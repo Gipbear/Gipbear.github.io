@@ -185,9 +185,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-01-05 10:07:50 / Modified: 21:32:40" itemprop="dateCreated datePublished" datetime="2021-01-05T10:07:50+08:00">2021-01-05</time>
+              <time title="Created: 2021-01-05 10:07:50" itemprop="dateCreated datePublished" datetime="2021-01-05T10:07:50+08:00">2021-01-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-06 00:01:25" itemprop="dateModified" datetime="2021-01-06T00:01:25+08:00">2021-01-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">配置</span></a>
+                </span>
             </span>
 
           
@@ -208,80 +223,67 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>[TOC]</p>
-<h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1>
-      
-    </div>
+          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><h2 id="缘"><a href="#缘" class="headerlink" title="缘"></a>缘</h2><p>时隔一年多的时间，再次将拾起写博客的习惯。最早的时候是在大一接触了 Hexo，那时候有人跟我分享了他的刚搭建好的博客，但是我并没有看懂，于是就没有太在意，想来自己还是错过了最初变强的机会，而那个人已经是南大的研究生了。后来自己搭建博客是在大三了，主要内容还是编程问题、平时课程的收获和周记等心得类的，之后由于考研的缘故又放下了博客。这次再拿出来干脆重新开始搭建，这次以数据分析内容为主，记录在此算是一种自我督促吧。</p>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>安装 Hexo 的时候，包括安装其他软件，希望读者可以将<strong>全文都看一遍</strong>，再多看几篇其他的教程再下手，尤其是这种自由度比较高的东西，配置多，步骤多，涉及的内容也比较多。</p>
+<p>本文是针对：Hexo + GitHub Pages 进行搭建的，使用 github.io 作为域名，主题是 Next。</p>
+<h2 id="Hexo环境准备"><a href="#Hexo环境准备" class="headerlink" title="Hexo环境准备"></a>Hexo环境准备</h2><p>本文的面向 Windows 10 的。</p>
+<p>Hexo 安装之前需要的准备工作有：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://git-scm.com/download/win">Git 下载</a>，以及安装的<a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">中文说明文档</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://nodejs.org/en/download/">Nodejs 下载</a>，作者的 Node.js 是 Anaconda 中安装某个包的时候装的，具体忘记了，反正在电脑上是有的:smiley:。</li>
+<li>（可选）<a target="_blank" rel="noopener" href="https://classic.yarnpkg.com/en/docs/install">yarn</a>，Node.js 是自带 npm 包管理器的，但是因为某些原因<del>感到不爽</del>而使用 yarn ，它本质上还是利用 npm 进行安装的，至于 cnpm 还是不推荐的。</li>
+</ul>
+<p>此处不是重点，就不一一赘述安装步骤了。</p>
+<p>除此之外还需要一个 GitHub 账号，打开<a target="_blank" rel="noopener" href="https://github.com/">GitHub官网</a>，注册并登录，并且新建一个项目，如下：</p>
+<img src="/.com//01new.png" style="zoom:50%;">
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+<p>需要注意的是，repository 的 name 一定是 &lt;GitHub name&gt;.github.io，这也是之后直接访问的免费域名。作者这里是因为已经创建过了，所以显示错误。</p>
+<img src="/.com//02repository.png" style="zoom:50%;">
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/05/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Grizzly">
-      <meta itemprop="description" content="人与数据">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Grizzly's daily">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/05/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-01-05 09:11:36" itemprop="dateCreated datePublished" datetime="2021-01-05T09:11:36+08:00">2021-01-05</time>
-            </span>
-
-          
-            <span id="/2021/01/05/hello-world/" class="post-meta-item leancloud_visitors" data-flag-title="Hello World" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>创建好了之后就到下一步吧，一会儿回过头来再使用。</p>
+<h2 id="Hexo-安装"><a href="#Hexo-安装" class="headerlink" title="Hexo 安装"></a>Hexo 安装</h2><p>接下来就开始 Hexo 的安装：</p>
+<h3 id="安装-Hexo-依赖包"><a href="#安装-Hexo-依赖包" class="headerlink" title="安装 Hexo 依赖包"></a>安装 Hexo 依赖包</h3><ul>
+<li><p>选择合适的地方新建一个文件夹（下面称为<strong>根目录</strong>），作为 Hexo 博客的主文件夹，建议命名为<code>&lt;GitHub name&gt;.github.io</code>。</p>
+</li>
+<li><p>在新建的博客文件夹（再强调一次，下面称为<strong>根目录</strong>）内右击打开 Git Bash，输入<code>yarn global add hexo-cli</code>，在全局安装 Hexo。</p>
+<blockquote>
+<p>此处应该是不会在该文件夹产生任何内容的，不出意外的话，应该是在<code>&lt;yarn安装目录&gt;\Data\global\node_modules</code>中</p>
+</blockquote>
+</li>
+<li><p>随后在博客的根目录内输入<code>hexo init</code>，对 Hexo 进行初始化，该文件夹下不能有任何文件，否则会报错。</p>
+</li>
+</ul>
+<h3 id="关联-GitHub-Pages"><a href="#关联-GitHub-Pages" class="headerlink" title="关联 GitHub Pages"></a>关联 GitHub Pages</h3><p>到这里，已经将 Hexo 安装到本地了，接下来需要将 Hexo 与 GitHub Pages 进行关联，使得 Hexo 可以部署在 GitHub 上。</p>
+<ul>
+<li><p>打开之前建立的 repository，复制该 repository 的 ssh 链接。</p>
+  <img src="/.com//03sshaddress.png" alt="ssh链接" style="zoom:50%;"> 
+</li>
+<li><p>在博客根目录下找到<code>_config.yml</code>文件，使用记事本或VS code等软件打开，在最下面找到</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: 上一步复制的ssh链接</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意配置文件的冒号之后都是有<strong>空格</strong>的。</p>
+</blockquote>
+</li>
+<li><p>再进入博客的根目录，输入的邮箱和用户名。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &quot;自己的邮箱&quot;</span><br><span class="line">git config --global user.name &quot;自己的用户名&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>输入<code>yarn add hexo-deployer-git</code>，安装 Git 部署依赖项，就大功告成了。</p>
+</li>
+</ul>
+<h2 id="启动-Hexo"><a href="#启动-Hexo" class="headerlink" title="启动 Hexo"></a>启动 Hexo</h2><p>这时候让我们来启动一下看看我们的博客，同样在根目录下输入命令：</p>
+<ul>
+<li><code>hexo clean</code>：清除 public 文件夹内的内容，也就是清理缓存建议每次更新的时候运行一下。</li>
+<li><code>hexo generate</code>：生成文件，生成发布的 public 文件，可简写为<code>hexo g</code>。</li>
+<li><code>hexo server</code>：启动本地服务器，可以通过 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 进行访问，此步成功就说明博客搭建成功了，可简写为<code>hexo s</code></li>
+<li><code>hexo deploy</code>：部署博客，可简写为 <code>hexo g</code>。</li>
+</ul>
+<h3 id="跳过输入GitHub-密码"><a href="#跳过输入GitHub-密码" class="headerlink" title="跳过输入GitHub 密码"></a>跳过输入GitHub 密码</h3><p>到这里为止，在 deploy 的时候，会发现每次都需要输入密码，十分的麻烦，所以使用 ssh-keygen 来生成密钥：</p>
+<ul>
+<li>同样在根目录输入<code>ssh-keygen -t rsa -C &quot;自己的邮箱&quot;</code>。</li>
+<li>连续敲击三下回车，后面两下是输入密码，直接回车就表示不输入密码。</li>
+<li>成功之后会在用户目录下生成<code>.shh</code>文件夹，打开其中的<code>id_rsa.pub</code>文件，右击记事本打开就可以，复制其中的完整内容。</li>
+<li>在 GitHub 的<a target="_blank" rel="noopener" href="https://github.com/settings/keys">设置-&gt; SSH keys</a>中，点击<code>New SSH key</code>，Title 任意，Key 则是将复制的内容粘贴进去即可。</li>
+</ul>
+<p>至此一个可以成功部署的最初 Hexo 博客就搭建完成了，后续就是优化内容了。</p>
 
       
     </div>
@@ -363,9 +365,15 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
