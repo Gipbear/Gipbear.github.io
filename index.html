@@ -193,7 +193,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-06 23:13:43" itemprop="dateModified" datetime="2021-01-06T23:13:43+08:00">2021-01-06</time>
+                <time title="Modified: 2021-01-06 23:27:27" itemprop="dateModified" datetime="2021-01-06T23:27:27+08:00">2021-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -318,6 +318,11 @@
 <li><p>在主题下打开<code>_config.yml</code>配置文件，找到 avatar 字段</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Sidebar Avatar</span><br><span class="line">avatar:</span><br><span class="line">  # Replace the default image and set the url here.</span><br><span class="line">  url: &#x2F;images&#x2F;avatar.gif  # avatar.gif 是自己喜欢的头像，放在\themes\next\source\images下</span><br><span class="line">  rounded: ture            # 是否圆形显示头像 true | false</span><br><span class="line">  rotated: ture            # 光标移到头像上后头像是否旋转 true | false</span><br></pre></td></tr></table></figure></li>
 </ul>
+</li>
+<li><p>将文章链接修改颜色</p>
+<p> 在<code>themes\next\source\css\_common\components\post\</code>下打开<code>post.styl</code>文件，添加字段</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.post-body p a&#123;</span><br><span class="line">  color: #0593d3;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    color: #0477ab;</span><br><span class="line">    text-decoration: underline;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 最好在末尾添加，便于和原文进行区分</p>
 </li>
 <li></li>
 </ol>
