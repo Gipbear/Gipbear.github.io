@@ -193,7 +193,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-06 00:01:25" itemprop="dateModified" datetime="2021-01-06T00:01:25+08:00">2021-01-06</time>
+                <time title="Modified: 2021-01-06 08:47:44" itemprop="dateModified" datetime="2021-01-06T08:47:44+08:00">2021-01-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,7 +258,7 @@
 <li><p>打开之前建立的 repository，复制该 repository 的 ssh 链接。</p>
   <img src="/.com//03sshaddress.png" alt="ssh链接" style="zoom:50%;"> 
 </li>
-<li><p>在博客根目录下找到<code>_config.yml</code>文件，使用记事本或VS code等软件打开，在最下面找到</p>
+<li><p>在博客根目录下找到<code>_config.yml</code>配置文件，使用记事本或VS code等软件打开，在最下面找到</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">    type: git</span><br><span class="line">    repo: 上一步复制的ssh链接</span><br><span class="line">    branch: master</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意配置文件的冒号之后都是有<strong>空格</strong>的。</p>
@@ -284,7 +284,21 @@
 <li>在 GitHub 的<a target="_blank" rel="noopener" href="https://github.com/settings/keys">设置-&gt; SSH keys</a>中，点击<code>New SSH key</code>，Title 任意，Key 则是将复制的内容粘贴进去即可。</li>
 </ul>
 <p>至此一个可以成功部署的最初 Hexo 博客就搭建完成了，后续就是优化内容了。</p>
-
+<h2 id="tags、categories、about"><a href="#tags、categories、about" class="headerlink" title="tags、categories、about"></a>tags、categories、about</h2><p>默认在导航栏会有首页、归档、关于三个选项，还可以添加标签、分类和关于三个模块，之后就可以在文章中对文章添加分类或标签了，关于模块是自我介绍类的，也可以作为自己的主页，写一些自我介绍的一些内容。</p>
+<ul>
+<li><p>在博客根目录下打开<code>_config.yml</code>配置文件，找到menu，去除tags、categories、about对应的注释。</p>
+</li>
+<li><p>在博客根目录下执行指令，来新建文件夹：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo new page &quot;tags&quot;</span><br><span class="line">hexo new page &quot;categories&quot;</span><br><span class="line">hexo new page &quot;about&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>这些文件夹在根目录的 source 下，其中都会有<code>index.md</code>文件，打开之后分别增加<code>type</code>属性：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line">date: 2021-01-06 08:24:26</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">---</span><br><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2021-01-06 08:24:22</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2021-01-06 08:24:28</span><br><span class="line">type: &quot;about&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
+<li><p>重新部署 Hexo 就可以生效。</p>
+</li>
+</ul>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>主题的话，我这里选择爆款的 <a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next">Next 主题</a>，想要尝试更多主题可以在<a target="_blank" rel="noopener" href="https://hexo.io/themes/">Hexo Themes</a>中自己选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:theme-next&#x2F;hexo-theme-next.git themes&#x2F;next</span><br><span class="line">&#x2F;&#x2F; 注意: https:&#x2F;&#x2F;github.com&#x2F;iissnan&#x2F;hexo-theme-next，该项目已经不维护</span><br></pre></td></tr></table></figure>
+<p>克隆下来的主题就在 themes/next 文件夹内，其中的<code>_config.yml</code>配置文件是之后操作主题的地方，需要和之前根目录下 Hexo 的配置区分开。</p>
+<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><h2 id="阅读次数统计"><a href="#阅读次数统计" class="headerlink" title="阅读次数统计"></a>阅读次数统计</h2>
       
     </div>
 
