@@ -56,8 +56,23 @@
   <entry>
     <title>测量HTML元素长度</title>
     <url>/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>这次要推荐是关于</p>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>这次要推荐是提升html页面布局效率的chrome插件。</p>
+<p>适用于有 HTML + CSS 进行页面设计需求的人群。</p>
+</blockquote>
+<p>该插件是<a href="https://chrome.google.com/webstore/detail/page-ruler-redux/giejhjebcalaheckengmchjekofhhmal">Page Ruler Redux</a>，直接点击链接就可以在<code>Chrome</code>应用商店进行下载了。</p>
+<p>下载完成并进行安装，使用<code>ALT + P</code>快捷键就可以将插件打开，戍边点击选择需要测量的区域即可。</p>
+<p>当然，这样直接点击有的时候会选的不太准确，可以打开元素模式，自动选择边界框，在调试的时候就可以自动选择元素边界，准确进行设计。</p>
+<p><img src="/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/01.png" alt="打开元素模式"></p>
 ]]></content>
+      <categories>
+        <category>插件</category>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Chrome</tag>
+        <tag>CSS</tag>
+      </tags>
   </entry>
   <entry>
     <title>hexo 的安装和配置</title>
@@ -242,7 +257,17 @@
 <blockquote>
 <p>注意修改<code>src</code>为<code>love.js</code>所在的路径。</p>
 </blockquote>
-<h4 id="浏览器网页标题恶搞"><a href="#浏览器网页标题恶搞" class="headerlink" title="浏览器网页标题恶搞"></a>浏览器网页标题恶搞</h4><h2 id="诚挚感谢"><a href="#诚挚感谢" class="headerlink" title="诚挚感谢"></a>诚挚感谢</h2><p><a href="https://lvxuefei.top/%E5%88%A9%E7%94%A8Hexo-Next%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89-%E4%BC%98%E5%8C%96-%E5%90%84%E7%A7%8Dtips%E3%80%81%E9%BB%91%E7%A7%91%E6%8A%80%EF%BC%8C%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0/"><strong>槐雪</strong></a></p>
+<h4 id="浏览器网页标题恶搞"><a href="#浏览器网页标题恶搞" class="headerlink" title="浏览器网页标题恶搞"></a>浏览器网页标题恶搞</h4><p>离开博客页面会在标签页出现恶搞文字表情，也可以自定义。在<code>\themes\next\source\js</code>下新建一个<code>FunnyTitle.js</code>文件，写入如下内容：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!--浏览器搞笑标题--&gt;</span><br><span class="line"> <span class="keyword">var</span> OriginTitle = <span class="built_in">document</span>.title;</span><br><span class="line"> <span class="keyword">var</span> titleTime;</span><br><span class="line"> <span class="built_in">document</span>.addEventListener(<span class="string">&#x27;visibilitychange&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="built_in">document</span>.hidden) &#123;</span><br><span class="line">         <span class="built_in">document</span>.title = <span class="string">&#x27;ヽ(●-`Д´-)ノ你丑你就走！&#x27;</span>;</span><br><span class="line">         <span class="built_in">clearTimeout</span>(titleTime);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="built_in">document</span>.title = <span class="string">&#x27;ヾ(Ő∀Ő3)ノ你帅就回来！&#x27;</span> + OriginTitle;</span><br><span class="line">         titleTime = <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">             <span class="built_in">document</span>.title = OriginTitle;</span><br><span class="line">         &#125;, <span class="number">2000</span>);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<p>并在<code>hexo\themes\next\layout\_layout.swing</code>文件底部<code>&lt;body&gt;</code>上增加：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--浏览器搞笑标题--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;\js\FunnyTitle.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<h2 id="诚挚感谢"><a href="#诚挚感谢" class="headerlink" title="诚挚感谢"></a>诚挚感谢</h2><p><a href="https://lvxuefei.top/%E5%88%A9%E7%94%A8Hexo-Next%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89-%E4%BC%98%E5%8C%96-%E5%90%84%E7%A7%8Dtips%E3%80%81%E9%BB%91%E7%A7%91%E6%8A%80%EF%BC%8C%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0/"><strong>槐雪</strong></a></p>
 <p><a href="https://www.itfanr.cc/2018/11/12/busuanzi-counter-error/">Hexo博客Next主题解决不蒜子统计不显示问题</a></p>
 <p><a href="http://www.sylan215.com/hexo-next-hongxin.html">next 主题下点击后出现红心效果</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/69211731">Hexo 博客美化合集（不断更新）</a></p>

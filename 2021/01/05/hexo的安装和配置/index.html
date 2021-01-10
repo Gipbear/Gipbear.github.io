@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/02repository.png">
 <meta property="og:image" content="http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/03sshaddress.png">
 <meta property="article:published_time" content="2021-01-05T02:07:50.000Z">
-<meta property="article:modified_time" content="2021-01-10T15:15:33.006Z">
+<meta property="article:modified_time" content="2021-01-10T15:26:23.526Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-10 23:15:33" itemprop="dateModified" datetime="2021-01-10T23:15:33+08:00">2021-01-10</time>
+                <time title="Modified: 2021-01-10 23:26:23" itemprop="dateModified" datetime="2021-01-10T23:26:23+08:00">2021-01-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,14 +258,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>11k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>10 mins.</span>
+              <span>11 mins.</span>
             </span>
 
         </div>
@@ -457,7 +457,17 @@
 <blockquote>
 <p>注意修改<code>src</code>为<code>love.js</code>所在的路径。</p>
 </blockquote>
-<h4 id="浏览器网页标题恶搞"><a href="#浏览器网页标题恶搞" class="headerlink" title="浏览器网页标题恶搞"></a>浏览器网页标题恶搞</h4><h2 id="诚挚感谢"><a href="#诚挚感谢" class="headerlink" title="诚挚感谢"></a>诚挚感谢</h2><p><a target="_blank" rel="noopener" href="https://lvxuefei.top/%E5%88%A9%E7%94%A8Hexo-Next%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89-%E4%BC%98%E5%8C%96-%E5%90%84%E7%A7%8Dtips%E3%80%81%E9%BB%91%E7%A7%91%E6%8A%80%EF%BC%8C%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0/"><strong>槐雪</strong></a></p>
+<h4 id="浏览器网页标题恶搞"><a href="#浏览器网页标题恶搞" class="headerlink" title="浏览器网页标题恶搞"></a>浏览器网页标题恶搞</h4><p>离开博客页面会在标签页出现恶搞文字表情，也可以自定义。在<code>\themes\next\source\js</code>下新建一个<code>FunnyTitle.js</code>文件，写入如下内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--浏览器搞笑标题--&gt;</span><br><span class="line"> <span class="keyword">var</span> OriginTitle = <span class="built_in">document</span>.title;</span><br><span class="line"> <span class="keyword">var</span> titleTime;</span><br><span class="line"> <span class="built_in">document</span>.addEventListener(<span class="string">&#x27;visibilitychange&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="built_in">document</span>.hidden) &#123;</span><br><span class="line">         <span class="built_in">document</span>.title = <span class="string">&#x27;ヽ(●-`Д´-)ノ你丑你就走！&#x27;</span>;</span><br><span class="line">         <span class="built_in">clearTimeout</span>(titleTime);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="built_in">document</span>.title = <span class="string">&#x27;ヾ(Ő∀Ő3)ノ你帅就回来！&#x27;</span> + OriginTitle;</span><br><span class="line">         titleTime = <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">             <span class="built_in">document</span>.title = OriginTitle;</span><br><span class="line">         &#125;, <span class="number">2000</span>);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<p>并在<code>hexo\themes\next\layout\_layout.swing</code>文件底部<code>&lt;body&gt;</code>上增加：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--浏览器搞笑标题--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;\js\FunnyTitle.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+<h2 id="诚挚感谢"><a href="#诚挚感谢" class="headerlink" title="诚挚感谢"></a>诚挚感谢</h2><p><a target="_blank" rel="noopener" href="https://lvxuefei.top/%E5%88%A9%E7%94%A8Hexo-Next%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89-%E4%BC%98%E5%8C%96-%E5%90%84%E7%A7%8Dtips%E3%80%81%E9%BB%91%E7%A7%91%E6%8A%80%EF%BC%8C%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0/"><strong>槐雪</strong></a></p>
 <p><a target="_blank" rel="noopener" href="https://www.itfanr.cc/2018/11/12/busuanzi-counter-error/">Hexo博客Next主题解决不蒜子统计不显示问题</a></p>
 <p><a target="_blank" rel="noopener" href="http://www.sylan215.com/hexo-next-hongxin.html">next 主题下点击后出现红心效果</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69211731">Hexo 博客美化合集（不断更新）</a></p>
@@ -591,13 +601,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -645,13 +655,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">13k</span>
+    <span title="Symbols count total">14k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">12 mins.</span>
+    <span title="Reading time total">13 mins.</span>
 </div>
 
 
