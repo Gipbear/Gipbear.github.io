@@ -60,6 +60,8 @@
 <p>这次要推荐是提升html页面布局效率的chrome插件。</p>
 <p>适用于有 HTML + CSS 进行页面设计需求的人群。</p>
 </blockquote>
+<a id="more"></a>
+
 <p>该插件是<a href="https://chrome.google.com/webstore/detail/page-ruler-redux/giejhjebcalaheckengmchjekofhhmal">Page Ruler Redux</a>，直接点击链接就可以在<code>Chrome</code>应用商店进行下载了。</p>
 <p>下载完成并进行安装，使用<code>ALT + P</code>快捷键就可以将插件打开，戍边点击选择需要测量的区域即可。</p>
 <p>当然，这样直接点击有的时候会选的不太准确，可以打开元素模式，自动选择边界框，在调试的时候就可以自动选择元素边界，准确进行设计。</p>
