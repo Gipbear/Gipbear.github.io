@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。  本篇适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。  JSON数据简介&#x2F;&#x2F; Todo：关于JSON数据的简介 JSON的全称是”JavaScript Object Notation”，意思是JavaScript对象表示法，它是一种基于文本，独立于语言的轻量级数据">
+  <meta name="description" content="这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。  本篇适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。 主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flask——JS获取python中的JSON数据">
 <meta property="og:url" content="http://example.com/2021/01/10/Flask%E2%80%94%E2%80%94JS%E8%8E%B7%E5%8F%96python%E4%B8%AD%E7%9A%84JSON%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。  本篇适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。  JSON数据简介&#x2F;&#x2F; Todo：关于JSON数据的简介 JSON的全称是”JavaScript Object Notation”，意思是JavaScript对象表示法，它是一种基于文本，独立于语言的轻量级数据">
+<meta property="og:description" content="这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。  本篇适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。 主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-10T11:15:01.000Z">
-<meta property="article:modified_time" content="2021-01-10T12:21:46.703Z">
+<meta property="article:modified_time" content="2021-01-10T12:56:02.494Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="Flask">
 <meta property="article:tag" content="JS">
@@ -225,7 +225,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-01-10 19:15:01 / Modified: 20:21:46" itemprop="dateCreated datePublished" datetime="2021-01-10T19:15:01+08:00">2021-01-10</time>
+              <time title="Created: 2021-01-10 19:15:01 / Modified: 20:56:02" itemprop="dateCreated datePublished" datetime="2021-01-10T19:15:01+08:00">2021-01-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,7 +276,10 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。</p>
 <blockquote>
 <p>本篇适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。</p>
+<p>主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题</p>
 </blockquote>
+<a id="more"></a>
+
 <h2 id="JSON数据简介"><a href="#JSON数据简介" class="headerlink" title="JSON数据简介"></a>JSON数据简介</h2><p>// Todo：关于JSON数据的简介</p>
 <p>JSON的全称是”<code>JavaScript Object Notation</code>”，意思是JavaScript对象表示法，它是一种基于文本，独立于语言的轻量级数据交换格式。</p>
 <h2 id="JS获取Flask的数据"><a href="#JS获取Flask的数据" class="headerlink" title="JS获取Flask的数据"></a>JS获取Flask的数据</h2><p>Flask框架允许我们在HTML中直接获得python文件中传递过来的参数，如下：</p>

@@ -220,7 +220,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-01-10 19:15:01 / Modified: 20:21:46" itemprop="dateCreated datePublished" datetime="2021-01-10T19:15:01+08:00">2021-01-10</time>
+              <time title="Created: 2021-01-10 19:15:01 / Modified: 20:56:02" itemprop="dateCreated datePublished" datetime="2021-01-10T19:15:01+08:00">2021-01-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,43 +261,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><p>这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。</p>
+          <p>这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。</p>
 <blockquote>
 <p>本篇适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。</p>
+<p>主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题</p>
 </blockquote>
-<h2 id="JSON数据简介"><a href="#JSON数据简介" class="headerlink" title="JSON数据简介"></a>JSON数据简介</h2><p>// Todo：关于JSON数据的简介</p>
-<p>JSON的全称是”<code>JavaScript Object Notation</code>”，意思是JavaScript对象表示法，它是一种基于文本，独立于语言的轻量级数据交换格式。</p>
-<h2 id="JS获取Flask的数据"><a href="#JS获取Flask的数据" class="headerlink" title="JS获取Flask的数据"></a>JS获取Flask的数据</h2><p>Flask框架允许我们在HTML中直接获得python文件中传递过来的参数，如下：</p>
-<p>app.py</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=<span class="string">&#x27;hello word!&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>这样在html页面中就可以直接显示传递过来的数据了，在前端页面需要使用某些需要后端计算返回数据的时候还是比较实用的。</p>
-<p>在Pandas下使用<code>DataFrame.to_json()</code>，将数据转化为JSON格式，我们可以使用type观察一下其类型，容易发现他本质上是一个字符串，所以将其传递给JS的时候，他就认为这是一个字符串类型的数据，所以，我们需要在JS文件中使用的时候，需要将<code>string</code>类型的JSON变量转化为<code>object</code>类型的JSON对象。</p>
-<p>此处存在三种常用的方法进行<sup id="fnref:1"><a href="#fn:1" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="[js字符串转化成json对象，使用JSON.parse()需要注意的地方](https://segmentfault.com/a/1190000007368846)
-[^ 2]:[Flask python 传输数据到前台 js 出问题 “&#39; &#34;”](https://blog.csdn.net/wangqing008/article/details/39352867)">[1]</span></a></sup></p>
-<ul>
-<li><code>var json = JSON.parse(str);</code></li>
-<li><code>var json = eval(&quot;(&quot; + str + &quot;)&quot;);</code></li>
-<li><code>var json = (new Function(&quot;return &quot; + str))();</code></li>
-</ul>
-<p>但是我们在Flask中传递参数过来之，在利用以上方法进行解析的时候却出现了问题：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sitePos形如 &#x27;[[obj00,obj01],[obj10,obj11],[obj20,obj21]&#x27;</span></span><br><span class="line"><span class="keyword">var</span> sitePos = &#123;&#123; sitePos &#125;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sitePos)</span><br><span class="line">sitePos = <span class="built_in">JSON</span>.parse(sitePos)</span><br><span class="line"><span class="built_in">console</span>.log(sitePos)</span><br></pre></td></tr></table></figure>
-<p>当我的数据是两列<code>数字类型</code>的JSON格式的时候，完全没问题，程序顺利运行！</p>
-<h3 id="报错：JSON字符串在JS中引号转义为‘-amp-34’"><a href="#报错：JSON字符串在JS中引号转义为‘-amp-34’" class="headerlink" title="报错：JSON字符串在JS中引号转义为‘&amp;#34’"></a>报错：JSON字符串在JS中引号转义为‘&amp;#34’</h3><p>但是当我加入一列<code>字符串类型</code>的数据时就出现问题了！第4行报错：<code>Uncaught SyntaxError: Unexpected token &amp; in JSON at position 1</code>，仔细一看第2行的log，发现字符串类型的数据中，双引号被转义为<code>&amp;#34;</code>，我一拍脑袋就想到解决办法了🤪</p>
-<ul>
-<li>错误方法1：在python中使用<code>to_json()</code>获得JSON字符串之后，利用<code>replace(&#39;\&quot;&#39;,&#39;&#39;)</code>，直接将引号删除。好家伙，照样报错<code>Uncaught SyntaxError: Unexpected token N in JSON at position 1</code>，报错到了字符串内容而已，本质问题相同。</li>
-<li>错误方法2：将双引号转化为单引号。。。不愧是我，继续错。</li>
-<li>错误方法3：在JS中使用ajax获取，这个就不展开将了，可以成功获取，但是不知道什么原因不能稳定显示，总之不靠谱，以及浪费了大量时间。（赤裸裸的给我希望，但是让我绝望——我太菜）。</li>
-</ul>
-<p>知道后来我遇到了这个男人[^ 2]，我终于悟了，这是因为JS出于对数据的安全考虑，将其进行转义，之前还看到一个不靠谱的文章说将安全保护关了。</p>
-<p>正确解法：在HTML使用容器来获得数据，之后再在JS中利用DOM获得数据</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;dataid&quot;</span> <span class="attr">d</span>=<span class="string">&quot;&#123;&#123;sitePos&#125;&#125;&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:none&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> sitePos = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;dataid&#x27;</span>).getAttribute(<span class="string">&#x27;d&#x27;</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>JS和HTML其实都可以通过 来获得Python中传递的数据。</p>
-</blockquote>
-<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;"><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007368846">js字符串转化成json对象，使用JSON.parse()需要注意的地方</a>
-[^ 2]:<a target="_blank" rel="noopener" href="https://blog.csdn.net/wangqing008/article/details/39352867">Flask python 传输数据到前台 js 出问题 “' &quot;”</a><a href="#fnref:1" rev="footnote"> ↩</a></span></li></ol></div></div>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/10/Flask%E2%80%94%E2%80%94JS%E8%8E%B7%E5%8F%96python%E4%B8%AD%E7%9A%84JSON%E6%95%B0%E6%8D%AE/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
     <div>    
