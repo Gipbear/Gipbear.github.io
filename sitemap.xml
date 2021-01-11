@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</loc>
+    <loc>http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</loc>
     
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</loc>
+    <loc>http://example.com/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</loc>
     
     <lastmod>2021-01-10</lastmod>
     
@@ -46,7 +46,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -54,42 +54,42 @@
   
   <url>
     <loc>http://example.com/tags/Flask/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/JS/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/JSON/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/Chrome/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/CSS/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/hexo/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -98,35 +98,35 @@
   
   <url>
     <loc>http://example.com/categories/%E8%BD%BB%E9%87%8FWeb/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E6%8F%92%E4%BB%B6/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E8%BD%BB%E9%87%8FWeb/%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E6%8F%92%E4%BB%B6/%E5%89%8D%E7%AB%AF/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2021-01-10</lastmod>
+    <lastmod>2021-01-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
