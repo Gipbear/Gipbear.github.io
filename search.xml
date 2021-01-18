@@ -307,6 +307,40 @@
 <li>数据处于任意分布下，总体样本的平均值总会在整体均值附近上下波动并符合正态分布。</li>
 </ol>
 <p>在没有办法得到全量数据的情况下，我们可以利用样本来估计总体，特别是具备大量用户的互联网行业，需要进行严格的测试和实验，也就是利用中心极限定理，从小量用户进行对照实验，来判断实验的策略对于整体用户的影响。</p>
+<h2 id="A-B测试应用"><a href="#A-B测试应用" class="headerlink" title="A/B测试应用"></a>A/B测试应用</h2><h3 id="置信区间和置信度"><a href="#置信区间和置信度" class="headerlink" title="置信区间和置信度"></a>置信区间和置信度</h3><p>概率论是通过抽样和分布来估计总体的一门学科。A/B测试实验就是希望通过抽样来估计整体，然而预估总是会出现偏差的，因为我们不能站在上帝的视角来直接获得准确的数据，所以我们使用两个预估策略：点估计和区间估计。</p>
+<ul>
+<li>估计一个班上的男生平均身高为170cm，就是点估计。</li>
+<li>估计一个班上的男生平均身高在167cm~174cm之间，就是区间估计。</li>
+</ul>
+<p>区间估计就在总体参数的点估计上增加一个区间范围，相比于点估计更加严谨。</p>
+<p>由此而言，我们估计的时候需要给出一个估计区间的范围，来保证结果的可靠性，但是这个范围不能无限放大，因为我们估计该班上男生的平均身高是0~10米也是完全正确的，但并没有实际意义。</p>
+<p>此时我们就需要给定一个足够小的误差范围（<strong>置信区间</strong>），并求得总体均值有多大的概率在此区间内（<strong>置信度或置信水平</strong>）。置信区间并不是完全的置信，而是一个估计区间，需要有一个指标来衡量置信区间的置信水平。</p>
+<blockquote>
+<p>日常使用的置信水平大部分是95%，是因为95%的置信度在正态分布中，误差范围刚好是两个标准差$\sigma$，并且误差范围并不大，而且置信水平相对较高。但也可以人为设定其他值来衡量。</p>
+</blockquote>
+<h3 id="显著性"><a href="#显著性" class="headerlink" title="显著性"></a>显著性</h3><p>显著性是A/B测试中衡量实验组相比对照组是否有明显差异的另一个一个核心指标，说明了两个测试组观察的指标在实验后差异是否显著，可以是提升显著，也可以是降低显著。</p>
+<ol>
+<li>同向为正，显著提升：当实验指标提升为正，且置信区间上下限同为正，那么实验结果显著提升。</li>
+<li>逆向为负，显著下降：当实验指标提升为负，且置信区间上下限同为负，那么实验结果显著下降。</li>
+<li>置信区间一正一负，效果不显著：若置信区间一正一负，那么结果将难以判断是提升还是下降的。</li>
+</ol>
+<blockquote>
+<p>目前的统计学中，通常将阈值发生几率小于5%的事件称之为“不可能事件”，吧$\alpha&lt;0.05$的概率称为具有显著性。</p>
+</blockquote>
+<h3 id="实验抽样与用户分层"><a href="#实验抽样与用户分层" class="headerlink" title="实验抽样与用户分层"></a>实验抽样与用户分层</h3><p>当我们对很多实验数据的时候，很多情况都是先进行抽样。抽样需要符合几个原则：</p>
+<ol>
+<li>均匀：抽样样本对象要尽可能分布均匀，属性一致；</li>
+<li>随机：保证样本呢均匀的和实验需求的前提下，应尽可能保持抽样的随机性；</li>
+<li>样本充足：样本过小会导致实验数据波动较大且实验周期较长。</li>
+</ol>
+<p>抽样之后进行实验，当实验用户分层只有一层，那就只能同时进行很少的实验，为了提高实验效率，就需要增加用户分层。</p>
+<p>实验分层方式：</p>
+<p>根据业务需求可以有多种划分方法，理论上可以划分N层</p>
+<ol>
+<li>正交分层：各层用户均匀分布至其他各个实验层，达到用户“正交”的效果。``实际上是上一层每一个实验的影响均匀分不到下一层里，使得效果相互抵消，而不影响下一层的实验评估效果`，从而只需要考虑单层策略的影响效果。</li>
+<li>逻辑互斥：不同的业务逻辑需要在不同的层，相同的业务逻辑只能在同一层。若一个用户在两层都是有关样式调整的实验，那么会产生逻辑干扰，导致结果逻辑混乱。</li>
+</ol>
+<h3 id="单一因素原则"><a href="#单一因素原则" class="headerlink" title="单一因素原则"></a>单一因素原则</h3><p>最后需要注意的是，在进行A/B实验的时候，需要保证每一个实验的评估对象都只有一个，即每次实验指考虑一个因素的影响，否则难以区分实验的效果是哪一个因素影响的。</p>
 ]]></content>
       <categories>
         <category>统计学</category>
@@ -471,5 +505,47 @@
         <category>机器学习</category>
         <category>总结</category>
       </categories>
+  </entry>
+  <entry>
+    <title>mysql导出表结构与数据</title>
+    <url>/2021/01/18/mysql%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为<code>.sql</code>文件，以及如何执行<code>.sql</code>文件</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="导出数据表"><a href="#导出数据表" class="headerlink" title="导出数据表"></a>导出数据表</h2><p>MySQL导出表结构主要是使用<code>mysqldump</code>命令。该命令是在<code>cmd</code>下执行的，而非MySQL命令行中，使用相对路径，会将文件保存在当前目录下。</p>
+<ol>
+<li><p>导出数据库<code>dbname</code>中全部表结构至<code>db.sql</code>中：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql;</span><br></pre></td></tr></table></figure></li>
+<li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构至<code>db.sql</code>中：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></li>
+<li><p>导出数据库<code>dbname</code>中全部表结构及其数据至<code>db.sql</code>中（不加-d）：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql</span><br></pre></td></tr></table></figure></li>
+<li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构及其数据至<code>db.sql</code>中：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure>
+<h2 id="读取数据表"><a href="#读取数据表" class="headerlink" title="读取数据表"></a>读取数据表</h2></li>
+</ol>
+<p>当我们拥有一个sql文件的时候，我们就可以直接执行sql脚本来完成任务。</p>
+<ol>
+<li><p>在cmd下执行命令：需要选择MySQL的sever下的目录，如果目录存在空格，则需要使用双引号，若sql文件中存在<code>use 数据库</code>则不需要指定<code>-D数据库</code></p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql&quot; –uroot –p -D dbname &lt; C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></li>
+<li><p>在MySQL命令行中执行命令：sql文件需要是绝对路径</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+</li>
+</ol>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
   </entry>
 </search>
