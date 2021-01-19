@@ -22,15 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件">
+  <meta name="description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件。 适用于需要简单数据库迁移的读者。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql导出表结构与数据">
 <meta property="og:url" content="http://example.com/2021/01/18/mysql%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件">
+<meta property="og:description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件。 适用于需要简单数据库迁移的读者。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-18T12:04:21.000Z">
-<meta property="article:modified_time" content="2021-01-18T12:35:25.982Z">
+<meta property="article:modified_time" content="2021-01-19T13:57:34.394Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
@@ -221,10 +221,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-01-18 20:04:21 / Modified: 20:35:25" itemprop="dateCreated datePublished" datetime="2021-01-18T20:04:21+08:00">2021-01-18</time>
+              <time title="Created: 2021-01-18 20:04:21" itemprop="dateCreated datePublished" datetime="2021-01-18T20:04:21+08:00">2021-01-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-19 21:57:34" itemprop="dateModified" datetime="2021-01-19T21:57:34+08:00">2021-01-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -248,7 +254,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>766</span>
+              <span>779</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -268,7 +274,8 @@
 
       
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为<code>.sql</code>文件，以及如何执行<code>.sql</code>文件</p>
+<p>本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为<code>.sql</code>文件，以及如何执行<code>.sql</code>文件。</p>
+<p>适用于需要简单数据库迁移的读者。</p>
 </blockquote>
 <a id="more"></a>
 
@@ -291,14 +298,9 @@
 <li><p>在MySQL命令行中执行命令：sql文件需要是绝对路径</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
 </li>
 </ol>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>
+
     </div>
     <div>    
       
@@ -346,7 +348,10 @@
     <a href="/2021/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/" rel="prev" title="机器学习小结">
       <i class="fa fa-chevron-left"></i> 机器学习小结
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="快乐Linux学习（一）">
+      快乐Linux学习（一） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -405,7 +410,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">导出数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">读取数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">3.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">导出数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">读取数据表</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -421,20 +426,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -482,13 +487,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">24k</span>
+    <span title="Symbols count total">25k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">22 mins.</span>
+    <span title="Reading time total">23 mins.</span>
 </div>
 
 

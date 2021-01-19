@@ -510,7 +510,8 @@
     <title>mysql导出表结构与数据</title>
     <url>/2021/01/18/mysql%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为<code>.sql</code>文件，以及如何执行<code>.sql</code>文件</p>
+<p>本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为<code>.sql</code>文件，以及如何执行<code>.sql</code>文件。</p>
+<p>适用于需要简单数据库迁移的读者。</p>
 </blockquote>
 <a id="more"></a>
 
@@ -533,19 +534,87 @@
 <li><p>在MySQL命令行中执行命令：sql文件需要是绝对路径</p>
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
 </li>
 </ol>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>]]></content>
+]]></content>
       <categories>
         <category>数据库</category>
       </categories>
       <tags>
         <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快乐Linux学习（一）</title>
+    <url>/2021/01/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是快乐学习Linux的第一篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>适用于学习Linux系统基础命令的读者。</p>
+</blockquote>
+<a id="more"></a>
+
+<p>Windows下Linux子系统是一个Linux玩家可能看不起的东西，但是作为我们这些新手接触Linux系统的第一步还是一个不错的选择，至于安装等内容在此不再赘述，Google上也有很多教程，之后有机会的话再补上。</p>
+<h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><p>首先，让我们来理解一下Linux系统的文件系统。Linux系统是以分层目录来组织所有文件的，组织形式类似于一棵树，目录树的分支是文件或文件目录，其中树根<code>/</code>也被称为根目录，所有的目录和文件都连接在该目录下。Windows的存储设备是相互独立的，具有各自的文件系统，而Linux则全部<code>挂载</code>在目录树上。</p>
+<blockquote>
+<p>很容易发现在WSL上，Windows下的各个磁盘都被挂载在目录<code>/mnt</code>下。但是我们在Windows系统中又可以找到WSL的存储目录，<code>C:\Users\username\AppData\Local\Packages\一个关于Ubuntu的文件夹\LocalState\rootfs\mnt\c</code>就是WSL在mnt目录下挂载的C盘，打开发现其中是空的，说明这并不是一个无限套娃的事情，这一点还是比较有趣的。</p>
+</blockquote>
+<ul>
+<li>pwd：显示当前所在目录。</li>
+<li>cd：更改当前目录，可以通过绝对路径（从<code>/</code>开始）或相对路径（当前目录开始）进行跳转。<ul>
+<li><code>cd</code> 或<code>cd ~</code>快速到达home目录；<code>cd -</code>快速到达之前所在的目录。</li>
+</ul>
+</li>
+</ul>
+<p>每个目录中都包含父目录和当前目录内容（包括根目录，根目录的父目录还是是根目录，因缺思厅），使用<code>..</code>表示父目录，使用<code>.</code>或省略表示当前目录。</p>
+<ul>
+<li>ls：罗列处出一个目录包含的文件及其子目录。是一个十分:smiley:的命令，也是初学者最喜欢使用的命令。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-l</td>
+<td>以长模式的形式，显示出目录信息</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>列出所有的文件和目录，包括文件名以<code>.</code>开头的隐藏文件。</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>按照human的习惯显示文件大小，可以与l搭配使用</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>反序排列显示</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>修改事件排序</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>命令行的命令一般是由命令+选项+参数组成，形如：<code>command -options arguments</code>。</p>
+<p>表格中的选项一般是上面最近命令的常用搭配，之后不再说明。</p>
+</blockquote>
+<p>长模式是的显示的内容是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">文件访问权限 硬链接数目 文件所属用户 文件所属用户组 文件大小 上次修改日期 文件名</span><br></pre></td></tr></table></figure>
+<ul>
+<li>file filename：显示文件描述</li>
+</ul>
+<blockquote>
+<p>Linux中对于文件的内容，并不是按照文件的后缀名决定的，<code>Linux崇尚一切皆文件</code>。</p>
+</blockquote>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
 </search>
