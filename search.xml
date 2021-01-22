@@ -54,233 +54,47 @@
       </tags>
   </entry>
   <entry>
-    <title>测量HTML元素长度</title>
-    <url>/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</url>
+    <title>Flask下控件回显问题——xm-select控件回显</title>
+    <url>/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>这次要推荐是提升html页面布局效率的chrome插件。</p>
-<p>适用于有 HTML + CSS 进行页面设计需求的人群。</p>
+<p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
+<p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
 </blockquote>
 <a id="more"></a>
 
-<h2 id="Page-Ruler-Redux"><a href="#Page-Ruler-Redux" class="headerlink" title="Page Ruler Redux"></a>Page Ruler Redux</h2><p>该插件是<a href="https://chrome.google.com/webstore/detail/page-ruler-redux/giejhjebcalaheckengmchjekofhhmal">Page Ruler Redux</a>，直接点击链接就可以在<code>Chrome</code>应用商店进行下载了。</p>
-<p>下载完成并进行安装，使用<code>ALT + P</code>快捷键就可以将插件打开，戍边点击选择需要测量的区域即可。</p>
-<p>当然，这样直接点击有的时候会选的不太准确，可以打开元素模式，自动选择边界框，在调试的时候就可以自动选择元素边界，准确进行设计。</p>
-<p><img src="/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/01.png" alt="打开元素模式"></p>
-<h2 id="Ctrl-Shift-I"><a href="#Ctrl-Shift-I" class="headerlink" title="Ctrl+Shift+I"></a>Ctrl+Shift+I</h2><p>2021年1月13日 更新：</p>
-<p>利用上面的插件来显示页面元素的width和height感觉是很方便，但我觉得更重要的应该是可以看到left和top等边距参数，这样可以准确控制页面的布局。</p>
-<p>同时当页面元素可以拖动和缩放的时候，我们打开插件进行测量，则页面可能会重新刷新，这个时候就比较不方便了，这时需要查看width和height的话，通过浏览器自带的<code>开发人员工具</code>，点击左上角的小箭头即可。将该页面独立出来，就可以直接查看页面元素的大小了。</p>
-<blockquote>
-<p>其实这个开发人员工具我用的很熟悉，但是当时想要测量页面元素却一时忘记，今天才反应过来，这可能就是灯下黑吧:joy:。</p>
-</blockquote>
+<h2 id="控件回显问题"><a href="#控件回显问题" class="headerlink" title="控件回显问题"></a>控件回显问题</h2><p>在Flask中调用<code>render_template</code>的时候页面会进行刷新，此时页面的<code>From</code>之类需要输入的控件在刷新后就会显示空白内容，因为刷新等于重新加载一次页面，虽然获取了输入的值，但是并没有保留在原本的控件 value 中。</p>
+<h3 id="解决显式控件回显问题方法"><a href="#解决显式控件回显问题方法" class="headerlink" title="解决显式控件回显问题方法"></a>解决显式控件回显问题方法</h3><p>本文所谓的显式控件是，控件的元素都是在HTML或JS中直接定义的，此事我们只需要找到控件所在的位置，给元素进行赋值，例如：</p>
+<p>app.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">            form_name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=form_name)</span><br></pre></td></tr></table></figure>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">style</span>=<span class="string">&quot;width: 220px&quot;</span>&gt;</span>姓名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; name &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>立即查看<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们这里是将从表单中获取的name值，再次赋值给name，也就是回显。</p>
+<p>其实也就是利用 Flask的<code>&#123;&#123; &#125;&#125;</code>进行传参，只不过这里是将参数传给<code>value</code>而已，与之前获取参数一节不过是举一反三。</p>
+<h3 id="解决隐式控件回显问题方法"><a href="#解决隐式控件回显问题方法" class="headerlink" title="解决隐式控件回显问题方法"></a>解决隐式控件回显问题方法</h3><p>在写小程序的时候，使用了layui框架的扩展插件<code>xm-select</code>，该插件主要是设计了好看的选择控件，例如单选多选等等，之后再开章节细讲。</p>
+<p>本人的调用的xm-select控件部分代码如下。</p>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" alt="下拉框效果展示"></p>
+<p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
+<p><img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" alt="开发人员工具下拉框元素代码"></p>
+<p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
+<p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>这样就成功完成了控件的回显。</p>
+<p>// Todo: 还有一个多选的回显，还为解决。</p>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><ol>
+<li>学会举一反三，Flask传过来的值在HTML的任何一个位置都可以运用；</li>
+<li>当控件是动态显示的时候，一定会存在赋值取值的函数入口，查找说明文档是最快的方法。</li>
+</ol>
 ]]></content>
       <categories>
-        <category>插件</category>
-        <category>前端</category>
+        <category>轻量Web</category>
       </categories>
       <tags>
-        <tag>Chrome</tag>
-        <tag>CSS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo 的安装和配置</title>
-    <url>/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><h2 id="缘"><a href="#缘" class="headerlink" title="缘"></a>缘</h2><p>时隔一年多的时间，再次将拾起写博客的习惯。最早的时候是在大一接触了 Hexo，那时候有人跟我分享了他的刚搭建好的博客，但是我并没有看懂，于是就没有太在意，想来自己还是错过了最初变强的机会，而那个人已经是南大的研究生了。后来自己搭建博客是在大三了，主要内容还是编程问题、平时课程的收获和周记等心得类的，之后由于考研的缘故又放下了博客。这次再拿出来干脆重新开始搭建，这次以数据分析内容为主，记录在此算是一种自我督促吧。</p>
-<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>安装 Hexo 的时候，包括安装其他软件，希望读者可以将<strong>全文都看一遍</strong>，再多看几篇其他的教程再下手，尤其是这种自由度比较高的东西，配置多，步骤多，涉及的内容也比较多。</p>
-<p>本文是针对：<code>Hexo 5.3 + GitHub Pages</code>进行搭建的，使用<code>&lt;GitHub name&gt;.github.io</code>作为域名，主题是<code>Next</code>。</p>
-<a id="more"></a>
-
-<h2 id="Hexo环境准备"><a href="#Hexo环境准备" class="headerlink" title="Hexo环境准备"></a>Hexo环境准备</h2><p>本文的面向 Windows 10 的。</p>
-<p>Hexo 安装之前需要的准备工作有：</p>
-<ul>
-<li><a href="https://git-scm.com/download/win">Git 下载</a>，以及安装的<a href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">中文说明文档</a>。</li>
-<li><a href="https://nodejs.org/en/download/">Nodejs 下载</a>，本人的 Node.js 是 Anaconda 中安装某个包的时候装的，具体忘记了，反正在电脑上是有的:smiley:。</li>
-<li>（可选）<a href="https://classic.yarnpkg.com/en/docs/install">yarn</a>，Node.js 是自带 npm 包管理器的，但是因为某些原因<del>感到不爽</del>而使用 yarn ，它本质上还是利用 npm 进行安装的，至于 cnpm 还是不推荐的。</li>
-</ul>
-<p>此处不是重点，就不一一赘述安装步骤了。</p>
-<p>除此之外还需要一个 GitHub 账号，打开<a href="https://github.com/">GitHub官网</a>，注册并登录，并且新建一个项目，如下：</p>
-<img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/01new.png" style="zoom:50%;">
-
-<p>需要注意的是，repository 的 name 一定是 &lt;GitHub name&gt;.github.io，这也是之后直接访问的免费域名。本人这里是因为已经创建过了，所以显示错误。</p>
-<img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/02repository.png" style="zoom:50%;">
-
-<p>创建好了之后就到下一步吧，一会儿回过头来再使用。</p>
-<h2 id="Hexo-安装"><a href="#Hexo-安装" class="headerlink" title="Hexo 安装"></a>Hexo 安装</h2><p>接下来就开始 Hexo 的安装：</p>
-<h3 id="安装-Hexo-依赖包"><a href="#安装-Hexo-依赖包" class="headerlink" title="安装 Hexo 依赖包"></a>安装 Hexo 依赖包</h3><ul>
-<li><p>选择合适的地方新建一个文件夹（下面称为<strong>根目录</strong>），作为 Hexo 博客的主文件夹，建议命名为<code>&lt;GitHub name&gt;.github.io</code>。</p>
-</li>
-<li><p>在新建的博客文件夹（再强调一次，下面称为<strong>根目录</strong>）内右击打开 Git Bash，输入<code>yarn global add hexo-cli</code>，在全局安装 Hexo。</p>
-<blockquote>
-<p>此处应该是不会在该文件夹产生任何内容的，不出意外的话，应该是在<code>&lt;yarn安装目录&gt;\Data\global\node_modules</code>中</p>
-</blockquote>
-</li>
-<li><p>随后在博客的根目录内输入<code>hexo init</code>，对 Hexo 进行初始化，该文件夹下不能有任何文件，否则会报错。</p>
-</li>
-</ul>
-<h3 id="关联-GitHub-Pages"><a href="#关联-GitHub-Pages" class="headerlink" title="关联 GitHub Pages"></a>关联 GitHub Pages</h3><p>到这里，已经将 Hexo 安装到本地了，接下来需要将 Hexo 与 GitHub Pages 进行关联，使得 Hexo 可以部署在 GitHub 上。</p>
-<ul>
-<li><p>打开之前建立的 repository，复制该 repository 的 ssh 链接。</p>
-  <img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/03sshaddress.png" alt="ssh链接" style="zoom:50%;"> 
-</li>
-<li><p>在博客根目录下找到<code>_config.yml</code>配置文件，使用记事本或VS code等软件打开，在最下面找到</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: 上一步复制的ssh链接</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意配置文件的冒号之后都是有<strong>空格</strong>的。</p>
-</blockquote>
-</li>
-<li><p>再进入博客的根目录，输入的邮箱和用户名。</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git config --global user.email &quot;自己的邮箱&quot;</span><br><span class="line">git config --global user.name &quot;自己的用户名&quot;</span><br></pre></td></tr></table></figure></li>
-<li><p>输入<code>yarn add hexo-deployer-git</code>，安装 Git 部署依赖项，就大功告成了。</p>
-</li>
-</ul>
-<h2 id="启动-Hexo"><a href="#启动-Hexo" class="headerlink" title="启动 Hexo"></a>启动 Hexo</h2><p>这时候让我们来启动一下看看我们的博客，同样在根目录下输入命令：</p>
-<ul>
-<li><code>hexo clean</code>：清除 public 文件夹内的内容，也就是清理缓存建议每次更新的时候运行一下。</li>
-<li><code>hexo generate</code>：生成文件，生成发布的 public 文件，可简写为<code>hexo g</code>。</li>
-<li><code>hexo server</code>：启动本地服务器，可以通过 <a href="http://localhost:4000/">http://localhost:4000</a> 进行访问，此步成功就说明博客搭建成功了，可简写为<code>hexo s</code></li>
-<li><code>hexo deploy</code>：部署博客，可简写为 <code>hexo g</code>。</li>
-</ul>
-<h3 id="跳过输入GitHub-密码"><a href="#跳过输入GitHub-密码" class="headerlink" title="跳过输入GitHub 密码"></a>跳过输入GitHub 密码</h3><p>到这里为止，在 deploy 的时候，会发现每次都需要输入密码，十分的麻烦，所以使用 ssh-keygen 来生成密钥：</p>
-<ul>
-<li>同样在根目录输入<code>ssh-keygen -t rsa -C &quot;自己的邮箱&quot;</code>。</li>
-<li>连续敲击三下回车，后面两下是输入密码，直接回车就表示不输入密码。</li>
-<li>成功之后会在用户目录下生成<code>.shh</code>文件夹，打开其中的<code>id_rsa.pub</code>文件，右击记事本打开就可以，复制其中的完整内容。</li>
-<li>在 GitHub 的<a href="https://github.com/settings/keys">设置-&gt; SSH keys</a>中，点击<code>New SSH key</code>，Title 任意，Key 则是将复制的内容粘贴进去即可。</li>
-</ul>
-<p>至此一个可以成功部署的最初 Hexo 博客就搭建完成了，后续就是优化内容了。</p>
-<h2 id="tags、categories、about"><a href="#tags、categories、about" class="headerlink" title="tags、categories、about"></a>tags、categories、about</h2><p>默认在导航栏会有首页、归档、关于三个选项，还可以添加标签、分类和关于三个模块，之后就可以在文章中对文章添加分类或标签了，关于模块是自我介绍类的，也可以作为自己的主页，写一些自我介绍的一些内容。</p>
-<ul>
-<li><p>在博客根目录下打开<code>_config.yml</code>配置文件，找到menu，去除tags、categories、about对应的注释。</p>
-</li>
-<li><p>在博客根目录下执行指令，来新建文件夹：</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;tags&quot;</span><br><span class="line">hexo new page &quot;categories&quot;</span><br><span class="line">hexo new page &quot;about&quot;</span><br></pre></td></tr></table></figure></li>
-<li><p>这些文件夹在根目录的 source 下，其中都会有<code>index.md</code>文件，打开之后分别增加<code>type</code>属性：</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line">date: 2021-01-06 08:24:26</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2021-01-06 08:24:22</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2021-01-06 08:24:28</span><br><span class="line">type: &quot;about&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
-<li><p>重新部署 Hexo 就可以生效。</p>
-</li>
-</ul>
-<h2 id="主题优化"><a href="#主题优化" class="headerlink" title="主题优化"></a>主题优化</h2><p>主题的话，我这里选择爆款的 <a href="https://github.com/theme-next/hexo-theme-next">Next 主题</a>，想要尝试更多主题可以在<a href="https://hexo.io/themes/">Hexo Themes</a>中自己选择。</p>
-<table>
-<thead>
-<tr>
-<th>版本</th>
-<th>年份</th>
-<th>仓库</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>v5.1.4 或更低</td>
-<td>2014 ~ 2017</td>
-<td><a href="https://github.com/iissnan/hexo-theme-next">https://github.com/iissnan/hexo-theme-next</a></td>
-</tr>
-<tr>
-<td>v6.0.0 ~ v7.8.0</td>
-<td>2018 ~ 2019</td>
-<td><a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></td>
-</tr>
-<tr>
-<td>v8.0.0 或更高</td>
-<td>2020</td>
-<td><a href="https://github.com/next-theme/hexo-theme-next">https://github.com/next-theme/hexo-theme-next</a></td>
-</tr>
-</tbody></table>
-<p>iissnan 已经停止维护了，不推荐，其他两个根据 Hexo 版本进行选择，克隆下来的主题就在 themes/next 文件夹内，其中的<code>_config.yml</code>配置文件是之后操作主题的地方，需要和之前根目录下 Hexo 的配置区分开。</p>
-<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><blockquote>
-<p>注意，有的时候配置完部署后未生效，一般 hexo s 一下，成功的话，再部署一次或多次就生效了，很神奇！！！记得每次都 clean 一下。</p>
-</blockquote>
-<h4 id="主题样式："><a href="#主题样式：" class="headerlink" title="主题样式："></a>主题样式：</h4><ul>
-<li>在主题文件夹中打开<code>_config.yml</code>配置文件，找到 scheme 属性。</li>
-<li>可以选择 Muse、Mist、Pisces 和 Gemini 四种主题类型。</li>
-</ul>
-<h4 id="图片显示问题"><a href="#图片显示问题" class="headerlink" title="图片显示问题"></a>图片显示问题</h4><p>通过之前的配置之后，发现我们的图片居然无法上传，又担心使用图床容易崩塌，所以，使用插件来将本地图片上传。</p>
-<ul>
-<li>在博客根目录下输入<code>yarn add https://github.com/7ym0n/hexo-asset-image</code>，安装该插件，注意直接安装 hexo-asset-image 的时候会出现图片<strong>时间无法映射</strong>的问题。</li>
-<li>在主题下打开<code>_config.yml</code>配置文件，找到 <code>post_asset_folder</code> 设置为 true，这样生成新的md文件的时候，就会得到一个同名的的文件夹，在其中存放对应博文所需要的图片。</li>
-<li>最后就可以在博客中引用图片了，可以是<code>![]()</code>或者 html 形式的（主要是可以缩放），</li>
-</ul>
-<h4 id="头像设置"><a href="#头像设置" class="headerlink" title="头像设置"></a>头像设置</h4><ul>
-<li><p>在主题下打开<code>_config.yml</code>配置文件，找到 avatar 字段</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Sidebar Avatar</span><br><span class="line">avatar:</span><br><span class="line">  # Replace the default image and set the url here.</span><br><span class="line">  url: &#x2F;images&#x2F;avatar.gif  # avatar.gif 是自己喜欢的头像，放在\themes\next\source\images下</span><br><span class="line">  rounded: ture            # 是否圆形显示头像 true | false</span><br><span class="line">  rotated: ture            # 光标移到头像上后头像是否旋转 true | false</span><br></pre></td></tr></table></figure>
-<h4 id="网站图标"><a href="#网站图标" class="headerlink" title="网站图标"></a>网站图标</h4></li>
-</ul>
-<p>同时设置一下网站的图标。</p>
-<p>将<code>themes\next\source\images</code>文件夹下的<code>apple-touch-icon-next.png</code>，<code>favicon-16x16-next.png</code>和<code>favicon-32x32-next.png</code>图片替换成同样名称和大小的图片即可。</p>
-<h4 id="将文章链接修改颜色"><a href="#将文章链接修改颜色" class="headerlink" title="将文章链接修改颜色"></a>将文章链接修改颜色</h4><p>在<code>themes\next\source\css\_common\components\post\</code>下打开<code>post.styl</code>文件，添加字段</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.post-body p a&#123;</span><br><span class="line">  color: #0593d3;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    color: #0477ab;</span><br><span class="line">    text-decoration: underline;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最好在末尾添加，便于和原配置进行区分。</p>
-<h4 id="主页部分显示"><a href="#主页部分显示" class="headerlink" title="主页部分显示"></a>主页部分显示</h4><p>Next 版本 7 以上已经不支持 auto_excerpt，因为摘要本身是博客的内容，而非主题负责的内容，官方推荐使用<code>&lt;!-- more --&gt;</code>来手动设置。</p>
-<h4 id="添加-GitHub-角标"><a href="#添加-GitHub-角标" class="headerlink" title="添加 GitHub 角标"></a>添加 GitHub 角标</h4><ul>
-<li>在<a href="https://github.blog/2008-12-19-github-ribbons/">GitHub Ribbons</a>中选择喜欢的角标形式，并复制代码。</li>
-<li>打开<code>themes/next/layout/_layout.swig</code>文件，在<code>&lt;div class=&quot;headband&quot;&gt;&lt;/div&gt;</code>下粘贴代码。</li>
-<li>将代码中的<code>href</code>替换为自己的 GitHub 主页</li>
-</ul>
-<h4 id="删除版本信息"><a href="#删除版本信息" class="headerlink" title="删除版本信息"></a>删除版本信息</h4><p>在主题配置文件中找到<code>powered</code>字段，修改为false即可。</p>
-<h4 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h4><p>在侧边栏添加一些社交链接，可以使用的图标可以在<a href="http://www.fontawesome.com.cn/faicons/">Font Awesome</a>查看，然后在主题配置文件中找到<code>social</code>字段，并进行配置，例如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">social:</span><br><span class="line">  GitHub: https:&#x2F;&#x2F;github.com&#x2F;Gipbear || fab fa-github</span><br><span class="line">  E-Mail: mailto:1099048889@qq.com || fa fa-envelope</span><br></pre></td></tr></table></figure>
-<p>但是一些没有的图标，比如B站，就需要使用自定义方法进行配置。这里我们使用阿里的<a href="https://www.iconfont.cn/search/index?q=bilibili">iconfont</a>来查找，找到B站的图标，点击图标上的<strong>添加入库</strong>，再点击右上方<strong>购物车</strong>图标，点击<strong>下载代码</strong>获得一个压缩文件，解压得到一个<code>iconfont.css</code>文件，将其复制到<code>themes\next\source\lib\font-awesome\css\all.min.css</code>后面，最后在social中添加即可：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bilibili: https:&#x2F;&#x2F;space.bilibili.com&#x2F;B站id || iconfont icon-bilibili-line</span><br></pre></td></tr></table></figure>
-<h4 id="添加文章权利声明"><a href="#添加文章权利声明" class="headerlink" title="添加文章权利声明"></a>添加文章权利声明</h4><p>emmm，虽然也没有特别大的利益相关，但是还是正式点比较好。</p>
-<p>在主题配置文件中找到<code>creative_commons</code>字段，将<code>post</code>修改为<code>true</code>即可。</p>
-<h4 id="代码样式"><a href="#代码样式" class="headerlink" title="代码样式"></a>代码样式</h4><p>修改代码的样式主题，在主题配置文件中找到<code>codeblock</code>字段，将<code>highlight_theme</code>修改为想要主题即可。</p>
-<p>同时打开<code>copy_button</code>按钮，使得代码可以直接复制。</p>
-<h4 id="加载显示进度条"><a href="#加载显示进度条" class="headerlink" title="加载显示进度条"></a>加载显示进度条</h4><p>进度条需要<a href="https://github.com/theme-next/theme-next-pace">下载插件</a>：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 注意：进入主题文件夹的不是指 themes，而是指 next！</span><br><span class="line">cd themes&#x2F;next</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;theme-next-pace source&#x2F;lib&#x2F;pace</span><br></pre></td></tr></table></figure>
-<p>之后打开主题配置文件，找到<code>pace</code>属性，设置<code>enable: true</code>，并选择自己喜欢的形式，可以在<a href="https://codebyzach.github.io/pace/">Pace</a>预览。</p>
-<h4 id="文章结束标记"><a href="#文章结束标记" class="headerlink" title="文章结束标记"></a>文章结束标记</h4><ol>
-<li><p>在<code>themes/next/layout/_macro/</code>下新建<code>passage-end-tag.swig</code>文件，并输入</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;    </span><br><span class="line">  &#123;% if not is_index %&#125;        </span><br><span class="line">    &lt;div style&#x3D;&quot;text-align:center;color: #ccc;font-size:14px;&quot;&gt;------ 本文结束------		&lt;&#x2F;div&gt;    </span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>再打开附近的<code>post.swig</code>文件，在注释<code>END POST BODY</code>字段之前增加</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;% if not is_index %&#125;</span><br><span class="line">    &#123;% include &#39;passage-end-tag.swig&#39; %&#125;    </span><br><span class="line">  &#123;% endif %&#125; </span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>最后打开主题配置文件，在<code>Post Setting</code>下增加如下即可。</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 文章末尾添加“本文结束”标记</span><br><span class="line">passage_end_tag:</span><br><span class="line">  enabled: true</span><br></pre></td></tr></table></figure>
-<h4 id="小代码格式"><a href="#小代码格式" class="headerlink" title="小代码格式"></a>小代码格式</h4></li>
-</ol>
-<p>本人这里设置的颜色类似于 Typora 的 OrangeHeart颜色，打开<code>themes\next\source\css\ _variables\base.sty</code>文件，修改:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 加入自定义颜色</span><br><span class="line">$my-codeblock-foreground &#x3D; #9966FF     &#x2F;&#x2F; 用&#96;&#96;围出的代码块字体颜色</span><br><span class="line">$my-codeblock-background &#x3D; #f5f5f5;    &#x2F;&#x2F; 用&#96;&#96;围出的代码块字体颜色</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Code &amp; Code Blocks</span><br><span class="line">&#x2F;&#x2F; --------------------------------------------------</span><br><span class="line">$code-font-family               &#x3D; $font-family-monospace;</span><br><span class="line">$code-foreground                &#x3D; $my-codeblock-foreground </span><br><span class="line">$code-background                &#x3D; $my-codeblock-background </span><br></pre></td></tr></table></figure>
-<h4 id="阅读次数统计"><a href="#阅读次数统计" class="headerlink" title="阅读次数统计"></a>阅读次数统计</h4><p>Hexo 有很多可以进行阅读次数等内容的方法，这里选择使用不蒜子进行统计。</p>
-<ol>
-<li><p>打开主题配置站点，将<code>busuanzi_count</code>设置为true。</p>
-</li>
-<li><p>同时找到主题文件夹中的<code>busuanzi-counter.swig</code>文件夹，这个路径好像不同的教程都不太一样，自己找一下吧，在将原本的对应配置修改如下，其中第三行不蒜子的 url 需要修改，<a href="http://busuanzi.ibruce.info/">原因</a>实属七牛天坑：</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;%- if theme.busuanzi_count.enable %&#125;</span><br><span class="line">&lt;div class&#x3D;&quot;busuanzi-count&quot;&gt;</span><br><span class="line">  &lt;script&#123;&#123; pjax &#125;&#125; async src&#x3D;&quot;&#x2F;&#x2F;busuanzi.ibruce.info&#x2F;busuanzi&#x2F;2.3&#x2F;busuanzi.pure.mini.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">  &#123;%- if theme.busuanzi_count.total_visitors %&#125;</span><br><span class="line">    &lt;span class&#x3D;&quot;post-meta-item&quot; id&#x3D;&quot;busuanzi_container_site_uv&quot; style&#x3D;&quot;display: none;&quot;&gt;</span><br><span class="line">      &lt;!--&lt;span class&#x3D;&quot;post-meta-item-icon&quot;&gt;--&gt;</span><br><span class="line">        &lt;!--&lt;i class&#x3D;&quot;fa fa-&#123;&#123; theme.busuanzi_count.total_visitors_icon &#125;&#125;&quot;&gt;&lt;&#x2F;i&gt;--&gt;</span><br><span class="line">      &lt;!--&lt;&#x2F;span&gt;--&gt;</span><br><span class="line">	  我的第</span><br><span class="line">      &lt;span class&#x3D;&quot;site-uv&quot; title&#x3D;&quot;&#123;&#123; __(&#39;footer.total_visitors&#39;) &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;span id&#x3D;&quot;busuanzi_value_site_uv&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;span&gt;</span><br><span class="line">	  位朋友</span><br><span class="line">    &lt;&#x2F;span&gt;</span><br><span class="line">  &#123;%- endif %&#125;</span><br><span class="line"></span><br><span class="line">  &#123;%- if theme.busuanzi_count.total_visitors and theme.busuanzi_count.total_views %&#125;</span><br><span class="line">    &lt;span class&#x3D;&quot;post-meta-divider&quot;&gt;|&lt;&#x2F;span&gt;</span><br><span class="line">  &#123;%- endif %&#125;</span><br><span class="line"></span><br><span class="line">  &#123;%- if theme.busuanzi_count.total_views %&#125;</span><br><span class="line">    &lt;span class&#x3D;&quot;post-meta-item&quot; id&#x3D;&quot;busuanzi_container_site_pv&quot; style&#x3D;&quot;display: none;&quot;&gt;</span><br><span class="line">      &lt;!--&lt;span class&#x3D;&quot;post-meta-item-icon&quot;&gt;--&gt;</span><br><span class="line">        &lt;!--&lt;i class&#x3D;&quot;fa fa-&#123;&#123; theme.busuanzi_count.total_views_icon &#125;&#125;&quot;&gt;&lt;&#x2F;i&gt;--&gt;</span><br><span class="line">      &lt;!--&lt;&#x2F;span&gt;--&gt;</span><br><span class="line">      历经</span><br><span class="line">      &lt;span class&#x3D;&quot;site-pv&quot; title&#x3D;&quot;&#123;&#123; __(&#39;footer.total_views&#39;) &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;span id&#x3D;&quot;busuanzi_value_site_pv&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;span&gt;</span><br><span class="line">	  次回眸才与你相遇</span><br><span class="line">    &lt;&#x2F;span&gt;</span><br><span class="line">  &#123;%- endif %&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h4 id="网站字数统计"><a href="#网站字数统计" class="headerlink" title="网站字数统计"></a>网站字数统计</h4><p>安装<code>hexo-symbols-count-time</code>插件，并在主题配置中找到<code>symbols_count_time</code>字段，修改为</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true</span><br><span class="line">  item_text_post: true</span><br><span class="line">  item_text_total: true</span><br><span class="line">  awl: 4</span><br><span class="line">  wpm: 275</span><br></pre></td></tr></table></figure>
-<h4 id="全局搜索"><a href="#全局搜索" class="headerlink" title="全局搜索"></a>全局搜索</h4><p>这个是在博客上创建一个可以全局搜索的入口，使得可以快速搜索博客内容。</p>
-<ol>
-<li><p>首先需要安装<code>hexo-generator-searchdb</code>插件。</p>
-</li>
-<li><p>打开站点配置文件，在<code>Extensions</code>下添加</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure></li>
-<li><p>最后再将主题配置中的<code>local_search</code>功能设置为<code>true</code>即可。</p>
-</li>
-</ol>
-<h4 id="修改文章底部标签"><a href="#修改文章底部标签" class="headerlink" title="修改文章底部标签"></a>修改文章底部标签</h4><p>默认的标签是用**#**表示的，这里修改一下使用图标tag来替换。打开<code>/themes/next/layout/_macro/post.swig</code>文件，找到<code>rel=&quot;tag&quot;&gt;</code>，将后面的<code>&#123;&#123; tag_indicate &#125;&#125; </code>替换为<code>&lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt;</code>即可。</p>
-<h4 id="鼠标点击特效"><a href="#鼠标点击特效" class="headerlink" title="鼠标点击特效"></a>鼠标点击特效</h4><p>在<code>hexo\themes\next\source\js\</code>目录或<code>hexo\themes\next\source\jsrc\</code>目录下（后者我没有）新建一个<code>love.js</code>文件，粘贴下方的内容</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">e, t, a</span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        c(<span class="string">&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &#x27;&#x27;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;</span>), o(), r()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">r</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> e = <span class="number">0</span>; e &lt; d.length; e++)</span><br><span class="line">            d[e].alpha &lt;= <span class="number">0</span> ? (t.body.removeChild(d[e].el), d.splice(e, <span class="number">1</span>)) : (d[e].y--, d[e].scale += <span class="number">.004</span>, d[e].alpha -= <span class="number">.013</span>, d[e].el.style.cssText = <span class="string">&quot;left:&quot;</span> + d[e].x + <span class="string">&quot;px;top:&quot;</span> + d[e].y + <span class="string">&quot;px;opacity:&quot;</span> + d[e].alpha + <span class="string">&quot;;transform:scale(&quot;</span> + d[e].scale + <span class="string">&quot;,&quot;</span> + d[e].scale + <span class="string">&quot;) rotate(45deg);background:&quot;</span> + d[e].color + <span class="string">&quot;;z-index:99999&quot;</span>);</span><br><span class="line">        requestAnimationFrame(r)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> t = <span class="string">&quot;function&quot;</span> == <span class="keyword">typeof</span> e.onclick &amp;&amp; e.onclick;</span><br><span class="line">        e.onclick = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            t &amp;&amp; t(), i(e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">i</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> a = t.createElement(<span class="string">&quot;div&quot;</span>);</span><br><span class="line">        a.className = <span class="string">&quot;heart&quot;</span>, d.push(&#123;</span><br><span class="line">            el: a,</span><br><span class="line">            x: e.clientX - <span class="number">5</span>,</span><br><span class="line">            y: e.clientY - <span class="number">5</span>,</span><br><span class="line">            scale: <span class="number">1</span>,</span><br><span class="line">            alpha: <span class="number">1</span>,</span><br><span class="line">            color: s()</span><br><span class="line">        &#125;), t.body.appendChild(a)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> a = t.createElement(<span class="string">&quot;style&quot;</span>);</span><br><span class="line">        a.type = <span class="string">&quot;text/css&quot;</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            a.appendChild(t.createTextNode(e))</span><br><span class="line">        &#125; <span class="keyword">catch</span> (t) &#123;</span><br><span class="line">            a.styleSheet.cssText = e</span><br><span class="line">        &#125;</span><br><span class="line">        t.getElementsByTagName(<span class="string">&quot;head&quot;</span>)[<span class="number">0</span>].appendChild(a)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;rgb(&quot;</span> + ~~(<span class="number">255</span> * <span class="built_in">Math</span>.random()) + <span class="string">&quot;,&quot;</span> + ~~(<span class="number">255</span> * <span class="built_in">Math</span>.random()) + <span class="string">&quot;,&quot;</span> + ~~(<span class="number">255</span> * <span class="built_in">Math</span>.random()) + <span class="string">&quot;)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> d = [];</span><br><span class="line">    e.requestAnimationFrame = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(e, <span class="number">1e3</span> / <span class="number">60</span>)</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;(), n()</span><br><span class="line">&#125;(<span class="built_in">window</span>, <span class="built_in">document</span>);</span><br></pre></td></tr></table></figure>
-<p>保存文件，并在<code>hexo\themes\next\layout\_layout.swing</code>文件底部<code>&lt;body&gt;</code>上增加：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 页面点击小红心 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/js/love.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意修改<code>src</code>为<code>love.js</code>所在的路径。</p>
-</blockquote>
-<h4 id="浏览器网页标题恶搞"><a href="#浏览器网页标题恶搞" class="headerlink" title="浏览器网页标题恶搞"></a>浏览器网页标题恶搞</h4><p>离开博客页面会在标签页出现恶搞文字表情，也可以自定义。在<code>\themes\next\source\js</code>下新建一个<code>FunnyTitle.js</code>文件，写入如下内容：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!--浏览器搞笑标题--&gt;</span><br><span class="line"> <span class="keyword">var</span> OriginTitle = <span class="built_in">document</span>.title;</span><br><span class="line"> <span class="keyword">var</span> titleTime;</span><br><span class="line"> <span class="built_in">document</span>.addEventListener(<span class="string">&#x27;visibilitychange&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="built_in">document</span>.hidden) &#123;</span><br><span class="line">         <span class="built_in">document</span>.title = <span class="string">&#x27;ヽ(●-`Д´-)ノ你丑你就走！&#x27;</span>;</span><br><span class="line">         <span class="built_in">clearTimeout</span>(titleTime);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="built_in">document</span>.title = <span class="string">&#x27;ヾ(Ő∀Ő3)ノ你帅就回来！&#x27;</span> + OriginTitle;</span><br><span class="line">         titleTime = <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">             <span class="built_in">document</span>.title = OriginTitle;</span><br><span class="line">         &#125;, <span class="number">2000</span>);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
-<p>并在<code>hexo\themes\next\layout\_layout.swing</code>文件底部<code>&lt;body&gt;</code>上增加：</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--浏览器搞笑标题--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;\js\FunnyTitle.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="诚挚感谢"><a href="#诚挚感谢" class="headerlink" title="诚挚感谢"></a>诚挚感谢</h2><p><a href="https://lvxuefei.top/%E5%88%A9%E7%94%A8Hexo-Next%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89-%E4%BC%98%E5%8C%96-%E5%90%84%E7%A7%8Dtips%E3%80%81%E9%BB%91%E7%A7%91%E6%8A%80%EF%BC%8C%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0/"><strong>槐雪</strong></a></p>
-<p><a href="https://www.itfanr.cc/2018/11/12/busuanzi-counter-error/">Hexo博客Next主题解决不蒜子统计不显示问题</a></p>
-<p><a href="http://www.sylan215.com/hexo-next-hongxin.html">next 主题下点击后出现红心效果</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/69211731">Hexo 博客美化合集（不断更新）</a></p>
-]]></content>
-      <categories>
-        <category>配置</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
+        <tag>Flask</tag>
+        <tag>layui</tag>
+        <tag>xm-select</tag>
       </tags>
   </entry>
   <entry>
@@ -344,166 +158,6 @@
 ]]></content>
       <categories>
         <category>统计学</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Flask下控件回显问题——xm-select控件回显</title>
-    <url>/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
-<p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
-</blockquote>
-<a id="more"></a>
-
-<h2 id="控件回显问题"><a href="#控件回显问题" class="headerlink" title="控件回显问题"></a>控件回显问题</h2><p>在Flask中调用<code>render_template</code>的时候页面会进行刷新，此时页面的<code>From</code>之类需要输入的控件在刷新后就会显示空白内容，因为刷新等于重新加载一次页面，虽然获取了输入的值，但是并没有保留在原本的控件 value 中。</p>
-<h3 id="解决显式控件回显问题方法"><a href="#解决显式控件回显问题方法" class="headerlink" title="解决显式控件回显问题方法"></a>解决显式控件回显问题方法</h3><p>本文所谓的显式控件是，控件的元素都是在HTML或JS中直接定义的，此事我们只需要找到控件所在的位置，给元素进行赋值，例如：</p>
-<p>app.py</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">            form_name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=form_name)</span><br></pre></td></tr></table></figure>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">style</span>=<span class="string">&quot;width: 220px&quot;</span>&gt;</span>姓名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; name &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>立即查看<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我们这里是将从表单中获取的name值，再次赋值给name，也就是回显。</p>
-<p>其实也就是利用 Flask的<code>&#123;&#123; &#125;&#125;</code>进行传参，只不过这里是将参数传给<code>value</code>而已，与之前获取参数一节不过是举一反三。</p>
-<h3 id="解决隐式控件回显问题方法"><a href="#解决隐式控件回显问题方法" class="headerlink" title="解决隐式控件回显问题方法"></a>解决隐式控件回显问题方法</h3><p>在写小程序的时候，使用了layui框架的扩展插件<code>xm-select</code>，该插件主要是设计了好看的选择控件，例如单选多选等等，之后再开章节细讲。</p>
-<p>本人的调用的xm-select控件部分代码如下。</p>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>运行结果如下：</p>
-<p><img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" alt="下拉框效果展示"></p>
-<p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
-<p><img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" alt="开发人员工具下拉框元素代码"></p>
-<p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
-<p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<p>这样就成功完成了控件的回显。</p>
-<p>// Todo: 还有一个多选的回显，还为解决。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><ol>
-<li>学会举一反三，Flask传过来的值在HTML的任何一个位置都可以运用；</li>
-<li>当控件是动态显示的时候，一定会存在赋值取值的函数入口，查找说明文档是最快的方法。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>轻量Web</category>
-      </categories>
-      <tags>
-        <tag>Flask</tag>
-        <tag>layui</tag>
-        <tag>xm-select</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习小结</title>
-    <url>/2021/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/</url>
-    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
-<p>本文是关于机器学习的一些总结式内容，<strong>暂时</strong>不包含神经网络和深度学习内容；</p>
-<p>适用于机器学习相关面试突袭！！！</p>
-</blockquote>
-<a id="more"></a>
-
-<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="SVM的简要介绍"><a href="#SVM的简要介绍" class="headerlink" title="SVM的简要介绍"></a>SVM的简要介绍</h3><p>SVM（ support vector machine，支持向量机）是一个面向数据的分类算法，基本模型就是在空间上找到一个<code>超平面</code>来将不同类别的数据划分出来，学习的策略是根据支持向量使得超平面的<code>间隔最大化</code>，最终转化为一个凸优化规划的求解问题。</p>
-<h3 id="LR"><a href="#LR" class="headerlink" title="LR"></a>LR</h3><p>LR（Logistic Regression，逻辑回归），逻辑回归虽然被称为是回归，但本质上还是一个二分类模型，名字的逻辑来源于logistic（逻辑斯蒂）分布，<br>$$<br>logit(x) = ln(\frac{P(y=1|x)}{P(y=0|x)}) = ln(\frac{P(y=1|x)}{1-P(y=1|x)}) = wx，其中w=\theta_1,\theta_2,\dots,\theta_n<br>$$<br>获得概率函数<br>$$<br>P(y=1|x) = \frac{1}{1+e^{-wx}}<br>$$<br>逻辑回归求解的话，一般是采用梯度下降算法进行求解，主要方法就是先对目标损失函数$J(w)$计算梯度（也就是求导），设计一个学习率（步长），向梯度的（负）方向更新回归系数，令损失函数不断减小，直至低于设置的临界门限，此时获得的回归系数就是最终使得损失函数最小的极小值点。</p>
-<p>逻辑回归中遇到有很多参数的时候，容易遇到过拟合的问题，此时采用正则化的方式，在经验风险上增加一个正则化项来惩罚过大的参数。</p>
-<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>正则化是针对过拟合提出来的，正则化项是模型参数向量的范数，一定程度上也能表现出模型复杂度。一般模型求解是优化最小的经验风险，通过加上正则化项和权重，来控制结构经验风险最优，防止模型结构过于复杂，降低过拟合风险。</p>
-<ul>
-<li>$L_1$正则化项（lasso回归），参数稀疏，<strong>自动完成特征选择</strong>，去除影响很小的特征；</li>
-<li>$L_2$正则化项（岭回归），能够解决过拟合问题。</li>
-</ul>
-<blockquote>
-<p>奥卡姆剃刀：所有的模型中，能够用最简单的方法来解释已知数据的模型是最好的。</p>
-</blockquote>
-<h3 id="逻辑回归与线性回归"><a href="#逻辑回归与线性回归" class="headerlink" title="逻辑回归与线性回归"></a>逻辑回归与线性回归</h3><p>逻辑回归和线性回归本质上都是广义的线性回归。</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>线性回归</th>
-<th>逻辑回归</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>目标函数</td>
-<td>最小二乘</td>
-<td>似然函数</td>
-</tr>
-<tr>
-<td>敏感度</td>
-<td>整个实数域内预测，敏感度一致</td>
-<td>Sigmoid函数减小预测范围，提高局部敏感度</td>
-</tr>
-</tbody></table>
-<p>逻辑回归本质上在线性回归上增加了一层sigmoid函数，但是这一层函数却改变了预测的敏感度。线性回归在整个数据域中，对数据的敏感度是一致的，在分类的边界往往模糊不清，而sigmoid函数使得逻辑回归的值在$[0,1]$之间，数据在x=0的附近是是十分敏感的，而在远大于或远小于0的部分是非常不敏感的，也就使得在边界的分类更加的准确。</p>
-<h3 id="逻辑回归与SVM"><a href="#逻辑回归与SVM" class="headerlink" title="逻辑回归与SVM"></a>逻辑回归与SVM</h3><p>逻辑回归和SVM都可以处理分类问题，一般用于二分类问题。</p>
-<p>区别：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th align="left">LR</th>
-<th align="left">SVM</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>模型</td>
-<td align="left">参数模型</td>
-<td align="left">非参数模型</td>
-</tr>
-<tr>
-<td>损失函数</td>
-<td align="left">Logistical Loss</td>
-<td align="left">hinge loss，最小化经验分类错误</td>
-</tr>
-<tr>
-<td>数据量</td>
-<td align="left">通过非线性映射，减少离分类面较远的属性权重，增加与分类相关的属性权重</td>
-<td align="left">仅考虑少数的几个支持向量进行学习，SVM转化为对偶问题之后，仅需要计算少数几个支持向量的距离，在进行复杂的核函数计算时有很大的优势</td>
-</tr>
-<tr>
-<td></td>
-<td align="left">LR能做的SVM都能</td>
-<td align="left">准确率上SVM能做的LR不一定能</td>
-</tr>
-</tbody></table>
-<h3 id="K-means和KNN为何使用欧式距离而不是曼哈顿距离计算"><a href="#K-means和KNN为何使用欧式距离而不是曼哈顿距离计算" class="headerlink" title="K-means和KNN为何使用欧式距离而不是曼哈顿距离计算"></a>K-means和KNN为何使用欧式距离而不是曼哈顿距离计算</h3><p>欧式距离：$d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+\dots+(x_n-y_n)^2}=\sqrt{\sum^n_{i=1}(x_i-y_i)^2}$，欧式距离将不同的属性的量纲视作等同，不适用于对个体具有不同重要性的指标。因此，欧式距离使用之前需要各属性都<strong>标准统一</strong>。</p>
-<p>曼哈顿距离：$d(X,Y) = |x_i-x_2|+|y_1-y_2|$（L1），曼哈顿距离表示的是两线线段对轴产生投影的总和，仅计算垂直或水平距离，依赖坐标系的转度，有维度的限制。</p>
-<p>数据点存在于任何空间，欧式距离将会是更可靠的选择。</p>
-<h3 id="简单描述特征工程"><a href="#简单描述特征工程" class="headerlink" title="简单描述特征工程"></a>简单描述特征工程</h3><h3 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h3><ul>
-<li>数据上，数据量太少，统计特征使用未来标签</li>
-<li>算法上：算法过于复杂</li>
-<li>解决方法：1. 数据规范化，增加数据量；2. 利用正则化降低模型复杂度；3. 减少迭代次数；4. 调整学习率；5. 模型融合。</li>
-</ul>
-<h3 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h3><p>所谓朴素，就是假设数据集中所有特征的作用同等重要并相互独立，但是这个假设在这个给世界上很少存在，所以认为他很朴素。</p>
-<ul>
-<li>条件概率：后验概率$P(B|A)$</li>
-<li>边缘概率：先验概率$P(A$</li>
-</ul>
-<p>那么贝叶斯定理为$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$</p>
-<h3 id="为什么要进行归一化"><a href="#为什么要进行归一化" class="headerlink" title="为什么要进行归一化"></a>为什么要进行归一化</h3><p>概率模型不需要归一化，因为概率模型只关心变量的分布和变量之间的条件概率，例如决策树和RF等模型，而Adaboost、GBDT、XGBoost、SVM、LR、KNN、KMeans之类的最优化问题需要进行归一化</p>
-<p>就二维特征而言，当两个数据特征的区间范围相差较大，那么数据特征形成的等高线就会比较窄，使用梯度下降算法进行求解的时候往往会出现“之”字形的下降路线，迭代次数多，时间长。而进行归一化之后，数据特征的取值区间相似，等高线会形成一个较为平滑的圆形，梯度下降的时候能够较快收敛。所以使用梯度下降算法的时候往往就很有归一化的必要。</p>
-<p>同时需要计算样本距离的时候，例如KNN中使用欧式距离，就需要将特征域缩放在相同范围，使得特征的权重保持一致。</p>
-<ul>
-<li><p>线性归一化：适用于数值比较集中的情况。但是当max和min值不稳定的时候容易使得归一化结果不稳定，所以可以使用经验常量进行替代<br>$$<br>x’ = \frac{x-min(x)}{max(x)-min(x)}<br>$$</p>
-</li>
-<li><p>标准差标准化：使得数据符合正态分布<br>$$<br>x’ = \frac{x-\mu}{\sigma}，\mu是样本均值，\sigma是样本标准差<br>$$</p>
-</li>
-<li><p>非线性归一化：适用于数据分化较大的场景，常使用log、指数、正切等数学方式，对原始数据进行映射，需要根据实际的数据决定非线性函数曲线。</p>
-</li>
-</ul>
-<h3 id="完整的机器学习项目过程"><a href="#完整的机器学习项目过程" class="headerlink" title="完整的机器学习项目过程"></a>完整的机器学习项目过程</h3><h4 id="1-抽象为数学问题"><a href="#1-抽象为数学问题" class="headerlink" title="1. 抽象为数学问题"></a>1. 抽象为数学问题</h4><p>需要将实际的业务问题转化为数学问题，也就是，我们可以获得什么样的数据，目标是回归还是分类或是聚类问题。</p>
-<h4 id="2-获取数据"><a href="#2-获取数据" class="headerlink" title="2. 获取数据"></a>2. 获取数据</h4><p>数据的价值决定着模型的上限，机器学习算法的优化不过的逼近这个上限。我们所选取的数据需要有代表性，否则就会过拟合。数据也不能偏斜太严重，不同特征之间不要存在数个数量级之间的差距。同时也需要判断需要数据的量级，判断消耗内存或和时间，若数据实在太大，就需要考虑调整算法或利用并行和分布式计算。</p>
-<h4 id="3-特征预处理和特征选择"><a href="#3-特征预处理和特征选择" class="headerlink" title="3. 特征预处理和特征选择"></a>3. 特征预处理和特征选择</h4><p>从良好的数据中选择出良好的特征才能够发挥最大效益。</p>
-<p>特征预处理这一步往往能够使得算法的效果和性能得到显著性提高。一般使用的方法有缺失值处理、归一化、离散化、因子化、去除共线性等方法。</p>
-<p>进行特征选择需要我们反复理解业务需求，筛选显著特征，去除非显著特征，可以利用相关系数、卡方检验、平均互信息、条件熵、后验概率等方法。</p>
-<h4 id="4-训练模型与调优"><a href="#4-训练模型与调优" class="headerlink" title="4. 训练模型与调优"></a>4. 训练模型与调优</h4><p>这一步就是选择算法对数据进行训练，现在有很多的算法都已经封装好了，例如Python中的sklearn库，真正影响效果的是参数的选择，这需要我们对算法的原理有更好的理解，来进行更好的调度。</p>
-<h4 id="5-模型评估"><a href="#5-模型评估" class="headerlink" title="5. 模型评估"></a>5. 模型评估</h4><p>模型训练之后需要对模型进行评估，首先考虑的是过拟合或欠拟合的问题，一般可以使用交叉验证或绘制学习曲线等方法进行验证，相应的调整数据量或模型复杂度。也可以考虑误差分析，观察误差样本，考虑是参数还是算法的问题，特征还是数据本身问题。不断的修改优化，来达到最优的效果。</p>
-<h4 id="6-模型融合"><a href="#6-模型融合" class="headerlink" title="6. 模型融合"></a>6. 模型融合</h4><p>一般来说，模型的融合都会使得效果有一定的提升。工程上，提升算法准确度的方法一般是在模型建立之前的数据清洗和特征工程上，以及建立模型之后的模型融合上。因为这两点标准可复制，效果也很稳定，细节调参的处理相对来说比较少，因为时间长，代价高，并且效果难以保证。</p>
-<h4 id="7-上线运行"><a href="#7-上线运行" class="headerlink" title="7. 上线运行"></a>7. 上线运行</h4><p>建立的模型投入使用的时候，并不单纯的考虑结果的准确性和误差情况，也需要考虑模型运行的速度、占用内存以及稳定性等情况。</p>
-<h3 id="协方差与相关性"><a href="#协方差与相关性" class="headerlink" title="协方差与相关性"></a>协方差与相关性</h3><p>协方差是用于衡量两个变量的联合变化程度，也就是同时变化的方向和程度情况。当两个变量之间存在不同的度量，我们会得到无意义的协方差。</p>
-<p>相关性是协方差的一个标准化格式，是消除了量纲影响、标准化之后特殊的协方差。<br>$$<br>\rho = \frac{Cov(X,Y)}{\sigma_X\sigma_Y}<br>$$<br>量纲对数据造成的变化幅度，使得协方差虽然能够得到两者是同向变化的，但是却不能发现两者变化相似。</p>
-<h3 id="XGBoost与GBDT"><a href="#XGBoost与GBDT" class="headerlink" title="XGBoost与GBDT"></a>XGBoost与GBDT</h3><p>传统GBDT以CART作为基分类器，xgboost还支持线性分类器，这个时候xgboost相当于带L1和L2正则化项的逻辑斯蒂回归（分类问题）或者线性回归（回归问题）。传统GBDT在优化时只用到一阶导数信息，xgboost则对代价函数进行了二阶泰勒展开，同时用到了一阶和二阶导数。顺便提一下，xgboost工具支持自定义代价函数，只要函数可一阶和二阶求导。<br>xgboost在代价函数里加入了正则项，用于控制模型的复杂度。正则项里包含了树的叶子节点个数、每个叶子节点上输出的score的L2模的平方和。从Bias-variance tradeoff角度来讲，正则项降低了模型的variance，使学习出来的模型更加简单，防止过拟合，这也是xgboost优于传统GBDT的一个特性。<br>Shrinkage（缩减），相当于学习速率（xgboost中的eta）。xgboost在进行完一次迭代后，会将叶子节点的权重乘上该系数，主要是为了削弱每棵树的影响，让后面有更大的学习空间。实际应用中，一般把eta设置得小一点，然后迭代次数设置得大一点。（补充：传统GBDT的实现也有学习速率）<br>列抽样（column subsampling）。xgboost借鉴了随机森林的做法，支持列抽样，不仅能降低过拟合，还能减少计算，这也是xgboost异于传统gbdt的一个特性。</p>
-<p>对缺失值的处理。对于特征的值有缺失的样本，xgboost可以自动学习出它的分裂方向。<br>xgboost工具支持并行。boosting不是一种串行的结构吗?怎么并行的？注意xgboost的并行不是tree粒度的并行，xgboost也是一次迭代完才能进行下一次迭代的（第t次迭代的代价函数里包含了前面t-1次迭代的预测值）。xgboost的并行是在特征粒度上的。我们知道，决策树的学习最耗时的一个步骤就是对特征的值进行排序（因为要确定最佳分割点），xgboost在训练之前，预先对数据进行了排序，然后保存为block结构，后面的迭代中重复地使用这个结构，大大减小计算量。这个block结构也使得并行成为了可能，在进行节点的分裂时，需要计算每个特征的增益，最终选增益最大的那个特征去做分裂，那么各个特征的增益计算就可以开多线程进行。可并行的近似直方图算法。树节点在进行分裂时，我们需要计算每个特征的每个分割点对应的增益，即用贪心法枚举所有可能的分割点。当数据无法一次载入内存或者在分布式情况下，贪心算法效率就会变得很低，所以xgboost还提出了一种可并行的近似直方图算法，用于高效地生成候选的分割点。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>]]></content>
-      <categories>
-        <category>机器学习</category>
-        <category>总结</category>
       </categories>
   </entry>
   <entry>
@@ -841,12 +495,65 @@
   </entry>
   <entry>
     <title>快乐Linux学习（二）</title>
-    <url>/2021/01/20/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <url>/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
 <p>本文是快乐学习Linux的第二篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
-<p>适用于学习Linux系统文件操作的读者。</p>
+<p>适用于学习Linux系统查看命令帮助和重定向的读者。</p>
 </blockquote>
 <a id="more"></a>
+
+<h2 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h2><p>Linux中，命令存在4种形式：</p>
+<ul>
+<li>type command：使用type命令能够显示命令的类别。</li>
+</ul>
+<h3 id="可执行程序"><a href="#可执行程序" class="headerlink" title="可执行程序"></a>可执行程序</h3><p>可执行程序位于<code>/usr/bin</code>目录中，是利用编程语言编写程序编译的二进制文件，包括C/C++</p>
+<p>、shell和python等编写的脚本。</p>
+<ul>
+<li>which command：显示<code>可执行程序</code>的位置。普通桌面系统可执行程序一般只有一个版本，但是在大型服务器中可能存在多个可执行程序版本，由此来确定准确位置</li>
+<li>command –help：许多可执行文件能够显示其语法和选项说明文档。某些程序可能不支持，但是不妨碍我们尝试一下。</li>
+<li>man program：在命令行运行的可执行程序往往会提供一个正式文档，使用man分页程序可以进行查看。man是使用less工具来显示的，所以可以使用less命令进行查看。</li>
+<li>apropos program：基于关键字匹配参考手册。是一种粗糙的查询手段，可以获得查询字段的手册页名字和其所在章节。等同于<code>man -k program</code>。</li>
+<li>info command：替代man命令程序手册页，类似于网页，链接可跳转。</li>
+</ul>
+<h3 id="builtins"><a href="#builtins" class="headerlink" title="builtins"></a>builtins</h3><p>这是shell内部命令，内建于shell自身，例如cd。</p>
+<ul>
+<li>help command：查看builtins命令的帮助文档</li>
+</ul>
+<h3 id="shell函数"><a href="#shell函数" class="headerlink" title="shell函数"></a>shell函数</h3><p>编写小规模的shell脚本，混合到环境变量中，会在之后详细讨论其编写、配置和使用。</p>
+<h3 id="alias别名"><a href="#alias别名" class="headerlink" title="alias别名"></a>alias别名</h3><p>自定义自己的命令，建立在其他命令之上。</p>
+<p>运行命令的时候可以使用<code>；</code>进行隔开，使得命令可以依次执行。例如</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cd &#x2F;usr; ls; cd -</span><br></pre></td></tr></table></figure>
+<p>之后使用alias进行重命名。首先需要查看该命令的名字是否被占用。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">type test # 发现已经被占用</span><br><span class="line">type foo # 发现还没有使用</span><br><span class="line">alias # 查看所有创建的alias</span><br></pre></td></tr></table></figure>
+<p>利用其创建alias别名，命令字符串需要紧跟<code>=</code>。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">alias foo&#x3D;&#39;cd &#x2F;usr; ls; cd -&#39;</span><br></pre></td></tr></table></figure>
+<p>删除别名使用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">unalias foo</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -866,6 +573,352 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>测量HTML元素长度</title>
+    <url>/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>这次要推荐是提升html页面布局效率的chrome插件。</p>
+<p>适用于有 HTML + CSS 进行页面设计需求的人群。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="Page-Ruler-Redux"><a href="#Page-Ruler-Redux" class="headerlink" title="Page Ruler Redux"></a>Page Ruler Redux</h2><p>该插件是<a href="https://chrome.google.com/webstore/detail/page-ruler-redux/giejhjebcalaheckengmchjekofhhmal">Page Ruler Redux</a>，直接点击链接就可以在<code>Chrome</code>应用商店进行下载了。</p>
+<p>下载完成并进行安装，使用<code>ALT + P</code>快捷键就可以将插件打开，戍边点击选择需要测量的区域即可。</p>
+<p>当然，这样直接点击有的时候会选的不太准确，可以打开元素模式，自动选择边界框，在调试的时候就可以自动选择元素边界，准确进行设计。</p>
+<p><img src="/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/01.png" alt="打开元素模式"></p>
+<h2 id="Ctrl-Shift-I"><a href="#Ctrl-Shift-I" class="headerlink" title="Ctrl+Shift+I"></a>Ctrl+Shift+I</h2><p>2021年1月13日 更新：</p>
+<p>利用上面的插件来显示页面元素的width和height感觉是很方便，但我觉得更重要的应该是可以看到left和top等边距参数，这样可以准确控制页面的布局。</p>
+<p>同时当页面元素可以拖动和缩放的时候，我们打开插件进行测量，则页面可能会重新刷新，这个时候就比较不方便了，这时需要查看width和height的话，通过浏览器自带的<code>开发人员工具</code>，点击左上角的小箭头即可。将该页面独立出来，就可以直接查看页面元素的大小了。</p>
+<blockquote>
+<p>其实这个开发人员工具我用的很熟悉，但是当时想要测量页面元素却一时忘记，今天才反应过来，这可能就是灯下黑吧:joy:。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>插件</category>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Chrome</tag>
+        <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习小结</title>
+    <url>/2021/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%B0%8F%E7%BB%93/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是关于机器学习的一些总结式内容，<strong>暂时</strong>不包含神经网络和深度学习内容；</p>
+<p>适用于机器学习相关面试突袭！！！</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="SVM的简要介绍"><a href="#SVM的简要介绍" class="headerlink" title="SVM的简要介绍"></a>SVM的简要介绍</h3><p>SVM（ support vector machine，支持向量机）是一个面向数据的分类算法，基本模型就是在空间上找到一个<code>超平面</code>来将不同类别的数据划分出来，学习的策略是根据支持向量使得超平面的<code>间隔最大化</code>，最终转化为一个凸优化规划的求解问题。</p>
+<h3 id="LR"><a href="#LR" class="headerlink" title="LR"></a>LR</h3><p>LR（Logistic Regression，逻辑回归），逻辑回归虽然被称为是回归，但本质上还是一个二分类模型，名字的逻辑来源于logistic（逻辑斯蒂）分布，<br>$$<br>logit(x) = ln(\frac{P(y=1|x)}{P(y=0|x)}) = ln(\frac{P(y=1|x)}{1-P(y=1|x)}) = wx，其中w=\theta_1,\theta_2,\dots,\theta_n<br>$$<br>获得概率函数<br>$$<br>P(y=1|x) = \frac{1}{1+e^{-wx}}<br>$$<br>逻辑回归求解的话，一般是采用梯度下降算法进行求解，主要方法就是先对目标损失函数$J(w)$计算梯度（也就是求导），设计一个学习率（步长），向梯度的（负）方向更新回归系数，令损失函数不断减小，直至低于设置的临界门限，此时获得的回归系数就是最终使得损失函数最小的极小值点。</p>
+<p>逻辑回归中遇到有很多参数的时候，容易遇到过拟合的问题，此时采用正则化的方式，在经验风险上增加一个正则化项来惩罚过大的参数。</p>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><p>正则化是针对过拟合提出来的，正则化项是模型参数向量的范数，一定程度上也能表现出模型复杂度。一般模型求解是优化最小的经验风险，通过加上正则化项和权重，来控制结构经验风险最优，防止模型结构过于复杂，降低过拟合风险。</p>
+<ul>
+<li>$L_1$正则化项（lasso回归），参数稀疏，<strong>自动完成特征选择</strong>，去除影响很小的特征；</li>
+<li>$L_2$正则化项（岭回归），能够解决过拟合问题。</li>
+</ul>
+<blockquote>
+<p>奥卡姆剃刀：所有的模型中，能够用最简单的方法来解释已知数据的模型是最好的。</p>
+</blockquote>
+<h3 id="逻辑回归与线性回归"><a href="#逻辑回归与线性回归" class="headerlink" title="逻辑回归与线性回归"></a>逻辑回归与线性回归</h3><p>逻辑回归和线性回归本质上都是广义的线性回归。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>线性回归</th>
+<th>逻辑回归</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>目标函数</td>
+<td>最小二乘</td>
+<td>似然函数</td>
+</tr>
+<tr>
+<td>敏感度</td>
+<td>整个实数域内预测，敏感度一致</td>
+<td>Sigmoid函数减小预测范围，提高局部敏感度</td>
+</tr>
+</tbody></table>
+<p>逻辑回归本质上在线性回归上增加了一层sigmoid函数，但是这一层函数却改变了预测的敏感度。线性回归在整个数据域中，对数据的敏感度是一致的，在分类的边界往往模糊不清，而sigmoid函数使得逻辑回归的值在$[0,1]$之间，数据在x=0的附近是是十分敏感的，而在远大于或远小于0的部分是非常不敏感的，也就使得在边界的分类更加的准确。</p>
+<h3 id="逻辑回归与SVM"><a href="#逻辑回归与SVM" class="headerlink" title="逻辑回归与SVM"></a>逻辑回归与SVM</h3><p>逻辑回归和SVM都可以处理分类问题，一般用于二分类问题。</p>
+<p>区别：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="left">LR</th>
+<th align="left">SVM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模型</td>
+<td align="left">参数模型</td>
+<td align="left">非参数模型</td>
+</tr>
+<tr>
+<td>损失函数</td>
+<td align="left">Logistical Loss</td>
+<td align="left">hinge loss，最小化经验分类错误</td>
+</tr>
+<tr>
+<td>数据量</td>
+<td align="left">通过非线性映射，减少离分类面较远的属性权重，增加与分类相关的属性权重</td>
+<td align="left">仅考虑少数的几个支持向量进行学习，SVM转化为对偶问题之后，仅需要计算少数几个支持向量的距离，在进行复杂的核函数计算时有很大的优势</td>
+</tr>
+<tr>
+<td></td>
+<td align="left">LR能做的SVM都能</td>
+<td align="left">准确率上SVM能做的LR不一定能</td>
+</tr>
+</tbody></table>
+<h3 id="K-means和KNN为何使用欧式距离而不是曼哈顿距离计算"><a href="#K-means和KNN为何使用欧式距离而不是曼哈顿距离计算" class="headerlink" title="K-means和KNN为何使用欧式距离而不是曼哈顿距离计算"></a>K-means和KNN为何使用欧式距离而不是曼哈顿距离计算</h3><p>欧式距离：$d(X,Y) = \sqrt{(x_1-y_1)^2+(x_2-y_2)^2+\dots+(x_n-y_n)^2}=\sqrt{\sum^n_{i=1}(x_i-y_i)^2}$，欧式距离将不同的属性的量纲视作等同，不适用于对个体具有不同重要性的指标。因此，欧式距离使用之前需要各属性都<strong>标准统一</strong>。</p>
+<p>曼哈顿距离：$d(X,Y) = |x_i-x_2|+|y_1-y_2|$（L1），曼哈顿距离表示的是两线线段对轴产生投影的总和，仅计算垂直或水平距离，依赖坐标系的转度，有维度的限制。</p>
+<p>数据点存在于任何空间，欧式距离将会是更可靠的选择。</p>
+<h3 id="简单描述特征工程"><a href="#简单描述特征工程" class="headerlink" title="简单描述特征工程"></a>简单描述特征工程</h3><h3 id="过拟合"><a href="#过拟合" class="headerlink" title="过拟合"></a>过拟合</h3><ul>
+<li>数据上，数据量太少，统计特征使用未来标签</li>
+<li>算法上：算法过于复杂</li>
+<li>解决方法：1. 数据规范化，增加数据量；2. 利用正则化降低模型复杂度；3. 减少迭代次数；4. 调整学习率；5. 模型融合。</li>
+</ul>
+<h3 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h3><p>所谓朴素，就是假设数据集中所有特征的作用同等重要并相互独立，但是这个假设在这个给世界上很少存在，所以认为他很朴素。</p>
+<ul>
+<li>条件概率：后验概率$P(B|A)$</li>
+<li>边缘概率：先验概率$P(A$</li>
+</ul>
+<p>那么贝叶斯定理为$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$</p>
+<h3 id="为什么要进行归一化"><a href="#为什么要进行归一化" class="headerlink" title="为什么要进行归一化"></a>为什么要进行归一化</h3><p>概率模型不需要归一化，因为概率模型只关心变量的分布和变量之间的条件概率，例如决策树和RF等模型，而Adaboost、GBDT、XGBoost、SVM、LR、KNN、KMeans之类的最优化问题需要进行归一化</p>
+<p>就二维特征而言，当两个数据特征的区间范围相差较大，那么数据特征形成的等高线就会比较窄，使用梯度下降算法进行求解的时候往往会出现“之”字形的下降路线，迭代次数多，时间长。而进行归一化之后，数据特征的取值区间相似，等高线会形成一个较为平滑的圆形，梯度下降的时候能够较快收敛。所以使用梯度下降算法的时候往往就很有归一化的必要。</p>
+<p>同时需要计算样本距离的时候，例如KNN中使用欧式距离，就需要将特征域缩放在相同范围，使得特征的权重保持一致。</p>
+<ul>
+<li><p>线性归一化：适用于数值比较集中的情况。但是当max和min值不稳定的时候容易使得归一化结果不稳定，所以可以使用经验常量进行替代<br>$$<br>x’ = \frac{x-min(x)}{max(x)-min(x)}<br>$$</p>
+</li>
+<li><p>标准差标准化：使得数据符合正态分布<br>$$<br>x’ = \frac{x-\mu}{\sigma}，\mu是样本均值，\sigma是样本标准差<br>$$</p>
+</li>
+<li><p>非线性归一化：适用于数据分化较大的场景，常使用log、指数、正切等数学方式，对原始数据进行映射，需要根据实际的数据决定非线性函数曲线。</p>
+</li>
+</ul>
+<h3 id="完整的机器学习项目过程"><a href="#完整的机器学习项目过程" class="headerlink" title="完整的机器学习项目过程"></a>完整的机器学习项目过程</h3><h4 id="1-抽象为数学问题"><a href="#1-抽象为数学问题" class="headerlink" title="1. 抽象为数学问题"></a>1. 抽象为数学问题</h4><p>需要将实际的业务问题转化为数学问题，也就是，我们可以获得什么样的数据，目标是回归还是分类或是聚类问题。</p>
+<h4 id="2-获取数据"><a href="#2-获取数据" class="headerlink" title="2. 获取数据"></a>2. 获取数据</h4><p>数据的价值决定着模型的上限，机器学习算法的优化不过的逼近这个上限。我们所选取的数据需要有代表性，否则就会过拟合。数据也不能偏斜太严重，不同特征之间不要存在数个数量级之间的差距。同时也需要判断需要数据的量级，判断消耗内存或和时间，若数据实在太大，就需要考虑调整算法或利用并行和分布式计算。</p>
+<h4 id="3-特征预处理和特征选择"><a href="#3-特征预处理和特征选择" class="headerlink" title="3. 特征预处理和特征选择"></a>3. 特征预处理和特征选择</h4><p>从良好的数据中选择出良好的特征才能够发挥最大效益。</p>
+<p>特征预处理这一步往往能够使得算法的效果和性能得到显著性提高。一般使用的方法有缺失值处理、归一化、离散化、因子化、去除共线性等方法。</p>
+<p>进行特征选择需要我们反复理解业务需求，筛选显著特征，去除非显著特征，可以利用相关系数、卡方检验、平均互信息、条件熵、后验概率等方法。</p>
+<h4 id="4-训练模型与调优"><a href="#4-训练模型与调优" class="headerlink" title="4. 训练模型与调优"></a>4. 训练模型与调优</h4><p>这一步就是选择算法对数据进行训练，现在有很多的算法都已经封装好了，例如Python中的sklearn库，真正影响效果的是参数的选择，这需要我们对算法的原理有更好的理解，来进行更好的调度。</p>
+<h4 id="5-模型评估"><a href="#5-模型评估" class="headerlink" title="5. 模型评估"></a>5. 模型评估</h4><p>模型训练之后需要对模型进行评估，首先考虑的是过拟合或欠拟合的问题，一般可以使用交叉验证或绘制学习曲线等方法进行验证，相应的调整数据量或模型复杂度。也可以考虑误差分析，观察误差样本，考虑是参数还是算法的问题，特征还是数据本身问题。不断的修改优化，来达到最优的效果。</p>
+<h4 id="6-模型融合"><a href="#6-模型融合" class="headerlink" title="6. 模型融合"></a>6. 模型融合</h4><p>一般来说，模型的融合都会使得效果有一定的提升。工程上，提升算法准确度的方法一般是在模型建立之前的数据清洗和特征工程上，以及建立模型之后的模型融合上。因为这两点标准可复制，效果也很稳定，细节调参的处理相对来说比较少，因为时间长，代价高，并且效果难以保证。</p>
+<h4 id="7-上线运行"><a href="#7-上线运行" class="headerlink" title="7. 上线运行"></a>7. 上线运行</h4><p>建立的模型投入使用的时候，并不单纯的考虑结果的准确性和误差情况，也需要考虑模型运行的速度、占用内存以及稳定性等情况。</p>
+<h3 id="协方差与相关性"><a href="#协方差与相关性" class="headerlink" title="协方差与相关性"></a>协方差与相关性</h3><p>协方差是用于衡量两个变量的联合变化程度，也就是同时变化的方向和程度情况。当两个变量之间存在不同的度量，我们会得到无意义的协方差。</p>
+<p>相关性是协方差的一个标准化格式，是消除了量纲影响、标准化之后特殊的协方差。<br>$$<br>\rho = \frac{Cov(X,Y)}{\sigma_X\sigma_Y}<br>$$<br>量纲对数据造成的变化幅度，使得协方差虽然能够得到两者是同向变化的，但是却不能发现两者变化相似。</p>
+<h3 id="XGBoost与GBDT"><a href="#XGBoost与GBDT" class="headerlink" title="XGBoost与GBDT"></a>XGBoost与GBDT</h3><p>传统GBDT以CART作为基分类器，xgboost还支持线性分类器，这个时候xgboost相当于带L1和L2正则化项的逻辑斯蒂回归（分类问题）或者线性回归（回归问题）。传统GBDT在优化时只用到一阶导数信息，xgboost则对代价函数进行了二阶泰勒展开，同时用到了一阶和二阶导数。顺便提一下，xgboost工具支持自定义代价函数，只要函数可一阶和二阶求导。<br>xgboost在代价函数里加入了正则项，用于控制模型的复杂度。正则项里包含了树的叶子节点个数、每个叶子节点上输出的score的L2模的平方和。从Bias-variance tradeoff角度来讲，正则项降低了模型的variance，使学习出来的模型更加简单，防止过拟合，这也是xgboost优于传统GBDT的一个特性。<br>Shrinkage（缩减），相当于学习速率（xgboost中的eta）。xgboost在进行完一次迭代后，会将叶子节点的权重乘上该系数，主要是为了削弱每棵树的影响，让后面有更大的学习空间。实际应用中，一般把eta设置得小一点，然后迭代次数设置得大一点。（补充：传统GBDT的实现也有学习速率）<br>列抽样（column subsampling）。xgboost借鉴了随机森林的做法，支持列抽样，不仅能降低过拟合，还能减少计算，这也是xgboost异于传统gbdt的一个特性。</p>
+<p>对缺失值的处理。对于特征的值有缺失的样本，xgboost可以自动学习出它的分裂方向。<br>xgboost工具支持并行。boosting不是一种串行的结构吗?怎么并行的？注意xgboost的并行不是tree粒度的并行，xgboost也是一次迭代完才能进行下一次迭代的（第t次迭代的代价函数里包含了前面t-1次迭代的预测值）。xgboost的并行是在特征粒度上的。我们知道，决策树的学习最耗时的一个步骤就是对特征的值进行排序（因为要确定最佳分割点），xgboost在训练之前，预先对数据进行了排序，然后保存为block结构，后面的迭代中重复地使用这个结构，大大减小计算量。这个block结构也使得并行成为了可能，在进行节点的分裂时，需要计算每个特征的增益，最终选增益最大的那个特征去做分裂，那么各个特征的增益计算就可以开多线程进行。可并行的近似直方图算法。树节点在进行分裂时，我们需要计算每个特征的每个分割点对应的增益，即用贪心法枚举所有可能的分割点。当数据无法一次载入内存或者在分布式情况下，贪心算法效率就会变得很低，所以xgboost还提出了一种可并行的近似直方图算法，用于高效地生成候选的分割点。</p>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>]]></content>
+      <categories>
+        <category>机器学习</category>
+        <category>总结</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>hexo 的安装和配置</title>
+    <url>/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><h1 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h1><h2 id="缘"><a href="#缘" class="headerlink" title="缘"></a>缘</h2><p>时隔一年多的时间，再次将拾起写博客的习惯。最早的时候是在大一接触了 Hexo，那时候有人跟我分享了他的刚搭建好的博客，但是我并没有看懂，于是就没有太在意，想来自己还是错过了最初变强的机会，而那个人已经是南大的研究生了。后来自己搭建博客是在大三了，主要内容还是编程问题、平时课程的收获和周记等心得类的，之后由于考研的缘故又放下了博客。这次再拿出来干脆重新开始搭建，这次以数据分析内容为主，记录在此算是一种自我督促吧。</p>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p>安装 Hexo 的时候，包括安装其他软件，希望读者可以将<strong>全文都看一遍</strong>，再多看几篇其他的教程再下手，尤其是这种自由度比较高的东西，配置多，步骤多，涉及的内容也比较多。</p>
+<p>本文是针对：<code>Hexo 5.3 + GitHub Pages</code>进行搭建的，使用<code>&lt;GitHub name&gt;.github.io</code>作为域名，主题是<code>Next</code>。</p>
+<a id="more"></a>
+
+<h2 id="Hexo环境准备"><a href="#Hexo环境准备" class="headerlink" title="Hexo环境准备"></a>Hexo环境准备</h2><p>本文的面向 Windows 10 的。</p>
+<p>Hexo 安装之前需要的准备工作有：</p>
+<ul>
+<li><a href="https://git-scm.com/download/win">Git 下载</a>，以及安装的<a href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">中文说明文档</a>。</li>
+<li><a href="https://nodejs.org/en/download/">Nodejs 下载</a>，本人的 Node.js 是 Anaconda 中安装某个包的时候装的，具体忘记了，反正在电脑上是有的:smiley:。</li>
+<li>（可选）<a href="https://classic.yarnpkg.com/en/docs/install">yarn</a>，Node.js 是自带 npm 包管理器的，但是因为某些原因<del>感到不爽</del>而使用 yarn ，它本质上还是利用 npm 进行安装的，至于 cnpm 还是不推荐的。</li>
+</ul>
+<p>此处不是重点，就不一一赘述安装步骤了。</p>
+<p>除此之外还需要一个 GitHub 账号，打开<a href="https://github.com/">GitHub官网</a>，注册并登录，并且新建一个项目，如下：</p>
+<img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/01new.png" style="zoom:50%;">
+
+<p>需要注意的是，repository 的 name 一定是 &lt;GitHub name&gt;.github.io，这也是之后直接访问的免费域名。本人这里是因为已经创建过了，所以显示错误。</p>
+<img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/02repository.png" style="zoom:50%;">
+
+<p>创建好了之后就到下一步吧，一会儿回过头来再使用。</p>
+<h2 id="Hexo-安装"><a href="#Hexo-安装" class="headerlink" title="Hexo 安装"></a>Hexo 安装</h2><p>接下来就开始 Hexo 的安装：</p>
+<h3 id="安装-Hexo-依赖包"><a href="#安装-Hexo-依赖包" class="headerlink" title="安装 Hexo 依赖包"></a>安装 Hexo 依赖包</h3><ul>
+<li><p>选择合适的地方新建一个文件夹（下面称为<strong>根目录</strong>），作为 Hexo 博客的主文件夹，建议命名为<code>&lt;GitHub name&gt;.github.io</code>。</p>
+</li>
+<li><p>在新建的博客文件夹（再强调一次，下面称为<strong>根目录</strong>）内右击打开 Git Bash，输入<code>yarn global add hexo-cli</code>，在全局安装 Hexo。</p>
+<blockquote>
+<p>此处应该是不会在该文件夹产生任何内容的，不出意外的话，应该是在<code>&lt;yarn安装目录&gt;\Data\global\node_modules</code>中</p>
+</blockquote>
+</li>
+<li><p>随后在博客的根目录内输入<code>hexo init</code>，对 Hexo 进行初始化，该文件夹下不能有任何文件，否则会报错。</p>
+</li>
+</ul>
+<h3 id="关联-GitHub-Pages"><a href="#关联-GitHub-Pages" class="headerlink" title="关联 GitHub Pages"></a>关联 GitHub Pages</h3><p>到这里，已经将 Hexo 安装到本地了，接下来需要将 Hexo 与 GitHub Pages 进行关联，使得 Hexo 可以部署在 GitHub 上。</p>
+<ul>
+<li><p>打开之前建立的 repository，复制该 repository 的 ssh 链接。</p>
+  <img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/03sshaddress.png" alt="ssh链接" style="zoom:50%;"> 
+</li>
+<li><p>在博客根目录下找到<code>_config.yml</code>配置文件，使用记事本或VS code等软件打开，在最下面找到</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: 上一步复制的ssh链接</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意配置文件的冒号之后都是有<strong>空格</strong>的。</p>
+</blockquote>
+</li>
+<li><p>再进入博客的根目录，输入的邮箱和用户名。</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git config --global user.email &quot;自己的邮箱&quot;</span><br><span class="line">git config --global user.name &quot;自己的用户名&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>输入<code>yarn add hexo-deployer-git</code>，安装 Git 部署依赖项，就大功告成了。</p>
+</li>
+</ul>
+<h2 id="启动-Hexo"><a href="#启动-Hexo" class="headerlink" title="启动 Hexo"></a>启动 Hexo</h2><p>这时候让我们来启动一下看看我们的博客，同样在根目录下输入命令：</p>
+<ul>
+<li><code>hexo clean</code>：清除 public 文件夹内的内容，也就是清理缓存建议每次更新的时候运行一下。</li>
+<li><code>hexo generate</code>：生成文件，生成发布的 public 文件，可简写为<code>hexo g</code>。</li>
+<li><code>hexo server</code>：启动本地服务器，可以通过 <a href="http://localhost:4000/">http://localhost:4000</a> 进行访问，此步成功就说明博客搭建成功了，可简写为<code>hexo s</code></li>
+<li><code>hexo deploy</code>：部署博客，可简写为 <code>hexo g</code>。</li>
+</ul>
+<h3 id="跳过输入GitHub-密码"><a href="#跳过输入GitHub-密码" class="headerlink" title="跳过输入GitHub 密码"></a>跳过输入GitHub 密码</h3><p>到这里为止，在 deploy 的时候，会发现每次都需要输入密码，十分的麻烦，所以使用 ssh-keygen 来生成密钥：</p>
+<ul>
+<li>同样在根目录输入<code>ssh-keygen -t rsa -C &quot;自己的邮箱&quot;</code>。</li>
+<li>连续敲击三下回车，后面两下是输入密码，直接回车就表示不输入密码。</li>
+<li>成功之后会在用户目录下生成<code>.shh</code>文件夹，打开其中的<code>id_rsa.pub</code>文件，右击记事本打开就可以，复制其中的完整内容。</li>
+<li>在 GitHub 的<a href="https://github.com/settings/keys">设置-&gt; SSH keys</a>中，点击<code>New SSH key</code>，Title 任意，Key 则是将复制的内容粘贴进去即可。</li>
+</ul>
+<p>至此一个可以成功部署的最初 Hexo 博客就搭建完成了，后续就是优化内容了。</p>
+<h2 id="tags、categories、about"><a href="#tags、categories、about" class="headerlink" title="tags、categories、about"></a>tags、categories、about</h2><p>默认在导航栏会有首页、归档、关于三个选项，还可以添加标签、分类和关于三个模块，之后就可以在文章中对文章添加分类或标签了，关于模块是自我介绍类的，也可以作为自己的主页，写一些自我介绍的一些内容。</p>
+<ul>
+<li><p>在博客根目录下打开<code>_config.yml</code>配置文件，找到menu，去除tags、categories、about对应的注释。</p>
+</li>
+<li><p>在博客根目录下执行指令，来新建文件夹：</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new page &quot;tags&quot;</span><br><span class="line">hexo new page &quot;categories&quot;</span><br><span class="line">hexo new page &quot;about&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p>这些文件夹在根目录的 source 下，其中都会有<code>index.md</code>文件，打开之后分别增加<code>type</code>属性：</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line">date: 2021-01-06 08:24:26</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2021-01-06 08:24:22</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line">title: about</span><br><span class="line">date: 2021-01-06 08:24:28</span><br><span class="line">type: &quot;about&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure></li>
+<li><p>重新部署 Hexo 就可以生效。</p>
+</li>
+</ul>
+<h2 id="主题优化"><a href="#主题优化" class="headerlink" title="主题优化"></a>主题优化</h2><p>主题的话，我这里选择爆款的 <a href="https://github.com/theme-next/hexo-theme-next">Next 主题</a>，想要尝试更多主题可以在<a href="https://hexo.io/themes/">Hexo Themes</a>中自己选择。</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>年份</th>
+<th>仓库</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>v5.1.4 或更低</td>
+<td>2014 ~ 2017</td>
+<td><a href="https://github.com/iissnan/hexo-theme-next">https://github.com/iissnan/hexo-theme-next</a></td>
+</tr>
+<tr>
+<td>v6.0.0 ~ v7.8.0</td>
+<td>2018 ~ 2019</td>
+<td><a href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a></td>
+</tr>
+<tr>
+<td>v8.0.0 或更高</td>
+<td>2020</td>
+<td><a href="https://github.com/next-theme/hexo-theme-next">https://github.com/next-theme/hexo-theme-next</a></td>
+</tr>
+</tbody></table>
+<p>iissnan 已经停止维护了，不推荐，其他两个根据 Hexo 版本进行选择，克隆下来的主题就在 themes/next 文件夹内，其中的<code>_config.yml</code>配置文件是之后操作主题的地方，需要和之前根目录下 Hexo 的配置区分开。</p>
+<h3 id="主题配置"><a href="#主题配置" class="headerlink" title="主题配置"></a>主题配置</h3><blockquote>
+<p>注意，有的时候配置完部署后未生效，一般 hexo s 一下，成功的话，再部署一次或多次就生效了，很神奇！！！记得每次都 clean 一下。</p>
+</blockquote>
+<h4 id="主题样式："><a href="#主题样式：" class="headerlink" title="主题样式："></a>主题样式：</h4><ul>
+<li>在主题文件夹中打开<code>_config.yml</code>配置文件，找到 scheme 属性。</li>
+<li>可以选择 Muse、Mist、Pisces 和 Gemini 四种主题类型。</li>
+</ul>
+<h4 id="图片显示问题"><a href="#图片显示问题" class="headerlink" title="图片显示问题"></a>图片显示问题</h4><p>通过之前的配置之后，发现我们的图片居然无法上传，又担心使用图床容易崩塌，所以，使用插件来将本地图片上传。</p>
+<ul>
+<li>在博客根目录下输入<code>yarn add https://github.com/7ym0n/hexo-asset-image</code>，安装该插件，注意直接安装 hexo-asset-image 的时候会出现图片<strong>时间无法映射</strong>的问题。</li>
+<li>在主题下打开<code>_config.yml</code>配置文件，找到 <code>post_asset_folder</code> 设置为 true，这样生成新的md文件的时候，就会得到一个同名的的文件夹，在其中存放对应博文所需要的图片。</li>
+<li>最后就可以在博客中引用图片了，可以是<code>![]()</code>或者 html 形式的（主要是可以缩放），</li>
+</ul>
+<h4 id="头像设置"><a href="#头像设置" class="headerlink" title="头像设置"></a>头像设置</h4><ul>
+<li><p>在主题下打开<code>_config.yml</code>配置文件，找到 avatar 字段</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># Sidebar Avatar</span><br><span class="line">avatar:</span><br><span class="line">  # Replace the default image and set the url here.</span><br><span class="line">  url: &#x2F;images&#x2F;avatar.gif  # avatar.gif 是自己喜欢的头像，放在\themes\next\source\images下</span><br><span class="line">  rounded: ture            # 是否圆形显示头像 true | false</span><br><span class="line">  rotated: ture            # 光标移到头像上后头像是否旋转 true | false</span><br></pre></td></tr></table></figure>
+<h4 id="网站图标"><a href="#网站图标" class="headerlink" title="网站图标"></a>网站图标</h4></li>
+</ul>
+<p>同时设置一下网站的图标。</p>
+<p>将<code>themes\next\source\images</code>文件夹下的<code>apple-touch-icon-next.png</code>，<code>favicon-16x16-next.png</code>和<code>favicon-32x32-next.png</code>图片替换成同样名称和大小的图片即可。</p>
+<h4 id="将文章链接修改颜色"><a href="#将文章链接修改颜色" class="headerlink" title="将文章链接修改颜色"></a>将文章链接修改颜色</h4><p>在<code>themes\next\source\css\_common\components\post\</code>下打开<code>post.styl</code>文件，添加字段</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">.post-body p a&#123;</span><br><span class="line">  color: #0593d3;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    color: #0477ab;</span><br><span class="line">    text-decoration: underline;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最好在末尾添加，便于和原配置进行区分。</p>
+<h4 id="主页部分显示"><a href="#主页部分显示" class="headerlink" title="主页部分显示"></a>主页部分显示</h4><p>Next 版本 7 以上已经不支持 auto_excerpt，因为摘要本身是博客的内容，而非主题负责的内容，官方推荐使用<code>&lt;!-- more --&gt;</code>来手动设置。</p>
+<h4 id="添加-GitHub-角标"><a href="#添加-GitHub-角标" class="headerlink" title="添加 GitHub 角标"></a>添加 GitHub 角标</h4><ul>
+<li>在<a href="https://github.blog/2008-12-19-github-ribbons/">GitHub Ribbons</a>中选择喜欢的角标形式，并复制代码。</li>
+<li>打开<code>themes/next/layout/_layout.swig</code>文件，在<code>&lt;div class=&quot;headband&quot;&gt;&lt;/div&gt;</code>下粘贴代码。</li>
+<li>将代码中的<code>href</code>替换为自己的 GitHub 主页</li>
+</ul>
+<h4 id="删除版本信息"><a href="#删除版本信息" class="headerlink" title="删除版本信息"></a>删除版本信息</h4><p>在主题配置文件中找到<code>powered</code>字段，修改为false即可。</p>
+<h4 id="社交链接"><a href="#社交链接" class="headerlink" title="社交链接"></a>社交链接</h4><p>在侧边栏添加一些社交链接，可以使用的图标可以在<a href="http://www.fontawesome.com.cn/faicons/">Font Awesome</a>查看，然后在主题配置文件中找到<code>social</code>字段，并进行配置，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">social:</span><br><span class="line">  GitHub: https:&#x2F;&#x2F;github.com&#x2F;Gipbear || fab fa-github</span><br><span class="line">  E-Mail: mailto:1099048889@qq.com || fa fa-envelope</span><br></pre></td></tr></table></figure>
+<p>但是一些没有的图标，比如B站，就需要使用自定义方法进行配置。这里我们使用阿里的<a href="https://www.iconfont.cn/search/index?q=bilibili">iconfont</a>来查找，找到B站的图标，点击图标上的<strong>添加入库</strong>，再点击右上方<strong>购物车</strong>图标，点击<strong>下载代码</strong>获得一个压缩文件，解压得到一个<code>iconfont.css</code>文件，将其复制到<code>themes\next\source\lib\font-awesome\css\all.min.css</code>后面，最后在social中添加即可：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">bilibili: https:&#x2F;&#x2F;space.bilibili.com&#x2F;B站id || iconfont icon-bilibili-line</span><br></pre></td></tr></table></figure>
+<h4 id="添加文章权利声明"><a href="#添加文章权利声明" class="headerlink" title="添加文章权利声明"></a>添加文章权利声明</h4><p>emmm，虽然也没有特别大的利益相关，但是还是正式点比较好。</p>
+<p>在主题配置文件中找到<code>creative_commons</code>字段，将<code>post</code>修改为<code>true</code>即可。</p>
+<h4 id="代码样式"><a href="#代码样式" class="headerlink" title="代码样式"></a>代码样式</h4><p>修改代码的样式主题，在主题配置文件中找到<code>codeblock</code>字段，将<code>highlight_theme</code>修改为想要主题即可。</p>
+<p>同时打开<code>copy_button</code>按钮，使得代码可以直接复制。</p>
+<h4 id="加载显示进度条"><a href="#加载显示进度条" class="headerlink" title="加载显示进度条"></a>加载显示进度条</h4><p>进度条需要<a href="https://github.com/theme-next/theme-next-pace">下载插件</a>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 注意：进入主题文件夹的不是指 themes，而是指 next！</span><br><span class="line">cd themes&#x2F;next</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;theme-next&#x2F;theme-next-pace source&#x2F;lib&#x2F;pace</span><br></pre></td></tr></table></figure>
+<p>之后打开主题配置文件，找到<code>pace</code>属性，设置<code>enable: true</code>，并选择自己喜欢的形式，可以在<a href="https://codebyzach.github.io/pace/">Pace</a>预览。</p>
+<h4 id="文章结束标记"><a href="#文章结束标记" class="headerlink" title="文章结束标记"></a>文章结束标记</h4><ol>
+<li><p>在<code>themes/next/layout/_macro/</code>下新建<code>passage-end-tag.swig</code>文件，并输入</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;    </span><br><span class="line">  &#123;% if not is_index %&#125;        </span><br><span class="line">    &lt;div style&#x3D;&quot;text-align:center;color: #ccc;font-size:14px;&quot;&gt;------ 本文结束------		&lt;&#x2F;div&gt;    </span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>再打开附近的<code>post.swig</code>文件，在注释<code>END POST BODY</code>字段之前增加</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">  &#123;% if not is_index %&#125;</span><br><span class="line">    &#123;% include &#39;passage-end-tag.swig&#39; %&#125;    </span><br><span class="line">  &#123;% endif %&#125; </span><br><span class="line">&lt;&#x2F;div&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>最后打开主题配置文件，在<code>Post Setting</code>下增加如下即可。</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># 文章末尾添加“本文结束”标记</span><br><span class="line">passage_end_tag:</span><br><span class="line">  enabled: true</span><br></pre></td></tr></table></figure>
+<h4 id="小代码格式"><a href="#小代码格式" class="headerlink" title="小代码格式"></a>小代码格式</h4></li>
+</ol>
+<p>本人这里设置的颜色类似于 Typora 的 OrangeHeart颜色，打开<code>themes\next\source\css\ _variables\base.sty</code>文件，修改:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F; 加入自定义颜色</span><br><span class="line">$my-codeblock-foreground &#x3D; #9966FF     &#x2F;&#x2F; 用&#96;&#96;围出的代码块字体颜色</span><br><span class="line">$my-codeblock-background &#x3D; #f5f5f5;    &#x2F;&#x2F; 用&#96;&#96;围出的代码块字体颜色</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; Code &amp; Code Blocks</span><br><span class="line">&#x2F;&#x2F; --------------------------------------------------</span><br><span class="line">$code-font-family               &#x3D; $font-family-monospace;</span><br><span class="line">$code-foreground                &#x3D; $my-codeblock-foreground </span><br><span class="line">$code-background                &#x3D; $my-codeblock-background </span><br></pre></td></tr></table></figure>
+<h4 id="阅读次数统计"><a href="#阅读次数统计" class="headerlink" title="阅读次数统计"></a>阅读次数统计</h4><p>Hexo 有很多可以进行阅读次数等内容的方法，这里选择使用不蒜子进行统计。</p>
+<ol>
+<li><p>打开主题配置站点，将<code>busuanzi_count</code>设置为true。</p>
+</li>
+<li><p>同时找到主题文件夹中的<code>busuanzi-counter.swig</code>文件夹，这个路径好像不同的教程都不太一样，自己找一下吧，在将原本的对应配置修改如下，其中第三行不蒜子的 url 需要修改，<a href="http://busuanzi.ibruce.info/">原因</a>实属七牛天坑：</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;%- if theme.busuanzi_count.enable %&#125;</span><br><span class="line">&lt;div class&#x3D;&quot;busuanzi-count&quot;&gt;</span><br><span class="line">  &lt;script&#123;&#123; pjax &#125;&#125; async src&#x3D;&quot;&#x2F;&#x2F;busuanzi.ibruce.info&#x2F;busuanzi&#x2F;2.3&#x2F;busuanzi.pure.mini.js&quot;&gt;&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">  &#123;%- if theme.busuanzi_count.total_visitors %&#125;</span><br><span class="line">    &lt;span class&#x3D;&quot;post-meta-item&quot; id&#x3D;&quot;busuanzi_container_site_uv&quot; style&#x3D;&quot;display: none;&quot;&gt;</span><br><span class="line">      &lt;!--&lt;span class&#x3D;&quot;post-meta-item-icon&quot;&gt;--&gt;</span><br><span class="line">        &lt;!--&lt;i class&#x3D;&quot;fa fa-&#123;&#123; theme.busuanzi_count.total_visitors_icon &#125;&#125;&quot;&gt;&lt;&#x2F;i&gt;--&gt;</span><br><span class="line">      &lt;!--&lt;&#x2F;span&gt;--&gt;</span><br><span class="line">	  我的第</span><br><span class="line">      &lt;span class&#x3D;&quot;site-uv&quot; title&#x3D;&quot;&#123;&#123; __(&#39;footer.total_visitors&#39;) &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;span id&#x3D;&quot;busuanzi_value_site_uv&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;span&gt;</span><br><span class="line">	  位朋友</span><br><span class="line">    &lt;&#x2F;span&gt;</span><br><span class="line">  &#123;%- endif %&#125;</span><br><span class="line"></span><br><span class="line">  &#123;%- if theme.busuanzi_count.total_visitors and theme.busuanzi_count.total_views %&#125;</span><br><span class="line">    &lt;span class&#x3D;&quot;post-meta-divider&quot;&gt;|&lt;&#x2F;span&gt;</span><br><span class="line">  &#123;%- endif %&#125;</span><br><span class="line"></span><br><span class="line">  &#123;%- if theme.busuanzi_count.total_views %&#125;</span><br><span class="line">    &lt;span class&#x3D;&quot;post-meta-item&quot; id&#x3D;&quot;busuanzi_container_site_pv&quot; style&#x3D;&quot;display: none;&quot;&gt;</span><br><span class="line">      &lt;!--&lt;span class&#x3D;&quot;post-meta-item-icon&quot;&gt;--&gt;</span><br><span class="line">        &lt;!--&lt;i class&#x3D;&quot;fa fa-&#123;&#123; theme.busuanzi_count.total_views_icon &#125;&#125;&quot;&gt;&lt;&#x2F;i&gt;--&gt;</span><br><span class="line">      &lt;!--&lt;&#x2F;span&gt;--&gt;</span><br><span class="line">      历经</span><br><span class="line">      &lt;span class&#x3D;&quot;site-pv&quot; title&#x3D;&quot;&#123;&#123; __(&#39;footer.total_views&#39;) &#125;&#125;&quot;&gt;</span><br><span class="line">        &lt;span id&#x3D;&quot;busuanzi_value_site_pv&quot;&gt;&lt;&#x2F;span&gt;</span><br><span class="line">      &lt;&#x2F;span&gt;</span><br><span class="line">	  次回眸才与你相遇</span><br><span class="line">    &lt;&#x2F;span&gt;</span><br><span class="line">  &#123;%- endif %&#125;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&#123;%- endif %&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="网站字数统计"><a href="#网站字数统计" class="headerlink" title="网站字数统计"></a>网站字数统计</h4><p>安装<code>hexo-symbols-count-time</code>插件，并在主题配置中找到<code>symbols_count_time</code>字段，修改为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true</span><br><span class="line">  item_text_post: true</span><br><span class="line">  item_text_total: true</span><br><span class="line">  awl: 4</span><br><span class="line">  wpm: 275</span><br></pre></td></tr></table></figure>
+<h4 id="全局搜索"><a href="#全局搜索" class="headerlink" title="全局搜索"></a>全局搜索</h4><p>这个是在博客上创建一个可以全局搜索的入口，使得可以快速搜索博客内容。</p>
+<ol>
+<li><p>首先需要安装<code>hexo-generator-searchdb</code>插件。</p>
+</li>
+<li><p>打开站点配置文件，在<code>Extensions</code>下添加</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure></li>
+<li><p>最后再将主题配置中的<code>local_search</code>功能设置为<code>true</code>即可。</p>
+</li>
+</ol>
+<h4 id="修改文章底部标签"><a href="#修改文章底部标签" class="headerlink" title="修改文章底部标签"></a>修改文章底部标签</h4><p>默认的标签是用**#**表示的，这里修改一下使用图标tag来替换。打开<code>/themes/next/layout/_macro/post.swig</code>文件，找到<code>rel=&quot;tag&quot;&gt;</code>，将后面的<code>&#123;&#123; tag_indicate &#125;&#125; </code>替换为<code>&lt;i class=&quot;fa fa-tag&quot;&gt;&lt;/i&gt;</code>即可。</p>
+<h4 id="鼠标点击特效"><a href="#鼠标点击特效" class="headerlink" title="鼠标点击特效"></a>鼠标点击特效</h4><p>在<code>hexo\themes\next\source\js\</code>目录或<code>hexo\themes\next\source\jsrc\</code>目录下（后者我没有）新建一个<code>love.js</code>文件，粘贴下方的内容</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">!<span class="function"><span class="keyword">function</span>(<span class="params">e, t, a</span>) </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        c(<span class="string">&quot;.heart&#123;width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);&#125;.heart:after,.heart:before&#123;content: &#x27;&#x27;;width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;&#125;.heart:after&#123;top: -5px;&#125;.heart:before&#123;left: -5px;&#125;&quot;</span>), o(), r()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">r</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> e = <span class="number">0</span>; e &lt; d.length; e++)</span><br><span class="line">            d[e].alpha &lt;= <span class="number">0</span> ? (t.body.removeChild(d[e].el), d.splice(e, <span class="number">1</span>)) : (d[e].y--, d[e].scale += <span class="number">.004</span>, d[e].alpha -= <span class="number">.013</span>, d[e].el.style.cssText = <span class="string">&quot;left:&quot;</span> + d[e].x + <span class="string">&quot;px;top:&quot;</span> + d[e].y + <span class="string">&quot;px;opacity:&quot;</span> + d[e].alpha + <span class="string">&quot;;transform:scale(&quot;</span> + d[e].scale + <span class="string">&quot;,&quot;</span> + d[e].scale + <span class="string">&quot;) rotate(45deg);background:&quot;</span> + d[e].color + <span class="string">&quot;;z-index:99999&quot;</span>);</span><br><span class="line">        requestAnimationFrame(r)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">o</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> t = <span class="string">&quot;function&quot;</span> == <span class="keyword">typeof</span> e.onclick &amp;&amp; e.onclick;</span><br><span class="line">        e.onclick = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            t &amp;&amp; t(), i(e)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">i</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> a = t.createElement(<span class="string">&quot;div&quot;</span>);</span><br><span class="line">        a.className = <span class="string">&quot;heart&quot;</span>, d.push(&#123;</span><br><span class="line">            el: a,</span><br><span class="line">            x: e.clientX - <span class="number">5</span>,</span><br><span class="line">            y: e.clientY - <span class="number">5</span>,</span><br><span class="line">            scale: <span class="number">1</span>,</span><br><span class="line">            alpha: <span class="number">1</span>,</span><br><span class="line">            color: s()</span><br><span class="line">        &#125;), t.body.appendChild(a)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">c</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> a = t.createElement(<span class="string">&quot;style&quot;</span>);</span><br><span class="line">        a.type = <span class="string">&quot;text/css&quot;</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            a.appendChild(t.createTextNode(e))</span><br><span class="line">        &#125; <span class="keyword">catch</span> (t) &#123;</span><br><span class="line">            a.styleSheet.cssText = e</span><br><span class="line">        &#125;</span><br><span class="line">        t.getElementsByTagName(<span class="string">&quot;head&quot;</span>)[<span class="number">0</span>].appendChild(a)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;rgb(&quot;</span> + ~~(<span class="number">255</span> * <span class="built_in">Math</span>.random()) + <span class="string">&quot;,&quot;</span> + ~~(<span class="number">255</span> * <span class="built_in">Math</span>.random()) + <span class="string">&quot;,&quot;</span> + ~~(<span class="number">255</span> * <span class="built_in">Math</span>.random()) + <span class="string">&quot;)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> d = [];</span><br><span class="line">    e.requestAnimationFrame = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">setTimeout</span>(e, <span class="number">1e3</span> / <span class="number">60</span>)</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;(), n()</span><br><span class="line">&#125;(<span class="built_in">window</span>, <span class="built_in">document</span>);</span><br></pre></td></tr></table></figure>
+<p>保存文件，并在<code>hexo\themes\next\layout\_layout.swing</code>文件底部<code>&lt;body&gt;</code>上增加：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 页面点击小红心 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/js/love.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意修改<code>src</code>为<code>love.js</code>所在的路径。</p>
+</blockquote>
+<h4 id="浏览器网页标题恶搞"><a href="#浏览器网页标题恶搞" class="headerlink" title="浏览器网页标题恶搞"></a>浏览器网页标题恶搞</h4><p>离开博客页面会在标签页出现恶搞文字表情，也可以自定义。在<code>\themes\next\source\js</code>下新建一个<code>FunnyTitle.js</code>文件，写入如下内容：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;!--浏览器搞笑标题--&gt;</span><br><span class="line"> <span class="keyword">var</span> OriginTitle = <span class="built_in">document</span>.title;</span><br><span class="line"> <span class="keyword">var</span> titleTime;</span><br><span class="line"> <span class="built_in">document</span>.addEventListener(<span class="string">&#x27;visibilitychange&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (<span class="built_in">document</span>.hidden) &#123;</span><br><span class="line">         <span class="built_in">document</span>.title = <span class="string">&#x27;ヽ(●-`Д´-)ノ你丑你就走！&#x27;</span>;</span><br><span class="line">         <span class="built_in">clearTimeout</span>(titleTime);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="built_in">document</span>.title = <span class="string">&#x27;ヾ(Ő∀Ő3)ノ你帅就回来！&#x27;</span> + OriginTitle;</span><br><span class="line">         titleTime = <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">             <span class="built_in">document</span>.title = OriginTitle;</span><br><span class="line">         &#125;, <span class="number">2000</span>);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<p>并在<code>hexo\themes\next\layout\_layout.swing</code>文件底部<code>&lt;body&gt;</code>上增加：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--浏览器搞笑标题--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;\js\FunnyTitle.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="诚挚感谢"><a href="#诚挚感谢" class="headerlink" title="诚挚感谢"></a>诚挚感谢</h2><p><a href="https://lvxuefei.top/%E5%88%A9%E7%94%A8Hexo-Next%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%88%E4%B8%89%EF%BC%89-%E4%BC%98%E5%8C%96-%E5%90%84%E7%A7%8Dtips%E3%80%81%E9%BB%91%E7%A7%91%E6%8A%80%EF%BC%8C%E4%B8%8D%E6%96%AD%E6%9B%B4%E6%96%B0/"><strong>槐雪</strong></a></p>
+<p><a href="https://www.itfanr.cc/2018/11/12/busuanzi-counter-error/">Hexo博客Next主题解决不蒜子统计不显示问题</a></p>
+<p><a href="http://www.sylan215.com/hexo-next-hongxin.html">next 主题下点击后出现红心效果</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/69211731">Hexo 博客美化合集（不断更新）</a></p>
+]]></content>
+      <categories>
+        <category>配置</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
