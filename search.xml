@@ -921,4 +921,27 @@
         <tag>hexo</tag>
       </tags>
   </entry>
+  <entry>
+    <title>快乐Linux学习（零）</title>
+    <url>/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%9B%B6%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>学习中途发现很有意思的东西，就分享在开篇了。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="Linux-可以激发我们的想象"><a href="#Linux-可以激发我们的想象" class="headerlink" title="Linux 可以激发我们的想象"></a>Linux 可以激发我们的想象</h2><blockquote>
+<p>当我被要求解释 Windows 与 Linux 之间的差异时，我经常拿玩具来作比喻。<br>Windows 就像一个游戏机。你去商店，买了一个包装在盒子里面的全新的游戏<br>机。你把它带回家，打开盒子，开始玩游戏。精美的画面，动人的声音。玩了一段<br>时间之后，你厌倦了它自带的游戏，所以你返回商店，又买了另一个游戏机。这个<br>过程反复重复。最后，你玩腻了游戏机自带的游戏，你回到商店，告诉售货员，“我<br>想要一个这样的游戏！”但售货员告诉你没有这样的游戏存在，因为它没有“市场<br>需求”。然后你说，“但是我只需要修改一下这个游戏！“，售货员又告诉你不能修改<br>它。所有游戏都被封装在它们的存储器中。到头来，你发现你的玩具只局限于别人<br>为你规定好的游戏。</p>
+<p>另一方面，Linux 就像一个全世界上最大的建造模型。你打开它，发现它只是一<br>个巨大的部件集合。有许多钢支柱、螺钉、螺母、齿轮、滑轮、发动机和一些怎样<br>来建造它的说明书。然后你开始摆弄它。你建造了一个又一个样板模型。过了一会<br>儿，你发现你要建造自己的模型。你不必返回商店，因为你已经拥有了你需要的一<br>切。建造模型以你构想的形状为模板，搭建你想要的模型。<br>当然，选择哪一个玩具，是你的事情，那么你觉得哪个玩具更令人满意呢？</p>
+</blockquote>
+<p>Windows是经典模式，Linux是自定义模式。</p>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>个人喜好而已，“Just enjoy yourself”。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
 </search>
