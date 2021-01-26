@@ -30,7 +30,7 @@
 <meta property="og:description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件。 适用于需要简单数据库迁移的读者。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-18T12:04:21.000Z">
-<meta property="article:modified_time" content="2021-01-19T13:57:34.394Z">
+<meta property="article:modified_time" content="2021-01-26T02:12:45.021Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary">
@@ -229,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-19 21:57:34" itemprop="dateModified" datetime="2021-01-19T21:57:34+08:00">2021-01-19</time>
+                <time title="Modified: 2021-01-26 10:12:45" itemprop="dateModified" datetime="2021-01-26T10:12:45+08:00">2021-01-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -254,7 +254,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>779</span>
+              <span>774</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -282,13 +282,13 @@
 <h2 id="导出数据表"><a href="#导出数据表" class="headerlink" title="导出数据表"></a>导出数据表</h2><p>MySQL导出表结构主要是使用<code>mysqldump</code>命令。该命令是在<code>cmd</code>下执行的，而非MySQL命令行中，使用相对路径，会将文件保存在当前目录下。</p>
 <ol>
 <li><p>导出数据库<code>dbname</code>中全部表结构至<code>db.sql</code>中：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql;</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql</span><br></pre></td></tr></table></figure></li>
 <li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构至<code>db.sql</code>中：</p>
  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></li>
 <li><p>导出数据库<code>dbname</code>中全部表结构及其数据至<code>db.sql</code>中（不加-d）：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p dbname &gt;db.sql</span><br></pre></td></tr></table></figure></li>
 <li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构及其数据至<code>db.sql</code>中：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure>
 <h2 id="读取数据表"><a href="#读取数据表" class="headerlink" title="读取数据表"></a>读取数据表</h2></li>
 </ol>
 <p>当我们拥有一个sql文件的时候，我们就可以直接执行sql脚本来完成任务。</p>
@@ -487,13 +487,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">30k</span>
+    <span title="Symbols count total">33k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">27 mins.</span>
+    <span title="Reading time total">30 mins.</span>
 </div>
 
 
