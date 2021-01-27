@@ -240,7 +240,7 @@
 </tr>
 <tr>
 <td>-a</td>
-<td>列出所有的文件和目录，包括文件名以<code>.</code>开头的隐藏文件。</td>
+<td>列出所有的文件和目录，包括文件名以<code>.</code>开头的隐藏文件</td>
 </tr>
 <tr>
 <td>-h</td>
@@ -257,6 +257,10 @@
 <tr>
 <td>-i</td>
 <td>显示文件索引节点信息</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>仅显示目录，而不显示其下文件</td>
 </tr>
 </tbody></table>
 <blockquote>
@@ -966,6 +970,54 @@
 <p>Windows是经典模式，Linux是自定义模式。</p>
 <h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>个人喜好而已，“Just enjoy yourself”。</p>
 ]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快乐Linux学习（三）</title>
+    <url>/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>适用于学习Linux系统中shell特性和键盘操作的读者。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="字符展开"><a href="#字符展开" class="headerlink" title="字符展开"></a>字符展开</h2><p>每当我们在bash中输入一串命令，bash就会在执行命令之前将命令进行<code>展开</code>操作。</p>
+<p>我们可以使用<code>echo</code>来显示一行文本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo This is a test.</span><br></pre></td></tr></table></figure>
+<p>那么不出意外将会输出结果<code>This is a test.</code>，当我们输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo *</span><br></pre></td></tr></table></figure>
+<p>就会出现意外了:joy:，结果是根据通配符含义的“<code>*</code>”匹配当前文件夹的任何内容，而不是我们想要打印的“<code>*</code>”，这就意味着我们的命令有了自己的想法，想要按照自身的规则先进行展开成完全态，再执行命令。</p>
+<h3 id="路径名展开"><a href="#路径名展开" class="headerlink" title="路径名展开"></a>路径名展开</h3><p>以上这样的展开被称为路径名展开，例如打印当前目录所有的以<code>l</code>开头的文件或目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo l*</span><br></pre></td></tr></table></figure>
+<p>但是无法显示隐藏文件的展开路径，但是<code>办法总比困难多</code>。我们进行尝试：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo .*</span><br></pre></td></tr></table></figure>
+<p>几乎成功了，但是存在了不需要的<code>.</code>和<code>..</code>。换个方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ls -d .[!.]?* | less</span><br></pre></td></tr></table></figure>
+<p>仅展示以<code>.</code>开头，第二个符号不是<code>.</code>，并且至少再包含一个符号，之后可以紧跟任意多个字符。</p>
+<blockquote>
+<p>我们可以发现，对于文件和目录进行打印输出的时候，使用echo和ls的结果似乎差不多，但是细心的话，我们可以发现，ls文件名之间的间距是根据<code>制表符</code>规定的，而echo每两个文件名之间的间距是<code>一个空格</code>，其中原因也是shell的命令展开。</p>
+</blockquote>
+<h3 id="算数表达式展开"><a href="#算数表达式展开" class="headerlink" title="算数表达式展开"></a>算数表达式展开</h3><p>算术表达式是形如<code>$((expression))</code>，表达式中不在意空格，并且可以嵌套存在，需要注意的是除法“<code>/</code>”，由于表达式仅支持<strong>整数操作</strong>，所以除法操作得到的结果是<strong>舍尾的整数</strong>，想要获得余数可以使用“<code>%</code>”进行操作。</p>
+<h3 id="花括号展开"><a href="#花括号展开" class="headerlink" title="花括号展开"></a>花括号展开</h3><p>花括号是为了获得多个具有一定重复规律的字符串而出现的，举个例子:bulb:：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo hello-&#123;R,G,B&#125;-world</span><br></pre></td></tr></table></figure>
+<p>则结果会生成<code>hello-R-world hello-G-world hello-B-world</code>，或者想要生成2019-01至2021-12的文件夹来存放相应内容，可以使用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir &#123;2019..2021&#125;-0&#123;1..9&#125; &#123;2019..2021&#125;-1&#123;0..2&#125;</span><br></pre></td></tr></table></figure>
+<p>其中花括号内可以包含字符串列表，整数区间和字符区间，区间使用<code>..</code>来表示区间范围，其中字符区间全部是大写或全部是小写的时候没有任何问题，但是在大写到小写的区间内，由于<code>ASCII</code>码的原因，会存在几个过度的字符，这需要注意一下。</p>
+<p>同样的，花括号也可以<code>嵌套</code>。</p>
+<h3 id="参数展开"><a href="#参数展开" class="headerlink" title="参数展开"></a>参数展开</h3><p>参数展开在此处简要体提及，之后会在shell脚本中详细阐述。</p>
+<p>我们查看一下可以使用的有效参数：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">printenv | less</span><br></pre></td></tr></table></figure>
+<p>这些参数可以使用 <code>$</code>符号进行调用，来显示参数对应的值：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">echo $USER</span><br></pre></td></tr></table></figure>
+<p>命令替换功能也能将命令的输出作为一个展开模式来使用，例如将找到cp目录的<strong>结果作为展开的参数</strong>给ls进行打印：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ls -l $(which cp)</span><br></pre></td></tr></table></figure>
+<p>同样的，管道线也适用参数展开，在旧版bash中也可以使用<code>ls -l `which cp` </code>达到同样效果。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>]]></content>
       <categories>
         <category>操作系统</category>
       </categories>
