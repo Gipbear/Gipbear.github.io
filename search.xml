@@ -179,17 +179,20 @@
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p dbname &gt;db.sql</span><br></pre></td></tr></table></figure></li>
 <li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构及其数据至<code>db.sql</code>中：</p>
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure>
-<h2 id="读取数据表"><a href="#读取数据表" class="headerlink" title="读取数据表"></a>读取数据表</h2></li>
+<h2 id="导入数据表"><a href="#导入数据表" class="headerlink" title="导入数据表"></a>导入数据表</h2></li>
 </ol>
 <p>当我们拥有一个sql文件的时候，我们就可以直接执行sql脚本来完成任务。</p>
 <ol>
 <li><p>在cmd下执行命令：需要选择MySQL的sever下的目录，如果目录存在空格，则需要使用双引号，若sql文件中存在<code>use 数据库</code>则不需要指定<code>-D数据库</code></p>
  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&quot;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql&quot; –uroot –p -D dbname &lt; C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></li>
 <li><p>在MySQL命令行中执行命令：sql文件需要是绝对路径</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure>
-
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者推荐下面这个</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure>
+<p>在导入数据库的时候，有可能会出现错误<code>MySQL server has gone away</code>。原因一般是操作sql的时间太长，或者插入数据库的数据量太大，一般来说，可以将数据分批插入，或者修改<code>max_allowed_packet</code>参数的配置。</p>
 </li>
 </ol>
+<p>首先查看max_allowed_packet的值，使用<code>show global variables like &#39;max_allowed_packet&#39;</code>查看对应的值，之后输入语句进行调整，由于<code>db.sql</code>文件太大，本人这里设置为100M：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> max_allowed_packet<span class="operator">=</span><span class="number">1024</span><span class="operator">*</span><span class="number">1024</span><span class="operator">*</span><span class="number">100</span></span><br></pre></td></tr></table></figure>
+<p>接下来再读取sql文件导入数据库的时候问题就不大了</p>
 ]]></content>
       <categories>
         <category>数据库</category>
