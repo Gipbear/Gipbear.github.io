@@ -1186,7 +1186,20 @@
 <h3 id="默认权限"><a href="#默认权限" class="headerlink" title="默认权限"></a>默认权限</h3><p>当我们新建文件的时候会自动赋予一个默认权限，这里在<strong>WSL</strong>下，默认的是<code>rw-r--r--</code>，这是由<code>umask</code>进行控制的。</p>
 <p>命令行使用<code>umask</code>进行查看，会发现响应的数值是0022，常用的Linux系统还有0002，对应着关闭了哪些权限，2指的就是10，也就是原始文件权限是<code>rw-rw-rw-</code>，根据umask的掩码来<strong>关闭</strong>某些权限，作为最终的默认权限。</p>
 <p>一般不用修改，使用系统默认的就可以了。</p>
-<h3 id="用户和用户组"><a href="#用户和用户组" class="headerlink" title="用户和用户组"></a>用户和用户组</h3><h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>]]></content>
+<h3 id="用户和用户组"><a href="#用户和用户组" class="headerlink" title="用户和用户组"></a>用户和用户组</h3><p>针对具有多个用户和用户组的情况下，不同用户具有不同的文件的控制权。</p>
+<ul>
+<li><p>su [-[l]] [user]：是允许我们切换到另一个用户的身份，重新启动一个shell进程。</p>
+<p>  -l 表示切换shell环境，并更改工作目录到该用户下，没有用户名则默认是root，如下切换至root用户：</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">su -</span><br></pre></td></tr></table></figure>
+<p>  需要输入切换后用户的密码，登录后超级用户root显示的符号从“<code>$</code>”变为“<code>#</code>”，使用exit退出。</p>
+</li>
+<li><p>sudo：是允许一个普通用户以另一个用户的身份执行任务，本质上用户并没有切换，而且输入的密码是用户本身的密码，并且密码可以维持一段时间的信任。</p>
+</li>
+</ul>
+<p>可以使用<code>chown [owner][:[group]] file</code>对文件的用户和用户组进行更改。</p>
+<p>使用<code>passwd</code>可以更改密码。</p>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>关于文件和目录权限的内容并不过多赘述，之后存在需求之后再进行补充。</p>
+]]></content>
       <categories>
         <category>操作系统</category>
       </categories>
