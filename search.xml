@@ -1390,4 +1390,32 @@
         <tag>误差</tag>
       </tags>
   </entry>
+  <entry>
+    <title>python常用函数</title>
+    <url>/2021/02/06/python%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文罗列了回顾python时候的一些常用函数</p>
+</blockquote>
+<a id="more"></a>
+
+<ul>
+<li><p><a href="https://www.hackerrank.com/challenges/text-alignment/problem">文字对齐</a>：</p>
+<p>  <code>string.ljust(width,&#39;-&#39;)</code>string在左侧；<code>string.center(width,&#39;-&#39;)</code>string居中；<code>string.rjust(width,&#39;-&#39;)</code>string在右侧</p>
+</li>
+<li><p><a href="https://www.hackerrank.com/challenges/text-wrap/problem">文本自动换行</a>：</p>
+<p>  <code>textwrap.wrap(string, width)</code>获得list，使用<code>&#39;\n&#39;.join()</code>进行连接</p>
+</li>
+<li><p><a href="https://www.hackerrank.com/challenges/python-string-formatting/problem">矩阵显示多进制</a>：</p>
+<p>  二进制八进制以及十六进制的格式化显示，矩阵间距为二进制宽度。使用format进行格式化</p>
+</li>
+<li></li>
+</ul>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2>]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>函数</tag>
+      </tags>
+  </entry>
 </search>
