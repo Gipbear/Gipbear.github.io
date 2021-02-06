@@ -1418,4 +1418,29 @@
         <tag>函数</tag>
       </tags>
   </entry>
+  <entry>
+    <title>mysql中位数</title>
+    <url>/2021/02/06/mysql%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
+    <content><![CDATA[<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/hint.css/2.4.1/hint.min.css"><blockquote>
+<p>本文是在mysql中查询一列<strong>奇数</strong>个数据的中位数。</p>
+</blockquote>
+<a id="more"></a>
+
+<p>在<a href="https://www.hackerrank.com/dashboard">HackerRank</a>刷题的时候遇到了一道需要查询中位数的题目。</p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>将中位数定义为：将数据集的上半部分与下半部分分开的数字，也就是仅存在一个中位数。</p>
+<p>需要找出某列的中位数。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>Station表中存在奇数个数据，那么我们要查找的LAT_N就是将数据分开后使得：上半部分个数=下半部分个数。</p>
+<p>于是我们需要在查询该表Station S的同时，再创建两个相同的Station表来计算上下部分的LAT_N个数，在检查记录的同时比较上下两部分的数量，当数量相同的时候，该S.LAT_N就是需要得到的中位数。</p>
+<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select round(s.LAT_N,4)</span><br><span class="line">from station s</span><br><span class="line">where (select count(LAT_N)</span><br><span class="line">       from station</span><br><span class="line">       where LAT_N &lt; s.LAT_N) &#x3D; (</span><br><span class="line">           select count(LAT_N)</span><br><span class="line">           from station</span><br><span class="line">           where (LAT_N &gt; s.LAT_N))</span><br></pre></td></tr></table></figure>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>当遇到比较抽象的问题的时候，需要学会转换思路，将抽象的中位数定义，转化为现实的，上下部分数量相同问题；也要熟悉mysql中创建新表和原表比较的方法。</p>
+]]></content>
+      <categories>
+        <category>增删改查</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>select</tag>
+        <tag>中位数</tag>
+      </tags>
+  </entry>
 </search>
