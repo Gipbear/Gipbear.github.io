@@ -29,15 +29,15 @@
 <meta property="og:site_name" content="Grizzly&#39;s daily">
 <meta property="og:description" content="Hexo缘时隔一年多的时间，再次将拾起写博客的习惯。最早的时候是在大一接触了 Hexo，那时候有人跟我分享了他的刚搭建好的博客，但是我并没有看懂，于是就没有太在意，想来自己还是错过了最初变强的机会，而那个人已经是南大的研究生了。后来自己搭建博客是在大三了，主要内容还是编程问题、平时课程的收获和周记等心得类的，之后由于考研的缘故又放下了博客。这次再拿出来干脆重新开始搭建，这次以数据分析内容为主，记录">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/.com//01new.png">
-<meta property="og:image" content="http://example.com/.com//02repository.png">
-<meta property="og:image" content="http://example.com/.com//03sshaddress.png">
+<meta property="og:image" content="http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/01new.png">
+<meta property="og:image" content="http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/02repository.png">
+<meta property="og:image" content="http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/03sshaddress.png">
 <meta property="article:published_time" content="2021-01-05T02:07:50.000Z">
-<meta property="article:modified_time" content="2021-01-11T14:22:58.000Z">
+<meta property="article:modified_time" content="2021-12-29T11:26:40.776Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//01new.png">
+<meta name="twitter:image" content="http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/01new.png">
 
 <link rel="canonical" href="http://example.com/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">
 
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-11 22:22:58" itemprop="dateModified" datetime="2021-01-11T22:22:58+08:00">2021-01-11</time>
+                <time title="Modified: 2021-12-29 19:26:40" itemprop="dateModified" datetime="2021-12-29T19:26:40+08:00">2021-12-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,10 +277,10 @@
 </ul>
 <p>此处不是重点，就不一一赘述安装步骤了。</p>
 <p>除此之外还需要一个 GitHub 账号，打开<a target="_blank" rel="noopener" href="https://github.com/">GitHub官网</a>，注册并登录，并且新建一个项目，如下：</p>
-<img src="/.com//01new.png" style="zoom:50%;">
+<img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/01new.png" class="" title="hexo的安装和配置&#x2F;01new.png">
 
 <p>需要注意的是，repository 的 name 一定是 &lt;GitHub name&gt;.github.io，这也是之后直接访问的免费域名。本人这里是因为已经创建过了，所以显示错误。</p>
-<img src="/.com//02repository.png" style="zoom:50%;">
+<img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/02repository.png" class="" title="hexo的安装和配置">
 
 <p>创建好了之后就到下一步吧，一会儿回过头来再使用。</p>
 <h2 id="Hexo-安装"><a href="#Hexo-安装" class="headerlink" title="Hexo 安装"></a>Hexo 安装</h2><p>接下来就开始 Hexo 的安装：</p>
@@ -298,7 +298,7 @@
 <h3 id="关联-GitHub-Pages"><a href="#关联-GitHub-Pages" class="headerlink" title="关联 GitHub Pages"></a>关联 GitHub Pages</h3><p>到这里，已经将 Hexo 安装到本地了，接下来需要将 Hexo 与 GitHub Pages 进行关联，使得 Hexo 可以部署在 GitHub 上。</p>
 <ul>
 <li><p>打开之前建立的 repository，复制该 repository 的 ssh 链接。</p>
-  <img src="/.com//03sshaddress.png" alt="ssh链接" style="zoom:50%;"> </li>
+  <img src="/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/03sshaddress.png" class="" title="hexo的安装和配置&#x2F;03sshaddress.png"> </li>
 <li><p>在博客根目录下找到<code>_config.yml</code>配置文件，使用记事本或VS code等软件打开，在最下面找到</p>
   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: 上一步复制的ssh链接</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
 
