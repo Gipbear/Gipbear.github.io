@@ -29,8 +29,8 @@
 <meta property="og:site_name" content="Grizzly&#39;s daily">
 <meta property="og:description" content="本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。 本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png">
-<meta property="og:image" content="http://example.com/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png">
+<meta property="og:image" content="http://example.com/.com//01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png">
+<meta property="og:image" content="http://example.com/.com//02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png">
 <meta property="article:published_time" content="2021-01-13T01:27:36.000Z">
 <meta property="article:modified_time" content="2021-01-28T03:37:10.000Z">
 <meta property="article:author" content="Grizzly">
@@ -38,7 +38,7 @@
 <meta property="article:tag" content="layui">
 <meta property="article:tag" content="xm-select">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png">
+<meta name="twitter:image" content="http://example.com/.com//01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png">
 
 <link rel="canonical" href="http://example.com/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/">
 
@@ -209,7 +209,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Grizzly">
-      <meta itemprop="description" content="人与数据">
+      <meta itemprop="description" content="冲冲冲">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -286,9 +286,9 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>运行结果如下：</p>
-<p><img src="Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" alt="下拉框效果展示"></p>
+<p><img src="/.com//01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" alt="下拉框效果展示"></p>
 <p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
-<p><img src="Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" alt="开发人员工具下拉框元素代码"></p>
+<p><img src="/.com//02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" alt="开发人员工具下拉框元素代码"></p>
 <p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a target="_blank" rel="noopener" href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
 <p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
@@ -420,14 +420,14 @@
     <img class="site-author-image" itemprop="image" alt="Grizzly"
       src="/images/avatar.gif">
   <p class="site-author-name" itemprop="name">Grizzly</p>
-  <div class="site-description" itemprop="description">人与数据</div>
+  <div class="site-description" itemprop="description">冲冲冲</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
