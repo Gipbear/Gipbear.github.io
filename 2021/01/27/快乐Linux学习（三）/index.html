@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell特性和键盘操作的读者。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快乐Linux学习（三）">
+<meta property="og:url" content="http://example.com/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="Grizzly&#39;s daily">
+<meta property="og:description" content="本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell特性和键盘操作的读者。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-01-27T13:51:11.000Z">
+<meta property="article:modified_time" content="2021-01-28T02:26:04.000Z">
+<meta property="article:author" content="Grizzly">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>快乐Linux学习（三） | Grizzly's daily</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Gipbear" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Grizzly's daily</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Grizzly">
+      <meta itemprop="description" content="人与数据">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Grizzly's daily">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          快乐Linux学习（三）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-01-27 21:51:11" itemprop="dateCreated datePublished" datetime="2021-01-27T21:51:11+08:00">2021-01-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-01-28 10:26:04" itemprop="dateModified" datetime="2021-01-28T10:26:04+08:00">2021-01-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>适用于学习Linux系统中shell特性和键盘操作的读者。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="字符展开"><a href="#字符展开" class="headerlink" title="字符展开"></a>字符展开</h2><p>每当我们在bash中输入一串命令，bash就会在执行命令之前将命令进行<code>展开</code>操作。</p>
+<p>我们可以使用<code>echo</code>来显示一行文本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo This is a test.</span><br></pre></td></tr></table></figure>
+
+<p>那么不出意外将会输出结果<code>This is a test.</code>，当我们输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo *</span><br></pre></td></tr></table></figure>
+
+<p>就会出现意外了:joy:，结果是根据通配符含义的“<code>*</code>”匹配当前文件夹的任何内容，而不是我们想要打印的“<code>*</code>”，这就意味着我们的命令有了自己的想法，想要按照自身的规则先进行展开成完全态，再执行命令。</p>
+<h3 id="路径名展开"><a href="#路径名展开" class="headerlink" title="路径名展开"></a>路径名展开</h3><p>以上这样的展开被称为路径名展开，例如打印当前目录所有的以<code>l</code>开头的文件或目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo l*</span><br></pre></td></tr></table></figure>
+
+<p>但是无法显示隐藏文件的展开路径，但是<code>办法总比困难多</code>。我们进行尝试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo .*</span><br></pre></td></tr></table></figure>
+
+<p>几乎成功了，但是存在了不需要的<code>.</code>和<code>..</code>。换个方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -d .[!.]?* | less</span><br></pre></td></tr></table></figure>
+
+<p>仅展示以<code>.</code>开头，第二个符号不是<code>.</code>，并且至少再包含一个符号，之后可以紧跟任意多个字符。</p>
+<blockquote>
+<p>我们可以发现，对于文件和目录进行打印输出的时候，使用echo和ls的结果似乎差不多，但是细心的话，我们可以发现，ls文件名之间的间距是根据<code>制表符</code>规定的，而echo每两个文件名之间的间距是<code>一个空格</code>，其中原因也是shell的命令展开。</p>
+</blockquote>
+<h3 id="算数表达式展开"><a href="#算数表达式展开" class="headerlink" title="算数表达式展开"></a>算数表达式展开</h3><p>算术表达式是形如<code>$((expression))</code>，表达式中不在意空格，并且可以嵌套存在，需要注意的是除法“<code>/</code>”，由于表达式仅支持<strong>整数操作</strong>，所以除法操作得到的结果是<strong>舍尾的整数</strong>，想要获得余数可以使用“<code>%</code>”进行操作。</p>
+<h3 id="花括号展开"><a href="#花括号展开" class="headerlink" title="花括号展开"></a>花括号展开</h3><p>花括号是为了获得多个具有一定重复规律的字符串而出现的，举个例子:bulb:：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo hello-&#123;R,G,B&#125;-world</span><br></pre></td></tr></table></figure>
+
+<p>则结果会生成<code>hello-R-world hello-G-world hello-B-world</code>，或者想要生成2019-01至2021-12的文件夹来存放相应内容，可以使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir &#123;2019..2021&#125;-0&#123;1..9&#125; &#123;2019..2021&#125;-1&#123;0..2&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中花括号内可以包含字符串列表，整数区间和字符区间，区间使用<code>..</code>来表示区间范围，其中字符区间全部是大写或全部是小写的时候没有任何问题，但是在大写到小写的区间内，由于<code>ASCII</code>码的原因，会存在几个过度的字符，这需要注意一下。</p>
+<p>同样的，花括号也可以<code>嵌套</code>。</p>
+<h3 id="参数展开"><a href="#参数展开" class="headerlink" title="参数展开"></a>参数展开</h3><p>参数展开在此处简要体提及，之后会在shell脚本中详细阐述。</p>
+<p>我们查看一下可以使用的有效参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printenv | less</span><br></pre></td></tr></table></figure>
+
+<p>这些参数可以使用 <code>$</code>符号进行调用，来显示参数对应的值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $USER</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令替换</strong>功能也能将命令的输出作为一个展开模式来使用，例如将找到cp目录的<strong>结果作为展开的参数</strong>给ls进行打印：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l $(which cp)</span><br></pre></td></tr></table></figure>
+
+<p>同样的，管道线也适用参数展开，在旧版bash中也可以使用<code>ls -l `which cp` </code>达到同样效果。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>这里的引用指的是一种引用机制，用来有选择的禁止不需要的展开。什么叫做不需要的展开，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo This is a     Test</span><br></pre></td></tr></table></figure>
+
+<p>但是结果是<code>This is a Test</code>，中间想要的空格被自动展开后再进行单词分割（空格、制表符、换行符等界定符）而失去了。再比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo The total price is $100.00</span><br></pre></td></tr></table></figure>
+
+<p>但是结果却是<code>The total price is 00.00</code>，原因是<code>$1</code>被视作名为变量1的参数。</p>
+<p>为了禁止这些不需要的展开，所以出现了引用机制，这里有两种类型，一种是<strong>双引号</strong>，一种是<strong>单引号</strong>。</p>
+<p>使用双引号的时候，shell使用的一些特殊字符将会失去其特殊含义，<u>单词分割，路径名展开，波浪线展开（用户名）和花括号展开</u>都会被禁止。</p>
+<p>例如这个存在空格的破损文件名<code>word count.txt</code>，正常情况下ls的时候会认作两个参数，而使用双引号的时候就会关闭单词分割，从而视作一个参数来正确读取，并且可以使用mv进行重命名。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -l &quot;word count.txt&quot;</span><br><span class="line">mv &quot;word count.txt&quot; word_count.txt</span><br></pre></td></tr></table></figure>
+
+<p>再比如打印日历：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $(cal)</span><br></pre></td></tr></table></figure>
+
+<p>这就是被单词分割的后果！可以尝试加上双引号，一下子好看了有木有:laughing:！</p>
+<p>但是对于<code>$，\和` </code>并不会被禁止，也就是意味着参数展开，算术展开和命令替换仍然会被执行。</p>
+<p>这就需要使用单引号来<strong>禁止全部展开</strong>，通过以下对比进行说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`</span><br><span class="line">echo &quot;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&quot;</span><br><span class="line">echo &#x27;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&#x27;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对于转义字符“<code>\</code>”有一个很有趣的东西，echo加上<code>-e</code>能够解释转义字符，例如，10秒后响铃:alarm_clock:：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sleep 10; echo -e &quot;Time&#x27;s up \a&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="键盘的高级操作"><a href="#键盘的高级操作" class="headerlink" title="键盘的高级操作"></a>键盘的高级操作</h2><p>这里再附带说一下键盘有关的高级操作，<code>命令行的目标是懒惰</code>，各种简短而丰富的命令是为了更少的敲击键盘和无需使用鼠标，来专注于工作本身。</p>
+<p>在命令行中存在很多的按键，来快速编辑，例如：</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl-a</td>
+<td>光标移动到行首</td>
+</tr>
+<tr>
+<td>Ctrl-e</td>
+<td>光标移动到行尾</td>
+</tr>
+<tr>
+<td>Alt-f</td>
+<td>光标向前移动一个字</td>
+</tr>
+<tr>
+<td>Alt-b</td>
+<td>光标向后移动一个字</td>
+</tr>
+<tr>
+<td>Ctrl-l</td>
+<td>清空屏幕，与clear相同</td>
+</tr>
+<tr>
+<td>Alt-l</td>
+<td>光标至字尾的字符转化为小写字母</td>
+</tr>
+<tr>
+<td>Alt-u</td>
+<td>光标至字尾的字符转化为大写字母</td>
+</tr>
+</tbody></table>
+<h3 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h3><p>自动补全是shell一个很方便的方法，Linux系统不一样可能机制不同，WSL中是只有一个匹配的则敲击<code>一下tab</code>键即可，存在多个匹配条件，则连续敲击<code>两下tab</code>键显示。</p>
+<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><p>使用上下键就可以浏览之前输入过的历史命令，不过还可以使用history进行查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history | less</span><br></pre></td></tr></table></figure>
+
+<p>在每个历史命令中，每行会有一个序号，我们在命令行直接输入<code>!80</code>就可以直接执行第80行的命令了。</p>
+<p>使用<code>Ctrl-r</code>可以进入搜索模式，输入部分命令内容，继续按下<code>Ctrl-r</code>就可以从<strong>现在</strong>到<strong>过去</strong>进行历史命令匹配了。</p>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>总之，Linux中的shell是一个很有趣的事物，准确的理解其中展开和引用机制可以很好的发挥shell的能力。对于最后提及的键盘快捷键，暂时来说只是锦上添花，更多的还是关注命令本身。</p>
+
+    </div>
+    <div>    
+      
+          <div>    
+	        
+		<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------		</div>    
+	
+</div>    
+         
+    </div>
+
+    
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Grizzly
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/" title="快乐Linux学习（三）">http://example.com/2021/01/27/快乐Linux学习（三）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i>Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%9B%B6%EF%BC%89/" rel="prev" title="快乐Linux学习（零）">
+      <i class="fa fa-chevron-left"></i> 快乐Linux学习（零）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/28/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="next" title="快乐Linux学习（四）">
+      快乐Linux学习（四） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E5%B1%95%E5%BC%80"><span class="nav-number">1.</span> <span class="nav-text">字符展开</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E5%90%8D%E5%B1%95%E5%BC%80"><span class="nav-number">1.1.</span> <span class="nav-text">路径名展开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%B1%95%E5%BC%80"><span class="nav-number">1.2.</span> <span class="nav-text">算数表达式展开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%B1%E6%8B%AC%E5%8F%B7%E5%B1%95%E5%BC%80"><span class="nav-number">1.3.</span> <span class="nav-text">花括号展开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%B1%95%E5%BC%80"><span class="nav-number">1.4.</span> <span class="nav-text">参数展开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">引用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%AE%E7%9B%98%E7%9A%84%E9%AB%98%E7%BA%A7%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">键盘的高级操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%A8"><span class="nav-number">2.1.</span> <span class="nav-text">自动补全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">历史命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">3.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Grizzly"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Grizzly</p>
+  <div class="site-description" itemprop="description">人与数据</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Gipbear" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Gipbear" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1099048889@qq.com" title="E-Mail → mailto:1099048889@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Grizzly</span>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <!--<span class="post-meta-item-icon">-->
+        <!--<i class="fa fa-fa fa-user"></i>-->
+      <!--</span>-->
+	  我的第
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+	  位朋友
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <!--<span class="post-meta-item-icon">-->
+        <!--<i class="fa fa-fa fa-eye"></i>-->
+      <!--</span>-->
+      历经
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+	  次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <!--浏览器搞笑标题-->
+  <script type="text/javascript" src="/js/FunnyTitle.js"></script>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>

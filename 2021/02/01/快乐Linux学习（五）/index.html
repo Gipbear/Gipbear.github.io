@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell环境和vi相关内容的读者。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快乐Linux学习（五）">
+<meta property="og:url" content="http://example.com/2021/02/01/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/index.html">
+<meta property="og:site_name" content="Grizzly&#39;s daily">
+<meta property="og:description" content="本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell环境和vi相关内容的读者。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-02-01T08:23:48.000Z">
+<meta property="article:modified_time" content="2021-02-02T14:41:20.000Z">
+<meta property="article:author" content="Grizzly">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/02/01/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>快乐Linux学习（五） | Grizzly's daily</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Gipbear" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Grizzly's daily</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/01/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Grizzly">
+      <meta itemprop="description" content="人与数据">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Grizzly's daily">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          快乐Linux学习（五）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-02-01 16:23:48" itemprop="dateCreated datePublished" datetime="2021-02-01T16:23:48+08:00">2021-02-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-02-02 22:41:20" itemprop="dateModified" datetime="2021-02-02T22:41:20+08:00">2021-02-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>适用于学习Linux系统中shell环境和vi相关内容的读者。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="shell环境"><a href="#shell环境" class="headerlink" title="shell环境"></a>shell环境</h2><p>shell在shell会话中保存着大量的信息，这些信息被称为shell环境。</p>
+<p>一般程序都是通过获取环境中的数据（<strong>环境变量</strong>）或<strong>配置文件</strong>来存储程序的设置，所以我们可以调整环境变量或配置文件来改变程序的行为。</p>
+<p>在shell环境中，一般存储两种基本类型的数据，一种是环境变量，一种是shell变量（bash存放的少量数据）。</p>
+<ul>
+<li>printenv：可以显示环境变量，看到的是环境变量及其对应的数值。</li>
+<li>set：可以显示环境变量、shell变量和自定义的shell函数，并且按照首字母排序。</li>
+</ul>
+<h2 id="shell启动文件"><a href="#shell启动文件" class="headerlink" title="shell启动文件"></a>shell启动文件</h2><p>登录系统之后会启动bash程序，读取一些列称为启动文件的配置脚本，之后再读取用户home目录的启动文件，这两个启动文件分别定义了全局和个人的shell环境。其中的启动顺序根据shell会话类型来决定。</p>
+<ul>
+<li><p>登录shell会话</p>
+<p>  会提示用户输入用户名和密码，读取一个或多个启动文件。</p>
+<p>  首先是应用于所有用户的全局配置文件：<code>/etc/profile</code>，然后是用户个人的启动文件：在WSL下使用的是：<code>~/.profile</code>，其他的Linux版本可能是<code>~/.bash_profile</code>和<code>~/.bash_login</code>。</p>
+</li>
+<li><p>非登录shell会话</p>
+<p>  一般是在GUI下启动终端会话时出现，读取全局配置文件：<code>/etc/bash.bashrc</code>，以及个人配置文件：<code>~/.bashrc</code>。并会集成父进程的环境设置（一般是一个登录shell进程）。</p>
+</li>
+</ul>
+<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>修改配置文件的时候，可以使用文本编辑器打开文件，例如使用下面会提到的<strong>vi</strong>进行修改。</p>
+<p>修改之前可以对文件进行备份，通常使用扩展名<code>.bak</code>、<code>.sav</code>、<code>.old</code>等方式来备份：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp .bashrc .bashrc.bak</span><br></pre></td></tr></table></figure>
+
+<p>然后修改<code>.bashrc</code>文件，遇到麻烦的时候可以再利用备份文件进行还原。</p>
+<p>修改之后使用source来激活配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>一般来说，添加目录到PATH变量或定义额外的环境变量，需要把修改<code>.profile</code>文件（或替代文件<code>.bash_profile</code>），对于其他的修改则放在<code>.bashrc</code>文件中。</p>
+</blockquote>
+<h2 id="vi"><a href="#vi" class="headerlink" title="vi"></a>vi</h2><p>在很多Linux系统都预装了vi程序，并且存在另一个高级替代版vim（vi improved），之后我们使用是vi实际上就是vim。vi具有轻量且快速的特点，相比于一些其他并不会在Linux上都预装的文本编辑器，在远程服务器上进行文本修改的时候，vi就显得相当方便了。</p>
+<blockquote>
+<p>最重要的是：不会的话会被其他Linux使用者嘲笑！所以加油吧:fist_oncoming:！</p>
+</blockquote>
+<h3 id="打开和退出"><a href="#打开和退出" class="headerlink" title="打开和退出"></a>打开和退出</h3><p>首先最重要的是学会如何打开vi，并关闭它。</p>
+<p>WSL已经预装了vim，我们在命令行输入vi或vim命令即可进入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi</span><br></pre></td></tr></table></figure>
+
+<p>会发现显示<code>VIM - Vi IMproved</code>等内容，但实际上这些并不是打开了任何文件的内容，因为在vi中，行编辑最左侧出现了波浪号<code>~</code>说明该行内容为空。此时不要按下键盘上的任何键，因为我们此时处于vi的命令模式，如果我们需要退出的话，输入<code>:q</code>并按下回车就可以退出（出现在屏幕左下角，并且冒号是命令的一部分）。</p>
+<blockquote>
+<p>命令模式分为普通命令模式和ex模式，ex模式就是有冒号的命令，普通命令模式就是正常的命令，需要注意区分，在下文中，出现冒号的就是ex命令，否则就是普通命令。</p>
+</blockquote>
+<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><p>在vi的命令模式下，存在大量的移动命令：</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>移动效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k j h l或Alt+方向键</td>
+<td>上下左右（方向）移动一个字符</td>
+</tr>
+<tr>
+<td>0</td>
+<td>移动到当前行的行首</td>
+</tr>
+<tr>
+<td>^</td>
+<td>当前行第一个非空字符</td>
+</tr>
+<tr>
+<td>$</td>
+<td>当前行末尾</td>
+</tr>
+<tr>
+<td>b w或Shift+方向键</td>
+<td>移动到上/下一个单词或标点的开头</td>
+</tr>
+<tr>
+<td>B W或Ctrl+方向键</td>
+<td>移动到上/下一个单词的开头</td>
+</tr>
+<tr>
+<td>G</td>
+<td>文件末尾</td>
+</tr>
+</tbody></table>
+<p>并且可以使用<strong>数字和命令</strong>来控制移动多少个字符或行，例如<code>5h</code>向左移动5个字符。</p>
+<h3 id="编辑文本"><a href="#编辑文本" class="headerlink" title="编辑文本"></a>编辑文本</h3><p>我们使用vi可以直接创建一个新的或打开一个已经存在的文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi foo.txt</span><br></pre></td></tr></table></figure>
+
+<p>执行命令会出现空白界面，我们需要知道的是：<strong>vi是一个模式编辑器</strong>，此时进入的vi的<strong>命令模式</strong>，按下的每一个键都是命令，所以千万不要乱来！</p>
+<p>我们按下<code>i</code>键，在左下角会出现<code>-- INSERT --</code>，表示进入了<u>插入</u>模式。此时可以输入一些文本。输入文本之后需要返回，需要使用<code>Esc</code>重新进入命令模式，如果需要<u>保存修改</u>则使用<code>:w</code>或保存并退出<code>:wq</code>，如果不需要保存则使用<code>:q!</code>。</p>
+<p>当我们想要<u>撤回</u>的时候，可以使用<code>u</code>来撤回对文本的最后一次<strong>修改</strong>，注意和word中只撤回几个字不一样，这是撤回最后一次<strong>修改</strong>。</p>
+<p>当我们再一次进入foo.txt文件时，光标会出现在上次退出的地方，当我们想要在行尾进行插入的时候，发现<code>i</code>只能出现在最后一个字符之前，所以我们使用<code>a</code>进行插入，同样会出现<code>-- INSERT --</code>，表示进入编辑模式，或者<code>A</code>直接到达编辑行的行尾。</p>
+<p>当我们需要<u>插入空白行</u>的时候，可以使用命令<code>o</code>在光标下方插入一行，使用命令<code>O</code>在光标上方插入一行。</p>
+<h3 id="删除、剪切、复制和粘贴"><a href="#删除、剪切、复制和粘贴" class="headerlink" title="删除、剪切、复制和粘贴"></a>删除、剪切、复制和粘贴</h3><p>这些操作的命令和移动光标类似</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>[number]x</td>
+<td>删除当前字符，及其后面number-1个字符</td>
+</tr>
+<tr>
+<td>[number]dd</td>
+<td>剪切当前行，及其后面number-1行</td>
+</tr>
+<tr>
+<td>d+移动光标的命令</td>
+<td>移动光标决定剪切内容</td>
+</tr>
+<tr>
+<td>[number]yy</td>
+<td>复制当前行，及其后面number-1行</td>
+</tr>
+<tr>
+<td>y+移动光标的命令</td>
+<td>移动光标决定复制内容</td>
+</tr>
+<tr>
+<td>P/p</td>
+<td>粘贴到光标前/后</td>
+</tr>
+</tbody></table>
+<h3 id="查找和替换"><a href="#查找和替换" class="headerlink" title="查找和替换"></a>查找和替换</h3><p>使用<code>/</code>命令来查找匹配的字符。例如<code>/line</code>找到所有line开头的字符，使用n命令重复查询操作（可循环查找）。</p>
+<p>替换操作则略显复杂，例如将文本所有的line都替换为Line，需要输入命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/line/Line/gc</span><br></pre></td></tr></table></figure>
+
+<p>%表示行数，省略则是执行当前行；s表示替换；/line/Line是查找与替换的文本；g是全局匹配，省略则是每行第一个匹配的进行替换；c是增加用户确认。</p>
+<h3 id="多文件操作"><a href="#多文件操作" class="headerlink" title="多文件操作"></a>多文件操作</h3><p>当我们需要进行多文件编辑的时候，就可以使用vi同时打开多个文本，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi foo.txt ls-output.txt</span><br></pre></td></tr></table></figure>
+
+<p>此时屏幕显示第一个文件，使用<code>:n</code>切换到下一个文件，使用<code>:N</code>切换到上一个文件。也可以使用<code>:buffers</code>来查看打开的文件列表，使用<code>:buffer 编号</code>就可以切换编辑的文件。</p>
+<p>当前文件修改而未保存的时候，vi会阻止我们进行跳转，在命令后添加感叹号可以强制跳转。</p>
+<p>在打开的文件中，使用<code>:e 文件地址</code>就可以打开新的文件。</p>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>一些可以直接使用echo显得是命令原来就是shell环境中的变量，像path就和Windows中修改环境变量类似，影响着一些程序的运行，需要在安装一些程序的时候进行修改，例如安装WSL显示GUI界面，需要安装xlaunch，并且之后需要在.bashrc文件中进行一定的配置才能正常运行。</p>
+<p>在vi编辑器方便则是学会基本的编辑操作和保存，有一定的认知即可，毕竟学习成本较高，正常情况下本人还是比较喜欢直接在Windows下使用交互式编辑器进行快速编辑。</p>
+
+    </div>
+    <div>    
+      
+          <div>    
+	        
+		<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------		</div>    
+	
+</div>    
+         
+    </div>
+
+    
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Grizzly
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://example.com/2021/02/01/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/" title="快乐Linux学习（五）">http://example.com/2021/02/01/快乐Linux学习（五）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i>Linux</a>
+              <a href="/tags/shell/" rel="tag"><i class="fa fa-tag"></i>shell</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/28/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/" rel="prev" title="快乐Linux学习（四）">
+      <i class="fa fa-chevron-left"></i> 快乐Linux学习（四）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/05/%E5%B9%B8%E5%AD%98%E8%80%85%E5%81%8F%E5%B7%AE/" rel="next" title="幸存者偏差">
+      幸存者偏差 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">shell环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">shell启动文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">修改配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vi"><span class="nav-number">3.</span> <span class="nav-text">vi</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E5%92%8C%E9%80%80%E5%87%BA"><span class="nav-number">3.1.</span> <span class="nav-text">打开和退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E5%85%89%E6%A0%87"><span class="nav-number">3.2.</span> <span class="nav-text">移动光标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E6%96%87%E6%9C%AC"><span class="nav-number">3.3.</span> <span class="nav-text">编辑文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E3%80%81%E5%89%AA%E5%88%87%E3%80%81%E5%A4%8D%E5%88%B6%E5%92%8C%E7%B2%98%E8%B4%B4"><span class="nav-number">3.4.</span> <span class="nav-text">删除、剪切、复制和粘贴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E5%92%8C%E6%9B%BF%E6%8D%A2"><span class="nav-number">3.5.</span> <span class="nav-text">查找和替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">3.6.</span> <span class="nav-text">多文件操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Grizzly"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Grizzly</p>
+  <div class="site-description" itemprop="description">人与数据</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Gipbear" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Gipbear" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1099048889@qq.com" title="E-Mail → mailto:1099048889@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Grizzly</span>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <!--<span class="post-meta-item-icon">-->
+        <!--<i class="fa fa-fa fa-user"></i>-->
+      <!--</span>-->
+	  我的第
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+	  位朋友
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <!--<span class="post-meta-item-icon">-->
+        <!--<i class="fa fa-fa fa-eye"></i>-->
+      <!--</span>-->
+      历经
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+	  次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+  <!--浏览器搞笑标题-->
+  <script type="text/javascript" src="/js/FunnyTitle.js"></script>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
