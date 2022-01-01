@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是快乐学习Linux的第四篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中文件权限和进程相关内容的读者。">
+  <meta name="description" content="本文是快乐学习Linux的第四篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中文件权限和进程相关内容的读者。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快乐Linux学习（四）">
 <meta property="og:url" content="http://example.com/2021/01/28/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是快乐学习Linux的第四篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中文件权限和进程相关内容的读者。">
+<meta property="og:description" content="本文是快乐学习Linux的第四篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中文件权限和进程相关内容的读者。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-28T03:34:53.000Z">
 <meta property="article:modified_time" content="2021-02-01T08:24:46.000Z">
@@ -181,10 +181,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -217,6 +213,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -249,6 +246,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
             </span>
 
         </div>
@@ -265,12 +276,12 @@
 <p>适用于学习Linux系统中文件权限和进程相关内容的读者。</p>
 </blockquote>
 <span id="more"></span>
-
-<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p>本系列的博客内容其实是建立在WSL上的，主要是仅给个人用户一个Linux环境，顺便来熟悉Linux系统，所以以下不会涉及太过复杂的权限设置，会覆盖基本的操作。</p>
+<h2 id="权限">权限</h2>
+<p>本系列的博客内容其实是建立在WSL上的，主要是仅给个人用户一个Linux环境，顺便来熟悉Linux系统，所以以下不会涉及太过复杂的权限设置，会覆盖基本的操作。</p>
 <p>当我们使用ls -l进行查看的时候，会按照长模式的方式显示：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件访问权限 硬链接数目 文件所属用户 文件所属用户组 文件大小 上次修改日期 文件名</span><br></pre></td></tr></table></figure>
-
-<h3 id="文件访问权限"><a href="#文件访问权限" class="headerlink" title="文件访问权限"></a>文件访问权限</h3><p>文件访问权限是由两部分组成的，一部分是文件类型，一部分是文件模式。</p>
+<h3 id="文件访问权限">文件访问权限</h3>
+<p>文件访问权限是由两部分组成的，一部分是文件类型，一部分是文件模式。</p>
 <p>文件类型有：</p>
 <ul>
 <li>-：普通文件。</li>
@@ -282,51 +293,54 @@
 <p>文件模式由文件所有者、文件组所有者和其他人三种用户的三种基本的：可读r、可写w、可执行x（s、t什么的就不涉及了）组成，共9个字符。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>属性</th>
 <th>文件</th>
 <th>目录</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>r</td>
 <td>允许打开并读写文件内容</td>
 <td>允许列出目录内容，前提是目录设置了x属性</td>
 </tr>
-<tr>
+<tr class="even">
 <td>w</td>
 <td>允许写入文件内容。重命名或删除是根据目录属性来的</td>
 <td>允许在目录下新建、删除或重命名文件，前提也是目录设置了x属性</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>x</td>
 <td>允许将文件作为程序来执行，脚本语言编写的程序必须具备</td>
 <td></td>
 </tr>
-</tbody></table>
-<h3 id="更改文件模式"><a href="#更改文件模式" class="headerlink" title="更改文件模式"></a>更改文件模式</h3><p>我们可以使用chomd来更改文件模式，更改的方式有两种，一种是八进制数字表示法或符号表示法，由于本人倾向于八进制数字表示法，且确实很nice，所以就不介绍符号表示法了。</p>
+</tbody>
+</table>
+<h3 id="更改文件模式">更改文件模式</h3>
+<p>我们可以使用chomd来更改文件模式，更改的方式有两种，一种是八进制数字表示法或符号表示法，由于本人倾向于八进制数字表示法，且确实很nice，所以就不介绍符号表示法了。</p>
 <p><strong>八进制数字表示法</strong>是因为1个八进制恰好需要3个二进制位来表示，而3个权限刚好对应3个二进制位，那么3种用户就只需要使用3位八进制数来表示即可（缕一缕这句话，其实挺清楚的）。</p>
 <p>例如<code>r--</code>就是100，也就是4，<code>rw-</code>就是110，也就是6，以此类推即可。</p>
 <p>那么新建并修改foo.txt权限为<code>rwxrw-r--</code>只需要使用：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; foo.txt</span><br><span class="line">chmod 764 foo.txt</span><br></pre></td></tr></table></figure>
-
-<h3 id="默认权限"><a href="#默认权限" class="headerlink" title="默认权限"></a>默认权限</h3><p>当我们新建文件的时候会自动赋予一个默认权限，这里在<strong>WSL</strong>下，默认的是<code>rw-r--r--</code>，这是由<code>umask</code>进行控制的。</p>
+<h3 id="默认权限">默认权限</h3>
+<p>当我们新建文件的时候会自动赋予一个默认权限，这里在<strong>WSL</strong>下，默认的是<code>rw-r--r--</code>，这是由<code>umask</code>进行控制的。</p>
 <p>命令行使用<code>umask</code>进行查看，会发现响应的数值是0022，常用的Linux系统还有0002，对应着关闭了哪些权限，2指的就是10，也就是原始文件权限是<code>rw-rw-rw-</code>，根据umask的掩码来<strong>关闭</strong>某些权限，作为最终的默认权限。</p>
 <p>一般不用修改，使用系统默认的就可以了。</p>
-<h3 id="用户和用户组"><a href="#用户和用户组" class="headerlink" title="用户和用户组"></a>用户和用户组</h3><p>针对具有多个用户和用户组的情况下，不同用户具有不同的文件的控制权。</p>
+<h3 id="用户和用户组">用户和用户组</h3>
+<p>针对具有多个用户和用户组的情况下，不同用户具有不同的文件的控制权。</p>
 <ul>
 <li><p>su [-[l]] [user]：是允许我们切换到另一个用户的身份，重新启动一个shell进程。</p>
-<p>  -l 表示切换shell环境，并更改工作目录到该用户下，没有用户名则默认是root，如下切换至root用户：</p>
-  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su -</span><br></pre></td></tr></table></figure>
-
-<p>  需要输入切换后用户的密码，登录后超级用户root显示的符号从“<code>$</code>”变为“<code>#</code>”，使用exit退出。</p>
-</li>
-<li><p>sudo：是允许一个普通用户以另一个用户的身份执行任务，本质上用户并没有切换，而且输入的密码是用户本身的密码，并且密码可以维持一段时间的信任。</p>
-</li>
+<p>-l 表示切换shell环境，并更改工作目录到该用户下，没有用户名则默认是root，如下切换至root用户：</p>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su -</span><br></pre></td></tr></table></figure></p>
+<p>需要输入切换后用户的密码，登录后超级用户root显示的符号从“<code>$</code>”变为“<code>#</code>”，使用exit退出。</p></li>
+<li><p>sudo：是允许一个普通用户以另一个用户的身份执行任务，本质上用户并没有切换，而且输入的密码是用户本身的密码，并且密码可以维持一段时间的信任。</p></li>
 </ul>
 <p>可以使用<code>chown [owner][:[group]] file</code>对文件的用户和用户组进行更改。</p>
 <p>使用<code>passwd</code>可以更改密码。</p>
-<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>关于文件和目录权限的内容并不过多赘述，之后存在需求之后再进行补充。</p>
+<h2 id="进程">进程</h2>
+<h2 id="个人收获">个人收获</h2>
+<p>关于文件和目录权限的内容并不过多赘述，之后存在需求之后再进行补充。</p>
 
     </div>
     <div>    
@@ -359,25 +373,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -501,10 +496,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -528,6 +530,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -609,6 +623,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

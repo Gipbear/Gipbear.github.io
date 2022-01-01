@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell环境和vi相关内容的读者。">
+  <meta name="description" content="本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell环境和vi相关内容的读者。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快乐Linux学习（五）">
 <meta property="og:url" content="http://example.com/2021/02/01/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell环境和vi相关内容的读者。">
+<meta property="og:description" content="本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell环境和vi相关内容的读者。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-02-01T08:23:48.000Z">
 <meta property="article:modified_time" content="2021-02-02T14:41:20.000Z">
@@ -182,10 +182,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -218,6 +214,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -250,6 +247,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>3 mins.</span>
             </span>
 
         </div>
@@ -266,138 +277,144 @@
 <p>适用于学习Linux系统中shell环境和vi相关内容的读者。</p>
 </blockquote>
 <span id="more"></span>
-
-<h2 id="shell环境"><a href="#shell环境" class="headerlink" title="shell环境"></a>shell环境</h2><p>shell在shell会话中保存着大量的信息，这些信息被称为shell环境。</p>
+<h2 id="shell环境">shell环境</h2>
+<p>shell在shell会话中保存着大量的信息，这些信息被称为shell环境。</p>
 <p>一般程序都是通过获取环境中的数据（<strong>环境变量</strong>）或<strong>配置文件</strong>来存储程序的设置，所以我们可以调整环境变量或配置文件来改变程序的行为。</p>
 <p>在shell环境中，一般存储两种基本类型的数据，一种是环境变量，一种是shell变量（bash存放的少量数据）。</p>
 <ul>
 <li>printenv：可以显示环境变量，看到的是环境变量及其对应的数值。</li>
 <li>set：可以显示环境变量、shell变量和自定义的shell函数，并且按照首字母排序。</li>
 </ul>
-<h2 id="shell启动文件"><a href="#shell启动文件" class="headerlink" title="shell启动文件"></a>shell启动文件</h2><p>登录系统之后会启动bash程序，读取一些列称为启动文件的配置脚本，之后再读取用户home目录的启动文件，这两个启动文件分别定义了全局和个人的shell环境。其中的启动顺序根据shell会话类型来决定。</p>
+<h2 id="shell启动文件">shell启动文件</h2>
+<p>登录系统之后会启动bash程序，读取一些列称为启动文件的配置脚本，之后再读取用户home目录的启动文件，这两个启动文件分别定义了全局和个人的shell环境。其中的启动顺序根据shell会话类型来决定。</p>
 <ul>
 <li><p>登录shell会话</p>
-<p>  会提示用户输入用户名和密码，读取一个或多个启动文件。</p>
-<p>  首先是应用于所有用户的全局配置文件：<code>/etc/profile</code>，然后是用户个人的启动文件：在WSL下使用的是：<code>~/.profile</code>，其他的Linux版本可能是<code>~/.bash_profile</code>和<code>~/.bash_login</code>。</p>
-</li>
+<p>会提示用户输入用户名和密码，读取一个或多个启动文件。</p>
+<p>首先是应用于所有用户的全局配置文件：<code>/etc/profile</code>，然后是用户个人的启动文件：在WSL下使用的是：<code>~/.profile</code>，其他的Linux版本可能是<code>~/.bash_profile</code>和<code>~/.bash_login</code>。</p></li>
 <li><p>非登录shell会话</p>
-<p>  一般是在GUI下启动终端会话时出现，读取全局配置文件：<code>/etc/bash.bashrc</code>，以及个人配置文件：<code>~/.bashrc</code>。并会集成父进程的环境设置（一般是一个登录shell进程）。</p>
-</li>
+<p>一般是在GUI下启动终端会话时出现，读取全局配置文件：<code>/etc/bash.bashrc</code>，以及个人配置文件：<code>~/.bashrc</code>。并会集成父进程的环境设置（一般是一个登录shell进程）。</p></li>
 </ul>
-<h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><p>修改配置文件的时候，可以使用文本编辑器打开文件，例如使用下面会提到的<strong>vi</strong>进行修改。</p>
+<h3 id="修改配置文件">修改配置文件</h3>
+<p>修改配置文件的时候，可以使用文本编辑器打开文件，例如使用下面会提到的<strong>vi</strong>进行修改。</p>
 <p>修改之前可以对文件进行备份，通常使用扩展名<code>.bak</code>、<code>.sav</code>、<code>.old</code>等方式来备份：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp .bashrc .bashrc.bak</span><br></pre></td></tr></table></figure>
-
 <p>然后修改<code>.bashrc</code>文件，遇到麻烦的时候可以再利用备份文件进行还原。</p>
 <p>修改之后使用source来激活配置：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>一般来说，添加目录到PATH变量或定义额外的环境变量，需要把修改<code>.profile</code>文件（或替代文件<code>.bash_profile</code>），对于其他的修改则放在<code>.bashrc</code>文件中。</p>
 </blockquote>
-<h2 id="vi"><a href="#vi" class="headerlink" title="vi"></a>vi</h2><p>在很多Linux系统都预装了vi程序，并且存在另一个高级替代版vim（vi improved），之后我们使用是vi实际上就是vim。vi具有轻量且快速的特点，相比于一些其他并不会在Linux上都预装的文本编辑器，在远程服务器上进行文本修改的时候，vi就显得相当方便了。</p>
+<h2 id="vi">vi</h2>
+<p>在很多Linux系统都预装了vi程序，并且存在另一个高级替代版vim（vi improved），之后我们使用是vi实际上就是vim。vi具有轻量且快速的特点，相比于一些其他并不会在Linux上都预装的文本编辑器，在远程服务器上进行文本修改的时候，vi就显得相当方便了。</p>
 <blockquote>
 <p>最重要的是：不会的话会被其他Linux使用者嘲笑！所以加油吧:fist_oncoming:！</p>
 </blockquote>
-<h3 id="打开和退出"><a href="#打开和退出" class="headerlink" title="打开和退出"></a>打开和退出</h3><p>首先最重要的是学会如何打开vi，并关闭它。</p>
+<h3 id="打开和退出">打开和退出</h3>
+<p>首先最重要的是学会如何打开vi，并关闭它。</p>
 <p>WSL已经预装了vim，我们在命令行输入vi或vim命令即可进入：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi</span><br></pre></td></tr></table></figure>
-
 <p>会发现显示<code>VIM - Vi IMproved</code>等内容，但实际上这些并不是打开了任何文件的内容，因为在vi中，行编辑最左侧出现了波浪号<code>~</code>说明该行内容为空。此时不要按下键盘上的任何键，因为我们此时处于vi的命令模式，如果我们需要退出的话，输入<code>:q</code>并按下回车就可以退出（出现在屏幕左下角，并且冒号是命令的一部分）。</p>
 <blockquote>
 <p>命令模式分为普通命令模式和ex模式，ex模式就是有冒号的命令，普通命令模式就是正常的命令，需要注意区分，在下文中，出现冒号的就是ex命令，否则就是普通命令。</p>
 </blockquote>
-<h3 id="移动光标"><a href="#移动光标" class="headerlink" title="移动光标"></a>移动光标</h3><p>在vi的命令模式下，存在大量的移动命令：</p>
+<h3 id="移动光标">移动光标</h3>
+<p>在vi的命令模式下，存在大量的移动命令：</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>按键</th>
 <th>移动效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>k j h l或Alt+方向键</td>
 <td>上下左右（方向）移动一个字符</td>
 </tr>
-<tr>
+<tr class="even">
 <td>0</td>
 <td>移动到当前行的行首</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>^</td>
 <td>当前行第一个非空字符</td>
 </tr>
-<tr>
+<tr class="even">
 <td>$</td>
 <td>当前行末尾</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>b w或Shift+方向键</td>
 <td>移动到上/下一个单词或标点的开头</td>
 </tr>
-<tr>
+<tr class="even">
 <td>B W或Ctrl+方向键</td>
 <td>移动到上/下一个单词的开头</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>G</td>
 <td>文件末尾</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>并且可以使用<strong>数字和命令</strong>来控制移动多少个字符或行，例如<code>5h</code>向左移动5个字符。</p>
-<h3 id="编辑文本"><a href="#编辑文本" class="headerlink" title="编辑文本"></a>编辑文本</h3><p>我们使用vi可以直接创建一个新的或打开一个已经存在的文件：</p>
+<h3 id="编辑文本">编辑文本</h3>
+<p>我们使用vi可以直接创建一个新的或打开一个已经存在的文件：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi foo.txt</span><br></pre></td></tr></table></figure>
-
 <p>执行命令会出现空白界面，我们需要知道的是：<strong>vi是一个模式编辑器</strong>，此时进入的vi的<strong>命令模式</strong>，按下的每一个键都是命令，所以千万不要乱来！</p>
 <p>我们按下<code>i</code>键，在左下角会出现<code>-- INSERT --</code>，表示进入了<u>插入</u>模式。此时可以输入一些文本。输入文本之后需要返回，需要使用<code>Esc</code>重新进入命令模式，如果需要<u>保存修改</u>则使用<code>:w</code>或保存并退出<code>:wq</code>，如果不需要保存则使用<code>:q!</code>。</p>
 <p>当我们想要<u>撤回</u>的时候，可以使用<code>u</code>来撤回对文本的最后一次<strong>修改</strong>，注意和word中只撤回几个字不一样，这是撤回最后一次<strong>修改</strong>。</p>
 <p>当我们再一次进入foo.txt文件时，光标会出现在上次退出的地方，当我们想要在行尾进行插入的时候，发现<code>i</code>只能出现在最后一个字符之前，所以我们使用<code>a</code>进行插入，同样会出现<code>-- INSERT --</code>，表示进入编辑模式，或者<code>A</code>直接到达编辑行的行尾。</p>
 <p>当我们需要<u>插入空白行</u>的时候，可以使用命令<code>o</code>在光标下方插入一行，使用命令<code>O</code>在光标上方插入一行。</p>
-<h3 id="删除、剪切、复制和粘贴"><a href="#删除、剪切、复制和粘贴" class="headerlink" title="删除、剪切、复制和粘贴"></a>删除、剪切、复制和粘贴</h3><p>这些操作的命令和移动光标类似</p>
+<h3 id="删除剪切复制和粘贴">删除、剪切、复制和粘贴</h3>
+<p>这些操作的命令和移动光标类似</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>按键</th>
 <th>效果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>[number]x</td>
 <td>删除当前字符，及其后面number-1个字符</td>
 </tr>
-<tr>
+<tr class="even">
 <td>[number]dd</td>
 <td>剪切当前行，及其后面number-1行</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>d+移动光标的命令</td>
 <td>移动光标决定剪切内容</td>
 </tr>
-<tr>
+<tr class="even">
 <td>[number]yy</td>
 <td>复制当前行，及其后面number-1行</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>y+移动光标的命令</td>
 <td>移动光标决定复制内容</td>
 </tr>
-<tr>
+<tr class="even">
 <td>P/p</td>
 <td>粘贴到光标前/后</td>
 </tr>
-</tbody></table>
-<h3 id="查找和替换"><a href="#查找和替换" class="headerlink" title="查找和替换"></a>查找和替换</h3><p>使用<code>/</code>命令来查找匹配的字符。例如<code>/line</code>找到所有line开头的字符，使用n命令重复查询操作（可循环查找）。</p>
+</tbody>
+</table>
+<h3 id="查找和替换">查找和替换</h3>
+<p>使用<code>/</code>命令来查找匹配的字符。例如<code>/line</code>找到所有line开头的字符，使用n命令重复查询操作（可循环查找）。</p>
 <p>替换操作则略显复杂，例如将文本所有的line都替换为Line，需要输入命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/line/Line/gc</span><br></pre></td></tr></table></figure>
-
 <p>%表示行数，省略则是执行当前行；s表示替换；/line/Line是查找与替换的文本；g是全局匹配，省略则是每行第一个匹配的进行替换；c是增加用户确认。</p>
-<h3 id="多文件操作"><a href="#多文件操作" class="headerlink" title="多文件操作"></a>多文件操作</h3><p>当我们需要进行多文件编辑的时候，就可以使用vi同时打开多个文本，例如：</p>
+<h3 id="多文件操作">多文件操作</h3>
+<p>当我们需要进行多文件编辑的时候，就可以使用vi同时打开多个文本，例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi foo.txt ls-output.txt</span><br></pre></td></tr></table></figure>
-
 <p>此时屏幕显示第一个文件，使用<code>:n</code>切换到下一个文件，使用<code>:N</code>切换到上一个文件。也可以使用<code>:buffers</code>来查看打开的文件列表，使用<code>:buffer 编号</code>就可以切换编辑的文件。</p>
 <p>当前文件修改而未保存的时候，vi会阻止我们进行跳转，在命令后添加感叹号可以强制跳转。</p>
 <p>在打开的文件中，使用<code>:e 文件地址</code>就可以打开新的文件。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>一些可以直接使用echo显得是命令原来就是shell环境中的变量，像path就和Windows中修改环境变量类似，影响着一些程序的运行，需要在安装一些程序的时候进行修改，例如安装WSL显示GUI界面，需要安装xlaunch，并且之后需要在.bashrc文件中进行一定的配置才能正常运行。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>一些可以直接使用echo显得是命令原来就是shell环境中的变量，像path就和Windows中修改环境变量类似，影响着一些程序的运行，需要在安装一些程序的时候进行修改，例如安装WSL显示GUI界面，需要安装xlaunch，并且之后需要在.bashrc文件中进行一定的配置才能正常运行。</p>
 <p>在vi编辑器方便则是学会基本的编辑操作和保存，有一定的认知即可，毕竟学习成本较高，正常情况下本人还是比较喜欢直接在Windows下使用交互式编辑器进行快速编辑。</p>
 
     </div>
@@ -431,25 +448,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -529,7 +527,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">shell环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">shell启动文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">修改配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vi"><span class="nav-number">3.</span> <span class="nav-text">vi</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E5%92%8C%E9%80%80%E5%87%BA"><span class="nav-number">3.1.</span> <span class="nav-text">打开和退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E5%85%89%E6%A0%87"><span class="nav-number">3.2.</span> <span class="nav-text">移动光标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E6%96%87%E6%9C%AC"><span class="nav-number">3.3.</span> <span class="nav-text">编辑文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E3%80%81%E5%89%AA%E5%88%87%E3%80%81%E5%A4%8D%E5%88%B6%E5%92%8C%E7%B2%98%E8%B4%B4"><span class="nav-number">3.4.</span> <span class="nav-text">删除、剪切、复制和粘贴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E5%92%8C%E6%9B%BF%E6%8D%A2"><span class="nav-number">3.5.</span> <span class="nav-text">查找和替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">3.6.</span> <span class="nav-text">多文件操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E7%8E%AF%E5%A2%83"><span class="nav-number">1.</span> <span class="nav-text">shell环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell%E5%90%AF%E5%8A%A8%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">shell启动文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">修改配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vi"><span class="nav-number">3.</span> <span class="nav-text">vi</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E5%92%8C%E9%80%80%E5%87%BA"><span class="nav-number">3.1.</span> <span class="nav-text">打开和退出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E5%85%89%E6%A0%87"><span class="nav-number">3.2.</span> <span class="nav-text">移动光标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E6%96%87%E6%9C%AC"><span class="nav-number">3.3.</span> <span class="nav-text">编辑文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%89%AA%E5%88%87%E5%A4%8D%E5%88%B6%E5%92%8C%E7%B2%98%E8%B4%B4"><span class="nav-number">3.4.</span> <span class="nav-text">删除、剪切、复制和粘贴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E5%92%8C%E6%9B%BF%E6%8D%A2"><span class="nav-number">3.5.</span> <span class="nav-text">查找和替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">3.6.</span> <span class="nav-text">多文件操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -574,10 +572,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -601,6 +606,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -682,6 +699,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

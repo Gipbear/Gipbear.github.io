@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件。 适用于需要简单数据库迁移的读者。">
+  <meta name="description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件。 适用于需要简单数据库迁移的读者。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql导出表结构与数据">
 <meta property="og:url" content="http://example.com/2021/01/18/mysql%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件。 适用于需要简单数据库迁移的读者。">
+<meta property="og:description" content="本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为.sql文件，以及如何执行.sql文件。 适用于需要简单数据库迁移的读者。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-18T12:04:21.000Z">
 <meta property="article:modified_time" content="2021-01-27T01:34:52.000Z">
@@ -181,10 +181,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -217,6 +213,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -249,6 +246,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
             </span>
 
         </div>
@@ -265,29 +276,29 @@
 <p>适用于需要简单数据库迁移的读者。</p>
 </blockquote>
 <span id="more"></span>
-
-<h2 id="导出数据表"><a href="#导出数据表" class="headerlink" title="导出数据表"></a>导出数据表</h2><p>MySQL导出表结构主要是使用<code>mysqldump</code>命令。该命令是在<code>cmd</code>下执行的，而非MySQL命令行中，使用相对路径，会将文件保存在当前目录下。</p>
-<ol>
+<h2 id="导出数据表">导出数据表</h2>
+<p>MySQL导出表结构主要是使用<code>mysqldump</code>命令。该命令是在<code>cmd</code>下执行的，而非MySQL命令行中，使用相对路径，会将文件保存在当前目录下。</p>
+<ol type="1">
 <li><p>导出数据库<code>dbname</code>中全部表结构至<code>db.sql</code>中：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
 <li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构至<code>db.sql</code>中：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
 <li><p>导出数据库<code>dbname</code>中全部表结构及其数据至<code>db.sql</code>中（不加-d）：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p dbname &gt;db.sql</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p dbname &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
 <li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构及其数据至<code>db.sql</code>中：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
 </ol>
-<h2 id="导入数据表"><a href="#导入数据表" class="headerlink" title="导入数据表"></a>导入数据表</h2><p>当我们拥有一个sql文件的时候，我们就可以直接执行sql脚本来完成任务。</p>
-<ol>
+<h2 id="导入数据表">导入数据表</h2>
+<p>当我们拥有一个sql文件的时候，我们就可以直接执行sql脚本来完成任务。</p>
+<ol type="1">
 <li><p>在cmd下执行命令：需要选择MySQL的sever下的目录，如果目录存在空格，则需要使用双引号，若sql文件中存在<code>use 数据库</code>则不需要指定<code>-D数据库</code></p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql&quot; –uroot –p -D dbname &lt; C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql&quot; –uroot –p -D dbname &lt; C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></p></li>
 <li><p>在MySQL命令行中执行命令：sql文件需要是绝对路径</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者推荐下面这个</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者推荐下面这个</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></p></li>
 </ol>
 <p>在导入数据库的时候，有可能会出现错误<code>MySQL server has gone away</code>。原因一般是操作sql的时间太长，或者插入数据库的数据量太大，一般来说，可以将数据分批插入，或者修改<code>max_allowed_packet</code>参数的配置。</p>
-<p>首先查看max_allowed_packet的值，使用<code>show global variables like &#39;max_allowed_packet&#39;</code>查看对应的值，之后输入语句进行调整，由于<code>db.sql</code>文件太大，本人这里设置为100M：</p>
+<p>首先查看max_allowed_packet的值，使用<code>show global variables like 'max_allowed_packet'</code>查看对应的值，之后输入语句进行调整，由于<code>db.sql</code>文件太大，本人这里设置为100M：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> max_allowed_packet<span class="operator">=</span><span class="number">1024</span><span class="operator">*</span><span class="number">1024</span><span class="operator">*</span><span class="number">100</span></span><br></pre></td></tr></table></figure>
-
 <p>接下来再读取sql文件导入数据库的时候问题就不大了</p>
 
     </div>
@@ -321,25 +332,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -463,10 +455,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -490,6 +489,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -571,6 +582,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell特性和键盘操作的读者。">
+  <meta name="description" content="本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell特性和键盘操作的读者。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快乐Linux学习（三）">
 <meta property="og:url" content="http://example.com/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell特性和键盘操作的读者。">
+<meta property="og:description" content="本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统中shell特性和键盘操作的读者。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-27T13:51:11.000Z">
 <meta property="article:modified_time" content="2021-01-28T02:26:04.000Z">
@@ -181,10 +181,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -217,6 +213,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -249,6 +246,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>3 mins.</span>
             </span>
 
         </div>
@@ -265,117 +276,112 @@
 <p>适用于学习Linux系统中shell特性和键盘操作的读者。</p>
 </blockquote>
 <span id="more"></span>
-
-<h2 id="字符展开"><a href="#字符展开" class="headerlink" title="字符展开"></a>字符展开</h2><p>每当我们在bash中输入一串命令，bash就会在执行命令之前将命令进行<code>展开</code>操作。</p>
+<h2 id="字符展开">字符展开</h2>
+<p>每当我们在bash中输入一串命令，bash就会在执行命令之前将命令进行<code>展开</code>操作。</p>
 <p>我们可以使用<code>echo</code>来显示一行文本：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo This is a test.</span><br></pre></td></tr></table></figure>
-
 <p>那么不出意外将会输出结果<code>This is a test.</code>，当我们输入：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo *</span><br></pre></td></tr></table></figure>
-
 <p>就会出现意外了:joy:，结果是根据通配符含义的“<code>*</code>”匹配当前文件夹的任何内容，而不是我们想要打印的“<code>*</code>”，这就意味着我们的命令有了自己的想法，想要按照自身的规则先进行展开成完全态，再执行命令。</p>
-<h3 id="路径名展开"><a href="#路径名展开" class="headerlink" title="路径名展开"></a>路径名展开</h3><p>以上这样的展开被称为路径名展开，例如打印当前目录所有的以<code>l</code>开头的文件或目录：</p>
+<h3 id="路径名展开">路径名展开</h3>
+<p>以上这样的展开被称为路径名展开，例如打印当前目录所有的以<code>l</code>开头的文件或目录：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo l*</span><br></pre></td></tr></table></figure>
-
 <p>但是无法显示隐藏文件的展开路径，但是<code>办法总比困难多</code>。我们进行尝试：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo .*</span><br></pre></td></tr></table></figure>
-
 <p>几乎成功了，但是存在了不需要的<code>.</code>和<code>..</code>。换个方法：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -d .[!.]?* | less</span><br></pre></td></tr></table></figure>
-
 <p>仅展示以<code>.</code>开头，第二个符号不是<code>.</code>，并且至少再包含一个符号，之后可以紧跟任意多个字符。</p>
 <blockquote>
 <p>我们可以发现，对于文件和目录进行打印输出的时候，使用echo和ls的结果似乎差不多，但是细心的话，我们可以发现，ls文件名之间的间距是根据<code>制表符</code>规定的，而echo每两个文件名之间的间距是<code>一个空格</code>，其中原因也是shell的命令展开。</p>
 </blockquote>
-<h3 id="算数表达式展开"><a href="#算数表达式展开" class="headerlink" title="算数表达式展开"></a>算数表达式展开</h3><p>算术表达式是形如<code>$((expression))</code>，表达式中不在意空格，并且可以嵌套存在，需要注意的是除法“<code>/</code>”，由于表达式仅支持<strong>整数操作</strong>，所以除法操作得到的结果是<strong>舍尾的整数</strong>，想要获得余数可以使用“<code>%</code>”进行操作。</p>
-<h3 id="花括号展开"><a href="#花括号展开" class="headerlink" title="花括号展开"></a>花括号展开</h3><p>花括号是为了获得多个具有一定重复规律的字符串而出现的，举个例子:bulb:：</p>
+<h3 id="算数表达式展开">算数表达式展开</h3>
+<p>算术表达式是形如<code>$((expression))</code>，表达式中不在意空格，并且可以嵌套存在，需要注意的是除法“<code>/</code>”，由于表达式仅支持<strong>整数操作</strong>，所以除法操作得到的结果是<strong>舍尾的整数</strong>，想要获得余数可以使用“<code>%</code>”进行操作。</p>
+<h3 id="花括号展开">花括号展开</h3>
+<p>花括号是为了获得多个具有一定重复规律的字符串而出现的，举个例子:bulb:：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo hello-&#123;R,G,B&#125;-world</span><br></pre></td></tr></table></figure>
-
 <p>则结果会生成<code>hello-R-world hello-G-world hello-B-world</code>，或者想要生成2019-01至2021-12的文件夹来存放相应内容，可以使用：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir &#123;2019..2021&#125;-0&#123;1..9&#125; &#123;2019..2021&#125;-1&#123;0..2&#125;</span><br></pre></td></tr></table></figure>
-
 <p>其中花括号内可以包含字符串列表，整数区间和字符区间，区间使用<code>..</code>来表示区间范围，其中字符区间全部是大写或全部是小写的时候没有任何问题，但是在大写到小写的区间内，由于<code>ASCII</code>码的原因，会存在几个过度的字符，这需要注意一下。</p>
 <p>同样的，花括号也可以<code>嵌套</code>。</p>
-<h3 id="参数展开"><a href="#参数展开" class="headerlink" title="参数展开"></a>参数展开</h3><p>参数展开在此处简要体提及，之后会在shell脚本中详细阐述。</p>
+<h3 id="参数展开">参数展开</h3>
+<p>参数展开在此处简要体提及，之后会在shell脚本中详细阐述。</p>
 <p>我们查看一下可以使用的有效参数：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printenv | less</span><br></pre></td></tr></table></figure>
-
 <p>这些参数可以使用 <code>$</code>符号进行调用，来显示参数对应的值：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $USER</span><br></pre></td></tr></table></figure>
-
 <p><strong>命令替换</strong>功能也能将命令的输出作为一个展开模式来使用，例如将找到cp目录的<strong>结果作为展开的参数</strong>给ls进行打印：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l $(which cp)</span><br></pre></td></tr></table></figure>
-
-<p>同样的，管道线也适用参数展开，在旧版bash中也可以使用<code>ls -l `which cp` </code>达到同样效果。</p>
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>这里的引用指的是一种引用机制，用来有选择的禁止不需要的展开。什么叫做不需要的展开，如下：</p>
+<p>同样的，管道线也适用参数展开，在旧版bash中也可以使用<code>ls -l `which cp`</code>达到同样效果。</p>
+<h3 id="引用">引用</h3>
+<p>这里的引用指的是一种引用机制，用来有选择的禁止不需要的展开。什么叫做不需要的展开，如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo This is a     Test</span><br></pre></td></tr></table></figure>
-
 <p>但是结果是<code>This is a Test</code>，中间想要的空格被自动展开后再进行单词分割（空格、制表符、换行符等界定符）而失去了。再比如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo The total price is $100.00</span><br></pre></td></tr></table></figure>
-
 <p>但是结果却是<code>The total price is 00.00</code>，原因是<code>$1</code>被视作名为变量1的参数。</p>
 <p>为了禁止这些不需要的展开，所以出现了引用机制，这里有两种类型，一种是<strong>双引号</strong>，一种是<strong>单引号</strong>。</p>
 <p>使用双引号的时候，shell使用的一些特殊字符将会失去其特殊含义，<u>单词分割，路径名展开，波浪线展开（用户名）和花括号展开</u>都会被禁止。</p>
 <p>例如这个存在空格的破损文件名<code>word count.txt</code>，正常情况下ls的时候会认作两个参数，而使用双引号的时候就会关闭单词分割，从而视作一个参数来正确读取，并且可以使用mv进行重命名。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -l &quot;word count.txt&quot;</span><br><span class="line">mv &quot;word count.txt&quot; word_count.txt</span><br></pre></td></tr></table></figure>
-
 <p>再比如打印日历：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $(cal)</span><br></pre></td></tr></table></figure>
-
 <p>这就是被单词分割的后果！可以尝试加上双引号，一下子好看了有木有:laughing:！</p>
-<p>但是对于<code>$，\和` </code>并不会被禁止，也就是意味着参数展开，算术展开和命令替换仍然会被执行。</p>
+<p>但是对于<code>$，\和`</code>并不会被禁止，也就是意味着参数展开，算术展开和命令替换仍然会被执行。</p>
 <p>这就需要使用单引号来<strong>禁止全部展开</strong>，通过以下对比进行说明：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`</span><br><span class="line">echo &quot;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&quot;</span><br><span class="line">echo &#x27;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&#x27;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>对于转义字符“<code>\</code>”有一个很有趣的东西，echo加上<code>-e</code>能够解释转义字符，例如，10秒后响铃:alarm_clock:：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sleep 10; echo -e &quot;Time&#x27;s up \a&quot;</span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2 id="键盘的高级操作"><a href="#键盘的高级操作" class="headerlink" title="键盘的高级操作"></a>键盘的高级操作</h2><p>这里再附带说一下键盘有关的高级操作，<code>命令行的目标是懒惰</code>，各种简短而丰富的命令是为了更少的敲击键盘和无需使用鼠标，来专注于工作本身。</p>
+<h2 id="键盘的高级操作">键盘的高级操作</h2>
+<p>这里再附带说一下键盘有关的高级操作，<code>命令行的目标是懒惰</code>，各种简短而丰富的命令是为了更少的敲击键盘和无需使用鼠标，来专注于工作本身。</p>
 <p>在命令行中存在很多的按键，来快速编辑，例如：</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>按键</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>Ctrl-a</td>
 <td>光标移动到行首</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Ctrl-e</td>
 <td>光标移动到行尾</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Alt-f</td>
 <td>光标向前移动一个字</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Alt-b</td>
 <td>光标向后移动一个字</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Ctrl-l</td>
 <td>清空屏幕，与clear相同</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Alt-l</td>
 <td>光标至字尾的字符转化为小写字母</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Alt-u</td>
 <td>光标至字尾的字符转化为大写字母</td>
 </tr>
-</tbody></table>
-<h3 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h3><p>自动补全是shell一个很方便的方法，Linux系统不一样可能机制不同，WSL中是只有一个匹配的则敲击<code>一下tab</code>键即可，存在多个匹配条件，则连续敲击<code>两下tab</code>键显示。</p>
-<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><p>使用上下键就可以浏览之前输入过的历史命令，不过还可以使用history进行查看：</p>
+</tbody>
+</table>
+<h3 id="自动补全">自动补全</h3>
+<p>自动补全是shell一个很方便的方法，Linux系统不一样可能机制不同，WSL中是只有一个匹配的则敲击<code>一下tab</code>键即可，存在多个匹配条件，则连续敲击<code>两下tab</code>键显示。</p>
+<h3 id="历史命令">历史命令</h3>
+<p>使用上下键就可以浏览之前输入过的历史命令，不过还可以使用history进行查看：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history | less</span><br></pre></td></tr></table></figure>
-
 <p>在每个历史命令中，每行会有一个序号，我们在命令行直接输入<code>!80</code>就可以直接执行第80行的命令了。</p>
 <p>使用<code>Ctrl-r</code>可以进入搜索模式，输入部分命令内容，继续按下<code>Ctrl-r</code>就可以从<strong>现在</strong>到<strong>过去</strong>进行历史命令匹配了。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>总之，Linux中的shell是一个很有趣的事物，准确的理解其中展开和引用机制可以很好的发挥shell的能力。对于最后提及的键盘快捷键，暂时来说只是锦上添花，更多的还是关注命令本身。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>总之，Linux中的shell是一个很有趣的事物，准确的理解其中展开和引用机制可以很好的发挥shell的能力。对于最后提及的键盘快捷键，暂时来说只是锦上添花，更多的还是关注命令本身。</p>
 
     </div>
     <div>    
@@ -408,25 +414,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -550,10 +537,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -577,6 +571,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -658,6 +664,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

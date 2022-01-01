@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。  本文适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。 主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题">
+  <meta name="description" content="这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。  本文适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。 主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flask | JS获取python中的JSON数据">
 <meta property="og:url" content="http://example.com/2021/01/10/Flask%E2%80%94%E2%80%94JS%E8%8E%B7%E5%8F%96python%E4%B8%AD%E7%9A%84JSON%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。  本文适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。 主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题">
+<meta property="og:description" content="这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。  本文适用于 Flask + Pandas + HTML + JS 的场景，其他场景不保证完全适用。 主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-10T11:15:01.000Z">
 <meta property="article:modified_time" content="2021-01-28T03:36:12.000Z">
@@ -183,10 +183,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -219,6 +215,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -255,6 +252,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
             </span>
 
         </div>
@@ -272,42 +283,45 @@
 <p>主要解决关于Flask传递JSON数据到JS出现‘&amp;#34’的问题</p>
 </blockquote>
 <span id="more"></span>
-
-<h2 id="JSON数据简介"><a href="#JSON数据简介" class="headerlink" title="JSON数据简介"></a>JSON数据简介</h2><p>// Todo：关于JSON数据的简介</p>
+<h2 id="json数据简介">JSON数据简介</h2>
+<p>// Todo：关于JSON数据的简介</p>
 <p>JSON的全称是”<code>JavaScript Object Notation</code>”，意思是JavaScript对象表示法，它是一种基于文本，独立于语言的轻量级数据交换格式。</p>
-<h2 id="JS获取Flask的数据"><a href="#JS获取Flask的数据" class="headerlink" title="JS获取Flask的数据"></a>JS获取Flask的数据</h2><p>Flask框架允许我们在HTML中直接获得python文件中传递过来的参数，如下：</p>
+<h2 id="js获取flask的数据">JS获取Flask的数据</h2>
+<p>Flask框架允许我们在HTML中直接获得python文件中传递过来的参数，如下：</p>
 <p>app.py</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=<span class="string">&#x27;hello word!&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
 <p>index.html</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p>这样在html页面中就可以直接显示传递过来的数据了，在前端某些需要后端计算返回数据的时候还是比较实用的。</p>
 <p>在Pandas下使用<code>DataFrame.to_json()</code>，将数据转化为JSON格式，我们可以使用type观察一下其类型，容易发现他本质上是一个字符串，所以将其传递给JS的时候，他就认为这是一个字符串类型的数据，所以，我们需要在JS文件中使用的时候，需要将<code>string</code>类型的JSON变量转化为<code>object</code>类型的JSON对象。</p>
-<p>此处存在三种常用的方法进行<a href="%5Bjs%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%8C%96%E6%88%90json%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%BD%BF%E7%94%A8JSON.parse()%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9%5D(https://segmentfault.com/a/1190000007368846)">^1</a></p>
+<p>此处存在三种常用的方法进行<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <ul>
 <li><code>var json = JSON.parse(str);</code></li>
-<li><code>var json = eval(&quot;(&quot; + str + &quot;)&quot;);</code></li>
-<li><code>var json = (new Function(&quot;return &quot; + str))();</code></li>
+<li><code>var json = eval("(" + str + ")");</code></li>
+<li><code>var json = (new Function("return " + str))();</code></li>
 </ul>
 <p>但是我们在Flask中传递参数过来之，在利用以上方法进行解析的时候却出现了问题：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sitePos形如 &#x27;[[obj00,obj01],[obj10,obj11],[obj20,obj21]&#x27;</span></span><br><span class="line"><span class="keyword">var</span> sitePos = &#123;&#123; sitePos &#125;&#125;</span><br><span class="line"><span class="built_in">console</span>.log(sitePos)</span><br><span class="line">sitePos = <span class="built_in">JSON</span>.parse(sitePos)</span><br><span class="line"><span class="built_in">console</span>.log(sitePos)</span><br></pre></td></tr></table></figure>
-
 <p>当我的数据是两列<code>数字类型</code>的JSON格式的时候，完全没问题，程序顺利运行！</p>
-<h3 id="报错：JSON字符串在JS中引号转义为‘-amp-34’"><a href="#报错：JSON字符串在JS中引号转义为‘-amp-34’" class="headerlink" title="报错：JSON字符串在JS中引号转义为‘&amp;#34’"></a>报错：JSON字符串在JS中引号转义为‘&amp;#34’</h3><p>但是当我加入一列<code>字符串类型</code>的数据时就出现问题了！第4行报错：<code>Uncaught SyntaxError: Unexpected token &amp; in JSON at position 1</code>，仔细一看第2行的log，发现字符串类型的数据中，双引号被转义为<code>&amp;#34;</code>，我一拍脑袋就想到解决办法了🤪</p>
+<h3 id="报错json字符串在js中引号转义为34">报错：JSON字符串在JS中引号转义为‘&amp;#34’</h3>
+<p>但是当我加入一列<code>字符串类型</code>的数据时就出现问题了！第4行报错：<code>Uncaught SyntaxError: Unexpected token &amp; in JSON at position 1</code>，仔细一看第2行的log，发现字符串类型的数据中，双引号被转义为<code>&amp;#34;</code>，我一拍脑袋就想到解决办法了🤪</p>
 <ul>
-<li>错误方法1：在python中使用<code>to_json()</code>获得JSON字符串之后，利用<code>replace(&#39;\&quot;&#39;,&#39;&#39;)</code>，直接将引号删除。好家伙，照样报错<code>Uncaught SyntaxError: Unexpected token N in JSON at position 1</code>，报错到了字符串内容而已，本质问题相同。</li>
+<li>错误方法1：在python中使用<code>to_json()</code>获得JSON字符串之后，利用<code>replace('\"','')</code>，直接将引号删除。好家伙，照样报错<code>Uncaught SyntaxError: Unexpected token N in JSON at position 1</code>，报错到了字符串内容而已，本质问题相同。</li>
 <li>错误方法2：将双引号转化为单引号。。。不愧是我，继续错。</li>
 <li>错误方法3：在JS中使用ajax获取，这个就不展开将了，可以成功获取，但是不知道什么原因不能稳定显示，总之不靠谱，以及浪费了大量时间。（赤裸裸的给我希望，但是让我绝望——我太菜）。</li>
 </ul>
 <p>知道后来我遇到了这个男人[^ 2]，我终于悟了，这是因为JS出于对数据的安全考虑，将其进行转义，之前还看到一个不靠谱的文章说将安全保护关了。</p>
-<p>正确解法：在HTML使用容器来获得数据，之后再在JS中利用DOM获得数据。将样式设置为<code>style=&quot;display:none&quot;</code>是为了不让该元素容器显示，只作为媒介存在。</p>
+<p>正确解法：在HTML使用容器来获得数据，之后再在JS中利用DOM获得数据。将样式设置为<code>style="display:none"</code>是为了不让该元素容器显示，只作为媒介存在。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;dataid&quot;</span> <span class="attr">d</span>=<span class="string">&quot;&#123;&#123;sitePos&#125;&#125;&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:none&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> sitePos = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;dataid&#x27;</span>).getAttribute(<span class="string">&#x27;d&#x27;</span>);</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>JS和HTML其实都可以通过 来获得Python中传递的数据。</p>
 </blockquote>
-<p>[^ 2]:<a target="_blank" rel="noopener" href="https://blog.csdn.net/wangqing008/article/details/39352867">Flask python 传输数据到前台 js 出问题 “&#39; &#34;”</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000007368846">js字符串转化成json对象，使用JSON.parse()需要注意的地方</a> [^ 2]:<a target="_blank" rel="noopener" href="https://blog.csdn.net/wangqing008/article/details/39352867">Flask python 传输数据到前台 js 出问题 “' "”</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
     </div>
     <div>    
@@ -340,25 +354,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -439,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON%E6%95%B0%E6%8D%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">JSON数据简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E8%8E%B7%E5%8F%96Flask%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">JS获取Flask的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%EF%BC%9AJSON%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%A8JS%E4%B8%AD%E5%BC%95%E5%8F%B7%E8%BD%AC%E4%B9%89%E4%B8%BA%E2%80%98-amp-34%E2%80%99"><span class="nav-number">2.1.</span> <span class="nav-text">报错：JSON字符串在JS中引号转义为‘&amp;#34’</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#json%E6%95%B0%E6%8D%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">JSON数据简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js%E8%8E%B7%E5%8F%96flask%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">JS获取Flask的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99json%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%9C%A8js%E4%B8%AD%E5%BC%95%E5%8F%B7%E8%BD%AC%E4%B9%89%E4%B8%BA34"><span class="nav-number">2.1.</span> <span class="nav-text">报错：JSON字符串在JS中引号转义为‘&amp;#34’</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -484,10 +479,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -511,6 +513,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -592,6 +606,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

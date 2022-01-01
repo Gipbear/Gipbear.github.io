@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是根据《活用数据|驱动业务的数据分析实战》中的案例进行的学习总结，主要是从内外部因素对企业网上商城进行定性和定量分析，并结合波士顿矩阵进行分析。 适用于需要结合案例学习数据分析方法的初学者。">
+  <meta name="description" content="本文是根据《活用数据|驱动业务的数据分析实战》中的案例进行的学习总结，主要是从内外部因素对企业网上商城进行定性和定量分析，并结合波士顿矩阵进行分析。 适用于需要结合案例学习数据分析方法的初学者。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="战略分析案例——网上商城">
 <meta property="og:url" content="http://example.com/2021/02/16/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是根据《活用数据|驱动业务的数据分析实战》中的案例进行的学习总结，主要是从内外部因素对企业网上商城进行定性和定量分析，并结合波士顿矩阵进行分析。 适用于需要结合案例学习数据分析方法的初学者。">
+<meta property="og:description" content="本文是根据《活用数据|驱动业务的数据分析实战》中的案例进行的学习总结，主要是从内外部因素对企业网上商城进行定性和定量分析，并结合波士顿矩阵进行分析。 适用于需要结合案例学习数据分析方法的初学者。">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/2021/02/16/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/%E7%BD%91%E4%B8%8A%E5%95%86%E5%9F%8E%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%B3%A2%E5%A3%AB%E9%A1%BF%E7%9F%A9%E9%98%B5%E5%9B%BE.svg">
 <meta property="article:published_time" content="2021-02-16T11:42:23.000Z">
@@ -187,10 +187,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -223,6 +219,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -255,6 +252,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>5.2k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>5 mins.</span>
             </span>
 
         </div>
@@ -271,15 +282,17 @@
 <p>适用于需要结合案例学习数据分析方法的初学者。</p>
 </blockquote>
 <span id="more"></span>
-
-<h2 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h2><p>进行战略分析的分析思路是进行研究目的和研究内容的分解，下面对此分别进行考虑。</p>
+<h2 id="总体思路">总体思路</h2>
+<p>进行战略分析的分析思路是进行研究目的和研究内容的分解，下面对此分别进行考虑。</p>
 <p>首先考虑<code>研究目的</code>，这里是帮助商城进行<strong>战略选择</strong>，选择最适合商城的目标市场。对此我们需要分析两个因素：</p>
 <ul>
 <li>外部因素——市场吸引力：市场情况如何，是否有希望获得足够的利益；</li>
 <li>内部因素——企业竞争力：企业是否有能力进入市场，进入市场后能够获得多少利益。</li>
 </ul>
 <p>其次分析<code>研究内容</code>，主要是进行环境分析，包括宏观环境、市场环境、竞争环境分析。</p>
-<h2 id="环境分析"><a href="#环境分析" class="headerlink" title="环境分析"></a>环境分析</h2><h3 id="宏观环境分析"><a href="#宏观环境分析" class="headerlink" title="宏观环境分析"></a>宏观环境分析</h3><p>宏观环境是指影响市场的各种宏观原因，可以利益PEST进行概况：</p>
+<h2 id="环境分析">环境分析</h2>
+<h3 id="宏观环境分析">宏观环境分析</h3>
+<p>宏观环境是指影响市场的各种宏观原因，可以利益PEST进行概况：</p>
 <ul>
 <li>政治环境 Political</li>
 <li>经济环境 Economic</li>
@@ -287,46 +300,52 @@
 <li>技术环境 Technological</li>
 </ul>
 <p>通过宏观环境分析，企业可以判断出，对某企业而言，哪些因素是机会，哪些因素是威胁，若<strong>机会大于威胁</strong>，则说明该市场具有吸引力。</p>
-<h3 id="市场环境分析"><a href="#市场环境分析" class="headerlink" title="市场环境分析"></a>市场环境分析</h3><p>市场环境是指市场的<strong>具体情况</strong>，需要考虑的因素比较多，比较倾向于市场规模大、利润水平高、增长速度快、成长潜力强、所处生命周期成长期等，这种市场对于企业更具有吸引力。但是大部分市场并不会同时满足以上条件，所以，需要企业按照自身资源和定位情况进行取舍。</p>
+<h3 id="市场环境分析">市场环境分析</h3>
+<p>市场环境是指市场的<strong>具体情况</strong>，需要考虑的因素比较多，比较倾向于市场规模大、利润水平高、增长速度快、成长潜力强、所处生命周期成长期等，这种市场对于企业更具有吸引力。但是大部分市场并不会同时满足以上条件，所以，需要企业按照自身资源和定位情况进行取舍。</p>
 <p>通过以上宏观环境和市场环境可以分析得出市场对企业是否具有吸引力，但是并不是具有吸引力的市场，就一定会使得企业获利，因为我们还需要对比企业自身优势进行分析。优势并不是绝对的，而是相对的，其相对于竞争环境，所以需要进行竞争环境分析。</p>
-<h3 id="竞争环境分析"><a href="#竞争环境分析" class="headerlink" title="竞争环境分析"></a>竞争环境分析</h3><p>企业的竞争环境可以归纳为影响企业生存状况的波特五力，包括供应商、购买者、直接竞争对手、替代品和潜在进入者五个方面的力。</p>
+<h3 id="竞争环境分析">竞争环境分析</h3>
+<p>企业的竞争环境可以归纳为影响企业生存状况的波特五力，包括供应商、购买者、直接竞争对手、替代品和潜在进入者五个方面的力。</p>
 <p>通过对比分析这企业在五力中的情况，如果总体处于上风，则表明企业具有竞争力。</p>
-<h2 id="实例演示"><a href="#实例演示" class="headerlink" title="实例演示"></a>实例演示</h2><p>本案例是在jupyter上进行的，可以参考我在Github上相应的<a target="_blank" rel="noopener" href="https://github.com/Gipbear/data-analysis/blob/master/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83%E7%BD%91%E4%B8%8A%E5%95%86%E5%9F%8E%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90/%E6%9F%90%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83%E7%BD%91%E4%B8%8A%E5%95%86%E5%9F%8E%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90.ipynb">代码</a></p>
-<ol>
+<h2 id="实例演示">实例演示</h2>
+<p>本案例是在jupyter上进行的，可以参考我在Github上相应的<a target="_blank" rel="noopener" href="https://github.com/Gipbear/data-analysis/blob/master/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83%E7%BD%91%E4%B8%8A%E5%95%86%E5%9F%8E%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90/%E6%9F%90%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83%E7%BD%91%E4%B8%8A%E5%95%86%E5%9F%8E%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90.ipynb">代码</a></p>
+<ol type="1">
 <li><p>首先导入需要使用的依赖包（个人偏好都添加在第一行）;</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> mpl</span><br><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> set_matplotlib_formats</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> mpl</span><br><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> set_matplotlib_formats</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure></p></li>
 <li><p>读取excel表格，依次读取各个sheet中的内外因素评价矩阵;</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">df1 = pd.read_excel(<span class="string">&#x27;data/内外因素评价矩阵数据.xlsx&#x27;</span>,sheet_name=<span class="number">0</span>)</span><br><span class="line">col_name = [<span class="string">&#x27;分数&#x27;</span>,<span class="string">&#x27;电商在销售渠道地位凸显&#x27;</span>,<span class="string">&#x27;国内消费者信心指数攀升&#x27;</span>,<span class="string">&#x27;电子商务交易额迅速增长&#x27;</span>,<span class="string">&#x27;通过电商可以掌握用户界面&#x27;</span>,<span class="string">&#x27;国家政策的扶持&#x27;</span>]</span><br><span class="line">df1.columns = col_name</span><br><span class="line"></span><br><span class="line">df2 = pd.read_excel(<span class="string">&#x27;data/内外因素评价矩阵数据.xlsx&#x27;</span>,sheet_name=<span class="number">1</span>)</span><br><span class="line">col_name = [<span class="string">&#x27;分数&#x27;</span>,<span class="string">&#x27;激烈的市场竞争&#x27;</span>,<span class="string">&#x27;电子商务诚信制度未完善&#x27;</span>,<span class="string">&#x27;网络安全缺乏坚实保障&#x27;</span>]</span><br><span class="line">df2.columns = col_name</span><br><span class="line"></span><br><span class="line">df3 = pd.read_excel(<span class="string">&#x27;data/内外因素评价矩阵数据.xlsx&#x27;</span>,sheet_name=<span class="number">2</span>)</span><br><span class="line">col_name = [<span class="string">&#x27;分数&#x27;</span>,<span class="string">&#x27;实力强大&#x27;</span>,<span class="string">&#x27;消费者信誉良好&#x27;</span>,<span class="string">&#x27;良好的企业形象&#x27;</span>,<span class="string">&#x27;透明化贴心服务&#x27;</span>]</span><br><span class="line">df3.columns = col_name</span><br><span class="line"></span><br><span class="line">df4 = pd.read_excel(<span class="string">&#x27;data/内外因素评价矩阵数据.xlsx&#x27;</span>,sheet_name=<span class="number">3</span>)</span><br><span class="line">col_name = [<span class="string">&#x27;分数&#x27;</span>,<span class="string">&#x27;缺乏电商运营经验&#x27;</span>,<span class="string">&#x27;缺乏网购消费者群体&#x27;</span>,<span class="string">&#x27;网站建设不完整&#x27;</span>,<span class="string">&#x27;物流体系未真正建成&#x27;</span>]</span><br><span class="line">df4.columns = col_name</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">df1 = pd.read_excel(<span class="string">&#x27;data/内外因素评价矩阵数据.xlsx&#x27;</span>,sheet_name=<span class="number">0</span>)</span><br><span class="line">col_name = [<span class="string">&#x27;分数&#x27;</span>,<span class="string">&#x27;电商在销售渠道地位凸显&#x27;</span>,<span class="string">&#x27;国内消费者信心指数攀升&#x27;</span>,<span class="string">&#x27;电子商务交易额迅速增长&#x27;</span>,<span class="string">&#x27;通过电商可以掌握用户界面&#x27;</span>,<span class="string">&#x27;国家政策的扶持&#x27;</span>]</span><br><span class="line">df1.columns = col_name</span><br><span class="line"></span><br><span class="line">df2 = pd.read_excel(<span class="string">&#x27;data/内外因素评价矩阵数据.xlsx&#x27;</span>,sheet_name=<span class="number">1</span>)</span><br><span class="line">col_name = [<span class="string">&#x27;分数&#x27;</span>,<span class="string">&#x27;激烈的市场竞争&#x27;</span>,<span class="string">&#x27;电子商务诚信制度未完善&#x27;</span>,<span class="string">&#x27;网络安全缺乏坚实保障&#x27;</span>]</span><br><span class="line">df2.columns = col_name</span><br><span class="line"></span><br><span class="line">df3 = pd.read_excel(<span class="string">&#x27;data/内外因素评价矩阵数据.xlsx&#x27;</span>,sheet_name=<span class="number">2</span>)</span><br><span class="line">col_name = [<span class="string">&#x27;分数&#x27;</span>,<span class="string">&#x27;实力强大&#x27;</span>,<span class="string">&#x27;消费者信誉良好&#x27;</span>,<span class="string">&#x27;良好的企业形象&#x27;</span>,<span class="string">&#x27;透明化贴心服务&#x27;</span>]</span><br><span class="line">df3.columns = col_name</span><br><span class="line"></span><br><span class="line">df4 = pd.read_excel(<span class="string">&#x27;data/内外因素评价矩阵数据.xlsx&#x27;</span>,sheet_name=<span class="number">3</span>)</span><br><span class="line">col_name = [<span class="string">&#x27;分数&#x27;</span>,<span class="string">&#x27;缺乏电商运营经验&#x27;</span>,<span class="string">&#x27;缺乏网购消费者群体&#x27;</span>,<span class="string">&#x27;网站建设不完整&#x27;</span>,<span class="string">&#x27;物流体系未真正建成&#x27;</span>]</span><br><span class="line">df4.columns = col_name</span><br></pre></td></tr></table></figure></p></li>
 <li><p>计算权重分为两个步骤：</p>
-<ol>
-<li><p>计算评分均值：将专家人数作为权重$f$，对分数$x_i$求其加权平均值：<br> $$<br> \bar{x} = \frac{\sum{x_i \times f_i}}{\sum{f_i}}<br> $$</p>
-</li>
-<li><p>计算权重：权重的确定方法有很多，大体分为主观赋权法（层次分析法等）和客观赋权法（主成分分析法等），此处采用变异系数方法来计算：<br> $$<br> \text{V} = \frac{\sigma}{\bar{x}}<br> $$<br> 其中$\sigma$是标准差，$\sigma=\sqrt{\sum{(x_i-x)^2 \times Pi}}$，而其中$\sum{(x_i-x)^2}$是该因素的离差平方和，$P_i$是该因素的频率。</p>
-</li>
+<ol type="1">
+<li><p>计算评分均值：将专家人数作为权重<span class="math inline">\(f\)</span>，对分数<span class="math inline">\(x_i\)</span>求其加权平均值： <span class="math display">\[
+ \bar{x} = \frac{\sum{x_i \times f_i}}{\sum{f_i}}
+ \]</span></p></li>
+<li><p>计算权重：权重的确定方法有很多，大体分为主观赋权法（层次分析法等）和客观赋权法（主成分分析法等），此处采用变异系数方法来计算： <span class="math display">\[
+ \text{V} = \frac{\sigma}{\bar{x}} 
+ \]</span> 其中<span class="math inline">\(\sigma\)</span>是标准差，<span class="math inline">\(\sigma=\sqrt{\sum{(x_i-x)^2 \times Pi}}\)</span>，而其中<span class="math inline">\(\sum{(x_i-x)^2}\)</span>是该因素的离差平方和，<span class="math inline">\(P_i\)</span>是该因素的频率。</p></li>
 </ol>
 <blockquote>
 <p>在评价体系中，若某个因素的取值差异较大，则说明该因素难以实现，是反映评价对象差距的关键因素，就要赋予更大的权重。</p>
 <p>变异系数在数值上等于标准差除以均值，可以表示因素取值的波动情况，因此这里可以使用变异系数来赋权。</p>
 </blockquote>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算变异系数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">coefficient_variation</span>(<span class="params">df,dfn,num</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    df: 统计矩阵</span></span><br><span class="line"><span class="string">    dfn: 矩阵编号</span></span><br><span class="line"><span class="string">    num: 样本数</span></span><br><span class="line"><span class="string">    res: 样本评分</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    me = df[<span class="string">&#x27;分数&#x27;</span>].dot(df.iloc[:,<span class="number">1</span>:])/num <span class="comment"># 计算评分均值</span></span><br><span class="line">    dfa = df.iloc[:,<span class="number">1</span>:]/num <span class="comment"># 计算分数频率</span></span><br><span class="line">    s = df[<span class="string">&#x27;分数&#x27;</span>]-me[dfn]</span><br><span class="line">    dfb = s*s <span class="comment"># 计算分数离差平方和</span></span><br><span class="line">    dfc = dfb.dot(dfa).apply(np.sqrt) <span class="comment"># 计算标准差</span></span><br><span class="line">    dfd = dfc/me[dfn] <span class="comment"># 计算变异系数</span></span><br><span class="line">    <span class="keyword">return</span> dfd,me</span><br></pre></td></tr></table></figure></li>
-<li><p>求得变异系数$\text{V}$之后，使用$W_i=\frac{V_i}{\sum{V_i}}$求得最终的权重，并计算各个评分均值加权平均数来获得最终的得分。</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算最后得分</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_score</span>(<span class="params">coeVar,me</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    coeVar: 变异系数</span></span><br><span class="line"><span class="string">    me: 评分均值</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    weights = coeVar / <span class="built_in">sum</span>(coeVar) <span class="comment"># 计算权重</span></span><br><span class="line">    score = weights.dot(me) <span class="comment"># 计算评分的加权平均数</span></span><br><span class="line">    <span class="keyword">return</span> score</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">coeVar, me= coefficient_variation(df1,<span class="number">0</span>,<span class="number">200</span>)</span><br><span class="line">score1 = get_score(coeVar,me)</span><br><span class="line">coeVar, me= coefficient_variation(df2,<span class="number">1</span>,<span class="number">200</span>)</span><br><span class="line">score2 = get_score(coeVar,me)</span><br><span class="line">coeVar, me= coefficient_variation(df3,<span class="number">2</span>,<span class="number">2000</span>)</span><br><span class="line">score3 = get_score(coeVar,me)</span><br><span class="line">coeVar, me= coefficient_variation(df4,<span class="number">3</span>,<span class="number">2000</span>)</span><br><span class="line">score4 = get_score(coeVar,me)</span><br></pre></td></tr></table></figure></li>
-<li><p>得到各个优势、劣势、机会和威胁的最终得分之后，计算$\frac{优势}{劣势}$的比值是否大于1，若大于1则说明优势大于劣势，企业具有竞争力，否则不具有竞争力；计算$\frac{机会}{威胁}$的比值是否大于1，若大于1则说明机会大于威胁，市场具有吸引力，否则不具有吸引力。</p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = score1/score2</span><br><span class="line">y = score3/score4</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算变异系数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">coefficient_variation</span>(<span class="params">df,dfn,num</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    df: 统计矩阵</span></span><br><span class="line"><span class="string">    dfn: 矩阵编号</span></span><br><span class="line"><span class="string">    num: 样本数</span></span><br><span class="line"><span class="string">    res: 样本评分</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    me = df[<span class="string">&#x27;分数&#x27;</span>].dot(df.iloc[:,<span class="number">1</span>:])/num <span class="comment"># 计算评分均值</span></span><br><span class="line">    dfa = df.iloc[:,<span class="number">1</span>:]/num <span class="comment"># 计算分数频率</span></span><br><span class="line">    s = df[<span class="string">&#x27;分数&#x27;</span>]-me[dfn]</span><br><span class="line">    dfb = s*s <span class="comment"># 计算分数离差平方和</span></span><br><span class="line">    dfc = dfb.dot(dfa).apply(np.sqrt) <span class="comment"># 计算标准差</span></span><br><span class="line">    dfd = dfc/me[dfn] <span class="comment"># 计算变异系数</span></span><br><span class="line">    <span class="keyword">return</span> dfd,me</span><br></pre></td></tr></table></figure></p></li>
+<li><p>求得变异系数<span class="math inline">\(\text{V}\)</span>之后，使用<span class="math inline">\(W_i=\frac{V_i}{\sum{V_i}}\)</span>求得最终的权重，并计算各个评分均值加权平均数来获得最终的得分。</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算最后得分</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_score</span>(<span class="params">coeVar,me</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    coeVar: 变异系数</span></span><br><span class="line"><span class="string">    me: 评分均值</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    weights = coeVar / <span class="built_in">sum</span>(coeVar) <span class="comment"># 计算权重</span></span><br><span class="line">    score = weights.dot(me) <span class="comment"># 计算评分的加权平均数</span></span><br><span class="line">    <span class="keyword">return</span> score</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">coeVar, me= coefficient_variation(df1,<span class="number">0</span>,<span class="number">200</span>)</span><br><span class="line">score1 = get_score(coeVar,me)</span><br><span class="line">coeVar, me= coefficient_variation(df2,<span class="number">1</span>,<span class="number">200</span>)</span><br><span class="line">score2 = get_score(coeVar,me)</span><br><span class="line">coeVar, me= coefficient_variation(df3,<span class="number">2</span>,<span class="number">2000</span>)</span><br><span class="line">score3 = get_score(coeVar,me)</span><br><span class="line">coeVar, me= coefficient_variation(df4,<span class="number">3</span>,<span class="number">2000</span>)</span><br><span class="line">score4 = get_score(coeVar,me)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>得到各个优势、劣势、机会和威胁的最终得分之后，计算<span class="math inline">\(\frac{优势}{劣势}\)</span>的比值是否大于1，若大于1则说明优势大于劣势，企业具有竞争力，否则不具有竞争力；计算<span class="math inline">\(\frac{机会}{威胁}\)</span>的比值是否大于1，若大于1则说明机会大于威胁，市场具有吸引力，否则不具有吸引力。</p>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = score1/score2</span><br><span class="line">y = score3/score4</span><br></pre></td></tr></table></figure></p></li>
 <li><p>根据求得的两个比值制作战略选择波士顿矩阵图，进行战略选择分析：</p>
-<ol>
+<ol type="1">
 <li>SO战略：市场机会多，企业优势明显，属于增长型，利用外部机会和自身优势，创造最大收益；</li>
 <li>WO战略：市场机会多，企业劣势明显，属于扭转型，利用外部机会，克服自身劣势，抓住机遇；</li>
 <li>ST战略：市场威胁多，企业优势明显，属于多种经营型，依靠自身优势，回避外部威胁，勇敢面对挑战；</li>
 <li>WT战略：市场威胁多，企业劣势明显，属于防御型，减少外部威胁和自身劣势，休养生息。</li>
 </ol>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">set_matplotlib_formats(<span class="string">&#x27;svg&#x27;</span>)</span><br><span class="line">mpl.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = [<span class="string">&#x27;SimHei&#x27;</span>] <span class="comment"># 中文字体</span></span><br><span class="line"></span><br><span class="line">lim = <span class="built_in">max</span>(<span class="built_in">round</span>(x,<span class="number">1</span>),<span class="built_in">round</span>(y,<span class="number">1</span>)) + <span class="number">0.2</span> <span class="comment"># 坐标区间</span></span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">6</span>))</span><br><span class="line"></span><br><span class="line">plt.scatter(x,y,marker=<span class="string">&#x27;o&#x27;</span>,s=<span class="number">100</span>) <span class="comment"># 绘制散点图</span></span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">&#x27;机会最终得分/威胁最终得分&#x27;</span>,fontsize=<span class="number">16</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;优势最终得分/劣势最终得分&#x27;</span>,fontsize=<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">plt.xlim(<span class="number">0</span>,lim)</span><br><span class="line">plt.ylim(<span class="number">0</span>,lim)</span><br><span class="line"></span><br><span class="line">plt.vlines(<span class="number">1</span>,<span class="number">0</span>,lim,colors=<span class="string">&quot;r&quot;</span>,linestyles=<span class="string">&quot;dashed&quot;</span>)</span><br><span class="line">plt.hlines(<span class="number">1</span>,<span class="number">0</span>,lim,colors=<span class="string">&quot;r&quot;</span>,linestyles=<span class="string">&quot;dashed&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.text(x+<span class="number">0.001</span>,y,<span class="string">&#x27;&#123;:.2f&#125; &#123;:.2f&#125;&#x27;</span>.<span class="built_in">format</span>(x,y),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.text(<span class="number">0.02</span>,lim-<span class="number">0.12</span>,<span class="string">&#x27;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;ST战略&#x27;</span>),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>,color=<span class="string">&quot;w&quot;</span>,fontsize=<span class="number">20</span>).set_bbox(<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, alpha=<span class="number">0.5</span>))</span><br><span class="line">plt.text(<span class="number">0.02</span>,<span class="number">1</span>-<span class="number">0.12</span>,<span class="string">&#x27;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;WT战略&#x27;</span>),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>,color=<span class="string">&quot;w&quot;</span>,fontsize=<span class="number">20</span>).set_bbox(<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, alpha=<span class="number">0.5</span>))</span><br><span class="line">plt.text(<span class="number">1.02</span>,lim-<span class="number">0.12</span>,<span class="string">&#x27;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;SO战略&#x27;</span>),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>,color=<span class="string">&quot;w&quot;</span>,fontsize=<span class="number">20</span>).set_bbox(<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, alpha=<span class="number">0.5</span>))</span><br><span class="line">plt.text(<span class="number">1.02</span>,<span class="number">1</span>-<span class="number">0.12</span>,<span class="string">&#x27;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;SWO战略&#x27;</span>),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>,color=<span class="string">&quot;w&quot;</span>,fontsize=<span class="number">20</span>).set_bbox(<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, alpha=<span class="number">0.5</span>))</span><br></pre></td></tr></table></figure></li>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">set_matplotlib_formats(<span class="string">&#x27;svg&#x27;</span>)</span><br><span class="line">mpl.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>] = [<span class="string">&#x27;SimHei&#x27;</span>] <span class="comment"># 中文字体</span></span><br><span class="line"></span><br><span class="line">lim = <span class="built_in">max</span>(<span class="built_in">round</span>(x,<span class="number">1</span>),<span class="built_in">round</span>(y,<span class="number">1</span>)) + <span class="number">0.2</span> <span class="comment"># 坐标区间</span></span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">6</span>))</span><br><span class="line"></span><br><span class="line">plt.scatter(x,y,marker=<span class="string">&#x27;o&#x27;</span>,s=<span class="number">100</span>) <span class="comment"># 绘制散点图</span></span><br><span class="line"></span><br><span class="line">plt.xlabel(<span class="string">&#x27;机会最终得分/威胁最终得分&#x27;</span>,fontsize=<span class="number">16</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;优势最终得分/劣势最终得分&#x27;</span>,fontsize=<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">plt.xlim(<span class="number">0</span>,lim)</span><br><span class="line">plt.ylim(<span class="number">0</span>,lim)</span><br><span class="line"></span><br><span class="line">plt.vlines(<span class="number">1</span>,<span class="number">0</span>,lim,colors=<span class="string">&quot;r&quot;</span>,linestyles=<span class="string">&quot;dashed&quot;</span>)</span><br><span class="line">plt.hlines(<span class="number">1</span>,<span class="number">0</span>,lim,colors=<span class="string">&quot;r&quot;</span>,linestyles=<span class="string">&quot;dashed&quot;</span>)</span><br><span class="line"></span><br><span class="line">plt.text(x+<span class="number">0.001</span>,y,<span class="string">&#x27;&#123;:.2f&#125; &#123;:.2f&#125;&#x27;</span>.<span class="built_in">format</span>(x,y),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>)</span><br><span class="line"></span><br><span class="line">plt.text(<span class="number">0.02</span>,lim-<span class="number">0.12</span>,<span class="string">&#x27;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;ST战略&#x27;</span>),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>,color=<span class="string">&quot;w&quot;</span>,fontsize=<span class="number">20</span>).set_bbox(<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, alpha=<span class="number">0.5</span>))</span><br><span class="line">plt.text(<span class="number">0.02</span>,<span class="number">1</span>-<span class="number">0.12</span>,<span class="string">&#x27;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;WT战略&#x27;</span>),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>,color=<span class="string">&quot;w&quot;</span>,fontsize=<span class="number">20</span>).set_bbox(<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, alpha=<span class="number">0.5</span>))</span><br><span class="line">plt.text(<span class="number">1.02</span>,lim-<span class="number">0.12</span>,<span class="string">&#x27;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;SO战略&#x27;</span>),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>,color=<span class="string">&quot;w&quot;</span>,fontsize=<span class="number">20</span>).set_bbox(<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, alpha=<span class="number">0.5</span>))</span><br><span class="line">plt.text(<span class="number">1.02</span>,<span class="number">1</span>-<span class="number">0.12</span>,<span class="string">&#x27;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="string">&#x27;SWO战略&#x27;</span>),ha=<span class="string">&#x27;left&#x27;</span>,va=<span class="string">&#x27;bottom&#x27;</span>,color=<span class="string">&quot;w&quot;</span>,fontsize=<span class="number">20</span>).set_bbox(<span class="built_in">dict</span>(facecolor=<span class="string">&#x27;black&#x27;</span>, alpha=<span class="number">0.5</span>))</span><br></pre></td></tr></table></figure></p></li>
 </ol>
 <p>最终得到波士顿矩阵，如图：</p>
 <img src="/2021/02/16/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/%E7%BD%91%E4%B8%8A%E5%95%86%E5%9F%8E%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%B3%A2%E5%A3%AB%E9%A1%BF%E7%9F%A9%E9%98%B5%E5%9B%BE.svg" class="" title="网上商城战略分析波士顿矩阵图">
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>该购物中心网上商城的业务处于SO战略区，市场机会多，自身优势明显，可以充分利用市场机会和自身优势快速发展，创建最佳业务。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>通过本案例的学习，首先掌握了PEST和波特五力两种分析思路，从宏观和细节上对分析对象进行细化；SWOT定性分析方法将细化后的对象进行内外因素分析，并通过量化方法进行定量分析。该案例有层次的、内外结合的、定性定量的分析，学习了如何进行一次全面的战略分析。</p>
+<h2 id="结论">结论</h2>
+<p>该购物中心网上商城的业务处于SO战略区，市场机会多，自身优势明显，可以充分利用市场机会和自身优势快速发展，创建最佳业务。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>通过本案例的学习，首先掌握了PEST和波特五力两种分析思路，从宏观和细节上对分析对象进行细化；SWOT定性分析方法将细化后的对象进行内外因素分析，并通过量化方法进行定量分析。该案例有层次的、内外结合的、定性定量的分析，学习了如何进行一次全面的战略分析。</p>
 
     </div>
     <div>    
@@ -359,25 +378,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -505,10 +505,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -532,6 +539,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -613,6 +632,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

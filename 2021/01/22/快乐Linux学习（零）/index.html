@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。 学习中途发现很有意思的东西，就分享在开篇了。">
+  <meta name="description" content="本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。 学习中途发现很有意思的东西，就分享在开篇了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快乐Linux学习（零）">
 <meta property="og:url" content="http://example.com/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%9B%B6%EF%BC%89/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。 学习中途发现很有意思的东西，就分享在开篇了。">
+<meta property="og:description" content="本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。 学习中途发现很有意思的东西，就分享在开篇了。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-22T14:28:24.000Z">
 <meta property="article:modified_time" content="2021-01-22T14:33:10.000Z">
@@ -181,10 +181,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -217,6 +213,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -243,6 +240,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>646</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
             </span>
 
         </div>
@@ -259,13 +270,14 @@
 <p>学习中途发现很有意思的东西，就分享在开篇了。</p>
 </blockquote>
 <span id="more"></span>
-
-<h2 id="Linux-可以激发我们的想象"><a href="#Linux-可以激发我们的想象" class="headerlink" title="Linux 可以激发我们的想象"></a>Linux 可以激发我们的想象</h2><blockquote>
-<p>当我被要求解释 Windows 与 Linux 之间的差异时，我经常拿玩具来作比喻。<br>Windows 就像一个游戏机。你去商店，买了一个包装在盒子里面的全新的游戏<br>机。你把它带回家，打开盒子，开始玩游戏。精美的画面，动人的声音。玩了一段<br>时间之后，你厌倦了它自带的游戏，所以你返回商店，又买了另一个游戏机。这个<br>过程反复重复。最后，你玩腻了游戏机自带的游戏，你回到商店，告诉售货员，“我<br>想要一个这样的游戏！”但售货员告诉你没有这样的游戏存在，因为它没有“市场<br>需求”。然后你说，“但是我只需要修改一下这个游戏！“，售货员又告诉你不能修改<br>它。所有游戏都被封装在它们的存储器中。到头来，你发现你的玩具只局限于别人<br>为你规定好的游戏。</p>
-<p>另一方面，Linux 就像一个全世界上最大的建造模型。你打开它，发现它只是一<br>个巨大的部件集合。有许多钢支柱、螺钉、螺母、齿轮、滑轮、发动机和一些怎样<br>来建造它的说明书。然后你开始摆弄它。你建造了一个又一个样板模型。过了一会<br>儿，你发现你要建造自己的模型。你不必返回商店，因为你已经拥有了你需要的一<br>切。建造模型以你构想的形状为模板，搭建你想要的模型。<br>当然，选择哪一个玩具，是你的事情，那么你觉得哪个玩具更令人满意呢？</p>
+<h2 id="linux-可以激发我们的想象">Linux 可以激发我们的想象</h2>
+<blockquote>
+<p>当我被要求解释 Windows 与 Linux 之间的差异时，我经常拿玩具来作比喻。 Windows 就像一个游戏机。你去商店，买了一个包装在盒子里面的全新的游戏 机。你把它带回家，打开盒子，开始玩游戏。精美的画面，动人的声音。玩了一段 时间之后，你厌倦了它自带的游戏，所以你返回商店，又买了另一个游戏机。这个 过程反复重复。最后，你玩腻了游戏机自带的游戏，你回到商店，告诉售货员，“我 想要一个这样的游戏！”但售货员告诉你没有这样的游戏存在，因为它没有“市场 需求”。然后你说，“但是我只需要修改一下这个游戏！“，售货员又告诉你不能修改 它。所有游戏都被封装在它们的存储器中。到头来，你发现你的玩具只局限于别人 为你规定好的游戏。</p>
+<p>另一方面，Linux 就像一个全世界上最大的建造模型。你打开它，发现它只是一 个巨大的部件集合。有许多钢支柱、螺钉、螺母、齿轮、滑轮、发动机和一些怎样 来建造它的说明书。然后你开始摆弄它。你建造了一个又一个样板模型。过了一会 儿，你发现你要建造自己的模型。你不必返回商店，因为你已经拥有了你需要的一 切。建造模型以你构想的形状为模板，搭建你想要的模型。 当然，选择哪一个玩具，是你的事情，那么你觉得哪个玩具更令人满意呢？</p>
 </blockquote>
 <p>Windows是经典模式，Linux是自定义模式。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>个人喜好而已，“Just enjoy yourself”。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>个人喜好而已，“Just enjoy yourself”。</p>
 
     </div>
     <div>    
@@ -298,25 +310,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -395,7 +388,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E5%8F%AF%E4%BB%A5%E6%BF%80%E5%8F%91%E6%88%91%E4%BB%AC%E7%9A%84%E6%83%B3%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">Linux 可以激发我们的想象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">2.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux-%E5%8F%AF%E4%BB%A5%E6%BF%80%E5%8F%91%E6%88%91%E4%BB%AC%E7%9A%84%E6%83%B3%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">Linux 可以激发我们的想象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">2.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -440,10 +433,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -467,6 +467,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -548,6 +560,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

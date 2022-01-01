@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是快乐学习Linux的第一篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统基础命令和文件系统的读者。">
+  <meta name="description" content="本文是快乐学习Linux的第一篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统基础命令和文件系统的读者。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快乐Linux学习（一）">
 <meta property="og:url" content="http://example.com/2021/01/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是快乐学习Linux的第一篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统基础命令和文件系统的读者。">
+<meta property="og:description" content="本文是快乐学习Linux的第一篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统基础命令和文件系统的读者。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-01-19T13:51:30.000Z">
 <meta property="article:modified_time" content="2021-01-27T14:18:18.000Z">
@@ -181,10 +181,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -217,6 +213,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -249,6 +246,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>4 mins.</span>
             </span>
 
         </div>
@@ -265,19 +276,19 @@
 <p>适用于学习Linux系统基础命令和文件系统的读者。</p>
 </blockquote>
 <span id="more"></span>
-
 <p>Windows下Linux子系统是一个Linux玩家可能看不起的东西，但是作为我们这些新手接触Linux系统的第一步还是一个不错的选择，至于安装等内容在此不再赘述，Google上也有很多教程，之后有机会的话再补上。</p>
-<h2 id="文件系统简介"><a href="#文件系统简介" class="headerlink" title="文件系统简介"></a>文件系统简介</h2><p>首先，让我们来理解一下Linux系统的文件系统。Linux系统是以分层目录来组织所有文件的，组织形式类似于一棵树，目录树的分支是文件或文件目录，其中树根<code>/</code>也被称为根目录，所有的目录和文件都连接在该目录下。Windows的存储设备是相互独立的，具有各自的文件系统，而Linux则全部<code>挂载</code>在目录树上。</p>
+<h2 id="文件系统简介">文件系统简介</h2>
+<p>首先，让我们来理解一下Linux系统的文件系统。Linux系统是以分层目录来组织所有文件的，组织形式类似于一棵树，目录树的分支是文件或文件目录，其中树根<code>/</code>也被称为根目录，所有的目录和文件都连接在该目录下。Windows的存储设备是相互独立的，具有各自的文件系统，而Linux则全部<code>挂载</code>在目录树上。</p>
 <blockquote>
 <p>很容易发现在WSL上，Windows下的各个磁盘都被挂载在目录<code>/mnt</code>下。</p>
 <p>但是我们在Windows系统中又可以找到WSL的存储目录，<code>C:\Users\username\AppData\Local\Packages\一个关于Ubuntu的文件夹\LocalState\rootfs\mnt\c</code>就是WSL在mnt目录下挂载的C盘，打开发现其中是空的；而且从WSL中按以上路径寻找，发现没有权限进入<code>rootfs</code>文件夹，说明这并不是一个无限套娃的故事，这一点还是比较有趣的。</p>
 </blockquote>
 <ul>
 <li>pwd：显示当前所在目录。</li>
-<li>cd：更改当前目录，可以通过绝对路径（从<code>/</code>开始）或相对路径（当前目录开始）进行跳转。<ul>
+<li>cd：更改当前目录，可以通过绝对路径（从<code>/</code>开始）或相对路径（当前目录开始）进行跳转。
+<ul>
 <li><code>cd</code> 或<code>cd ~</code>快速到达home目录；<code>cd -</code>快速到达之前所在的目录。</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p>每个目录中都包含父目录和当前目录内容（包括根目录，根目录的父目录还是是根目录，因缺思厅），使用<code>..</code>表示父目录，使用<code>.</code>或省略表示当前目录。</p>
 <ul>
@@ -285,47 +296,48 @@
 </ul>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>选项</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>-l</td>
 <td>以长模式的形式，显示出目录信息</td>
 </tr>
-<tr>
+<tr class="even">
 <td>-a</td>
 <td>列出所有的文件和目录，包括文件名以<code>.</code>开头的隐藏文件</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>-h</td>
 <td>按照human的习惯显示文件大小，可以与l搭配使用</td>
 </tr>
-<tr>
+<tr class="even">
 <td>-r</td>
 <td>反序排列显示</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>-t</td>
 <td>修改事件排序</td>
 </tr>
-<tr>
+<tr class="even">
 <td>-i</td>
 <td>显示文件索引节点信息</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>-d</td>
 <td>仅显示目录，而不显示其下文件</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <p>命令行的命令一般是由命令+选项+参数组成，形如：<code>command -options arguments</code>。</p>
 <p>表格中的选项一般是上面最近命令的常用搭配，之后不再说明。</p>
 </blockquote>
 <p>长模式的显示的内容是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件访问权限 硬链接数目 文件所属用户 文件所属用户组 文件大小 上次修改日期 文件名</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>file filename：显示文件描述</li>
 </ul>
@@ -334,232 +346,234 @@
 </blockquote>
 <ul>
 <li><p>less filename：快速查看文本文件内容。</p>
-<p>  此处初学者less之后先不要乱动！不然Windows会一直出现duang！duang！duang！的声音。进去之后先按下<code>h</code>可以查看less操作的帮助文档，可以很有趣的发现很多方法，例如向下滚动，可以使用 <code>e  ^E  j  ^N  CR</code>等按键，默认向下一行，但是可以先输入数字N，来指定向下N行，也可以使用其他按键翻页等不赘述；输入<code>/</code>+正则表达式可以进行搜索匹配内容字符。其他感兴趣的内容可以自行使用help文档查看。</p>
+<p>此处初学者less之后先不要乱动！不然Windows会一直出现duang！duang！duang！的声音。进去之后先按下<code>h</code>可以查看less操作的帮助文档，可以很有趣的发现很多方法，例如向下滚动，可以使用 <code>e  ^E  j  ^N  CR</code>等按键，默认向下一行，但是可以先输入数字N，来指定向下N行，也可以使用其他按键翻页等不赘述；输入<code>/</code>+正则表达式可以进行搜索匹配内容字符。其他感兴趣的内容可以自行使用help文档查看。</p>
 <blockquote>
 <p>由于<code>j k</code>紧邻，本人暂时将其作为滚动页面的按键。</p>
 <p>所谓的less，其实比more命令功能更多，more只能向下翻页，而less能前后翻页。所谓<strong>色即是空</strong>，果然是有趣的Linux。</p>
-</blockquote>
-</li>
+</blockquote></li>
 </ul>
-<h2 id="根目录文件夹"><a href="#根目录文件夹" class="headerlink" title="根目录文件夹"></a>根目录文件夹</h2><p>下面罗列出一些根目录下的目录作用，可以自行查看，主要工作和编辑的地方就是home和usr目录下。</p>
+<h2 id="根目录文件夹">根目录文件夹</h2>
+<p>下面罗列出一些根目录下的目录作用，可以自行查看，主要工作和编辑的地方就是home和usr目录下。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>目录</th>
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>/</td>
 <td>根目录</td>
 </tr>
-<tr>
+<tr class="even">
 <td>bin</td>
 <td>系统启动和运行必须的二进制程序</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>boot</td>
 <td>Linux内核、初始RAM磁盘映像、启动加载程序</td>
 </tr>
-<tr>
+<tr class="even">
 <td>dev</td>
 <td>包含设备节点，维护所有设备的列表</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>etc</td>
 <td>所有系统层面的配置文件，以及一系列shell脚本（此处的任何文件都应可读）</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>home</code></td>
 <td>在其中有每个用户的目录，普通用户仅在自己目录下写文件</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>lib</td>
 <td>核心系统程序使用的共享库文件</td>
 </tr>
-<tr>
+<tr class="even">
 <td>media</td>
 <td>现在Linux系统中，可移动介质的挂载点，包括USB驱动器等</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>mnt</td>
 <td>早些Linux系统中，可移动介质的挂载点</td>
 </tr>
-<tr>
+<tr class="even">
 <td>opt</td>
 <td>安装“可选的”软件</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>proc</td>
 <td>Linux内核维护的虚拟文件系统，用来监管计算机</td>
 </tr>
-<tr>
+<tr class="even">
 <td>root</td>
 <td>root账户的home目录</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>sbin</td>
 <td>系统的二进制文件，完成重大系统任务程序，为超级用户保留</td>
 </tr>
-<tr>
+<tr class="even">
 <td>tmp</td>
 <td>存储各种程序创建的临时文件，系统重启会清空该目录</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>usr</code></td>
 <td>包含普通用户所需的所有程序和文件，很多内容和Windows下的用户目录类似</td>
 </tr>
-<tr>
+<tr class="even">
 <td>var</td>
 <td>存放动态文件，例如数据库等。除了tmp和home目录以外，其他目录都是静态的</td>
 </tr>
-</tbody></table>
-<h2 id="文件和目录操作"><a href="#文件和目录操作" class="headerlink" title="文件和目录操作"></a>文件和目录操作</h2><h3 id="通配符"><a href="#通配符" class="headerlink" title="通配符"></a>通配符</h3><p>首先介绍一下能够快速指定一组类似文件名的方法——通配符。所有接受文件名作为参数的命令都可以使用通配符进行匹配。</p>
+</tbody>
+</table>
+<h2 id="文件和目录操作">文件和目录操作</h2>
+<h3 id="通配符">通配符</h3>
+<p>首先介绍一下能够快速指定一组类似文件名的方法——通配符。所有接受文件名作为参数的命令都可以使用通配符进行匹配。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>通配符</th>
 <th>含义</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>*</td>
 <td>匹配任意多个字符</td>
 </tr>
-<tr>
+<tr class="even">
 <td>？</td>
 <td>匹配任意一个字符</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>[characters]</td>
 <td>匹配任意一个属于字符集中的字符</td>
 </tr>
-<tr>
+<tr class="even">
 <td>[!characters]</td>
 <td>匹配任意一个不属于字符集中的字符</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>[[:class:]]</td>
 <td>匹配任意一个属于指定字符类[:class:]中的字符</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>其中常用的字符类有：[:alnum:]——任意一个字母或数字；[:alpha:]——任意一个字母；[:digit:]——任意一个数字；[:lower:]——匹配任意一个小写字母；[:upper:]——匹配任意一个大写字母。</p>
-<h3 id="基本文件操作"><a href="#基本文件操作" class="headerlink" title="基本文件操作"></a>基本文件操作</h3><ul>
-<li><p>mkdir directory…：创建目录</p>
-</li>
-<li><p>cp item1 item2：复制文件或目录“item1”到文件或目录”item2”</p>
-</li>
-<li><p>cp item… directory：复制多个文件或目录到一个目录下</p>
+<h3 id="基本文件操作">基本文件操作</h3>
+<ul>
+<li><p>mkdir directory...：创建目录</p></li>
+<li><p>cp item1 item2：复制文件或目录“item1”到文件或目录"item2"</p></li>
+<li><p>cp item... directory：复制多个文件或目录到一个目录下</p>
 <blockquote>
 <p>可以很有趣的发现，该命令可以自动识别文件或目录，一定程度上页也说明了Linux中一切皆文件的概念。</p>
 </blockquote>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>选项</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>-i</td>
 <td>复制文件的时候，若文件已经存在，则在被重写之前提示用户确认信息，输入y覆盖，其他字符都保留原文件</td>
 </tr>
-<tr>
+<tr class="even">
 <td>-r</td>
 <td>递归复制目录及目录内容，复制目录的时候需要添加。</td>
 </tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-</li>
+</tbody>
+</table></li>
 <li><p>mv item1 item2：移动文件，完成操作后原文件不存在，方法和<code>cp</code>类似。当其在相同目录下操作的时候，文件<code>被自身覆盖</code>，且换了一个名字，相当于<code>重命名</code>一个相同的文件。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>选项</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>-i</td>
 <td>移动文件到新的目录中，若文件存在则提示是否覆盖的信息</td>
 </tr>
-<tr>
+<tr class="even">
 <td>-u</td>
 <td>仅移动新目录下不存在的文件</td>
 </tr>
-</tbody></table>
-</li>
-<li><p>rm item…：删除文件和目录</p>
+</tbody>
+</table></li>
+<li><p>rm item...：删除文件和目录</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>选项</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>-i</td>
 <td>删除之前提示用户确认信息</td>
 </tr>
-<tr>
+<tr class="even">
 <td>-r</td>
 <td>递归删除文件，需要删除目录的时候必须指定</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>-f</td>
 <td>即使文件不存在也继续执行，不提示错误信息</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <p>需要注意的是，使用通配符进行删除的时候，需要再三小心，因为Linux删除之后不会进入回收站，所以，最好在删除之前使用ls来查看一下匹配到的项目是否是自己想要删除的。</p>
-</blockquote>
-</li>
+</blockquote></li>
 </ul>
-<h2 id="创建链接"><a href="#创建链接" class="headerlink" title="创建链接"></a>创建链接</h2><h3 id="硬链接"><a href="#硬链接" class="headerlink" title="硬链接"></a>硬链接</h3><ul>
+<h2 id="创建链接">创建链接</h2>
+<h3 id="硬链接">硬链接</h3>
+<ul>
 <li>ln file link</li>
 </ul>
 <p>在Linux中，每个文件都默认会有一个硬链接，而每创建一个硬链接，就相当于创建了一个额外的目录项。硬链接存在两个局限性：一个是不能与链接本身不在同一个磁盘分区的文件；二是不能关联目录。</p>
 <p>我们可以假设文件是由两部分组成的：包含文件内容的<code>数据部分</code>和持有文件名的<code>名字部分</code>，那么我们的硬链接就是为实际的文件本身创建额外的名字，并且这些名字都能关联到相同的数据部分。</p>
 <p>硬链接就相当于是文件本身，和文件本身没有很大的区别，当硬链接被删除的时候，对文件本身没有影响。</p>
-<h3 id="符号链接"><a href="#符号链接" class="headerlink" title="符号链接"></a>符号链接</h3><ul>
+<h3 id="符号链接">符号链接</h3>
+<ul>
 <li>ln -s item link</li>
 </ul>
 <p>符号链接是为了克服硬链接的局限性，创建一个特殊类型的文件，该文件包含一个指向文件或目录的文本指针，类似于Windows的快捷方式。</p>
 <p>当向符号链接写入内容，那么其指向的文件<code>也会被写入</code>；而当删除符号链接时，仅链接被删除，若文件本身先被删除，那么链接依旧存在，但是指向内容为空，被称为坏链接。</p>
-<h2 id="练习场"><a href="#练习场" class="headerlink" title="练习场"></a>练习场</h2><p>创建一个文件夹来进行以上部分内容的练习。</p>
+<h2 id="练习场">练习场</h2>
+<p>创建一个文件夹来进行以上部分内容的练习。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 切换到home目录下进行实验</span><br><span class="line">cd</span><br><span class="line">mkdir playground</span><br><span class="line">cd playground</span><br><span class="line">mkdir dir1 dir2</span><br></pre></td></tr></table></figure>
-
 <p>简单的复制和移动文件操作，当复制到当前文件夹下，则可以使用“点”来表示当前文件夹；mv文件到同目录下就相当于重命名。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/passwd .</span><br><span class="line">cp -i /etc/passwd .</span><br><span class="line">mv passwd fun # 重命名</span><br><span class="line">mv fun dir1</span><br><span class="line">mv dir1/fun .</span><br></pre></td></tr></table></figure>
-
 <p>创建硬链接</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ln fun fun-hard</span><br><span class="line">ln fun dir1/fun-hard</span><br><span class="line">ln fun dir2/fun-hard</span><br></pre></td></tr></table></figure>
-
 <p>使用<code>ls -li</code>进行查看的时候，可以发现其中fun和fun-hard的第3个字段是“4”，表示硬链接的数目，可以发现每个文件或目录<code>至少一个</code>硬链接，因为文件名本身就是由硬链接创建的。</p>
 <blockquote>
 <p>第1个字段是文件内容的索引节点，可以发现硬链接和文件本身都是同一个索引节点，证明是同一个文件。</p>
 </blockquote>
 <p>创建符号链接，需要按照创建符号链接所在文件或目录的位置来计算链接对象的相对位置。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ln -s fun fun-sym</span><br><span class="line">ln -s ../fun dir1/fun-sym</span><br><span class="line">ln -s ../fun dir2/fun-sym</span><br><span class="line">ln -s dir1 dir1-sym</span><br></pre></td></tr></table></figure>
-
 <p>使用ls进行观察的时候，很容易发现符号链接文件会有一个指针指向目标文件。在文件大小字段可以发现，符号链接并不显示指向文件的大小，而是指向链接相对路径名称的<code>路径字符数</code>。</p>
 <p>此时可以利用tree来看一下目录的全部结构，使用<code>sudo apt install tree</code>进行安装，复制过来没有颜色显示。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── dir1</span><br><span class="line">│   ├── fun-hard</span><br><span class="line">│   └── fun-sym -&gt; ../fun</span><br><span class="line">├── dir1-sym -&gt; dir1</span><br><span class="line">├── dir2</span><br><span class="line">│   ├── fun-hard</span><br><span class="line">│   └── fun-sym -&gt; ../fun</span><br><span class="line">├── fun</span><br><span class="line">├── fun-hard</span><br><span class="line">└── fun-sym -&gt; fun</span><br></pre></td></tr></table></figure>
-
 <p>之后尝试删除实验。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm fun-hard</span><br></pre></td></tr></table></figure>
-
 <p>可以发现文件fun的链接数从4变为3，其他硬链接文件不受影响，再删除原文件fun。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm fun</span><br></pre></td></tr></table></figure>
-
 <p>可以发现，硬链接的文件只是链接数从3变成2，其他不受影响，但是可以发现符号链接变成了<strong>红色</strong>，其指向的文件不存在，无法打开。</p>
 <blockquote>
 <p>大多数文件操作是针对链接的对象，而不是链接本身；而rm是特例，删除链接的时候是删除链接本身，而不是链接的对象。</p>
 </blockquote>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>初步认识了Linux中的基础内容，最主要的是能够熟练查看Linux的一些文件和目录内容，并且会基础的文件操作。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>初步认识了Linux中的基础内容，最主要的是能够熟练查看Linux的一些文件和目录内容，并且会基础的文件操作。</p>
 
     </div>
     <div>    
@@ -592,25 +606,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -734,10 +729,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -761,6 +763,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -842,6 +856,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

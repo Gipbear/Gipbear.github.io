@@ -19,15 +19,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文主要是介绍Linux中的正则表达式 适用于需要学习正则表达式的同学。">
+  <meta name="description" content="本文主要是介绍Linux中的正则表达式 适用于需要学习正则表达式的同学。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快乐Linux学习（六）">
 <meta property="og:url" content="http://example.com/2021/02/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文主要是介绍Linux中的正则表达式 适用于需要学习正则表达式的同学。">
+<meta property="og:description" content="本文主要是介绍Linux中的正则表达式 适用于需要学习正则表达式的同学。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-02-19T13:25:05.000Z">
 <meta property="article:modified_time" content="2021-03-12T03:25:02.000Z">
@@ -182,10 +182,6 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
 
@@ -218,6 +214,7 @@
         </h1>
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -250,6 +247,20 @@
               </span>
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
             </span>
 
         </div>
@@ -266,133 +277,135 @@
 <p>适用于需要学习正则表达式的同学。</p>
 </blockquote>
 <span id="more"></span>
-
 <p>正则表达式是一种符号表示法，用来识别文本模式，与之前使用过的路径通配符有些相似，但是功能更强大。</p>
 <p>需要注意的是，很多系统和编程语言的都是具有正则表达式这个规则的，但是并不完全相同，此处仅学习Linux系统下POSIX标准中藐视的正则表达式，之后其他系统触类旁通学习即可。</p>
-<h2 id="grep"><a href="#grep" class="headerlink" title="grep"></a>grep</h2><p>主要使用的是grep程序，名字来自于“global regular expression print”，能够在文本文件中查找一个指定的正则表达式，并将匹配到的结果进行输出。</p>
+<h2 id="grep">grep</h2>
+<p>主要使用的是grep程序，名字来自于“global regular expression print”，能够在文本文件中查找一个指定的正则表达式，并将匹配到的结果进行输出。</p>
 <p>例如先使用ls标准输出/usr/bin的目录名，再通过管道，grep从管道中接受输入，并将匹配结果进行输出。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /usr/bin | grep zip</span><br></pre></td></tr></table></figure>
-
 <p>不通过管道的表达式如下所示：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep [options] regex [file...]</span><br></pre></td></tr></table></figure>
-
 <p>选项options有下列情况：</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>选项</th>
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>-i</td>
 <td>忽略大小写</td>
 </tr>
-<tr>
+<tr class="even">
 <td>-v</td>
 <td>获得不匹配项</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>-c</td>
 <td>获得匹配的数量</td>
 </tr>
-<tr>
+<tr class="even">
 <td>-l/-L</td>
 <td>打印存在匹配/不匹配项的文件夹名</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>-n</td>
 <td>打印匹配项的行号和结果</td>
 </tr>
-</tbody></table>
-<h2 id="元字符和原义字符"><a href="#元字符和原义字符" class="headerlink" title="元字符和原义字符"></a>元字符和原义字符</h2><p>上面grep后的<code>zip</code>，其中的“z”，“i”，“p”都是按照原本的意思和顺序进行匹配的，这些称为原义字符，需要使用其他规则进行匹配的时候，还包含如下<strong>元字符</strong>：</p>
+</tbody>
+</table>
+<h2 id="元字符和原义字符">元字符和原义字符</h2>
+<p>上面grep后的<code>zip</code>，其中的“z”，“i”，“p”都是按照原本的意思和顺序进行匹配的，这些称为原义字符，需要使用其他规则进行匹配的时候，还包含如下<strong>元字符</strong>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^ $ . [ ] &#123; &#125; - ? * + ( ) | \</span><br></pre></td></tr></table></figure>
-
 <p>其中POSIX 规范的字符集又将元字符又存在两种情况，基本正则表达式（BRE）和扩展的正则表达式（ERE），BRE中支持的是<code>^ $ . [ ] *</code>，ERE在此基础上扩展了<code>( ) &#123; &#125; ? + |</code>，使用的时候需要增加<code>-E</code>选项表示执行ERE标准。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>元字符</th>
 <th>解释</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>.</td>
 <td>任何字符</td>
 <td>可以用来匹配在某个位置的任意<strong>一个</strong>字符。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>^ / $</td>
 <td>锚点</td>
 <td>该表达式在文本开头/末尾存在才会被匹配。“^$”组合可以匹配空行。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>[ ]</td>
 <td>指定字符集</td>
 <td>从中括号内的指定字符集匹配<strong>一个</strong>字符。元字符在被放置到中括号中后将会失去本身的特殊含义，除了“^”和“-”。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>^</td>
 <td>否定</td>
 <td>在<strong>中括号内第一个字符</strong>时表示否定，匹配中括号内字符集以外的字符。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>-</td>
 <td>字符范围</td>
 <td>例如[a-z]，[B-Y]，[4-9a-h]等。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>|</td>
 <td>交替</td>
 <td>允许从一系列表达式之间选择匹配项。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>？</td>
 <td></td>
 <td>匹配零个或一个元素。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>*</td>
 <td></td>
 <td>匹配零个或多个元素。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>+</td>
 <td></td>
 <td>匹配一个或多个元素。</td>
 </tr>
-<tr>
+<tr class="even">
 <td>{ }</td>
 <td></td>
 <td>匹配特定个数的元素，n：元素只出现n次，n,m：元素出现[n,m]次，n,：元素出现不少于n次，,m：元素出现不多于m次。</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>补充一些字符集：[:word:]=[:alnum:]+[_]；[:alnum:]=[:alpha:]+[:digit:]；[:blank:]=空格+tab；[:cntrl:]=0-31和127字符；[:lower:]；[:upper:]；[:punct:]=标点符号；[:print:]=[:graph:]+[:space:]；[:xdigit:]=[0-9A-Fa-f]</p>
 <p>其他的基本都可以被视为<strong>原义字符</strong>。元字符也可以被<strong>反斜杠</strong>转义为原义字符。</p>
 <blockquote>
 <p>所以之前在shell执行的时候，存在的一些元字符等特殊符号会被展开，这时候就可以使用引号阻止其展开。</p>
 </blockquote>
-<h2 id="应用正则表达式"><a href="#应用正则表达式" class="headerlink" title="应用正则表达式"></a>应用正则表达式</h2><h3 id="使用grep匹配"><a href="#使用grep匹配" class="headerlink" title="使用grep匹配"></a>使用grep匹配</h3><p>首先使用下列语句生成一个测试的搜索匹配列表，多尝试几次，生成不符合“(nnn) nnn-nnnn”格式的电话号码，以便用来匹配。</p>
+<h2 id="应用正则表达式">应用正则表达式</h2>
+<h3 id="使用grep匹配">使用grep匹配</h3>
+<p>首先使用下列语句生成一个测试的搜索匹配列表，多尝试几次，生成不符合“(nnn) nnn-nnnn”格式的电话号码，以便用来匹配。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for i in &#123;1..10&#125;; do echo &quot;($&#123;RANDOM:0:3&#125;) $&#123;RANDOM:0:3&#125;-$&#123;RANDOM:0:4&#125;&quot; &gt;&gt;phonelist.txt; done</span><br></pre></td></tr></table></figure>
-
 <p>再使用cat和管道连接grep，因为使用了扩展的正则表达式，所以需要使用-E选项：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat phonelist.txt | grep -Ev &#x27;^\([0-9]&#123;3&#125;\) [0-9]&#123;3&#125;-[0-9]&#123;4&#125;&#x27;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用find查找"><a href="#使用find查找" class="headerlink" title="使用find查找"></a>使用find查找</h3><p>查找某个路径下的文件名是否符合满足正则表达式要求，例如查找当前路径下包含空格等不符合规范的路径名。</p>
+<h3 id="使用find查找">使用find查找</h3>
+<p>查找某个路径下的文件名是否符合满足正则表达式要求，例如查找当前路径下包含空格等不符合规范的路径名。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -regex &#x27;.*[^-\_./0-9a-zA-Z].*&#x27;</span><br></pre></td></tr></table></figure>
-
-<h3 id="利用locate查找文件"><a href="#利用locate查找文件" class="headerlink" title="利用locate查找文件"></a>利用locate查找文件</h3><p>locate支持基本的（–regexp）和扩展的（regex）正则表达式。例如搜索包含指定字符串的路径名。</p>
+<h3 id="利用locate查找文件">利用locate查找文件</h3>
+<p>locate支持基本的（--regexp）和扩展的（regex）正则表达式。例如搜索包含指定字符串的路径名。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locate --regex &#x27;bin/(bz|gz|zip)&#x27;</span><br></pre></td></tr></table></figure>
-
-<h3 id="在less-vim中使用正则表达式"><a href="#在less-vim中使用正则表达式" class="headerlink" title="在less/vim中使用正则表达式"></a>在less/vim中使用正则表达式</h3><p>less是使用“<code>/</code>”命令输入正则表达式进行匹配</p>
+<h3 id="在lessvim中使用正则表达式">在less/vim中使用正则表达式</h3>
+<p>less是使用“<code>/</code>”命令输入正则表达式进行匹配</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">less phonelist.txt</span><br><span class="line">/^\([0-9]&#123;3&#125;\) [0-9]&#123;3&#125;-[0-9]&#123;4&#125;$</span><br></pre></td></tr></table></figure>
-
 <p>vim也类似，不过vim中使用扩展表达式会被认作为文本字符，需要使用反斜杠进行转义为元字符。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/([0-9]\&#123;3\&#125;) [0-9]\&#123;3\&#125;-[0-9]\&#123;4\&#125;</span><br></pre></td></tr></table></figure>
-
 <p>默认是没有高亮显示的，想要高亮显示的话可以在命令模式下输入<code>:set hlsearch</code>转化为高亮模式。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>本章主要学习的是正则表达式，了解到不同系统和语言会具有不完全相同的正则表达式，主要是用于之后的查找和筛选，以及在处理数据的时候能够利用规则直接提取相关信息，比较重要。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>本章主要学习的是正则表达式，了解到不同系统和语言会具有不完全相同的正则表达式，主要是用于之后的查找和筛选，以及在处理数据的时候能够利用规则直接提取相关信息，比较重要。</p>
 
     </div>
     <div>    
@@ -425,25 +438,6 @@
   </li>
 </ul>
 </div>
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
 
 
       <footer class="post-footer">
@@ -523,7 +517,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#grep"><span class="nav-number">1.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%AD%97%E7%AC%A6%E5%92%8C%E5%8E%9F%E4%B9%89%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">元字符和原义字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">应用正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8grep%E5%8C%B9%E9%85%8D"><span class="nav-number">3.1.</span> <span class="nav-text">使用grep匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8find%E6%9F%A5%E6%89%BE"><span class="nav-number">3.2.</span> <span class="nav-text">使用find查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8locate%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">利用locate查找文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8less-vim%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.4.</span> <span class="nav-text">在less&#x2F;vim中使用正则表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#grep"><span class="nav-number">1.</span> <span class="nav-text">grep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E5%AD%97%E7%AC%A6%E5%92%8C%E5%8E%9F%E4%B9%89%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">元字符和原义字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">应用正则表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8grep%E5%8C%B9%E9%85%8D"><span class="nav-number">3.1.</span> <span class="nav-text">使用grep匹配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8find%E6%9F%A5%E6%89%BE"><span class="nav-number">3.2.</span> <span class="nav-text">使用find查找</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8locate%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">利用locate查找文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8lessvim%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.4.</span> <span class="nav-text">在less&#x2F;vim中使用正则表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -568,10 +562,17 @@
         <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
 
     </div>
   </aside>
@@ -595,6 +596,18 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">59 mins.</span>
 </div>
 
 
@@ -676,6 +689,63 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
