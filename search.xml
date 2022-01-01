@@ -1,69 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>A/B Testing</title>
-    <url>/2021/01/12/A-B-Testing/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是理论内容，关于A/B测试的概念、原理、和实际应用等；</p>
-<p>适用于需要了解A/B测试基本概念的读者。</p>
-</blockquote>
-<span id="more"></span>
-
-<h1 id="A-B测试"><a href="#A-B测试" class="headerlink" title="A/B测试"></a>A/B测试</h1><p>A/B测试本身是随机对照试验——双盲测试，对不同组进行不同的干预，对照实验效果进行分析。</p>
-<p>因为其实验成本不高，所以在互联网公司的应用很多，通过修改某个按钮或入口位置，通过某个指标来观察该策略的好坏程度，由此来提高用户体验。</p>
-<p>从统计学上看，是一种假设检验的方法，针对当前方案来<strong>验证哪个方法更优</strong>。</p>
-<blockquote>
-<p>这句话说明两点：1. A/B测试可以优化方案来进行迭代更新；2. A/B测试不能进行创造创新。</p>
-</blockquote>
-<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>互联网产品本身的量级都比较大，随意的改动影响将会非常大，这就可以通过A/B测试进行<strong>小量抽样流量</strong>来对整体进行评估，并且根据实验得到的结论相比于依靠历史经验来说更具有<strong>说服力</strong>；并且对于一些<strong>创新性</strong>想法，可以通过A/B测试进行快速验证，降低创新成本。</p>
-<h2 id="统计学基础"><a href="#统计学基础" class="headerlink" title="统计学基础"></a>统计学基础</h2><h3 id="全概率公式"><a href="#全概率公式" class="headerlink" title="全概率公式"></a>全概率公式</h3><p>全概率公式是用于将求解发生复杂事件A的概率问题，分解为求解发生多个简单事件$B_1,B_2,…B_n$概率的问题，其中。$B_1,B_2,…B_n$事件构成完备事件组——即两两不互相容，且和为全集。则<br>$$<br>P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)<br>$$<br>当一个策略针对不同人群产生不同效果的时候，可以利用全概率公式进行预估全局的效果；同时我们发现在全局的效果并不显著的时候，可以进行下钻，找出某个效果显著的人群，或者预估这个人群的占比对整体的影响。</p>
-<h3 id="大数定律"><a href="#大数定律" class="headerlink" title="大数定律"></a>大数定律</h3><p>当统计的数据量足够大，那么事物出现的频率就无线接近于期望值（Mean，每次可能结果的概率值$\times$结果的总和，反映随机变量平均取值的大小）。简单来说，重复的次数越多，需要验证的指标均值就会逐步接近于真实值，这也是我们实验能够成立的基础。</p>
-<h3 id="中心极限定理"><a href="#中心极限定理" class="headerlink" title="中心极限定理"></a>中心极限定理</h3><p>中心极限定理是T检验和假设检验成立的基础，也是A/B测试的核心。</p>
-<ol>
-<li>样本的均值=总体的均值：每次抽样获得的均值总是在整体的均值附近波动。</li>
-<li>数据处于任意分布下，总体样本的平均值总会在整体均值附近上下波动并符合正态分布。</li>
-</ol>
-<p>在没有办法得到全量数据的情况下，我们可以利用样本来估计总体，特别是具备大量用户的互联网行业，需要进行严格的测试和实验，也就是利用中心极限定理，从小量用户进行对照实验，来判断实验的策略对于整体用户的影响。</p>
-<h2 id="A-B测试应用"><a href="#A-B测试应用" class="headerlink" title="A/B测试应用"></a>A/B测试应用</h2><h3 id="置信区间和置信度"><a href="#置信区间和置信度" class="headerlink" title="置信区间和置信度"></a>置信区间和置信度</h3><p>概率论是通过抽样和分布来估计总体的一门学科。A/B测试实验就是希望通过抽样来估计整体，然而预估总是会出现偏差的，因为我们不能站在上帝的视角来直接获得准确的数据，所以我们使用两个预估策略：点估计和区间估计。</p>
-<ul>
-<li>估计一个班上的男生平均身高为170cm，就是点估计。</li>
-<li>估计一个班上的男生平均身高在167cm~174cm之间，就是区间估计。</li>
-</ul>
-<p>区间估计就在总体参数的点估计上增加一个区间范围，相比于点估计更加严谨。</p>
-<p>由此而言，我们估计的时候需要给出一个估计区间的范围，来保证结果的可靠性，但是这个范围不能无限放大，因为我们估计该班上男生的平均身高是0~10米也是完全正确的，但并没有实际意义。</p>
-<p>此时我们就需要给定一个足够小的误差范围（<strong>置信区间</strong>），并求得总体均值有多大的概率在此区间内（<strong>置信度或置信水平</strong>）。置信区间并不是完全的置信，而是一个估计区间，需要有一个指标来衡量置信区间的置信水平。</p>
-<blockquote>
-<p>日常使用的置信水平大部分是95%，是因为95%的置信度在正态分布中，误差范围刚好是两个标准差$\sigma$，并且误差范围并不大，而且置信水平相对较高。但也可以人为设定其他值来衡量。</p>
-</blockquote>
-<h3 id="显著性"><a href="#显著性" class="headerlink" title="显著性"></a>显著性</h3><p>显著性是A/B测试中衡量实验组相比对照组是否有明显差异的另一个一个核心指标，说明了两个测试组观察的指标在实验后差异是否显著，可以是提升显著，也可以是降低显著。</p>
-<ol>
-<li>同向为正，显著提升：当实验指标提升为正，且置信区间上下限同为正，那么实验结果显著提升。</li>
-<li>逆向为负，显著下降：当实验指标提升为负，且置信区间上下限同为负，那么实验结果显著下降。</li>
-<li>置信区间一正一负，效果不显著：若置信区间一正一负，那么结果将难以判断是提升还是下降的。</li>
-</ol>
-<blockquote>
-<p>目前的统计学中，通常将阈值发生几率小于5%的事件称之为“不可能事件”，吧$\alpha&lt;0.05$的概率称为具有显著性。</p>
-</blockquote>
-<h3 id="实验抽样与用户分层"><a href="#实验抽样与用户分层" class="headerlink" title="实验抽样与用户分层"></a>实验抽样与用户分层</h3><p>当我们对很多实验数据的时候，很多情况都是先进行抽样。抽样需要符合几个原则：</p>
-<ol>
-<li>均匀：抽样样本对象要尽可能分布均匀，属性一致；</li>
-<li>随机：保证样本呢均匀的和实验需求的前提下，应尽可能保持抽样的随机性；</li>
-<li>样本充足：样本过小会导致实验数据波动较大且实验周期较长。</li>
-</ol>
-<p>抽样之后进行实验，当实验用户分层只有一层，那就只能同时进行很少的实验，为了提高实验效率，就需要增加用户分层。</p>
-<p>实验分层方式：</p>
-<p>根据业务需求可以有多种划分方法，理论上可以划分N层</p>
-<ol>
-<li>正交分层：各层用户均匀分布至其他各个实验层，达到用户“正交”的效果。``实际上是上一层每一个实验的影响均匀分不到下一层里，使得效果相互抵消，而不影响下一层的实验评估效果`，从而只需要考虑单层策略的影响效果。</li>
-<li>逻辑互斥：不同的业务逻辑需要在不同的层，相同的业务逻辑只能在同一层。若一个用户在两层都是有关样式调整的实验，那么会产生逻辑干扰，导致结果逻辑混乱。</li>
-</ol>
-<h3 id="单一因素原则"><a href="#单一因素原则" class="headerlink" title="单一因素原则"></a>单一因素原则</h3><p>最后需要注意的是，在进行A/B实验的时候，需要保证每一个实验的评估对象都只有一个，即每次实验指考虑一个因素的影响，否则难以区分实验的效果是哪一个因素影响的。</p>
-]]></content>
-      <categories>
-        <category>统计学</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Flask | xm-select控件回显</title>
     <url>/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
     <content><![CDATA[<blockquote>
@@ -162,6 +99,69 @@
         <tag>layui</tag>
         <tag>xm-select</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>A/B Testing</title>
+    <url>/2021/01/12/A-B-Testing/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是理论内容，关于A/B测试的概念、原理、和实际应用等；</p>
+<p>适用于需要了解A/B测试基本概念的读者。</p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="A-B测试"><a href="#A-B测试" class="headerlink" title="A/B测试"></a>A/B测试</h1><p>A/B测试本身是随机对照试验——双盲测试，对不同组进行不同的干预，对照实验效果进行分析。</p>
+<p>因为其实验成本不高，所以在互联网公司的应用很多，通过修改某个按钮或入口位置，通过某个指标来观察该策略的好坏程度，由此来提高用户体验。</p>
+<p>从统计学上看，是一种假设检验的方法，针对当前方案来<strong>验证哪个方法更优</strong>。</p>
+<blockquote>
+<p>这句话说明两点：1. A/B测试可以优化方案来进行迭代更新；2. A/B测试不能进行创造创新。</p>
+</blockquote>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p>互联网产品本身的量级都比较大，随意的改动影响将会非常大，这就可以通过A/B测试进行<strong>小量抽样流量</strong>来对整体进行评估，并且根据实验得到的结论相比于依靠历史经验来说更具有<strong>说服力</strong>；并且对于一些<strong>创新性</strong>想法，可以通过A/B测试进行快速验证，降低创新成本。</p>
+<h2 id="统计学基础"><a href="#统计学基础" class="headerlink" title="统计学基础"></a>统计学基础</h2><h3 id="全概率公式"><a href="#全概率公式" class="headerlink" title="全概率公式"></a>全概率公式</h3><p>全概率公式是用于将求解发生复杂事件A的概率问题，分解为求解发生多个简单事件$B_1,B_2,…B_n$概率的问题，其中。$B_1,B_2,…B_n$事件构成完备事件组——即两两不互相容，且和为全集。则<br>$$<br>P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)<br>$$<br>当一个策略针对不同人群产生不同效果的时候，可以利用全概率公式进行预估全局的效果；同时我们发现在全局的效果并不显著的时候，可以进行下钻，找出某个效果显著的人群，或者预估这个人群的占比对整体的影响。</p>
+<h3 id="大数定律"><a href="#大数定律" class="headerlink" title="大数定律"></a>大数定律</h3><p>当统计的数据量足够大，那么事物出现的频率就无线接近于期望值（Mean，每次可能结果的概率值$\times$结果的总和，反映随机变量平均取值的大小）。简单来说，重复的次数越多，需要验证的指标均值就会逐步接近于真实值，这也是我们实验能够成立的基础。</p>
+<h3 id="中心极限定理"><a href="#中心极限定理" class="headerlink" title="中心极限定理"></a>中心极限定理</h3><p>中心极限定理是T检验和假设检验成立的基础，也是A/B测试的核心。</p>
+<ol>
+<li>样本的均值=总体的均值：每次抽样获得的均值总是在整体的均值附近波动。</li>
+<li>数据处于任意分布下，总体样本的平均值总会在整体均值附近上下波动并符合正态分布。</li>
+</ol>
+<p>在没有办法得到全量数据的情况下，我们可以利用样本来估计总体，特别是具备大量用户的互联网行业，需要进行严格的测试和实验，也就是利用中心极限定理，从小量用户进行对照实验，来判断实验的策略对于整体用户的影响。</p>
+<h2 id="A-B测试应用"><a href="#A-B测试应用" class="headerlink" title="A/B测试应用"></a>A/B测试应用</h2><h3 id="置信区间和置信度"><a href="#置信区间和置信度" class="headerlink" title="置信区间和置信度"></a>置信区间和置信度</h3><p>概率论是通过抽样和分布来估计总体的一门学科。A/B测试实验就是希望通过抽样来估计整体，然而预估总是会出现偏差的，因为我们不能站在上帝的视角来直接获得准确的数据，所以我们使用两个预估策略：点估计和区间估计。</p>
+<ul>
+<li>估计一个班上的男生平均身高为170cm，就是点估计。</li>
+<li>估计一个班上的男生平均身高在167cm~174cm之间，就是区间估计。</li>
+</ul>
+<p>区间估计就在总体参数的点估计上增加一个区间范围，相比于点估计更加严谨。</p>
+<p>由此而言，我们估计的时候需要给出一个估计区间的范围，来保证结果的可靠性，但是这个范围不能无限放大，因为我们估计该班上男生的平均身高是0~10米也是完全正确的，但并没有实际意义。</p>
+<p>此时我们就需要给定一个足够小的误差范围（<strong>置信区间</strong>），并求得总体均值有多大的概率在此区间内（<strong>置信度或置信水平</strong>）。置信区间并不是完全的置信，而是一个估计区间，需要有一个指标来衡量置信区间的置信水平。</p>
+<blockquote>
+<p>日常使用的置信水平大部分是95%，是因为95%的置信度在正态分布中，误差范围刚好是两个标准差$\sigma$，并且误差范围并不大，而且置信水平相对较高。但也可以人为设定其他值来衡量。</p>
+</blockquote>
+<h3 id="显著性"><a href="#显著性" class="headerlink" title="显著性"></a>显著性</h3><p>显著性是A/B测试中衡量实验组相比对照组是否有明显差异的另一个一个核心指标，说明了两个测试组观察的指标在实验后差异是否显著，可以是提升显著，也可以是降低显著。</p>
+<ol>
+<li>同向为正，显著提升：当实验指标提升为正，且置信区间上下限同为正，那么实验结果显著提升。</li>
+<li>逆向为负，显著下降：当实验指标提升为负，且置信区间上下限同为负，那么实验结果显著下降。</li>
+<li>置信区间一正一负，效果不显著：若置信区间一正一负，那么结果将难以判断是提升还是下降的。</li>
+</ol>
+<blockquote>
+<p>目前的统计学中，通常将阈值发生几率小于5%的事件称之为“不可能事件”，吧$\alpha&lt;0.05$的概率称为具有显著性。</p>
+</blockquote>
+<h3 id="实验抽样与用户分层"><a href="#实验抽样与用户分层" class="headerlink" title="实验抽样与用户分层"></a>实验抽样与用户分层</h3><p>当我们对很多实验数据的时候，很多情况都是先进行抽样。抽样需要符合几个原则：</p>
+<ol>
+<li>均匀：抽样样本对象要尽可能分布均匀，属性一致；</li>
+<li>随机：保证样本呢均匀的和实验需求的前提下，应尽可能保持抽样的随机性；</li>
+<li>样本充足：样本过小会导致实验数据波动较大且实验周期较长。</li>
+</ol>
+<p>抽样之后进行实验，当实验用户分层只有一层，那就只能同时进行很少的实验，为了提高实验效率，就需要增加用户分层。</p>
+<p>实验分层方式：</p>
+<p>根据业务需求可以有多种划分方法，理论上可以划分N层</p>
+<ol>
+<li>正交分层：各层用户均匀分布至其他各个实验层，达到用户“正交”的效果。``实际上是上一层每一个实验的影响均匀分不到下一层里，使得效果相互抵消，而不影响下一层的实验评估效果`，从而只需要考虑单层策略的影响效果。</li>
+<li>逻辑互斥：不同的业务逻辑需要在不同的层，相同的业务逻辑只能在同一层。若一个用户在两层都是有关样式调整的实验，那么会产生逻辑干扰，导致结果逻辑混乱。</li>
+</ol>
+<h3 id="单一因素原则"><a href="#单一因素原则" class="headerlink" title="单一因素原则"></a>单一因素原则</h3><p>最后需要注意的是，在进行A/B实验的时候，需要保证每一个实验的评估对象都只有一个，即每次实验指考虑一个因素的影响，否则难以区分实验的效果是哪一个因素影响的。</p>
+]]></content>
+      <categories>
+        <category>统计学</category>
+      </categories>
   </entry>
   <entry>
     <title>Flask | JS获取python中的JSON数据</title>
@@ -344,6 +344,32 @@
       </tags>
   </entry>
   <entry>
+    <title>mysql中位数</title>
+    <url>/2021/02/06/mysql%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是在mysql中查询一列<strong>奇数</strong>个数据的中位数。</p>
+</blockquote>
+<span id="more"></span>
+
+<p>在<a href="https://www.hackerrank.com/dashboard">HackerRank</a>刷题的时候遇到了一道需要查询中位数的题目。</p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>将中位数定义为：将数据集的上半部分与下半部分分开的数字，也就是仅存在一个中位数。</p>
+<p>需要找出某列的中位数。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>Station表中存在奇数个数据，那么我们要查找的LAT_N就是将数据分开后使得：上半部分个数=下半部分个数。</p>
+<p>于是我们需要在查询该表Station S的同时，再创建两个相同的Station表来计算上下部分的LAT_N个数，在检查记录的同时比较上下两部分的数量，当数量相同的时候，该S.LAT_N就是需要得到的中位数。</p>
+<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select round(s.LAT_N,4)</span><br><span class="line">from station s</span><br><span class="line">where (select count(LAT_N)</span><br><span class="line">       from station</span><br><span class="line">       where LAT_N &lt; s.LAT_N) = (</span><br><span class="line">           select count(LAT_N)</span><br><span class="line">           from station</span><br><span class="line">           where (LAT_N &gt; s.LAT_N))</span><br></pre></td></tr></table></figure>
+
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>当遇到比较抽象的问题的时候，需要学会转换思路，将抽象的中位数定义，转化为现实的，上下部分数量相同问题；也要熟悉mysql中创建新表和原表比较的方法。</p>
+]]></content>
+      <categories>
+        <category>增删改查</category>
+      </categories>
+      <tags>
+        <tag>select</tag>
+        <tag>中位数</tag>
+        <tag>mysql</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo的迁移</title>
     <url>/2021/12/29/hexo%E7%9A%84%E8%BF%81%E7%A7%BB/</url>
     <content><![CDATA[<blockquote>
@@ -469,32 +495,6 @@
       </tags>
   </entry>
   <entry>
-    <title>mysql中位数</title>
-    <url>/2021/02/06/mysql%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是在mysql中查询一列<strong>奇数</strong>个数据的中位数。</p>
-</blockquote>
-<span id="more"></span>
-
-<p>在<a href="https://www.hackerrank.com/dashboard">HackerRank</a>刷题的时候遇到了一道需要查询中位数的题目。</p>
-<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>将中位数定义为：将数据集的上半部分与下半部分分开的数字，也就是仅存在一个中位数。</p>
-<p>需要找出某列的中位数。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>Station表中存在奇数个数据，那么我们要查找的LAT_N就是将数据分开后使得：上半部分个数=下半部分个数。</p>
-<p>于是我们需要在查询该表Station S的同时，再创建两个相同的Station表来计算上下部分的LAT_N个数，在检查记录的同时比较上下两部分的数量，当数量相同的时候，该S.LAT_N就是需要得到的中位数。</p>
-<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select round(s.LAT_N,4)</span><br><span class="line">from station s</span><br><span class="line">where (select count(LAT_N)</span><br><span class="line">       from station</span><br><span class="line">       where LAT_N &lt; s.LAT_N) = (</span><br><span class="line">           select count(LAT_N)</span><br><span class="line">           from station</span><br><span class="line">           where (LAT_N &gt; s.LAT_N))</span><br></pre></td></tr></table></figure>
-
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>当遇到比较抽象的问题的时候，需要学会转换思路，将抽象的中位数定义，转化为现实的，上下部分数量相同问题；也要熟悉mysql中创建新表和原表比较的方法。</p>
-]]></content>
-      <categories>
-        <category>增删改查</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-        <tag>select</tag>
-        <tag>中位数</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>python常用函数</title>
     <url>/2021/02/06/python%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
     <content><![CDATA[<blockquote>
@@ -520,6 +520,56 @@
       </categories>
       <tags>
         <tag>函数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微信聊天记录制作词云图</title>
+    <url>/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/</url>
+    <content><![CDATA[<blockquote>
+<p>本文记录了从微信聊天记录导出到制作完成词云图的过程</p>
+<p>利用了python，GitHub开源项目完成，默认了解python和mysql基础知识。</p>
+<p>设备：Windows、ipad</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="导出微信聊天记录（有IOS-IpadOS设备）"><a href="#导出微信聊天记录（有IOS-IpadOS设备）" class="headerlink" title="导出微信聊天记录（有IOS/IpadOS设备）"></a>导出微信聊天记录（有IOS/IpadOS设备）</h2><p>首先我们需要将手机端的聊天记录（手机端的聊天记录比较完整）传送到微信端，这一步需要大家首先有一台苹果设备，利用iTunes备份聊天信息。</p>
+<ol>
+<li><p>（安卓用户）打开微信，找到<code>设置-&gt;聊天-&gt;聊天记录备份与迁移-&gt;迁移聊天记录到另一台设备</code>，然后选择想要的聊天记录，最后用苹果设备扫描出现的二维码，等待传输完成即可。</p>
+</li>
+<li><p>当苹果设备备份完成后，下载<a href="https://support.apple.com/zh-cn/HT210384">iTunes</a>，用电脑连接苹果设备，这时候在iTunes上会出现一个设备图标，点击并打开</p>
+<img src="/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/image-20220101105954123.png" class="" title="image-20220101105954123"></li>
+<li><p>点击<code>摘要-&gt;备份-&gt;本电脑-&gt;立即备份</code>，等待片刻使其备份完成。</p>
+<img src="/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/image-20220101110318002.png" class="" title="image-20220101110318002"></li>
+<li><p>在Windows中，聊天记录一般在<code>C:\Users\用户名\AppData\Roaming\Apple Computer\MobileSync\Backup</code>内，使用<a href="https://github.com/BlueMatthew/WechatExporter/releases/download/v1.8.0.10/v1.8.0.10_x64_win.zip">WechatExporter-Windows</a>或<a href="https://github.com/BlueMatthew/WechatExporter/releases/download/v1.8.0.10/v1.8.0.10_x64_macos.zip">WechatExporter-MacOS</a>来解析文件，之后图片及聊天记录就会存在选定的文件夹中。若仅需要聊天记录文件的txt文件，则在<code>格式</code>中选择<code>文本</code>即可。</p>
+<img src="/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/image-20220101111144265.png" class="" title="image-20220101111144265"></li>
+</ol>
+<h2 id="聊天记录入库"><a href="#聊天记录入库" class="headerlink" title="聊天记录入库"></a>聊天记录入库</h2><p>至此文件解析成功，接下来就是使用python对聊天记录导出的内容进行清洗过滤，得到<code>发送时间</code>、<code>用户名</code>和<code>聊天内容</code>，并保存到数据库中（当然也可以不用，自己对代码进行修改即可）如下所示：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">from</span> pymysql.converters <span class="keyword">import</span> escape_string</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_time</span>(<span class="params">time_str</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;将12小时日期时间转化为24小时制时间</span></span><br><span class="line"><span class="string">    Args: time_str (str): 12小时日期时间字符串，例如:2021-03-30 10:00:33 PM</span></span><br><span class="line"><span class="string">    Returns: str: 24小时制日期时间，例如:2021-03-30 22:00:33</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    str1 = time_str[-<span class="number">2</span>:]  <span class="comment"># 格式</span></span><br><span class="line">    data = time_str[:-<span class="number">3</span>]  <span class="comment"># 时间</span></span><br><span class="line">    <span class="keyword">if</span> str1.lower() == <span class="string">&quot;am&quot;</span> <span class="keyword">and</span> <span class="built_in">int</span>(time_str[-<span class="number">11</span>:-<span class="number">9</span>]) == <span class="number">12</span>:</span><br><span class="line">        hour = <span class="string">&quot;00&quot;</span></span><br><span class="line">        data = time_str[<span class="number">0</span>:<span class="number">11</span>] + hour + time_str[-<span class="number">9</span>:-<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">if</span> str1.lower() == <span class="string">&quot;pm&quot;</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">int</span>(time_str[-<span class="number">11</span>:-<span class="number">9</span>]) &lt; <span class="number">12</span>:</span><br><span class="line">            hour = <span class="built_in">str</span>(<span class="built_in">int</span>(time_str[-<span class="number">11</span>:-<span class="number">9</span>])+<span class="number">12</span>)</span><br><span class="line">        <span class="keyword">else</span>:  <span class="comment"># int(time_str[-11:-9]) == 12</span></span><br><span class="line">            hour = <span class="string">&quot;12&quot;</span></span><br><span class="line">        data = time_str[<span class="number">0</span>:<span class="number">11</span>] + hour + time_str[-<span class="number">9</span>:-<span class="number">3</span>]</span><br><span class="line">    str2 = time.mktime(time.strptime(data, <span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>))  <span class="comment"># 转换为时间戳</span></span><br><span class="line">    finally_result = <span class="built_in">str</span>(time.strftime(</span><br><span class="line">        <span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time.localtime(str2)))  <span class="comment"># 转换为指定格式</span></span><br><span class="line">    <span class="keyword">return</span> finally_result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">filter_lines = []  <span class="comment"># 最终的聊天信息</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&quot;你的聊天记录路径.txt&quot;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    lines = f.readlines()</span><br><span class="line">    reg = <span class="string">&quot;^.+[\u4E00-\u9FFF]\s\(.+\):&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">        <span class="comment"># 仅保留互相发送的信息记录</span></span><br><span class="line">        <span class="keyword">if</span> (line.startswith(<span class="string">&#x27;对方的用户名&#x27;</span>) <span class="keyword">or</span> line.startswith(<span class="string">&#x27;你的用户名&#x27;</span>)) <span class="keyword">and</span> re.match(reg, line):</span><br><span class="line">            filter_lines.append(line.strip())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接数据库</span></span><br><span class="line">conn = pymysql.connect(</span><br><span class="line">    host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">    user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">    password=<span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">    db=<span class="string">&#x27;wechat_report&#x27;</span>,  <span class="comment"># 需要先建好</span></span><br><span class="line">    charset=<span class="string">&#x27;utf8mb4&#x27;</span>,</span><br><span class="line">    port=<span class="number">3306</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建游标</span></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数据表</span></span><br><span class="line">create_sql = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">CREATE TABLE `log` (</span></span><br><span class="line"><span class="string">  `id` bigint(20) NOT NULL AUTO_INCREMENT,</span></span><br><span class="line"><span class="string">  `user` varchar(100) DEFAULT NULL,</span></span><br><span class="line"><span class="string">  `datetime` datetime DEFAULT NULL,</span></span><br><span class="line"><span class="string">  `content` text,</span></span><br><span class="line"><span class="string">  PRIMARY KEY (`id`)</span></span><br><span class="line"><span class="string">) ENGINE=InnoDB AUTO_INCREMENT=222187 DEFAULT CHARSET=utf8mb4;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">cur.execute(create_sql)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入数据表</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> filter_lines:</span><br><span class="line">    s1 = line.find(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    s2 = line.find(<span class="string">&quot;):&quot;</span>)</span><br><span class="line">    name = line[:s1]  <span class="comment"># 发送者</span></span><br><span class="line">    chattime = line[s1 + <span class="number">2</span>:s2]  <span class="comment"># 带有am/pm的12小时制时间</span></span><br><span class="line">    chattime = convert_time(chattime)  <span class="comment"># 转化为24小时制时间</span></span><br><span class="line">    content = line[s2 + <span class="number">2</span>:]  <span class="comment"># 聊天内容</span></span><br><span class="line">    insert_sql = <span class="string">f&quot;insert into log(user,datetime,content) values (&#x27;<span class="subst">&#123;name&#125;</span>&#x27;,&#x27;<span class="subst">&#123;chattime&#125;</span>&#x27; ,&#x27;<span class="subst">&#123;escape_string(content)&#125;</span>&#x27;)&quot;</span></span><br><span class="line">    cur.execute(insert_sql)</span><br><span class="line">conn.commit()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;一共有<span class="subst">&#123;<span class="built_in">len</span>(lines)&#125;</span>条聊天记录&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="聊天记录分词，计算词频"><a href="#聊天记录分词，计算词频" class="headerlink" title="聊天记录分词，计算词频"></a>聊天记录分词，计算词频</h2><p>从数据库中将数据读出，并使用<code>jieba</code>进行分词，统计每个词出现的次数，整理成<code>&#123;&#39;word&#39;: str, &#39;count&#39;:number&#125;</code>的格式，并按照词频大小进行排序。</p>
+<p>导出为使用<code>;</code>隔开的csv格式</p>
+<blockquote>
+<p>jieba分词的效果还是不错的，但是其实分析聊天记录的时候更想要的是关于句意吧，所以其实并没有达到我的预期。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接数据库</span></span><br><span class="line">conn = pymysql.connect(</span><br><span class="line">    host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">    user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">    password=<span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">    db=<span class="string">&#x27;wechat_report&#x27;</span>,</span><br><span class="line">    charset=<span class="string">&#x27;utf8mb4&#x27;</span>,</span><br><span class="line">    port=<span class="number">3306</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立游标</span></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">cur.execute(<span class="string">&quot;select * from log&quot;</span>)</span><br><span class="line">r = cur.fetchall()  <span class="comment"># 获得全部聊天记录</span></span><br><span class="line"></span><br><span class="line">result = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获得最长的一句话</span></span><br><span class="line">max_item = <span class="literal">None</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> r:</span><br><span class="line">    content = item[<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">if</span> (max_item <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> <span class="built_in">len</span>(content) &gt; <span class="built_in">len</span>(max_item[<span class="number">3</span>])) <span class="keyword">and</span> content.find(<span class="string">&#x27;http&#x27;</span>) == -<span class="number">1</span>:</span><br><span class="line">        max_item = item</span><br><span class="line"><span class="built_in">print</span>(max_item)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行分词</span></span><br><span class="line">word_arr = []</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> r:</span><br><span class="line">    content = item[<span class="number">3</span>]</span><br><span class="line">    seg_list = jieba.cut(content)</span><br><span class="line">    word_arr = word_arr + <span class="built_in">list</span>(seg_list)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算词频</span></span><br><span class="line">word_count_map = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> word_arr:</span><br><span class="line">    <span class="keyword">if</span> word <span class="keyword">in</span> word_count_map:</span><br><span class="line">        word_count_map[word] = word_count_map[word] + <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        word_count_map[word] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 组合成字典</span></span><br><span class="line">word_count_arr = []</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> word_count_map:</span><br><span class="line">    o = &#123;</span><br><span class="line">        <span class="string">&#x27;word&#x27;</span>: word,</span><br><span class="line">        <span class="string">&#x27;count&#x27;</span>: word_count_map[word]</span><br><span class="line">    &#125;</span><br><span class="line">    word_count_arr.append(o)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按词频排序</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">custom_sort</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x[<span class="string">&#x27;count&#x27;</span>] &gt; y[<span class="string">&#x27;count&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x[<span class="string">&#x27;count&#x27;</span>] &lt; y[<span class="string">&#x27;count&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">result[<span class="string">&#x27;word&#x27;</span>] = <span class="built_in">sorted</span>(word_count_arr, key=functools.cmp_to_key(custom_sort))</span><br><span class="line"></span><br><span class="line"><span class="comment"># with open(&quot;wechat-report\bin\result.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:</span></span><br><span class="line"><span class="comment">#     f.write(</span></span><br><span class="line"><span class="comment">#         json.dumps(result, ensure_ascii=False)</span></span><br><span class="line"><span class="comment">#     )</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用分号隔开写入csv文件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&quot;wechat-report\bin\result.csv&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> result[<span class="string">&#x27;word&#x27;</span>]:</span><br><span class="line">        f.write(i[<span class="string">&#x27;word&#x27;</span>]+<span class="string">&#x27;;&#x27;</span>+<span class="built_in">str</span>(i[<span class="string">&#x27;count&#x27;</span>])+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="制作词云"><a href="#制作词云" class="headerlink" title="制作词云"></a>制作词云</h2><p>词云的制作利用了一个还不错的网站<a href="https://wordart.com/create">Word Art</a>。</p>
+<ol>
+<li>words中使用<code>import</code>导入使用分号隔开的csv文件（复制粘贴进来）；</li>
+<li>shapes可以选择形状；</li>
+<li>fonts中记得导入中文字体，该网站默认仅支持英文字体；</li>
+<li>其他的自己探索吧，我也没仔细设置，点击上方中间红色按钮<code>Visualize</code>生成词云，下载项中可以免费下载普通画质的，也还可以了。</li>
+</ol>
+<h2 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h2><p><a href="https://github.com/myth984/wechat-report">myth984/wechat-report: 微信聊天记录年度报告 (github.com)</a></p>
+<p><a href="https://github.com/BlueMatthew/WechatExporter">BlueMatthew/WechatExporter: Wechat Chat History Exporter 微信聊天记录导出程序 (github.com)</a></p>
+<p><a href="https://wordart.com/create">Word Art - Edit - WordArt.com</a></p>
+<p><a href="https://izihun.com/zitixiazai-450.html?from_code=10033">沐瑶软笔手写体(Muyao-Softbrush)_TTF字体下载-字魂网 (izihun.com)</a></p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>词云</tag>
       </tags>
   </entry>
   <entry>
@@ -559,6 +609,133 @@
       </categories>
       <tags>
         <tag>误差</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快乐Linux学习（三）</title>
+    <url>/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>适用于学习Linux系统中shell特性和键盘操作的读者。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="字符展开"><a href="#字符展开" class="headerlink" title="字符展开"></a>字符展开</h2><p>每当我们在bash中输入一串命令，bash就会在执行命令之前将命令进行<code>展开</code>操作。</p>
+<p>我们可以使用<code>echo</code>来显示一行文本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo This is a test.</span><br></pre></td></tr></table></figure>
+
+<p>那么不出意外将会输出结果<code>This is a test.</code>，当我们输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo *</span><br></pre></td></tr></table></figure>
+
+<p>就会出现意外了:joy:，结果是根据通配符含义的“<code>*</code>”匹配当前文件夹的任何内容，而不是我们想要打印的“<code>*</code>”，这就意味着我们的命令有了自己的想法，想要按照自身的规则先进行展开成完全态，再执行命令。</p>
+<h3 id="路径名展开"><a href="#路径名展开" class="headerlink" title="路径名展开"></a>路径名展开</h3><p>以上这样的展开被称为路径名展开，例如打印当前目录所有的以<code>l</code>开头的文件或目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo l*</span><br></pre></td></tr></table></figure>
+
+<p>但是无法显示隐藏文件的展开路径，但是<code>办法总比困难多</code>。我们进行尝试：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo .*</span><br></pre></td></tr></table></figure>
+
+<p>几乎成功了，但是存在了不需要的<code>.</code>和<code>..</code>。换个方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -d .[!.]?* | less</span><br></pre></td></tr></table></figure>
+
+<p>仅展示以<code>.</code>开头，第二个符号不是<code>.</code>，并且至少再包含一个符号，之后可以紧跟任意多个字符。</p>
+<blockquote>
+<p>我们可以发现，对于文件和目录进行打印输出的时候，使用echo和ls的结果似乎差不多，但是细心的话，我们可以发现，ls文件名之间的间距是根据<code>制表符</code>规定的，而echo每两个文件名之间的间距是<code>一个空格</code>，其中原因也是shell的命令展开。</p>
+</blockquote>
+<h3 id="算数表达式展开"><a href="#算数表达式展开" class="headerlink" title="算数表达式展开"></a>算数表达式展开</h3><p>算术表达式是形如<code>$((expression))</code>，表达式中不在意空格，并且可以嵌套存在，需要注意的是除法“<code>/</code>”，由于表达式仅支持<strong>整数操作</strong>，所以除法操作得到的结果是<strong>舍尾的整数</strong>，想要获得余数可以使用“<code>%</code>”进行操作。</p>
+<h3 id="花括号展开"><a href="#花括号展开" class="headerlink" title="花括号展开"></a>花括号展开</h3><p>花括号是为了获得多个具有一定重复规律的字符串而出现的，举个例子:bulb:：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo hello-&#123;R,G,B&#125;-world</span><br></pre></td></tr></table></figure>
+
+<p>则结果会生成<code>hello-R-world hello-G-world hello-B-world</code>，或者想要生成2019-01至2021-12的文件夹来存放相应内容，可以使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir &#123;2019..2021&#125;-0&#123;1..9&#125; &#123;2019..2021&#125;-1&#123;0..2&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中花括号内可以包含字符串列表，整数区间和字符区间，区间使用<code>..</code>来表示区间范围，其中字符区间全部是大写或全部是小写的时候没有任何问题，但是在大写到小写的区间内，由于<code>ASCII</code>码的原因，会存在几个过度的字符，这需要注意一下。</p>
+<p>同样的，花括号也可以<code>嵌套</code>。</p>
+<h3 id="参数展开"><a href="#参数展开" class="headerlink" title="参数展开"></a>参数展开</h3><p>参数展开在此处简要体提及，之后会在shell脚本中详细阐述。</p>
+<p>我们查看一下可以使用的有效参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printenv | less</span><br></pre></td></tr></table></figure>
+
+<p>这些参数可以使用 <code>$</code>符号进行调用，来显示参数对应的值：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $USER</span><br></pre></td></tr></table></figure>
+
+<p><strong>命令替换</strong>功能也能将命令的输出作为一个展开模式来使用，例如将找到cp目录的<strong>结果作为展开的参数</strong>给ls进行打印：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l $(which cp)</span><br></pre></td></tr></table></figure>
+
+<p>同样的，管道线也适用参数展开，在旧版bash中也可以使用<code>ls -l `which cp` </code>达到同样效果。</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>这里的引用指的是一种引用机制，用来有选择的禁止不需要的展开。什么叫做不需要的展开，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo This is a     Test</span><br></pre></td></tr></table></figure>
+
+<p>但是结果是<code>This is a Test</code>，中间想要的空格被自动展开后再进行单词分割（空格、制表符、换行符等界定符）而失去了。再比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo The total price is $100.00</span><br></pre></td></tr></table></figure>
+
+<p>但是结果却是<code>The total price is 00.00</code>，原因是<code>$1</code>被视作名为变量1的参数。</p>
+<p>为了禁止这些不需要的展开，所以出现了引用机制，这里有两种类型，一种是<strong>双引号</strong>，一种是<strong>单引号</strong>。</p>
+<p>使用双引号的时候，shell使用的一些特殊字符将会失去其特殊含义，<u>单词分割，路径名展开，波浪线展开（用户名）和花括号展开</u>都会被禁止。</p>
+<p>例如这个存在空格的破损文件名<code>word count.txt</code>，正常情况下ls的时候会认作两个参数，而使用双引号的时候就会关闭单词分割，从而视作一个参数来正确读取，并且可以使用mv进行重命名。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l &quot;word count.txt&quot;</span><br><span class="line">mv &quot;word count.txt&quot; word_count.txt</span><br></pre></td></tr></table></figure>
+
+<p>再比如打印日历：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $(cal)</span><br></pre></td></tr></table></figure>
+
+<p>这就是被单词分割的后果！可以尝试加上双引号，一下子好看了有木有:laughing:！</p>
+<p>但是对于<code>$，\和` </code>并不会被禁止，也就是意味着参数展开，算术展开和命令替换仍然会被执行。</p>
+<p>这就需要使用单引号来<strong>禁止全部展开</strong>，通过以下对比进行说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`</span><br><span class="line">echo &quot;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&quot;</span><br><span class="line">echo &#x27;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&#x27;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对于转义字符“<code>\</code>”有一个很有趣的东西，echo加上<code>-e</code>能够解释转义字符，例如，10秒后响铃:alarm_clock:：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sleep 10; echo -e &quot;Time&#x27;s up \a&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="键盘的高级操作"><a href="#键盘的高级操作" class="headerlink" title="键盘的高级操作"></a>键盘的高级操作</h2><p>这里再附带说一下键盘有关的高级操作，<code>命令行的目标是懒惰</code>，各种简短而丰富的命令是为了更少的敲击键盘和无需使用鼠标，来专注于工作本身。</p>
+<p>在命令行中存在很多的按键，来快速编辑，例如：</p>
+<table>
+<thead>
+<tr>
+<th>按键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ctrl-a</td>
+<td>光标移动到行首</td>
+</tr>
+<tr>
+<td>Ctrl-e</td>
+<td>光标移动到行尾</td>
+</tr>
+<tr>
+<td>Alt-f</td>
+<td>光标向前移动一个字</td>
+</tr>
+<tr>
+<td>Alt-b</td>
+<td>光标向后移动一个字</td>
+</tr>
+<tr>
+<td>Ctrl-l</td>
+<td>清空屏幕，与clear相同</td>
+</tr>
+<tr>
+<td>Alt-l</td>
+<td>光标至字尾的字符转化为小写字母</td>
+</tr>
+<tr>
+<td>Alt-u</td>
+<td>光标至字尾的字符转化为大写字母</td>
+</tr>
+</tbody></table>
+<h3 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h3><p>自动补全是shell一个很方便的方法，Linux系统不一样可能机制不同，WSL中是只有一个匹配的则敲击<code>一下tab</code>键即可，存在多个匹配条件，则连续敲击<code>两下tab</code>键显示。</p>
+<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><p>使用上下键就可以浏览之前输入过的历史命令，不过还可以使用history进行查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">history | less</span><br></pre></td></tr></table></figure>
+
+<p>在每个历史命令中，每行会有一个序号，我们在命令行直接输入<code>!80</code>就可以直接执行第80行的命令了。</p>
+<p>使用<code>Ctrl-r</code>可以进入搜索模式，输入部分命令内容，继续按下<code>Ctrl-r</code>就可以从<strong>现在</strong>到<strong>过去</strong>进行历史命令匹配了。</p>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>总之，Linux中的shell是一个很有趣的事物，准确的理解其中展开和引用机制可以很好的发挥shell的能力。对于最后提及的键盘快捷键，暂时来说只是锦上添花，更多的还是关注命令本身。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -864,133 +1041,6 @@
 <p>大多数文件操作是针对链接的对象，而不是链接本身；而rm是特例，删除链接的时候是删除链接本身，而不是链接的对象。</p>
 </blockquote>
 <h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>初步认识了Linux中的基础内容，最主要的是能够熟练查看Linux的一些文件和目录内容，并且会基础的文件操作。</p>
-]]></content>
-      <categories>
-        <category>操作系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>快乐Linux学习（三）</title>
-    <url>/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
-<p>适用于学习Linux系统中shell特性和键盘操作的读者。</p>
-</blockquote>
-<span id="more"></span>
-
-<h2 id="字符展开"><a href="#字符展开" class="headerlink" title="字符展开"></a>字符展开</h2><p>每当我们在bash中输入一串命令，bash就会在执行命令之前将命令进行<code>展开</code>操作。</p>
-<p>我们可以使用<code>echo</code>来显示一行文本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo This is a test.</span><br></pre></td></tr></table></figure>
-
-<p>那么不出意外将会输出结果<code>This is a test.</code>，当我们输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo *</span><br></pre></td></tr></table></figure>
-
-<p>就会出现意外了:joy:，结果是根据通配符含义的“<code>*</code>”匹配当前文件夹的任何内容，而不是我们想要打印的“<code>*</code>”，这就意味着我们的命令有了自己的想法，想要按照自身的规则先进行展开成完全态，再执行命令。</p>
-<h3 id="路径名展开"><a href="#路径名展开" class="headerlink" title="路径名展开"></a>路径名展开</h3><p>以上这样的展开被称为路径名展开，例如打印当前目录所有的以<code>l</code>开头的文件或目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo l*</span><br></pre></td></tr></table></figure>
-
-<p>但是无法显示隐藏文件的展开路径，但是<code>办法总比困难多</code>。我们进行尝试：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo .*</span><br></pre></td></tr></table></figure>
-
-<p>几乎成功了，但是存在了不需要的<code>.</code>和<code>..</code>。换个方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -d .[!.]?* | less</span><br></pre></td></tr></table></figure>
-
-<p>仅展示以<code>.</code>开头，第二个符号不是<code>.</code>，并且至少再包含一个符号，之后可以紧跟任意多个字符。</p>
-<blockquote>
-<p>我们可以发现，对于文件和目录进行打印输出的时候，使用echo和ls的结果似乎差不多，但是细心的话，我们可以发现，ls文件名之间的间距是根据<code>制表符</code>规定的，而echo每两个文件名之间的间距是<code>一个空格</code>，其中原因也是shell的命令展开。</p>
-</blockquote>
-<h3 id="算数表达式展开"><a href="#算数表达式展开" class="headerlink" title="算数表达式展开"></a>算数表达式展开</h3><p>算术表达式是形如<code>$((expression))</code>，表达式中不在意空格，并且可以嵌套存在，需要注意的是除法“<code>/</code>”，由于表达式仅支持<strong>整数操作</strong>，所以除法操作得到的结果是<strong>舍尾的整数</strong>，想要获得余数可以使用“<code>%</code>”进行操作。</p>
-<h3 id="花括号展开"><a href="#花括号展开" class="headerlink" title="花括号展开"></a>花括号展开</h3><p>花括号是为了获得多个具有一定重复规律的字符串而出现的，举个例子:bulb:：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo hello-&#123;R,G,B&#125;-world</span><br></pre></td></tr></table></figure>
-
-<p>则结果会生成<code>hello-R-world hello-G-world hello-B-world</code>，或者想要生成2019-01至2021-12的文件夹来存放相应内容，可以使用：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir &#123;2019..2021&#125;-0&#123;1..9&#125; &#123;2019..2021&#125;-1&#123;0..2&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中花括号内可以包含字符串列表，整数区间和字符区间，区间使用<code>..</code>来表示区间范围，其中字符区间全部是大写或全部是小写的时候没有任何问题，但是在大写到小写的区间内，由于<code>ASCII</code>码的原因，会存在几个过度的字符，这需要注意一下。</p>
-<p>同样的，花括号也可以<code>嵌套</code>。</p>
-<h3 id="参数展开"><a href="#参数展开" class="headerlink" title="参数展开"></a>参数展开</h3><p>参数展开在此处简要体提及，之后会在shell脚本中详细阐述。</p>
-<p>我们查看一下可以使用的有效参数：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printenv | less</span><br></pre></td></tr></table></figure>
-
-<p>这些参数可以使用 <code>$</code>符号进行调用，来显示参数对应的值：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $USER</span><br></pre></td></tr></table></figure>
-
-<p><strong>命令替换</strong>功能也能将命令的输出作为一个展开模式来使用，例如将找到cp目录的<strong>结果作为展开的参数</strong>给ls进行打印：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l $(which cp)</span><br></pre></td></tr></table></figure>
-
-<p>同样的，管道线也适用参数展开，在旧版bash中也可以使用<code>ls -l `which cp` </code>达到同样效果。</p>
-<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>这里的引用指的是一种引用机制，用来有选择的禁止不需要的展开。什么叫做不需要的展开，如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo This is a     Test</span><br></pre></td></tr></table></figure>
-
-<p>但是结果是<code>This is a Test</code>，中间想要的空格被自动展开后再进行单词分割（空格、制表符、换行符等界定符）而失去了。再比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo The total price is $100.00</span><br></pre></td></tr></table></figure>
-
-<p>但是结果却是<code>The total price is 00.00</code>，原因是<code>$1</code>被视作名为变量1的参数。</p>
-<p>为了禁止这些不需要的展开，所以出现了引用机制，这里有两种类型，一种是<strong>双引号</strong>，一种是<strong>单引号</strong>。</p>
-<p>使用双引号的时候，shell使用的一些特殊字符将会失去其特殊含义，<u>单词分割，路径名展开，波浪线展开（用户名）和花括号展开</u>都会被禁止。</p>
-<p>例如这个存在空格的破损文件名<code>word count.txt</code>，正常情况下ls的时候会认作两个参数，而使用双引号的时候就会关闭单词分割，从而视作一个参数来正确读取，并且可以使用mv进行重命名。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l &quot;word count.txt&quot;</span><br><span class="line">mv &quot;word count.txt&quot; word_count.txt</span><br></pre></td></tr></table></figure>
-
-<p>再比如打印日历：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $(cal)</span><br></pre></td></tr></table></figure>
-
-<p>这就是被单词分割的后果！可以尝试加上双引号，一下子好看了有木有:laughing:！</p>
-<p>但是对于<code>$，\和` </code>并不会被禁止，也就是意味着参数展开，算术展开和命令替换仍然会被执行。</p>
-<p>这就需要使用单引号来<strong>禁止全部展开</strong>，通过以下对比进行说明：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`</span><br><span class="line">echo &quot;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&quot;</span><br><span class="line">echo &#x27;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&#x27;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>对于转义字符“<code>\</code>”有一个很有趣的东西，echo加上<code>-e</code>能够解释转义字符，例如，10秒后响铃:alarm_clock:：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sleep 10; echo -e &quot;Time&#x27;s up \a&quot;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="键盘的高级操作"><a href="#键盘的高级操作" class="headerlink" title="键盘的高级操作"></a>键盘的高级操作</h2><p>这里再附带说一下键盘有关的高级操作，<code>命令行的目标是懒惰</code>，各种简短而丰富的命令是为了更少的敲击键盘和无需使用鼠标，来专注于工作本身。</p>
-<p>在命令行中存在很多的按键，来快速编辑，例如：</p>
-<table>
-<thead>
-<tr>
-<th>按键</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Ctrl-a</td>
-<td>光标移动到行首</td>
-</tr>
-<tr>
-<td>Ctrl-e</td>
-<td>光标移动到行尾</td>
-</tr>
-<tr>
-<td>Alt-f</td>
-<td>光标向前移动一个字</td>
-</tr>
-<tr>
-<td>Alt-b</td>
-<td>光标向后移动一个字</td>
-</tr>
-<tr>
-<td>Ctrl-l</td>
-<td>清空屏幕，与clear相同</td>
-</tr>
-<tr>
-<td>Alt-l</td>
-<td>光标至字尾的字符转化为小写字母</td>
-</tr>
-<tr>
-<td>Alt-u</td>
-<td>光标至字尾的字符转化为大写字母</td>
-</tr>
-</tbody></table>
-<h3 id="自动补全"><a href="#自动补全" class="headerlink" title="自动补全"></a>自动补全</h3><p>自动补全是shell一个很方便的方法，Linux系统不一样可能机制不同，WSL中是只有一个匹配的则敲击<code>一下tab</code>键即可，存在多个匹配条件，则连续敲击<code>两下tab</code>键显示。</p>
-<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><p>使用上下键就可以浏览之前输入过的历史命令，不过还可以使用history进行查看：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">history | less</span><br></pre></td></tr></table></figure>
-
-<p>在每个历史命令中，每行会有一个序号，我们在命令行直接输入<code>!80</code>就可以直接执行第80行的命令了。</p>
-<p>使用<code>Ctrl-r</code>可以进入搜索模式，输入部分命令内容，继续按下<code>Ctrl-r</code>就可以从<strong>现在</strong>到<strong>过去</strong>进行历史命令匹配了。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>总之，Linux中的shell是一个很有趣的事物，准确的理解其中展开和引用机制可以很好的发挥shell的能力。对于最后提及的键盘快捷键，暂时来说只是锦上添花，更多的还是关注命令本身。</p>
 ]]></content>
       <categories>
         <category>操作系统</category>
@@ -1502,6 +1552,29 @@
       </tags>
   </entry>
   <entry>
+    <title>快乐Linux学习（零）</title>
+    <url>/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%9B%B6%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>学习中途发现很有意思的东西，就分享在开篇了。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="Linux-可以激发我们的想象"><a href="#Linux-可以激发我们的想象" class="headerlink" title="Linux 可以激发我们的想象"></a>Linux 可以激发我们的想象</h2><blockquote>
+<p>当我被要求解释 Windows 与 Linux 之间的差异时，我经常拿玩具来作比喻。<br>Windows 就像一个游戏机。你去商店，买了一个包装在盒子里面的全新的游戏<br>机。你把它带回家，打开盒子，开始玩游戏。精美的画面，动人的声音。玩了一段<br>时间之后，你厌倦了它自带的游戏，所以你返回商店，又买了另一个游戏机。这个<br>过程反复重复。最后，你玩腻了游戏机自带的游戏，你回到商店，告诉售货员，“我<br>想要一个这样的游戏！”但售货员告诉你没有这样的游戏存在，因为它没有“市场<br>需求”。然后你说，“但是我只需要修改一下这个游戏！“，售货员又告诉你不能修改<br>它。所有游戏都被封装在它们的存储器中。到头来，你发现你的玩具只局限于别人<br>为你规定好的游戏。</p>
+<p>另一方面，Linux 就像一个全世界上最大的建造模型。你打开它，发现它只是一<br>个巨大的部件集合。有许多钢支柱、螺钉、螺母、齿轮、滑轮、发动机和一些怎样<br>来建造它的说明书。然后你开始摆弄它。你建造了一个又一个样板模型。过了一会<br>儿，你发现你要建造自己的模型。你不必返回商店，因为你已经拥有了你需要的一<br>切。建造模型以你构想的形状为模板，搭建你想要的模型。<br>当然，选择哪一个玩具，是你的事情，那么你觉得哪个玩具更令人满意呢？</p>
+</blockquote>
+<p>Windows是经典模式，Linux是自定义模式。</p>
+<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>个人喜好而已，“Just enjoy yourself”。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>战略分析案例——网上商城</title>
     <url>/2021/02/16/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/</url>
     <content><![CDATA[<blockquote>
@@ -1694,26 +1767,33 @@
       </categories>
   </entry>
   <entry>
-    <title>快乐Linux学习（零）</title>
-    <url>/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%9B%B6%EF%BC%89/</url>
+    <title>测量HTML元素长度</title>
+    <url>/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</url>
     <content><![CDATA[<blockquote>
-<p>本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
-<p>学习中途发现很有意思的东西，就分享在开篇了。</p>
+<p>这次要推荐是提升html页面布局效率的chrome插件。</p>
+<p>适用于有 HTML + CSS 进行页面设计需求的人群。</p>
 </blockquote>
 <span id="more"></span>
 
-<h2 id="Linux-可以激发我们的想象"><a href="#Linux-可以激发我们的想象" class="headerlink" title="Linux 可以激发我们的想象"></a>Linux 可以激发我们的想象</h2><blockquote>
-<p>当我被要求解释 Windows 与 Linux 之间的差异时，我经常拿玩具来作比喻。<br>Windows 就像一个游戏机。你去商店，买了一个包装在盒子里面的全新的游戏<br>机。你把它带回家，打开盒子，开始玩游戏。精美的画面，动人的声音。玩了一段<br>时间之后，你厌倦了它自带的游戏，所以你返回商店，又买了另一个游戏机。这个<br>过程反复重复。最后，你玩腻了游戏机自带的游戏，你回到商店，告诉售货员，“我<br>想要一个这样的游戏！”但售货员告诉你没有这样的游戏存在，因为它没有“市场<br>需求”。然后你说，“但是我只需要修改一下这个游戏！“，售货员又告诉你不能修改<br>它。所有游戏都被封装在它们的存储器中。到头来，你发现你的玩具只局限于别人<br>为你规定好的游戏。</p>
-<p>另一方面，Linux 就像一个全世界上最大的建造模型。你打开它，发现它只是一<br>个巨大的部件集合。有许多钢支柱、螺钉、螺母、齿轮、滑轮、发动机和一些怎样<br>来建造它的说明书。然后你开始摆弄它。你建造了一个又一个样板模型。过了一会<br>儿，你发现你要建造自己的模型。你不必返回商店，因为你已经拥有了你需要的一<br>切。建造模型以你构想的形状为模板，搭建你想要的模型。<br>当然，选择哪一个玩具，是你的事情，那么你觉得哪个玩具更令人满意呢？</p>
+<h2 id="Page-Ruler-Redux"><a href="#Page-Ruler-Redux" class="headerlink" title="Page Ruler Redux"></a>Page Ruler Redux</h2><p>该插件是<a href="https://chrome.google.com/webstore/detail/page-ruler-redux/giejhjebcalaheckengmchjekofhhmal">Page Ruler Redux</a>，直接点击链接就可以在<code>Chrome</code>应用商店进行下载了。</p>
+<p>下载完成并进行安装，使用<code>ALT + P</code>快捷键就可以将插件打开，戍边点击选择需要测量的区域即可。</p>
+<p>当然，这样直接点击有的时候会选的不太准确，可以打开元素模式，自动选择边界框，在调试的时候就可以自动选择元素边界，准确进行设计。</p>
+<img src="/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/01.png" class="" title="打开元素模式">
+
+<h2 id="Ctrl-Shift-I"><a href="#Ctrl-Shift-I" class="headerlink" title="Ctrl+Shift+I"></a>Ctrl+Shift+I</h2><p>2021年1月13日 更新：</p>
+<p>利用上面的插件来显示页面元素的width和height感觉是很方便，但我觉得更重要的应该是可以看到left和top等边距参数，这样可以准确控制页面的布局。</p>
+<p>同时当页面元素可以拖动和缩放的时候，我们打开插件进行测量，则页面可能会重新刷新，这个时候就比较不方便了，这时需要查看width和height的话，通过浏览器自带的<code>开发人员工具</code>，点击左上角的小箭头即可。将该页面独立出来，就可以直接查看页面元素的大小了。</p>
+<blockquote>
+<p>其实这个开发人员工具我用的很熟悉，但是当时想要测量页面元素却一时忘记，今天才反应过来，这可能就是灯下黑吧:joy:。</p>
 </blockquote>
-<p>Windows是经典模式，Linux是自定义模式。</p>
-<h2 id="个人收获"><a href="#个人收获" class="headerlink" title="个人收获"></a>个人收获</h2><p>个人喜好而已，“Just enjoy yourself”。</p>
 ]]></content>
       <categories>
-        <category>操作系统</category>
+        <category>插件</category>
+        <category>前端</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>Chrome</tag>
+        <tag>CSS</tag>
       </tags>
   </entry>
   <entry>
@@ -1763,36 +1843,6 @@
       </categories>
       <tags>
         <tag>思维方式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>测量HTML元素长度</title>
-    <url>/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</url>
-    <content><![CDATA[<blockquote>
-<p>这次要推荐是提升html页面布局效率的chrome插件。</p>
-<p>适用于有 HTML + CSS 进行页面设计需求的人群。</p>
-</blockquote>
-<span id="more"></span>
-
-<h2 id="Page-Ruler-Redux"><a href="#Page-Ruler-Redux" class="headerlink" title="Page Ruler Redux"></a>Page Ruler Redux</h2><p>该插件是<a href="https://chrome.google.com/webstore/detail/page-ruler-redux/giejhjebcalaheckengmchjekofhhmal">Page Ruler Redux</a>，直接点击链接就可以在<code>Chrome</code>应用商店进行下载了。</p>
-<p>下载完成并进行安装，使用<code>ALT + P</code>快捷键就可以将插件打开，戍边点击选择需要测量的区域即可。</p>
-<p>当然，这样直接点击有的时候会选的不太准确，可以打开元素模式，自动选择边界框，在调试的时候就可以自动选择元素边界，准确进行设计。</p>
-<img src="/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/01.png" class="" title="打开元素模式">
-
-<h2 id="Ctrl-Shift-I"><a href="#Ctrl-Shift-I" class="headerlink" title="Ctrl+Shift+I"></a>Ctrl+Shift+I</h2><p>2021年1月13日 更新：</p>
-<p>利用上面的插件来显示页面元素的width和height感觉是很方便，但我觉得更重要的应该是可以看到left和top等边距参数，这样可以准确控制页面的布局。</p>
-<p>同时当页面元素可以拖动和缩放的时候，我们打开插件进行测量，则页面可能会重新刷新，这个时候就比较不方便了，这时需要查看width和height的话，通过浏览器自带的<code>开发人员工具</code>，点击左上角的小箭头即可。将该页面独立出来，就可以直接查看页面元素的大小了。</p>
-<blockquote>
-<p>其实这个开发人员工具我用的很熟悉，但是当时想要测量页面元素却一时忘记，今天才反应过来，这可能就是灯下黑吧:joy:。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>插件</category>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>Chrome</tag>
-        <tag>CSS</tag>
       </tags>
   </entry>
   <entry>
@@ -2086,56 +2136,6 @@
       </categories>
       <tags>
         <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>微信聊天记录制作词云图</title>
-    <url>/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/</url>
-    <content><![CDATA[<blockquote>
-<p>本文记录了从微信聊天记录导出到制作完成词云图的过程</p>
-<p>利用了python，GitHub开源项目完成，默认了解python和mysql基础知识。</p>
-<p>设备：Windows、ipad</p>
-</blockquote>
-<span id="more"></span>
-
-<h2 id="导出微信聊天记录（有IOS-IpadOS设备）"><a href="#导出微信聊天记录（有IOS-IpadOS设备）" class="headerlink" title="导出微信聊天记录（有IOS/IpadOS设备）"></a>导出微信聊天记录（有IOS/IpadOS设备）</h2><p>首先我们需要将手机端的聊天记录（手机端的聊天记录比较完整）传送到微信端，这一步需要大家首先有一台苹果设备，利用iTunes备份聊天信息。</p>
-<ol>
-<li><p>（安卓用户）打开微信，找到<code>设置-&gt;聊天-&gt;聊天记录备份与迁移-&gt;迁移聊天记录到另一台设备</code>，然后选择想要的聊天记录，最后用苹果设备扫描出现的二维码，等待传输完成即可。</p>
-</li>
-<li><p>当苹果设备备份完成后，下载<a href="https://support.apple.com/zh-cn/HT210384">iTunes</a>，用电脑连接苹果设备，这时候在iTunes上会出现一个设备图标，点击并打开</p>
-<img src="/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/image-20220101105954123.png" class="" title="image-20220101105954123"></li>
-<li><p>点击<code>摘要-&gt;备份-&gt;本电脑-&gt;立即备份</code>，等待片刻使其备份完成。</p>
-<img src="/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/image-20220101110318002.png" class="" title="image-20220101110318002"></li>
-<li><p>在Windows中，聊天记录一般在<code>C:\Users\用户名\AppData\Roaming\Apple Computer\MobileSync\Backup</code>内，使用<a href="https://github.com/BlueMatthew/WechatExporter/releases/download/v1.8.0.10/v1.8.0.10_x64_win.zip">WechatExporter-Windows</a>或<a href="https://github.com/BlueMatthew/WechatExporter/releases/download/v1.8.0.10/v1.8.0.10_x64_macos.zip">WechatExporter-MacOS</a>来解析文件，之后图片及聊天记录就会存在选定的文件夹中。若仅需要聊天记录文件的txt文件，则在<code>格式</code>中选择<code>文本</code>即可。</p>
-<img src="/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/image-20220101111144265.png" class="" title="image-20220101111144265"></li>
-</ol>
-<h2 id="聊天记录入库"><a href="#聊天记录入库" class="headerlink" title="聊天记录入库"></a>聊天记录入库</h2><p>至此文件解析成功，接下来就是使用python对聊天记录导出的内容进行清洗过滤，得到<code>发送时间</code>、<code>用户名</code>和<code>聊天内容</code>，并保存到数据库中（当然也可以不用，自己对代码进行修改即可）如下所示：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">from</span> pymysql.converters <span class="keyword">import</span> escape_string</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">convert_time</span>(<span class="params">time_str</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;将12小时日期时间转化为24小时制时间</span></span><br><span class="line"><span class="string">    Args: time_str (str): 12小时日期时间字符串，例如:2021-03-30 10:00:33 PM</span></span><br><span class="line"><span class="string">    Returns: str: 24小时制日期时间，例如:2021-03-30 22:00:33</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    str1 = time_str[-<span class="number">2</span>:]  <span class="comment"># 格式</span></span><br><span class="line">    data = time_str[:-<span class="number">3</span>]  <span class="comment"># 时间</span></span><br><span class="line">    <span class="keyword">if</span> str1.lower() == <span class="string">&quot;am&quot;</span> <span class="keyword">and</span> <span class="built_in">int</span>(time_str[-<span class="number">11</span>:-<span class="number">9</span>]) == <span class="number">12</span>:</span><br><span class="line">        hour = <span class="string">&quot;00&quot;</span></span><br><span class="line">        data = time_str[<span class="number">0</span>:<span class="number">11</span>] + hour + time_str[-<span class="number">9</span>:-<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">if</span> str1.lower() == <span class="string">&quot;pm&quot;</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">int</span>(time_str[-<span class="number">11</span>:-<span class="number">9</span>]) &lt; <span class="number">12</span>:</span><br><span class="line">            hour = <span class="built_in">str</span>(<span class="built_in">int</span>(time_str[-<span class="number">11</span>:-<span class="number">9</span>])+<span class="number">12</span>)</span><br><span class="line">        <span class="keyword">else</span>:  <span class="comment"># int(time_str[-11:-9]) == 12</span></span><br><span class="line">            hour = <span class="string">&quot;12&quot;</span></span><br><span class="line">        data = time_str[<span class="number">0</span>:<span class="number">11</span>] + hour + time_str[-<span class="number">9</span>:-<span class="number">3</span>]</span><br><span class="line">    str2 = time.mktime(time.strptime(data, <span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>))  <span class="comment"># 转换为时间戳</span></span><br><span class="line">    finally_result = <span class="built_in">str</span>(time.strftime(</span><br><span class="line">        <span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time.localtime(str2)))  <span class="comment"># 转换为指定格式</span></span><br><span class="line">    <span class="keyword">return</span> finally_result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">filter_lines = []  <span class="comment"># 最终的聊天信息</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&quot;你的聊天记录路径.txt&quot;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    lines = f.readlines()</span><br><span class="line">    reg = <span class="string">&quot;^.+[\u4E00-\u9FFF]\s\(.+\):&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">        <span class="comment"># 仅保留互相发送的信息记录</span></span><br><span class="line">        <span class="keyword">if</span> (line.startswith(<span class="string">&#x27;对方的用户名&#x27;</span>) <span class="keyword">or</span> line.startswith(<span class="string">&#x27;你的用户名&#x27;</span>)) <span class="keyword">and</span> re.match(reg, line):</span><br><span class="line">            filter_lines.append(line.strip())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接数据库</span></span><br><span class="line">conn = pymysql.connect(</span><br><span class="line">    host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">    user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">    password=<span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">    db=<span class="string">&#x27;wechat_report&#x27;</span>,  <span class="comment"># 需要先建好</span></span><br><span class="line">    charset=<span class="string">&#x27;utf8mb4&#x27;</span>,</span><br><span class="line">    port=<span class="number">3306</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建游标</span></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建数据表</span></span><br><span class="line">create_sql = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">CREATE TABLE `log` (</span></span><br><span class="line"><span class="string">  `id` bigint(20) NOT NULL AUTO_INCREMENT,</span></span><br><span class="line"><span class="string">  `user` varchar(100) DEFAULT NULL,</span></span><br><span class="line"><span class="string">  `datetime` datetime DEFAULT NULL,</span></span><br><span class="line"><span class="string">  `content` text,</span></span><br><span class="line"><span class="string">  PRIMARY KEY (`id`)</span></span><br><span class="line"><span class="string">) ENGINE=InnoDB AUTO_INCREMENT=222187 DEFAULT CHARSET=utf8mb4;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">cur.execute(create_sql)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入数据表</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> filter_lines:</span><br><span class="line">    s1 = line.find(<span class="string">&quot; &quot;</span>)</span><br><span class="line">    s2 = line.find(<span class="string">&quot;):&quot;</span>)</span><br><span class="line">    name = line[:s1]  <span class="comment"># 发送者</span></span><br><span class="line">    chattime = line[s1 + <span class="number">2</span>:s2]  <span class="comment"># 带有am/pm的12小时制时间</span></span><br><span class="line">    chattime = convert_time(chattime)  <span class="comment"># 转化为24小时制时间</span></span><br><span class="line">    content = line[s2 + <span class="number">2</span>:]  <span class="comment"># 聊天内容</span></span><br><span class="line">    insert_sql = <span class="string">f&quot;insert into log(user,datetime,content) values (&#x27;<span class="subst">&#123;name&#125;</span>&#x27;,&#x27;<span class="subst">&#123;chattime&#125;</span>&#x27; ,&#x27;<span class="subst">&#123;escape_string(content)&#125;</span>&#x27;)&quot;</span></span><br><span class="line">    cur.execute(insert_sql)</span><br><span class="line">conn.commit()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;一共有<span class="subst">&#123;<span class="built_in">len</span>(lines)&#125;</span>条聊天记录&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="聊天记录分词，计算词频"><a href="#聊天记录分词，计算词频" class="headerlink" title="聊天记录分词，计算词频"></a>聊天记录分词，计算词频</h2><p>从数据库中将数据读出，并使用<code>jieba</code>进行分词，统计每个词出现的次数，整理成<code>&#123;&#39;word&#39;: str, &#39;count&#39;:number&#125;</code>的格式，并按照词频大小进行排序。</p>
-<p>导出为使用<code>;</code>隔开的csv格式</p>
-<blockquote>
-<p>jieba分词的效果还是不错的，但是其实分析聊天记录的时候更想要的是关于句意吧，所以其实并没有达到我的预期。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接数据库</span></span><br><span class="line">conn = pymysql.connect(</span><br><span class="line">    host=<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">    user=<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">    password=<span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">    db=<span class="string">&#x27;wechat_report&#x27;</span>,</span><br><span class="line">    charset=<span class="string">&#x27;utf8mb4&#x27;</span>,</span><br><span class="line">    port=<span class="number">3306</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 建立游标</span></span><br><span class="line">cur = conn.cursor()</span><br><span class="line"></span><br><span class="line">cur.execute(<span class="string">&quot;select * from log&quot;</span>)</span><br><span class="line">r = cur.fetchall()  <span class="comment"># 获得全部聊天记录</span></span><br><span class="line"></span><br><span class="line">result = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获得最长的一句话</span></span><br><span class="line">max_item = <span class="literal">None</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> r:</span><br><span class="line">    content = item[<span class="number">3</span>]</span><br><span class="line">    <span class="keyword">if</span> (max_item <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">or</span> <span class="built_in">len</span>(content) &gt; <span class="built_in">len</span>(max_item[<span class="number">3</span>])) <span class="keyword">and</span> content.find(<span class="string">&#x27;http&#x27;</span>) == -<span class="number">1</span>:</span><br><span class="line">        max_item = item</span><br><span class="line"><span class="built_in">print</span>(max_item)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行分词</span></span><br><span class="line">word_arr = []</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> r:</span><br><span class="line">    content = item[<span class="number">3</span>]</span><br><span class="line">    seg_list = jieba.cut(content)</span><br><span class="line">    word_arr = word_arr + <span class="built_in">list</span>(seg_list)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算词频</span></span><br><span class="line">word_count_map = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> word_arr:</span><br><span class="line">    <span class="keyword">if</span> word <span class="keyword">in</span> word_count_map:</span><br><span class="line">        word_count_map[word] = word_count_map[word] + <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        word_count_map[word] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 组合成字典</span></span><br><span class="line">word_count_arr = []</span><br><span class="line"><span class="keyword">for</span> word <span class="keyword">in</span> word_count_map:</span><br><span class="line">    o = &#123;</span><br><span class="line">        <span class="string">&#x27;word&#x27;</span>: word,</span><br><span class="line">        <span class="string">&#x27;count&#x27;</span>: word_count_map[word]</span><br><span class="line">    &#125;</span><br><span class="line">    word_count_arr.append(o)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按词频排序</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">custom_sort</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    <span class="keyword">if</span> x[<span class="string">&#x27;count&#x27;</span>] &gt; y[<span class="string">&#x27;count&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x[<span class="string">&#x27;count&#x27;</span>] &lt; y[<span class="string">&#x27;count&#x27;</span>]:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">result[<span class="string">&#x27;word&#x27;</span>] = <span class="built_in">sorted</span>(word_count_arr, key=functools.cmp_to_key(custom_sort))</span><br><span class="line"></span><br><span class="line"><span class="comment"># with open(&quot;wechat-report\bin\result.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:</span></span><br><span class="line"><span class="comment">#     f.write(</span></span><br><span class="line"><span class="comment">#         json.dumps(result, ensure_ascii=False)</span></span><br><span class="line"><span class="comment">#     )</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用分号隔开写入csv文件</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">r&quot;wechat-report\bin\result.csv&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> result[<span class="string">&#x27;word&#x27;</span>]:</span><br><span class="line">        f.write(i[<span class="string">&#x27;word&#x27;</span>]+<span class="string">&#x27;;&#x27;</span>+<span class="built_in">str</span>(i[<span class="string">&#x27;count&#x27;</span>])+<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="制作词云"><a href="#制作词云" class="headerlink" title="制作词云"></a>制作词云</h2><p>词云的制作利用了一个还不错的网站<a href="https://wordart.com/create">Word Art</a>。</p>
-<ol>
-<li>words中使用<code>import</code>导入使用分号隔开的csv文件（复制粘贴进来）；</li>
-<li>shapes可以选择形状；</li>
-<li>fonts中记得导入中文字体，该网站默认仅支持英文字体；</li>
-<li>其他的自己探索吧，我也没仔细设置，点击上方中间红色按钮<code>Visualize</code>生成词云，下载项中可以免费下载普通画质的，也还可以了。</li>
-</ol>
-<h2 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h2><p><a href="https://github.com/myth984/wechat-report">myth984/wechat-report: 微信聊天记录年度报告 (github.com)</a></p>
-<p><a href="https://github.com/BlueMatthew/WechatExporter">BlueMatthew/WechatExporter: Wechat Chat History Exporter 微信聊天记录导出程序 (github.com)</a></p>
-<p><a href="https://wordart.com/create">Word Art - Edit - WordArt.com</a></p>
-<p><a href="https://izihun.com/zitixiazai-450.html?from_code=10033">沐瑶软笔手写体(Muyao-Softbrush)_TTF字体下载-字魂网 (izihun.com)</a></p>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>词云</tag>
       </tags>
   </entry>
 </search>
