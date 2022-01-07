@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-06T14:18:05.539Z</updated>
+  <updated>2022-01-07T08:43:37.085Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>加快国内访问GitHub速度</title>
+    <link href="http://example.com/2022/01/07/%E5%8A%A0%E5%BF%AB%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AEGitHub%E9%80%9F%E5%BA%A6/"/>
+    <id>http://example.com/2022/01/07/%E5%8A%A0%E5%BF%AB%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AEGitHub%E9%80%9F%E5%BA%A6/</id>
+    <published>2022-01-07T08:16:03.000Z</published>
+    <updated>2022-01-07T08:43:37.085Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文主要是为了提高国内访问GitHub的速度。</p><p>方法是修改host文件。</p></blockquote><span id="more"></span><p>在国内 GitHub 访问速度慢或者无法访问，一般是因为 github 的加速分发 CDN 域名<code>assets-cdn.github.com</code>遭到<a href="https://baike.baidu.com/item/DNS%E6%B1%A1%E6%9F%93/8620359">DNS污染</a>，无法访问导致的。</p><p>所以解决方法就是修改本地的 host 映射，让解析的域名直接指向 Github 的 IP 地址，来绕过 DNS 解析。</p><h2 id="查询最新的-github-的-ip-地址">查询最新的 Github 的 IP 地址</h2><p>使用<a href="https://www.ipaddress.com/">ipaddress.com</a>查询以下域名对应的 IP 地址：</p><blockquote><p>github.com assets-cdn.github.com github.global.ssl.fastly.net</p></blockquote><h2 id="修改本地-host-文件">修改本地 host 文件</h2><p>Windows 用户在<code>C:\Windows\System32\drivers\etc</code>下找到 host 目录，若没有修改权限在<code>属性 -&gt; 安全</code>中增加用户的修改权限。</p><p>在使用记事本打开，在最后加入查询的 IP 和域名，增加如下内容，其中 IP 是自己查的最新的：</p><blockquote><p>#github映射（随便啦，做个标记让自己以后看到知道这里修改了什么）</p><p>140.82.114.3 github.com</p><p>185.199.108.153 assets-cdn.github.com</p><p>199.232.69.194 github.global.ssl.fastly.net</p></blockquote><h2 id="刷新-dns-缓存">刷新 DNS 缓存</h2><p>Windows 下使用<code>Win+R</code>，输入<code>cmd</code>，打开命令行，输入：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /flushdns</span><br></pre></td></tr></table></figure><p>刷新成功后就可以愉快的访问 Github 了。</p><h2 id="最后">最后</h2><p>由于 IP 经常会发生变化，所以如果访问变慢了就需要手动更新。</p><p>这里推荐一个网址<a href="https://raw.hellogithub.com/hosts">hellogithub</a>，有最新的 Github 访问 IP，可以直接复制粘贴。</p><h2 id="参考文章">参考文章</h2><ol type="1"><li><a href="https://juejin.cn/post/6955761924722130974">国内加速访问Github的办法，超级简单</a></li><li><a href="https://juejin.cn/post/7019683061977579557">解决GitHub访问慢的问题</a></li></ol><h2 id="个人收获">个人收获</h2><p>其实很早之前就修改过但现在忘记了，所以还是自己写一篇文章，很久以后忘记了直接来找就好了。</p><p>其中的一些原理细节未必会懂，但是这就是一个工具呀，能用好就可以啦！</p><p>以上，继续加油！</p>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文主要是为了提高国内访问GitHub的速度。&lt;/p&gt;
+&lt;p&gt;方法是修改host文件。&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="配置" scheme="http://example.com/categories/%E9%85%8D%E7%BD%AE/"/>
+    
+    
+    <category term="GitHub" scheme="http://example.com/tags/GitHub/"/>
+    
+  </entry>
   
   <entry>
     <title>单链表解题技巧3——相交链表</title>
@@ -42,9 +66,9 @@
     
     <category term="c++" scheme="http://example.com/tags/c/"/>
     
-    <category term="逻辑链接" scheme="http://example.com/tags/%E9%80%BB%E8%BE%91%E9%93%BE%E6%8E%A5/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+    <category term="逻辑链接" scheme="http://example.com/tags/%E9%80%BB%E8%BE%91%E9%93%BE%E6%8E%A5/"/>
     
   </entry>
   
@@ -512,30 +536,6 @@
     
     
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mysql导出表结构与数据</title>
-    <link href="http://example.com/2021/01/18/mysql%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE/"/>
-    <id>http://example.com/2021/01/18/mysql%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE/</id>
-    <published>2021-01-18T12:04:21.000Z</published>
-    <updated>2021-01-27T01:34:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为<code>.sql</code>文件，以及如何执行<code>.sql</code>文件。</p><p>适用于需要简单数据库迁移的读者。</p></blockquote><span id="more"></span><h2 id="导出数据表">导出数据表</h2><p>MySQL导出表结构主要是使用<code>mysqldump</code>命令。该命令是在<code>cmd</code>下执行的，而非MySQL命令行中，使用相对路径，会将文件保存在当前目录下。</p><ol type="1"><li><p>导出数据库<code>dbname</code>中全部表结构至<code>db.sql</code>中：</p><p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql</span><br></pre></td></tr></table></figure></p></li><li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构至<code>db.sql</code>中：</p><p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></p></li><li><p>导出数据库<code>dbname</code>中全部表结构及其数据至<code>db.sql</code>中（不加-d）：</p><p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p dbname &gt;db.sql</span><br></pre></td></tr></table></figure></p></li><li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构及其数据至<code>db.sql</code>中：</p><p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -uroot -p dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></p></li></ol><h2 id="导入数据表">导入数据表</h2><p>当我们拥有一个sql文件的时候，我们就可以直接执行sql脚本来完成任务。</p><ol type="1"><li><p>在cmd下执行命令：需要选择MySQL的sever下的目录，如果目录存在空格，则需要使用双引号，若sql文件中存在<code>use 数据库</code>则不需要指定<code>-D数据库</code></p><p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql&quot; –uroot –p -D dbname &lt; C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></p></li><li><p>在MySQL命令行中执行命令：sql文件需要是绝对路径</p><p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者推荐下面这个</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></p></li></ol><p>在导入数据库的时候，有可能会出现错误<code>MySQL server has gone away</code>。原因一般是操作sql的时间太长，或者插入数据库的数据量太大，一般来说，可以将数据分批插入，或者修改<code>max_allowed_packet</code>参数的配置。</p><p>首先查看max_allowed_packet的值，使用<code>show global variables like 'max_allowed_packet'</code>查看对应的值，之后输入语句进行调整，由于<code>db.sql</code>文件太大，本人这里设置为100M：</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> max_allowed_packet<span class="operator">=</span><span class="number">1024</span><span class="operator">*</span><span class="number">1024</span><span class="operator">*</span><span class="number">100</span></span><br></pre></td></tr></table></figure><p>接下来再读取sql文件导入数据库的时候问题就不大了</p>]]></content>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为&lt;code&gt;.sql&lt;/code&gt;文件，以及如何执行&lt;code&gt;.sql&lt;/code&gt;文件。&lt;/p&gt;
-&lt;p&gt;适用于需要简单数据库迁移的读者。&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="数据库" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-    
-    <category term="mysql" scheme="http://example.com/tags/mysql/"/>
     
   </entry>
   
