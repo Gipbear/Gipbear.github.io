@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-10T12:57:32.852Z</updated>
+  <updated>2022-01-10T15:56:06.687Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机器学习西瓜书——绪论</title>
+    <link href="http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%BB%AA%E8%AE%BA/"/>
+    <id>http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%BB%AA%E8%AE%BA/</id>
+    <published>2022-01-10T13:21:36.000Z</published>
+    <updated>2022-01-10T15:56:06.687Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一二章内容的简单体会。</p><p>主要的内容有：</p></blockquote><span id="more"></span><h2 id="第一章-绪论">第一章 绪论</h2><h3 id="引言">1.1 引言</h3><p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p><blockquote><p>所谓"经验"就是"数据";</p><p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p></blockquote><h3 id="基本术语">基本术语</h3><h4 id="数据部分">数据部分</h4><ul><li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li><li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(samp1e);</p></li><li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li><li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute va1ue). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (samp1e space) 或"输入空间".</p><blockquote><p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p></blockquote></li></ul><h4 id="学习过程">学习过程</h4><ul><li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li><li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training samp1e), 训练样本组成的集合称为"训练集"(training set);</p><blockquote><p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p></blockquote></li><li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li><li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li></ul><h4 id="标记部分">标记部分</h4><ul><li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li><li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li></ul><h4 id="学习任务">学习任务</h4><ul><li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li><li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li><li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li><li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li></ul><h4 id="模型目标">模型目标</h4><ul><li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li><li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li><li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li><li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li><li>训练样本越多, 越有可能获得强泛化能力的模型.</li></ul><h3 id="假设空间">假设空间</h3><p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p><ul><li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li><li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li></ul><p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p><blockquote><p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p></blockquote><p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p><p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p><h3 id="归纳偏好">归纳偏好</h3><p>// todo</p><h2 id="个人收获">个人收获</h2><p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p><p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一二章内容的简单体会。&lt;/p&gt;
+&lt;p&gt;主要的内容有：&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="机器学习" scheme="http://example.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="西瓜书" scheme="http://example.com/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
+    
+    <category term="名词解释" scheme="http://example.com/tags/%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
   
   <entry>
     <title>数组解题技巧3——二分查找</title>
@@ -38,9 +64,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
     
@@ -70,9 +96,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="字符串" scheme="http://example.com/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
@@ -188,9 +214,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="逻辑链接" scheme="http://example.com/tags/%E9%80%BB%E8%BE%91%E9%93%BE%E6%8E%A5/"/>
     
@@ -220,11 +246,11 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="快慢指针" scheme="http://example.com/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
   </entry>
   
@@ -252,9 +278,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="k路问题" scheme="http://example.com/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="k路问题" scheme="http://example.com/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
     
   </entry>
   
@@ -540,30 +566,6 @@
     <category term="Linux" scheme="http://example.com/tags/Linux/"/>
     
     <category term="shell" scheme="http://example.com/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>快乐Linux学习（四）</title>
-    <link href="http://example.com/2021/01/28/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
-    <id>http://example.com/2021/01/28/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/</id>
-    <published>2021-01-28T03:34:53.000Z</published>
-    <updated>2021-02-01T08:24:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>本文是快乐学习Linux的第四篇，是基于Windows的Linux子系统（WSL）进行操作的。</p><p>适用于学习Linux系统中文件权限和进程相关内容的读者。</p></blockquote><span id="more"></span><h2 id="权限">权限</h2><p>本系列的博客内容其实是建立在WSL上的，主要是仅给个人用户一个Linux环境，顺便来熟悉Linux系统，所以以下不会涉及太过复杂的权限设置，会覆盖基本的操作。</p><p>当我们使用ls -l进行查看的时候，会按照长模式的方式显示：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">文件访问权限 硬链接数目 文件所属用户 文件所属用户组 文件大小 上次修改日期 文件名</span><br></pre></td></tr></table></figure><h3 id="文件访问权限">文件访问权限</h3><p>文件访问权限是由两部分组成的，一部分是文件类型，一部分是文件模式。</p><p>文件类型有：</p><ul><li>-：普通文件。</li><li>d：目录。</li><li>l：符号连接，其显示的文件模式都是虚拟值，真正的文件模式是链接指向的文件决定的。</li><li>c：字符设备文件，按照字节流处理数据的设备，例如终端机或者调制解调器。</li><li>b：块设备文件，按照数据块处理数据的设备，例如硬盘或者CD-ROM。</li></ul><p>文件模式由文件所有者、文件组所有者和其他人三种用户的三种基本的：可读r、可写w、可执行x（s、t什么的就不涉及了）组成，共9个字符。</p><table><thead><tr class="header"><th>属性</th><th>文件</th><th>目录</th></tr></thead><tbody><tr class="odd"><td>r</td><td>允许打开并读写文件内容</td><td>允许列出目录内容，前提是目录设置了x属性</td></tr><tr class="even"><td>w</td><td>允许写入文件内容。重命名或删除是根据目录属性来的</td><td>允许在目录下新建、删除或重命名文件，前提也是目录设置了x属性</td></tr><tr class="odd"><td>x</td><td>允许将文件作为程序来执行，脚本语言编写的程序必须具备</td><td></td></tr></tbody></table><h3 id="更改文件模式">更改文件模式</h3><p>我们可以使用chomd来更改文件模式，更改的方式有两种，一种是八进制数字表示法或符号表示法，由于本人倾向于八进制数字表示法，且确实很nice，所以就不介绍符号表示法了。</p><p><strong>八进制数字表示法</strong>是因为1个八进制恰好需要3个二进制位来表示，而3个权限刚好对应3个二进制位，那么3种用户就只需要使用3位八进制数来表示即可（缕一缕这句话，其实挺清楚的）。</p><p>例如<code>r--</code>就是100，也就是4，<code>rw-</code>就是110，也就是6，以此类推即可。</p><p>那么新建并修改foo.txt权限为<code>rwxrw-r--</code>只需要使用：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; foo.txt</span><br><span class="line">chmod 764 foo.txt</span><br></pre></td></tr></table></figure><h3 id="默认权限">默认权限</h3><p>当我们新建文件的时候会自动赋予一个默认权限，这里在<strong>WSL</strong>下，默认的是<code>rw-r--r--</code>，这是由<code>umask</code>进行控制的。</p><p>命令行使用<code>umask</code>进行查看，会发现响应的数值是0022，常用的Linux系统还有0002，对应着关闭了哪些权限，2指的就是10，也就是原始文件权限是<code>rw-rw-rw-</code>，根据umask的掩码来<strong>关闭</strong>某些权限，作为最终的默认权限。</p><p>一般不用修改，使用系统默认的就可以了。</p><h3 id="用户和用户组">用户和用户组</h3><p>针对具有多个用户和用户组的情况下，不同用户具有不同的文件的控制权。</p><ul><li><p>su [-[l]] [user]：是允许我们切换到另一个用户的身份，重新启动一个shell进程。</p><p>-l 表示切换shell环境，并更改工作目录到该用户下，没有用户名则默认是root，如下切换至root用户：</p><p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su -</span><br></pre></td></tr></table></figure></p><p>需要输入切换后用户的密码，登录后超级用户root显示的符号从“<code>$</code>”变为“<code>#</code>”，使用exit退出。</p></li><li><p>sudo：是允许一个普通用户以另一个用户的身份执行任务，本质上用户并没有切换，而且输入的密码是用户本身的密码，并且密码可以维持一段时间的信任。</p></li></ul><p>可以使用<code>chown [owner][:[group]] file</code>对文件的用户和用户组进行更改。</p><p>使用<code>passwd</code>可以更改密码。</p><h2 id="进程">进程</h2><h2 id="个人收获">个人收获</h2><p>关于文件和目录权限的内容并不过多赘述，之后存在需求之后再进行补充。</p>]]></content>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文是快乐学习Linux的第四篇，是基于Windows的Linux子系统（WSL）进行操作的。&lt;/p&gt;
-&lt;p&gt;适用于学习Linux系统中文件权限和进程相关内容的读者。&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="操作系统" scheme="http://example.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
     
   </entry>
   
