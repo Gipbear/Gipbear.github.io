@@ -30,7 +30,7 @@
 <meta property="og:description" content="本文是关于数组的前缀和技巧，在快速计算一个数组区间内的元素之和时使用 涉及 leetcode 的 303. 区域和检索 - 数组不可变、304. 二维区域和检索 - 矩阵不可变和560. 和为 K 的子数组。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-01-07T14:44:22.000Z">
-<meta property="article:modified_time" content="2022-01-07T15:40:29.893Z">
+<meta property="article:modified_time" content="2022-01-10T09:31:44.684Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="leetcode题解">
 <meta property="article:tag" content="c++">
@@ -226,10 +226,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-07 22:44:22 / 修改时间：23:40:29" itemprop="dateCreated datePublished" datetime="2022-01-07T22:44:22+08:00">2022-01-07</time>
+              <time title="创建时间：2022-01-07 22:44:22" itemprop="dateCreated datePublished" datetime="2022-01-07T22:44:22+08:00">2022-01-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-10 17:31:44" itemprop="dateModified" datetime="2022-01-10T17:31:44+08:00">2022-01-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -253,7 +259,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>2.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -280,7 +286,11 @@
 <h2 id="区域检索">区域检索</h2>
 <h3 id="题目1">题目1</h3>
 <p>首先来看题目<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>：给定一个整数数组 nums，求出数组从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点。</p>
-<p>示例1： &gt; 输入：[ [ [-2, 0, 3, -5, 2, -1] ], [0, 2], [2, 5], [0, 5] ] &gt; &gt; 输出：[null, 1, -1, -3]</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：[ [ [-2, 0, 3, -5, 2, -1] ], [0, 2], [2, 5], [0, 5] ]</p>
+<p>输出：[null, 1, -1, -3]</p>
+</blockquote>
 <h3 id="理解一下1">理解一下1</h3>
 <p>题目的大概意思就是：计算数组内某个区域的和。</p>
 <p>代码要求有两点，一个是写出构造函数，一个是写出计算区域和的函数。</p>
@@ -306,8 +316,16 @@
 <h2 id="和为-k-的子数组">和为 K 的子数组</h2>
 <h3 id="题目2">题目2</h3>
 <p>首先来看题目<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>：给你一个整数数组 nums 和一个整数 k ，请你统计并返回该数组中和为 k 的连续子数组的个数。</p>
-<p>示例1： &gt; 输入：nums = [1,1,1], k = 2 &gt; &gt; 输出：2</p>
-<p>示例2： &gt; 输入：nums = [1,2,3], k = 3 &gt; &gt; 输出：2</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：nums = [1,1,1], k = 2</p>
+<p>输出：2</p>
+</blockquote>
+<p>示例2：</p>
+<blockquote>
+<p>输入：nums = [1,2,3], k = 3</p>
+<p>输出：2</p>
+</blockquote>
 <h3 id="理解一下2">理解一下2</h3>
 <p>题目的大概意思就是：计算出，给定数组中有多少个连续子数组的和为 K，也就是给定数组中有多少个区间和为K。</p>
 <p>最基本的思路就是穷举嘛，嵌套循环，计算所有区间的数组之和，判断其是否为 K。不过很遗憾，时间复杂度<span class="math inline">\(O(n^2)\)</span>在10000大小的测试案例中超时了。</p>
