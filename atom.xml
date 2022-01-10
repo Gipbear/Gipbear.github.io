@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-10T12:27:45.754Z</updated>
+  <updated>2022-01-10T12:57:32.852Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>数组解题技巧3——二分查找 - 数组 - leetcode题解 - 二分查找 - 双指针 - c++</title>
+    <title>数组解题技巧3——二分查找</title>
     <link href="http://example.com/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
     <id>http://example.com/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</id>
     <published>2022-01-10T11:18:35.000Z</published>
-    <updated>2022-01-10T12:27:45.754Z</updated>
+    <updated>2022-01-10T12:57:32.852Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>本文是关于问题有序数组的二分查找问题，1.查找一个元素；2.查找区间全元素。</p><p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>和<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>。</p></blockquote><span id="more"></span><h2 id="二分查找">二分查找</h2><h3 id="题目1">题目1</h3><p>首先来看题目<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>：给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p><p>示例1：</p><blockquote><p>输入：nums = [-1,0,3,5,9,12], target = 9</p><p>输出：4</p></blockquote><p>示例2：</p><blockquote><p>输入：nums = [-1,0,3,5,9,12], target = 2</p><p>输出：-1</p></blockquote><h3 id="理解一下1">理解一下1</h3><p>题目的大概意思就是：在有序数组<code>nums</code>中找出与<code>target</code>相同的元素的索引位置。</p><p>直接遍历的时间复杂度是O(n)，而这里是<strong>有序数组</strong>，那么就可以使用二分查找，由此时间复杂度为O(log n)。</p><p>基本的思路是：</p><ol type="1"><li>约束查找区间左索引指针<code>left</code>和右索引指针<code>right</code>，获得中间索引指针<code>mid</code>；</li><li>判断<code>mid</code>指向的元素与<code>target</code>的大小：<ol type="1"><li>等于<code>target</code>：返回该<code>mid</code>索引；</li><li>大于<code>target</code>：说明在左侧，<code>right</code>向左收缩；</li><li>小于<code>target</code>：说明在右侧，<code>left</code>向右收缩；</li></ol></li></ol><h3 id="解题1">解题1</h3><p>需要注意的是right和left是<strong>闭区间</strong>，并且while循环中使用的是<span class="math inline">\(\leq\)</span>。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>; <span class="comment">// 右侧需要减一</span></span><br><span class="line">    <span class="comment">// 计算 mid 时需要防止太大溢出</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid +<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="查找元素区间">查找元素区间</h2><h3 id="题目2">题目2</h3><p>首先来看题目<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>：给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。</p><p>如果数组中不存在目标值 target，返回[-1, -1]。</p><p>示例1：</p><blockquote><p>输入：nums = [5,7,7,8,8,10], target = 8</p><p>输出：[3,4]</p></blockquote><p>示例2：</p><blockquote><p>输入：nums = [5,7,7,8,8,10], target = 6</p><p>输出：[-1,-1]</p></blockquote><h3 id="理解一下2">理解一下2</h3><p>这道题目是想要寻找等于target的所有元素，由于是<strong>有序数组</strong>，所以由一个<strong>区间</strong>表示。主要的问题在于如何寻找到区间的<strong>左右边界</strong>。</p><p>这里有两个思路，都是利用<strong>二分查找</strong>。</p><h3 id="解题2.1">解题2.1</h3><ol type="1"><li>按照普通的二分查找，找到寻找一个等于target的元素位置；</li><li>若未找到则flag置为false；</li><li>若找到了，那么向左右依次寻找临界点即可。</li></ol><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;  <span class="comment">// 此处判断元素相等则跳出循环</span></span><br><span class="line">            flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">        left = mid;</span><br><span class="line">        right = mid;</span><br><span class="line">        <span class="keyword">while</span>(--left &gt;= <span class="number">0</span> &amp;&amp; nums[left] == target);</span><br><span class="line">        <span class="keyword">while</span>(++right &lt; nums.<span class="built_in">size</span>() &amp;&amp; nums[right] == target);</span><br><span class="line">        <span class="keyword">return</span> &#123;++left, --right&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="题解2.2">题解2.2</h3><p>与方法一不同，直接去寻找左右端点。</p><p>需要修改的地方仅仅是在<strong>二分查找相等</strong>时和<strong>收缩边界</strong>的情况<strong>统一</strong>起来，如下：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="built_in">leftRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> right = <span class="built_in">rightRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">return</span> &#123;left, right&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">leftRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;  <span class="comment">// 右侧向左侧收缩，找到左端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(left &gt;= nums.<span class="built_in">size</span>() || nums[left] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rightRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;  <span class="comment">// 左侧向右侧收缩，找到右端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(right &lt; <span class="number">0</span> || nums[right] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="个人收获">个人收获</h2><p>这里使用的二分查找比较简单，类似于一棵树，主要就是收缩区间和循环终止等一些细节问题。</p><p>第二个关于区间问题的方法，在leetcode上虽然第一个方法的效率较高，但是第二个方法的模块化和层次化要更好，更适合进行改编改写。</p>]]></content>
     
@@ -35,6 +35,16 @@
     
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
+    
+    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+    <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
+    
+    <category term="二分查找" scheme="http://example.com/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
     
   </entry>
   
@@ -60,9 +70,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="字符串" scheme="http://example.com/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
@@ -178,9 +188,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="逻辑链接" scheme="http://example.com/tags/%E9%80%BB%E8%BE%91%E9%93%BE%E6%8E%A5/"/>
     
@@ -210,11 +220,11 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="快慢指针" scheme="http://example.com/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/"/>
-    
-    <category term="c++" scheme="http://example.com/tags/c/"/>
     
   </entry>
   
@@ -242,9 +252,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="k路问题" scheme="http://example.com/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
   </entry>
   
