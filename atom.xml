@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-11T11:20:17.403Z</updated>
+  <updated>2022-01-11T11:38:08.253Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机器学习西瓜书——第02章模型评估和选择</title>
+    <link href="http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/"/>
+    <id>http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/</id>
+    <published>2022-01-11T11:36:17.000Z</published>
+    <updated>2022-01-11T11:38:08.253Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择。</p><p>主要的内容有：</p></blockquote><span id="more"></span><h2 id="个人收获">个人收获</h2>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择。&lt;/p&gt;
+&lt;p&gt;主要的内容有：&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>单链表解题技巧4——反转链表</title>
@@ -47,18 +67,18 @@
   </entry>
   
   <entry>
-    <title>机器学习西瓜书——绪论</title>
-    <link href="http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%BB%AA%E8%AE%BA/"/>
-    <id>http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%BB%AA%E8%AE%BA/</id>
+    <title>机器学习西瓜书——第01章绪论</title>
+    <link href="http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/"/>
+    <id>http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</id>
     <published>2022-01-10T13:21:36.000Z</published>
-    <updated>2022-01-11T11:20:29.727Z</updated>
+    <updated>2022-01-11T11:39:58.284Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一二章内容的简单体会。</p><p>主要的内容有：</p></blockquote><span id="more"></span><h2 id="第一章-绪论">第一章 绪论</h2><h3 id="引言">1.1 引言</h3><p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p><blockquote><p>所谓"经验"就是"数据";</p><p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p></blockquote><h3 id="基本术语">基本术语</h3><h4 id="数据部分">数据部分</h4><ul><li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li><li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(samp1e);</p></li><li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li><li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute va1ue). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (samp1e space) 或"输入空间".</p><blockquote><p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p></blockquote></li></ul><h4 id="学习过程">学习过程</h4><ul><li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li><li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training samp1e), 训练样本组成的集合称为"训练集"(training set);</p><blockquote><p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p></blockquote></li><li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li><li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li></ul><h4 id="标记部分">标记部分</h4><ul><li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li><li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li></ul><h4 id="学习任务">学习任务</h4><ul><li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li><li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li><li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li><li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li></ul><h4 id="模型目标">模型目标</h4><ul><li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li><li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li><li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li><li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li><li>训练样本越多, 越有可能获得强泛化能力的模型.</li></ul><h3 id="假设空间">假设空间</h3><p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p><ul><li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li><li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li></ul><p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p><blockquote><p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p></blockquote><p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p><p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 所以实际上存在很多的假设空间，但仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p><h3 id="归纳偏好">归纳偏好</h3><p>// todo</p><h2 id="个人收获">个人收获</h2><p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p><p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会。</p><p>主要的内容有：机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)</p></blockquote><span id="more"></span><h2 id="引言">1.1 引言</h2><p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p><blockquote><p>所谓"经验"就是"数据";</p><p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p></blockquote><h2 id="基本术语">1.2 基本术语</h2><h3 id="数据部分">数据部分</h3><ul><li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li><li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(samp1e);</p></li><li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li><li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute va1ue). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (samp1e space) 或"输入空间".</p><blockquote><p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p></blockquote></li></ul><h3 id="学习过程">学习过程</h3><ul><li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li><li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training samp1e), 训练样本组成的集合称为"训练集"(training set);</p><blockquote><p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p></blockquote></li><li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li><li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li></ul><h3 id="标记部分">标记部分</h3><ul><li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li><li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li></ul><h3 id="学习任务">学习任务</h3><ul><li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li><li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li><li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li><li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li></ul><h3 id="模型目标">模型目标</h3><ul><li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li><li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li><li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li><li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li><li>训练样本越多, 越有可能获得强泛化能力的模型.</li></ul><h2 id="假设空间">1.3 假设空间</h2><p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p><ul><li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li><li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li></ul><p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p><blockquote><p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p></blockquote><p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p><p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 所以实际上存在很多的假设空间，但仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p><h2 id="归纳偏好">1.4 归纳偏好</h2><p>// todo</p><h2 id="个人收获">个人收获</h2><p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p><p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>]]></content>
     
     
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一二章内容的简单体会。&lt;/p&gt;
-&lt;p&gt;主要的内容有：&lt;/p&gt;
+&lt;p&gt;本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会。&lt;/p&gt;
+&lt;p&gt;主要的内容有：机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)&lt;/p&gt;
 &lt;/blockquote&gt;</summary>
     
     
@@ -94,9 +114,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
     
@@ -126,9 +146,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="字符串" scheme="http://example.com/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
@@ -244,9 +264,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="逻辑链接" scheme="http://example.com/tags/%E9%80%BB%E8%BE%91%E9%93%BE%E6%8E%A5/"/>
     
@@ -276,11 +296,11 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="快慢指针" scheme="http://example.com/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
   </entry>
   
@@ -308,9 +328,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="k路问题" scheme="http://example.com/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="k路问题" scheme="http://example.com/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
     
   </entry>
   
@@ -547,29 +567,6 @@
     
     
     <category term="函数" scheme="http://example.com/tags/%E5%87%BD%E6%95%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>幸存者偏差</title>
-    <link href="http://example.com/2021/02/05/%E5%B9%B8%E5%AD%98%E8%80%85%E5%81%8F%E5%B7%AE/"/>
-    <id>http://example.com/2021/02/05/%E5%B9%B8%E5%AD%98%E8%80%85%E5%81%8F%E5%B7%AE/</id>
-    <published>2021-02-05T12:35:29.000Z</published>
-    <updated>2021-02-05T14:01:04.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>本文主要解释了幸存者偏差的定义</p></blockquote><span id="more"></span><h2 id="定义">定义</h2><p>幸存者偏差（Survivorship bias）是指从筛选之后的<u>“幸存者”样本</u>中得到结论，从而产生的偏差。</p><h2 id="偏差影响">偏差影响</h2><p>这种偏差属于认知上的偏差，仅考虑了获得的样本，而忽视了未通过筛选的样本。在这种偏差下往往会出现两种常见的错误：<strong>规则推导</strong>和<strong>因果推断</strong>。</p><ul><li><p>规则推导：现存的事物是曾经唯一存在过的事物。</p><p>我们会假设自己所看到是事物是过去唯一的存在，而实际上很多过去的事物并未保存至今。（商朝流只传下青铜器，但是并不表示商朝只用青铜器）</p></li><li><p>因果推断：某个机制中幸存下来的事物都会受到该机制的影响。</p><p>并不是从该机制中幸存下来说明该机制影响了该事物，而是该事物满足了该机制的条件才得以幸存。</p></li></ul><h2 id="bi软件调研分析">BI软件调研分析</h2><p>假设一家商业智能（BI）软件公司正在开展2周免费使用活动，一周后剩下少数用书仍在使用，并且这些用户都是数据分析师，借助该软件进行了更加复杂的分析。</p><p>按照调研的结果，可能会得到两个<strong>错误</strong>的结论：</p><ul><li><p>BI软件的适用人群是数据分析师。</p><p>在下结论之前，同样需要观察那些<u>“非幸存者”</u>（放弃使用的用户），我们并不知道这些用户中是否也有数据分析师。如果我们的调研用户全部是数据分析师，若离开的用户比剩下的用户更多时，那么得出的结论则恰恰相反。</p><p>为了得到正确的结论，我们需要分析每一个一开始就加入使用的用户，找到真正能够区分同期群的用户特征。</p></li><li><p>BI软件让深入数据分析变得更加容易：</p><p>在调研中，我们并没有设置一个对照组来比较用户之间的<strong>分析能力</strong>，这些用户或许是在使用BI软件做最高级的任务，但是或许在其他软件上能够做更高级的事情，也获取用户本身就是资深的数据分析师，无论使用说明软件都能进行深入分析。而不是因为使用了该BI软件才能进行深入分析。</p><p>若要衡量该软件的真正价值，则需要先评估用户分析水平，然后对比在相似的分析任务，操作不同软件的表现，从而得到有说服力的结论。</p></li></ul><h2 id="个人收获">个人收获</h2><p>分析所有同期群的用户；衡量产品价值的时候需要和竞争对手的产品进行对比；对比用户使用前后的改变，得到产品带来的因果关系。</p>]]></content>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文主要解释了幸存者偏差的定义&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="统计学" scheme="http://example.com/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
-    
-    
-    <category term="误差" scheme="http://example.com/tags/%E8%AF%AF%E5%B7%AE/"/>
     
   </entry>
   
