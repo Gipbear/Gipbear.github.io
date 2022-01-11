@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-10T15:56:06.687Z</updated>
+  <updated>2022-01-11T11:20:17.403Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,13 +17,43 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>单链表解题技巧4——反转链表</title>
+    <link href="http://example.com/2022/01/11/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A74%E2%80%94%E2%80%94%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/"/>
+    <id>http://example.com/2022/01/11/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A74%E2%80%94%E2%80%94%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</id>
+    <published>2022-01-11T10:44:35.000Z</published>
+    <updated>2022-01-11T11:20:17.403Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文是关于单链表的反转问题, 存在反转全部链表和部分区间链表的情况.</p><p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/reverse-linked-list/">206. 反转链表</a>和<a href="https://leetcode-cn.com/problems/reverse-linked-list-ii/">92. 反转链表 II</a>.</p></blockquote><span id="more"></span><h2 id="反转链表">反转链表</h2><h3 id="题目1">题目1</h3><p>首先来看题目<a href="https://leetcode-cn.com/problems/reverse-linked-list/">206. 反转链表</a>: 给你单链表的头节点 head , 请你反转链表, 并返回反转后的链表.</p><p>示例1:</p><blockquote><p>输入: head = [1,2,3,4,5]</p><p>输出: [5,4,3,2,1]</p></blockquote><p>示例2:</p><blockquote><p>输入: head = []</p><p>输出: []</p></blockquote><h3 id="理解一下1">理解一下1</h3><p>反转很好理解, 链表本来是指向其<strong>唯一后继</strong>, 现在只不过是去指向其<strong>唯一前趋</strong>.</p><p>基本的思路是:</p><ol type="1"><li>需要三个指针, 一个指向前趋, 一个指向当前结点, 一个指向后继;</li><li>然后循环迭代, 变换指针的移动即可.</li></ol><p>以上的是最基本的迭代思维, 那么尝试使用递归的思想来解决呢?</p><ol type="1"><li>首先递归反转某个结点后的所有链表;</li><li>直至base case: 空链或唯一结点;</li><li>然后将反转后的链表与该结点连接上即可.</li></ol><h3 id="解题1">解题1</h3><p>首先是迭代的算法:</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode *h = <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode * p = head, *q = head;</span><br><span class="line">    <span class="keyword">while</span>(p != <span class="literal">nullptr</span> &amp;&amp; p-&gt;next != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        q = p-&gt;next;</span><br><span class="line">        p-&gt;next = h;</span><br><span class="line">        h = p;</span><br><span class="line">        p = q;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;next = h;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后是递归的解法, 最后三行不好理解的话画个图就知道了:</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 使用last指向翻转head后的链表</span></span><br><span class="line">    ListNode *last = <span class="built_in">reverseList</span>(head-&gt;next);</span><br><span class="line">    <span class="comment">// 这里需要画个图才能解释</span></span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    <span class="comment">// 最后head去指向空</span></span><br><span class="line">    head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="反转部分链表">反转部分链表</h2><h3 id="题目2">题目2</h3><p>首先来看题目<a href="https://leetcode-cn.com/problems/reverse-linked-list-ii/">92. 反转链表 II</a>: 给你单链表的头指针 head 和两个整数 left 和 right, 其中 left &lt;= right . 请你反转从位置 left 到位置 right 的链表节点, 返回<strong>反转后的链表</strong>.</p><p>示例1:</p><blockquote><p>输入: head = [1,2,3,4,5], left = 2, right = 4</p><p>输出: [1,4,3,2,5]</p></blockquote><p>示例2:</p><blockquote><p>输入: head = [5], left = 1, right = 1</p><p>输出: [5]</p></blockquote><h3 id="理解一下2">理解一下2</h3><p>与上一题不同的是, 这题需要将链表的部分区间进行翻转, 这就需要将链表分为三个部分处理: 前部分-翻转部分-后部分, 这会显得比较麻烦.</p><p>那么我们考虑一个问题: <strong>反转链表前N个结点</strong>, 那么链表就只需要分为: 翻转部分-后部分, 相比而言简单一些了.</p><p>反转前N个结点的基本的思路是:</p><ol type="1"><li>通过N设置对反转<strong>结束</strong>的判断, 同时需要一个指针来表示<strong>后继</strong>;</li><li>与第一题一样翻转;</li></ol><p>那么对于我们的区间就很简单了:</p><ol type="1"><li>不断递归或迭代后移至需要反转的结点;</li><li>然后不就是<strong>反转链表前N个结点</strong>的问题嘛!</li></ol><h3 id="解题2">解题2</h3><p>由于结点和指针相对较多, 要仔细判断清楚.</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseBetween</span><span class="params">(ListNode* head, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">reverseTopN</span>(head, right);</span><br><span class="line">    head-&gt;next = <span class="built_in">reverseBetween</span>(head-&gt;next, left<span class="number">-1</span>, right<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ListNode * rest;</span><br><span class="line"><span class="function">ListNode* <span class="title">reverseTopN</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">        rest = head-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    ListNode * last = <span class="built_in">reverseTopN</span>(head-&gt;next, n<span class="number">-1</span>);</span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    head-&gt;next = rest;</span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="个人收获">个人收获</h2><p>在这里反转链表的问题上, 迭代和递归的时间复杂度都是O(n), 所以选择使用哪个都差不多, 但是递归的空间复杂度却是O(n), 所以实际应用的时候还是迭代较好.</p><p>不过这里让我对递归有了更好的认知, 写递归函数, 就是要<strong>相信这个递归函数可以做到它该做的</strong>, 然后我们将<code>base case</code>和其他需要准备的做好就可以了, 剩下的就相信它!</p>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是关于单链表的反转问题, 存在反转全部链表和部分区间链表的情况.&lt;/p&gt;
+&lt;p&gt;涉及 leetcode 的&lt;a href=&quot;https://leetcode-cn.com/problems/reverse-linked-list/&quot;&gt;206. 反转链表&lt;/a&gt;和&lt;a href=&quot;https://leetcode-cn.com/problems/reverse-linked-list-ii/&quot;&gt;92. 反转链表 II&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
+    
+    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="迭代和递归" scheme="http://example.com/tags/%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92/"/>
+    
+  </entry>
+  
+  <entry>
     <title>机器学习西瓜书——绪论</title>
     <link href="http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%BB%AA%E8%AE%BA/"/>
     <id>http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%BB%AA%E8%AE%BA/</id>
     <published>2022-01-10T13:21:36.000Z</published>
-    <updated>2022-01-10T15:56:06.687Z</updated>
+    <updated>2022-01-11T11:20:29.727Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一二章内容的简单体会。</p><p>主要的内容有：</p></blockquote><span id="more"></span><h2 id="第一章-绪论">第一章 绪论</h2><h3 id="引言">1.1 引言</h3><p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p><blockquote><p>所谓"经验"就是"数据";</p><p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p></blockquote><h3 id="基本术语">基本术语</h3><h4 id="数据部分">数据部分</h4><ul><li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li><li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(samp1e);</p></li><li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li><li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute va1ue). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (samp1e space) 或"输入空间".</p><blockquote><p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p></blockquote></li></ul><h4 id="学习过程">学习过程</h4><ul><li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li><li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training samp1e), 训练样本组成的集合称为"训练集"(training set);</p><blockquote><p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p></blockquote></li><li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li><li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li></ul><h4 id="标记部分">标记部分</h4><ul><li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li><li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li></ul><h4 id="学习任务">学习任务</h4><ul><li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li><li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li><li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li><li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li></ul><h4 id="模型目标">模型目标</h4><ul><li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li><li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li><li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li><li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li><li>训练样本越多, 越有可能获得强泛化能力的模型.</li></ul><h3 id="假设空间">假设空间</h3><p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p><ul><li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li><li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li></ul><p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p><blockquote><p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p></blockquote><p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p><p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p><h3 id="归纳偏好">归纳偏好</h3><p>// todo</p><h2 id="个人收获">个人收获</h2><p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p><p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一二章内容的简单体会。</p><p>主要的内容有：</p></blockquote><span id="more"></span><h2 id="第一章-绪论">第一章 绪论</h2><h3 id="引言">1.1 引言</h3><p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p><blockquote><p>所谓"经验"就是"数据";</p><p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p></blockquote><h3 id="基本术语">基本术语</h3><h4 id="数据部分">数据部分</h4><ul><li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li><li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(samp1e);</p></li><li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li><li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute va1ue). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (samp1e space) 或"输入空间".</p><blockquote><p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p></blockquote></li></ul><h4 id="学习过程">学习过程</h4><ul><li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li><li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training samp1e), 训练样本组成的集合称为"训练集"(training set);</p><blockquote><p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p></blockquote></li><li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li><li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li></ul><h4 id="标记部分">标记部分</h4><ul><li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li><li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li></ul><h4 id="学习任务">学习任务</h4><ul><li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li><li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li><li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li><li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li></ul><h4 id="模型目标">模型目标</h4><ul><li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li><li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li><li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li><li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li><li>训练样本越多, 越有可能获得强泛化能力的模型.</li></ul><h3 id="假设空间">假设空间</h3><p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p><ul><li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li><li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li></ul><p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p><blockquote><p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p></blockquote><p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p><p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 所以实际上存在很多的假设空间，但仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p><h3 id="归纳偏好">归纳偏好</h3><p>// todo</p><h2 id="个人收获">个人收获</h2><p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p><p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>]]></content>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -64,9 +94,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
     
@@ -96,9 +126,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="字符串" scheme="http://example.com/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
@@ -214,9 +244,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="逻辑链接" scheme="http://example.com/tags/%E9%80%BB%E8%BE%91%E9%93%BE%E6%8E%A5/"/>
     
@@ -246,11 +276,11 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="快慢指针" scheme="http://example.com/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/"/>
-    
-    <category term="c++" scheme="http://example.com/tags/c/"/>
     
   </entry>
   
@@ -278,9 +308,9 @@
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
-    
     <category term="k路问题" scheme="http://example.com/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
     
   </entry>
   
@@ -540,32 +570,6 @@
     
     
     <category term="误差" scheme="http://example.com/tags/%E8%AF%AF%E5%B7%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>快乐Linux学习（五）</title>
-    <link href="http://example.com/2021/02/01/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/"/>
-    <id>http://example.com/2021/02/01/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/</id>
-    <published>2021-02-01T08:23:48.000Z</published>
-    <updated>2021-02-02T14:41:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。</p><p>适用于学习Linux系统中shell环境和vi相关内容的读者。</p></blockquote><span id="more"></span><h2 id="shell环境">shell环境</h2><p>shell在shell会话中保存着大量的信息，这些信息被称为shell环境。</p><p>一般程序都是通过获取环境中的数据（<strong>环境变量</strong>）或<strong>配置文件</strong>来存储程序的设置，所以我们可以调整环境变量或配置文件来改变程序的行为。</p><p>在shell环境中，一般存储两种基本类型的数据，一种是环境变量，一种是shell变量（bash存放的少量数据）。</p><ul><li>printenv：可以显示环境变量，看到的是环境变量及其对应的数值。</li><li>set：可以显示环境变量、shell变量和自定义的shell函数，并且按照首字母排序。</li></ul><h2 id="shell启动文件">shell启动文件</h2><p>登录系统之后会启动bash程序，读取一些列称为启动文件的配置脚本，之后再读取用户home目录的启动文件，这两个启动文件分别定义了全局和个人的shell环境。其中的启动顺序根据shell会话类型来决定。</p><ul><li><p>登录shell会话</p><p>会提示用户输入用户名和密码，读取一个或多个启动文件。</p><p>首先是应用于所有用户的全局配置文件：<code>/etc/profile</code>，然后是用户个人的启动文件：在WSL下使用的是：<code>~/.profile</code>，其他的Linux版本可能是<code>~/.bash_profile</code>和<code>~/.bash_login</code>。</p></li><li><p>非登录shell会话</p><p>一般是在GUI下启动终端会话时出现，读取全局配置文件：<code>/etc/bash.bashrc</code>，以及个人配置文件：<code>~/.bashrc</code>。并会集成父进程的环境设置（一般是一个登录shell进程）。</p></li></ul><h3 id="修改配置文件">修改配置文件</h3><p>修改配置文件的时候，可以使用文本编辑器打开文件，例如使用下面会提到的<strong>vi</strong>进行修改。</p><p>修改之前可以对文件进行备份，通常使用扩展名<code>.bak</code>、<code>.sav</code>、<code>.old</code>等方式来备份：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp .bashrc .bashrc.bak</span><br></pre></td></tr></table></figure><p>然后修改<code>.bashrc</code>文件，遇到麻烦的时候可以再利用备份文件进行还原。</p><p>修改之后使用source来激活配置：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bashrc</span><br></pre></td></tr></table></figure><blockquote><p>一般来说，添加目录到PATH变量或定义额外的环境变量，需要把修改<code>.profile</code>文件（或替代文件<code>.bash_profile</code>），对于其他的修改则放在<code>.bashrc</code>文件中。</p></blockquote><h2 id="vi">vi</h2><p>在很多Linux系统都预装了vi程序，并且存在另一个高级替代版vim（vi improved），之后我们使用是vi实际上就是vim。vi具有轻量且快速的特点，相比于一些其他并不会在Linux上都预装的文本编辑器，在远程服务器上进行文本修改的时候，vi就显得相当方便了。</p><blockquote><p>最重要的是：不会的话会被其他Linux使用者嘲笑！所以加油吧:fist_oncoming:！</p></blockquote><h3 id="打开和退出">打开和退出</h3><p>首先最重要的是学会如何打开vi，并关闭它。</p><p>WSL已经预装了vim，我们在命令行输入vi或vim命令即可进入：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi</span><br></pre></td></tr></table></figure><p>会发现显示<code>VIM - Vi IMproved</code>等内容，但实际上这些并不是打开了任何文件的内容，因为在vi中，行编辑最左侧出现了波浪号<code>~</code>说明该行内容为空。此时不要按下键盘上的任何键，因为我们此时处于vi的命令模式，如果我们需要退出的话，输入<code>:q</code>并按下回车就可以退出（出现在屏幕左下角，并且冒号是命令的一部分）。</p><blockquote><p>命令模式分为普通命令模式和ex模式，ex模式就是有冒号的命令，普通命令模式就是正常的命令，需要注意区分，在下文中，出现冒号的就是ex命令，否则就是普通命令。</p></blockquote><h3 id="移动光标">移动光标</h3><p>在vi的命令模式下，存在大量的移动命令：</p><table><thead><tr class="header"><th>按键</th><th>移动效果</th></tr></thead><tbody><tr class="odd"><td>k j h l或Alt+方向键</td><td>上下左右（方向）移动一个字符</td></tr><tr class="even"><td>0</td><td>移动到当前行的行首</td></tr><tr class="odd"><td>^</td><td>当前行第一个非空字符</td></tr><tr class="even"><td>$</td><td>当前行末尾</td></tr><tr class="odd"><td>b w或Shift+方向键</td><td>移动到上/下一个单词或标点的开头</td></tr><tr class="even"><td>B W或Ctrl+方向键</td><td>移动到上/下一个单词的开头</td></tr><tr class="odd"><td>G</td><td>文件末尾</td></tr></tbody></table><p>并且可以使用<strong>数字和命令</strong>来控制移动多少个字符或行，例如<code>5h</code>向左移动5个字符。</p><h3 id="编辑文本">编辑文本</h3><p>我们使用vi可以直接创建一个新的或打开一个已经存在的文件：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi foo.txt</span><br></pre></td></tr></table></figure><p>执行命令会出现空白界面，我们需要知道的是：<strong>vi是一个模式编辑器</strong>，此时进入的vi的<strong>命令模式</strong>，按下的每一个键都是命令，所以千万不要乱来！</p><p>我们按下<code>i</code>键，在左下角会出现<code>-- INSERT --</code>，表示进入了<u>插入</u>模式。此时可以输入一些文本。输入文本之后需要返回，需要使用<code>Esc</code>重新进入命令模式，如果需要<u>保存修改</u>则使用<code>:w</code>或保存并退出<code>:wq</code>，如果不需要保存则使用<code>:q!</code>。</p><p>当我们想要<u>撤回</u>的时候，可以使用<code>u</code>来撤回对文本的最后一次<strong>修改</strong>，注意和word中只撤回几个字不一样，这是撤回最后一次<strong>修改</strong>。</p><p>当我们再一次进入foo.txt文件时，光标会出现在上次退出的地方，当我们想要在行尾进行插入的时候，发现<code>i</code>只能出现在最后一个字符之前，所以我们使用<code>a</code>进行插入，同样会出现<code>-- INSERT --</code>，表示进入编辑模式，或者<code>A</code>直接到达编辑行的行尾。</p><p>当我们需要<u>插入空白行</u>的时候，可以使用命令<code>o</code>在光标下方插入一行，使用命令<code>O</code>在光标上方插入一行。</p><h3 id="删除剪切复制和粘贴">删除、剪切、复制和粘贴</h3><p>这些操作的命令和移动光标类似</p><table><thead><tr class="header"><th>按键</th><th>效果</th></tr></thead><tbody><tr class="odd"><td>[number]x</td><td>删除当前字符，及其后面number-1个字符</td></tr><tr class="even"><td>[number]dd</td><td>剪切当前行，及其后面number-1行</td></tr><tr class="odd"><td>d+移动光标的命令</td><td>移动光标决定剪切内容</td></tr><tr class="even"><td>[number]yy</td><td>复制当前行，及其后面number-1行</td></tr><tr class="odd"><td>y+移动光标的命令</td><td>移动光标决定复制内容</td></tr><tr class="even"><td>P/p</td><td>粘贴到光标前/后</td></tr></tbody></table><h3 id="查找和替换">查找和替换</h3><p>使用<code>/</code>命令来查找匹配的字符。例如<code>/line</code>找到所有line开头的字符，使用n命令重复查询操作（可循环查找）。</p><p>替换操作则略显复杂，例如将文本所有的line都替换为Line，需要输入命令：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:%s/line/Line/gc</span><br></pre></td></tr></table></figure><p>%表示行数，省略则是执行当前行；s表示替换；/line/Line是查找与替换的文本；g是全局匹配，省略则是每行第一个匹配的进行替换；c是增加用户确认。</p><h3 id="多文件操作">多文件操作</h3><p>当我们需要进行多文件编辑的时候，就可以使用vi同时打开多个文本，例如：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi foo.txt ls-output.txt</span><br></pre></td></tr></table></figure><p>此时屏幕显示第一个文件，使用<code>:n</code>切换到下一个文件，使用<code>:N</code>切换到上一个文件。也可以使用<code>:buffers</code>来查看打开的文件列表，使用<code>:buffer 编号</code>就可以切换编辑的文件。</p><p>当前文件修改而未保存的时候，vi会阻止我们进行跳转，在命令后添加感叹号可以强制跳转。</p><p>在打开的文件中，使用<code>:e 文件地址</code>就可以打开新的文件。</p><h2 id="个人收获">个人收获</h2><p>一些可以直接使用echo显得是命令原来就是shell环境中的变量，像path就和Windows中修改环境变量类似，影响着一些程序的运行，需要在安装一些程序的时候进行修改，例如安装WSL显示GUI界面，需要安装xlaunch，并且之后需要在.bashrc文件中进行一定的配置才能正常运行。</p><p>在vi编辑器方便则是学会基本的编辑操作和保存，有一定的认知即可，毕竟学习成本较高，正常情况下本人还是比较喜欢直接在Windows下使用交互式编辑器进行快速编辑。</p>]]></content>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文是快乐学习Linux的第五篇，是基于Windows的Linux子系统（WSL）进行操作的。&lt;/p&gt;
-&lt;p&gt;适用于学习Linux系统中shell环境和vi相关内容的读者。&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="操作系统" scheme="http://example.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
-    
-    <category term="shell" scheme="http://example.com/tags/shell/"/>
     
   </entry>
   
