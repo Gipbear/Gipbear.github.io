@@ -22,17 +22,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择。 主要的内容有：">
+  <meta name="description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择。 主要的内容有：经验误差与过拟合、模型的评估方法(留出法&#x2F;交叉验证&#x2F;自助法)、性能度量(查准率&#x2F;查全率&#x2F;F1&#x2F;ROC曲线等), 部分内容待更新.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习西瓜书——第02章模型评估和选择">
 <meta property="og:url" content="http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择。 主要的内容有：">
+<meta property="og:description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择。 主要的内容有：经验误差与过拟合、模型的评估方法(留出法&#x2F;交叉验证&#x2F;自助法)、性能度量(查准率&#x2F;查全率&#x2F;F1&#x2F;ROC曲线等), 部分内容待更新.">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png">
+<meta property="og:image" content="http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/P-R%E5%9B%BE.png">
+<meta property="og:image" content="http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/ROC%E6%9B%B2%E7%BA%BF%E4%B8%8EAUC.png">
 <meta property="article:published_time" content="2022-01-11T11:36:17.000Z">
-<meta property="article:modified_time" content="2022-01-11T11:38:08.253Z">
+<meta property="article:modified_time" content="2022-01-11T16:22:15.659Z">
 <meta property="article:author" content="Grizzly">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png">
 
 <link rel="canonical" href="http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/">
 
@@ -222,10 +226,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-01-11 19:36:17 / 修改时间：19:38:08" itemprop="dateCreated datePublished" datetime="2022-01-11T19:36:17+08:00">2022-01-11</time>
+              <time title="创建时间：2022-01-11 19:36:17" itemprop="dateCreated datePublished" datetime="2022-01-11T19:36:17+08:00">2022-01-11</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-12 00:22:15" itemprop="dateModified" datetime="2022-01-12T00:22:15+08:00">2022-01-12</time>
+              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -240,14 +250,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>47</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -261,10 +271,144 @@
       
         <blockquote>
 <p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择。</p>
-<p>主要的内容有：</p>
+<p>主要的内容有：经验误差与过拟合、模型的评估方法(留出法/交叉验证/自助法)、性能度量(查准率/查全率/F1/ROC曲线等), 部分内容待更新.</p>
 </blockquote>
 <span id="more"></span>
+<h2 id="经验误差与过拟合">2.1 经验误差与过拟合</h2>
+<h3 id="误差">误差</h3>
+<p><strong>错误率</strong>: 分类错误的样本数 <span class="math inline">\(a\)</span> 占样本总数 <span class="math inline">\(m\)</span> 的比例称为"错误率"(error rate).</p>
+<p><span class="math display">\[
+error rate = \frac{a}{m}
+\]</span></p>
+<p>与之相对的是<strong>精度</strong>(accuracy):</p>
+<p><span class="math display">\[
+accuracy = 1 - \frac{a}{m}
+\]</span></p>
+<p>学习器在训练集上的误差称为<strong>训练误差</strong>(training error)或<strong>经验误差</strong>(empirical error); 而在新样本上的误差称为<strong>泛化误差</strong>(generalization error).</p>
+<blockquote>
+<p>我们最『想』得到『泛化误差』尽可能的小, 但是我们在训练的时候并不知道新样本, 所以『实际上』能做的是使得『经验误差』尽可能的小.</p>
+</blockquote>
+<h3 id="过拟合">过拟合</h3>
+<p>当我们训练模型学习训练样本的时候, 将训练样本学的"太好", 除了学习到数据集的普遍规律, 还将训练数据集的一些自身特点学习到了, 导致泛化性能下降, 这种现象称为<strong>过拟合</strong>(overfitting); 反之就是<strong>欠拟合</strong>(underfitting), 训练样本的普遍规律也没有学会.</p>
+<blockquote>
+<p>简单来说就是: 只会硬板照抄的学生 和 不好好学习的后进生.</p>
+</blockquote>
+<p>欠拟合是学习的不够好, 一般来说比较好解决, 例如在决策树中扩展分支, 在神经网络中增加训练轮数等.</p>
+<p>但是过拟合却是<strong>不可避免的</strong>, 只能做到缓解和减小其风险. 因为机器学习面临的问题是NP难, 但是有效算法是在有限时间内完成的, 不能完成 <span class="math inline">\(NP=P\)</span> 的证明.</p>
+<p>那么, 实际上有各种算法以及各种参数来训练模型, 如何选择? 这就是模型选择; 如何评估模型训练的好坏呢? 这就模型评估.</p>
+<h2 id="评估方法">2.2 评估方法</h2>
+<p>通过实验, 设置测试组对学习器的泛化误差来对模型进行选择. 需要一个测试集(testing set), 在学习器上得到的测试误差(testing error)与泛化误差近似.</p>
+<blockquote>
+<p>保证测试集中的数据尽可能未在训练集中出现.</p>
+</blockquote>
+<p>那么对于一个包含m个样本数据集D, 既要训练, 又要测试, 那么需要合适的划分方法得到训练集和测试集.</p>
+<h3 id="留出法hold-out">留出法(hold-out)</h3>
+<p>留出法<strong>直接</strong>将数据集<strong>划分</strong>为两个互斥的集合, 一个作为训练集S, 一个作为测试集T.</p>
+<p>需要注意的是: 训练集和测试集的划分要尽可能的保持<strong>数据分布一致</strong>, 避免因为数据划分过程引入额外的偏差, 从而对最终的结果产生影响.</p>
+<blockquote>
+<p>例如将男性的数据集作为训练集, 然后去评估女性的数据集得到的泛化误差, 很明显是不合理的. 应尽量保持男女同比例.</p>
+</blockquote>
+<p>一般划分数据的时候保留类别比例, 通常称为"分层采样"(stratified sampling). 虽然按照比例进行划分比较合适, 但是依旧可能会出现一些问题.</p>
+<blockquote>
+<p>例如购物消费数据降序排序, 划分前70%作为训练集,后30%作为测试集. 虽然此时男女比例可能是等比例划分的, 但是消费能力却是截然不同, 所以这种方式显然还欠缺考虑.</p>
+</blockquote>
+<p>所以在使用留出法的时候, 通常使用<strong>若干次随机抽样</strong>的方式进行划分, 然后对这几次的评估数据<strong>取均值</strong>.</p>
+<p>以上是为了更好使用留出法的一些方法, 但是留出法本身有一个<strong>固有缺陷</strong>: 训练集S较大时, 模型可以训练的更接近数据集D的模型, 但测试集T较小, 导致评估结果不够稳定; 若测试集T大了, 那么训练集S训练出的模型可能和数据集D差别较大, 从而降低了评估结果的保真性(fidelity).</p>
+<p>但是也没有完美的解决方法, 一般划2/3~4/5进行训练, 剩余作为测试.</p>
+<h3 id="交叉验证cross-validation">交叉验证(cross validation)</h3>
+<p>先将数据集划分为k个大小相同的互斥子集, 每个子集尽可能保持数据分布的一致性(分层抽样). 每次使用k-1个子集进行训练, 剩下的一个子集作为测试集. 从而获得k次测试结果并取均值. 所以通常也称为<strong>k-折交叉验证</strong>(k-fold cross validation).</p>
+<p>同样的, 为减小样本划分带来的影响, 通常使用p次随机划分, 然后取这p次k折交叉验证结果的均值.</p>
+<blockquote>
+<p>其中, 若令k=m,那么则会得到<strong>留一法</strong>(Leave-One-Out, LOO), 显然由于划分唯一, 不受随机划分的影响. 实际效果和训练集几乎相似, 但是同样有一个固有缺陷: 数据集较大时, 训练时间开销太大.</p>
+<p>所以: <strong>没有免费的午餐</strong>定理同样适用.</p>
+</blockquote>
+<h3 id="自助法bootstrapping">自助法(bootstrapping)</h3>
+<p>对给定的包含m个样本的数据集D, 进行m次<strong>抽样放回</strong>的过程, 得到数据集D'. 这个过程会使得某些样本可能会出现多次, 而某些样本却不会出现. 简单估计始终不被抽样的概率是<span class="math inline">\((1-\frac{1}{m})^m\)</span>, 取极限得到:</p>
+<p><span class="math display">\[
+\lim_{m\rightarrow \infin}{(1-\frac{1}{m})^m} \rightarrowtail \frac{1}{e} \approx 0.368
+\]</span></p>
+<p>将未出现约36.8%的数据作为测试集即可, 那么训练模型的时候使用m个样本作为训练集,测试集依旧有约1/3的数据作为测试.</p>
+<blockquote>
+<p>在数据集较小, 难以有效划分的时候比较有效.</p>
+<p>并能从初始数据集中产生多个不同的训练集, 对于集成学习等方法有很大好处.</p>
+</blockquote>
+<p>但在划分的时候改变了初始数据集的分布, 引入估计偏差, 所以在数据量足够的时候, 留出法和交叉验证更常用.</p>
+<h3 id="调参与最终模型">调参与最终模型</h3>
+<p>大部分的学习算法都需要一些参数进行设定, 参数的配置不同, 学习的模型往往有显著差距, 对参数(parameter)进行设定的过程称为参数调节或调参(parameter tuning).</p>
+<p>参数是在一定范围内进行取值, 并根据一定的步长进行调节. 那么我们最终的参数也只可能在我们划分的<strong>离散值</strong>中, 往往不一定能够达到"最佳", 但这也平衡了开销和性能.</p>
+<p>我们的调参是根据训练集S进行调参的, 最终的模型应该更根据选定的参数在<strong>完整的数据集</strong>中进行测试, 将最终的结果进行提交.</p>
+<blockquote>
+<p>通常将实际中遇到的数据称为测试数据, 而模型评估和选择中使用的数据集称为<strong>验证集</strong>(validation set).</p>
+</blockquote>
+<h2 id="性能度量">2.3 性能度量</h2>
+<p>那么对机器学习训练泛化性能的评估, 就是接下来的性能度量(performance measure). 不同的性能度量得到的评判标准也不同, 所以模型的"好坏"是相对的, 取决于算法和数据, 还取决于模型的任务需求.</p>
+<p>回归任务常用<strong>均方误差</strong>(mean squared error, MSE):</p>
+<p><span class="math display">\[
+E(f; D) = \frac{1}{m} \sum^m_{i=1}{(f(x_i)-y_i)^2}
+\]</span></p>
+<p>其中, <span class="math inline">\(f(x_i)\)</span>是模型对样本<span class="math inline">\(x_i\)</span>的预测, <span class="math inline">\(y_i\)</span>是真实标记.</p>
+<h3 id="查准率查全率与f1">查准率、查全率与F1</h3>
+<p>我们关心的问题有时候不仅仅是错误率或精度.</p>
+<blockquote>
+<p>例如我们不关心有多少比例的瓜判断错误, 而更加关心挑出的西瓜中有多少的比例是好瓜.</p>
+</blockquote>
+<p>此时就引入了查准率(precision)和查全率(recall):</p>
+<ul>
+<li><strong>查准率</strong>: 预测为正例中有多少是真的正例;</li>
+<li><strong>查全率</strong>: 实际为正例的有多少被预测为正例.</li>
+</ul>
+<p>对于二分类问题, 可将结果分为: 真正例(true positive)、假正例(false positive)、真反例(true negative)和假反例(false negative). 由此组成<strong>混淆矩阵</strong>(confusion matrix).</p>
+<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png" class="" title="混淆矩阵.png">
+<p><span class="math display">\[
+查准率P = \frac{TP}{TP+FP}
+\]</span></p>
+<p><span class="math display">\[
+查全率R = \frac{TP}{TP+FN}
+\]</span></p>
+<p>这两个度量往往相互制约, 总是一高一低.</p>
+<p>我们对学习器的预测样例的结果进行排序, 排在前面的样例认为是"最可能"为正例的样本, 按顺序逐个把样本作为正例进行预测, 则每个可计算出当前的查全率和查准率. 以此作为坐标轴可以绘制"P-R曲线".</p>
+<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/P-R%E5%9B%BE.png" class="" title="P-R图.png">
+<p>根据曲线, 我们可以发现A和B曲线<strong>包含</strong>C曲线, 那么可以认为训练得到曲线C的模型相对较差; 而A和B曲线发生了<strong>交叉</strong>, 那么性能的优劣则不好判断.</p>
+<p>引入"平衡点"(Break-Event Point, BEP)的概念, 在『查全率=查准率』处取得平衡点, 那么可以认为 A 优于 B.(挺草率的说)</p>
+<p>更常用的是F1常量:</p>
+<p><span class="math display">\[
+F1 = 2 \times \frac{1}{\frac{1}{P} + \frac{1}{R}} = \frac{2 \times P \times R}{P + R}
+\]</span></p>
+<p>在特定场景, 模型对于查全率和查准率的要求不同, 所以会赋予不同的权重来进行调整, 使得更符合模型的需求.</p>
+<p><span class="math display">\[
+F_\beta = \frac{(1+\beta^2) \times P \times R}{(\beta^2 \times P) + R}
+\]</span></p>
+<h4 id="多分类">多分类</h4>
+<p>以上是针对二分类问题提出了混淆矩阵, 那么对于多分类问题呢?</p>
+<p>一种方法是两两形成混淆矩阵, 先计算得到各自的查全率和查准率, <strong>再将取均值</strong>, 得到"宏查准率"(macro-P)和"宏查全率"(macro-R), 再计算"宏F1"(macro-F1).</p>
+<p>还有一种方法是各个混淆矩阵元素<strong>先取均值</strong>, 得到TP、FP、TN、FN的均值, 然后再基于这些均值计算得到"微查准率"(micro-P)和"微查全率"(micro-R), 再计算"微F1"(micro-F1).</p>
+<h3 id="roc与auc">ROC与AUC</h3>
+<p>很多的学习器是为了产生一个预测实值或概率预测, 然后将该概率预测与一个分类<strong>阈值</strong>(threshold)进行比较, 对测试样本进行排序, 最有可能的正例排在前面, 最不可能的正例排在最后面, 通过阈值将样本分为两部分.</p>
+<p>一般情况下, 我们根据任务需求来采用不同的截断点. 更重视"查准率", 则选择排序靠前的位置进行截断, 更重视"查全率", 则选择排序靠后的位置进行截断. 那么对<strong>排序质量</strong>的好坏直接影响了学习器在不同任务下的<strong>泛化性能</strong>的好坏. ROC曲线就是来研究学习器泛化性能的有力工具.</p>
+<p>『ROC曲线』原理与『P-R曲线』类似, 对学习器的预测样例的结果进行排序, 排在前面的样例认为是"最可能"为正例的样本, 按顺序逐个把样本作为正例进行预测, 则每个可计算出当前的<strong>真正例率</strong>(True Positive Rate, TPR)和<strong>假正例率</strong>(False Positive Rate, FPR):</p>
+<ul>
+<li>真正例率: 实际正例预测为正例的数量占所有实际正例的比例;</li>
+<li>假正例率: 实际反例预测为正例的数量占所有实际反例的比例.</li>
+</ul>
+<p><span class="math display">\[
+TPR = \frac{TP}{TP + FN}
+\]</span></p>
+<p><span class="math display">\[
+FPR = \frac{FP}{TN + FP}
+\]</span></p>
+<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/ROC%E6%9B%B2%E7%BA%BF%E4%B8%8EAUC.png" class="" title="ROC曲线与AUC.png">
+<p>如果要比较不同学习器的优劣, 就看ROC曲面下的<strong>面积AUC</strong>(Area Under ROC Curve).</p>
+<h3 id="代价敏感错误率与代价曲线">代价敏感错误率与代价曲线</h3>
+<p>// todo</p>
+<h2 id="比较检验">2.4 比较检验</h2>
+<p>假设检验</p>
+<p>交叉验证 t 检验</p>
+<p>McNemar 检验</p>
+<p>Friedman 检验与 Nemenyi 后续检验</p>
+<h2 id="偏差与方差">2.5 偏差与方差</h2>
 <h2 id="个人收获">个人收获</h2>
+<p>这一章主要是在讲如何对数据集进行划分, 如何评估模型的性能, 包括我还没完全捋清楚的假设检验部分, 都是在对模型性能的好坏进行评价, 对模型的可行性, 真实性进行分析.</p>
+<p>这些东西正是之后支撑我们来判断一个模型是好是坏, 是否可行的依据. 目前只是大概的了解了概念, 到了实际应用的时候还是要回过头来回顾前两章.</p>
 
     </div>
     <div>    
@@ -369,7 +513,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">1.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C%E8%AF%AF%E5%B7%AE%E4%B8%8E%E8%BF%87%E6%8B%9F%E5%90%88"><span class="nav-number">1.</span> <span class="nav-text">2.1 经验误差与过拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AF%E5%B7%AE"><span class="nav-number">1.1.</span> <span class="nav-text">误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88"><span class="nav-number">1.2.</span> <span class="nav-text">过拟合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2.2 评估方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%95%99%E5%87%BA%E6%B3%95hold-out"><span class="nav-number">2.1.</span> <span class="nav-text">留出法(hold-out)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81cross-validation"><span class="nav-number">2.2.</span> <span class="nav-text">交叉验证(cross validation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A9%E6%B3%95bootstrapping"><span class="nav-number">2.3.</span> <span class="nav-text">自助法(bootstrapping)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E5%8F%82%E4%B8%8E%E6%9C%80%E7%BB%88%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">调参与最终模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">2.3 性能度量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%87%86%E7%8E%87%E6%9F%A5%E5%85%A8%E7%8E%87%E4%B8%8Ef1"><span class="nav-number">3.1.</span> <span class="nav-text">查准率、查全率与F1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E5%88%86%E7%B1%BB"><span class="nav-number">3.1.1.</span> <span class="nav-text">多分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#roc%E4%B8%8Eauc"><span class="nav-number">3.2.</span> <span class="nav-text">ROC与AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E6%95%8F%E6%84%9F%E9%94%99%E8%AF%AF%E7%8E%87%E4%B8%8E%E4%BB%A3%E4%BB%B7%E6%9B%B2%E7%BA%BF"><span class="nav-number">3.3.</span> <span class="nav-text">代价敏感错误率与代价曲线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E6%A3%80%E9%AA%8C"><span class="nav-number">4.</span> <span class="nav-text">2.4 比较检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%8F%E5%B7%AE%E4%B8%8E%E6%96%B9%E5%B7%AE"><span class="nav-number">5.</span> <span class="nav-text">2.5 偏差与方差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">6.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -449,13 +593,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">87k</span>
+    <span title="站点总字数">92k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:19</span>
+    <span title="站点阅读时长">1:23</span>
 </div>
 
 
