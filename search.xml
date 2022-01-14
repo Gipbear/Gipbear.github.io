@@ -1,11 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>机器学习西瓜书——第03章线性模型</title>
+    <url>/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第三章线性模型.</p>
+<p>主要的内容有: 线性回归的基本形式、最小二乘法、广义线性回归、分类数据连续化:</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="基本形式">3.1 基本形式</h2>
+<p>线性模型(linear model)是一个通过属性的线性组合来进行预测的函数, 形如:</p>
+<p><span class="math display">\[
+f(x) = w_{1}x_{1} + x_{2}w_{2} + \dots + w_{d}x_{d} + b
+\]</span></p>
+<p>其中<span class="math inline">\(x_i\)</span>表示第<span class="math inline">\(i\)</span>个属性值.</p>
+<p>容易发现, 每个<span class="math inline">\(w_i\)</span>都表示了属性的权重, 这使得建立的模型有很好的<strong>可解释性</strong>(comprehensibility).</p>
+<p>一般可以写成<strong>向量</strong>形式:</p>
+<p><span class="math display">\[
+f(x) = \boldsymbol{w}^{T}\boldsymbol{x} + b
+\]</span></p>
+<p>那么我们的目的就是学习得到<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>来确定模型.</p>
+<h2 id="线性回归">3.2 线性回归</h2>
+<p>线性回归是来学习一个线性模型, 来预测<strong>连续值</strong>. 使得预测的连续值<span class="math inline">\(f(x_i)\)</span>尽可能是与真实值<span class="math inline">\(y_i\)</span>接近, 即, 使得<span class="math inline">\(f(x_i) \approxeq y_{i}\)</span>.</p>
+<h3 id="最小二乘法">最小二乘法</h3>
+<p>那么我们如何来衡量<span class="math inline">\(f(x_i)\)</span>与<span class="math inline">\(y_i\)</span>之间的差距呢, 这时候可以上文提过的<a href="https://gipbear.github.io/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/#%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F">均方误差(MSE)</a>来衡量<span class="math inline">\(f(x_i)\)</span>与<span class="math inline">\(y_i\)</span>之间的差距. 并使其最小化, 就可以得到我们先想要的<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(w^*, b^*)
+&amp;= \argmin_{(\boldsymbol{w}, b)}{\sum^m_{i=1}{(f(x_i)-y_i)^2}} \\
+&amp;= \argmin_{(\boldsymbol{w}, b)}{\sum^m_{i=1}{(y_i-wx_i-b)^2}}
+\end{aligned}
+\]</span></p>
+<blockquote>
+<p>这就是<strong>最小二乘法</strong>(least square method): 使用均方误差这个具有几何意义的<strong>欧氏距离</strong>来度量差距.</p>
+</blockquote>
+<p>OK, 那么我们下一步就是如何求解<span class="math inline">\(E_{(w,b)}= {\sum^m_{i=1}{(y_i-wx_i-b)^2}}\)</span>最小值了, 这一步叫做最小二乘的<strong>参数估计</strong>(parameter estimate), 对<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>和b分别求偏导, 并令为零可以得到<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>的最优解:</p>
+<p><span class="math display">\[
+w = \frac{\sum\limits^m_{i=1}{y_i(x_i-\bar{x})}}{\sum\limits^m_{i=1}{x_i^2}-\frac{1}{m}(\sum\limits^m_{i=1}{x_i})^2}
+\]</span></p>
+<p><span class="math display">\[
+b = \frac{1}{m}\sum^m_{i=1}{(y_i-wx_i)}
+\]</span></p>
+<h3 id="矩阵形式">矩阵形式</h3>
+<p>当我们将数据扩展为矩阵形式, 把<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>写入向量形式<span class="math inline">\(\boldsymbol{w} = (\boldsymbol{w}, b)\)</span>, 相应地, 把数据集<span class="math inline">\(D\)</span>表示为一个<span class="math inline">\(m*(d+1)\)</span>大小的矩阵<span class="math inline">\(\boldsymbol{X}\)</span>, 其中每一行代表一个实例，每行前d个元素对应实例中的d个属性, 最后一个元素恒为1. <span class="math display">\[
+\boldsymbol{X} =
+\begin{pmatrix}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1d} &amp; 1 \\
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2d} &amp; 1 \\
+\vdots &amp; \vdots &amp;  &amp; \vdots &amp; \vdots \\
+x_{m1} &amp; x_{m2} &amp; \cdots &amp; x_{md} &amp; 1 \\
+\end{pmatrix} =
+\begin{pmatrix}
+\boldsymbol{x_1}^T &amp; 1 \\
+\boldsymbol{x_2}^T &amp; 1 \\
+\vdots &amp; \vdots \\
+\boldsymbol{x_m}^T &amp; 1 \\
+\end{pmatrix}
+\]</span></p>
+<p>再将输入也写成向量形式</p>
+<p><span class="math display">\[
+\boldsymbol{y} = (y_1, y_2, \cdots, y_m)
+\]</span></p>
+<p>根据均方差误差最小化原则有:</p>
+<p><span class="math display">\[
+\boldsymbol{w}^\ast = arg \min_w(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{w})^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{w})
+\]</span></p>
+<p>令<span class="math inline">\(\boldsymbol{E_w} = (\boldsymbol{y}-\boldsymbol{X}\boldsymbol{w})^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{w})\)</span>, 对<span class="math inline">\(\boldsymbol{w}\)</span>求导得到</p>
+<p><span class="math display">\[
+\frac{\partial\boldsymbol{E_w}}{\partial\boldsymbol{w}} = 2\boldsymbol{X}^{\prime T}(\boldsymbol{X}\boldsymbol{w}-\boldsymbol{y})
+\]</span></p>
+<p>令其为零可得到<span class="math inline">\(\boldsymbol{W}\)</span>的最优解的闭式解。</p>
+<p>以上是当矩阵<span class="math inline">\(X^TX\)</span><strong>满秩(可逆)</strong>时进行的计算, 而实际中, 很多的数据矩阵是<strong>非满秩</strong>的, 则有可能会解出多个解, 那么选择解由学习算法的归纳偏好决定, 常见做法是引入正则化.</p>
+<h3 id="广义线性回归">广义线性回归</h3>
+<p>以上我们针对的是一个线性回归的模型, 显然预测得到的标记一定是一个线性的结果.</p>
+<blockquote>
+<p>此时我们实验中获得了一组数据, 通过观察是符合<strong>指数</strong>函数形式的, 很明显是一个非线性的标记序列, 那这时是否可以使用线性回归呢?</p>
+</blockquote>
+<p>答案是可以的.</p>
+<p>我们对标记<span class="math inline">\(y\)</span>取<code>ln函数</code>, 这时就会发现:</p>
+<p><span class="math display">\[
+\ln{y} = \boldsymbol{w}^{T}\boldsymbol{x} + b
+\]</span></p>
+<p>这就是<strong>对数线性回归</strong>, 在形式上我们可以使用线性回归进行表示, 但本质上却实现了非线性回归. 发生这时神奇变化的东西就是<code>ln</code>这个<strong>单调可微函数</strong>.</p>
+<p>由此推到<strong>广义线性模型</strong>(generalized linear model), 使用单调可微函数<span class="math inline">\(g(\cdot)\)</span>来将预测值和实际值联系起来.</p>
+<p><span class="math display">\[
+y = g^{-1}(\boldsymbol{w}^{T}\boldsymbol{x} + b)
+\]</span></p>
+<h3 id="分类变量化为连续值">分类变量化为连续值</h3>
+<p>有时我们的有些数据可能是离散的, 这时候我们会考虑将数据化为<strong>连续值</strong>.</p>
+<ul>
+<li>在<strong>有序</strong>(order)数据中, 比如"低" "中" "高"等, 可以使用<span class="math inline">\(\{0, 0.5, 1\}\)</span>来表示.
+<ul>
+<li>直接使用<code>map</code>映射, 或使用<code>LabelEncoder</code>.</li>
+</ul></li>
+<li>在<strong>无序</strong>数据中, 比如"西瓜" "南瓜" "冬瓜"等, 就需要使用<span class="math inline">\((1,0,0), (0,1,0), (0,0,1)\)</span>来表示.
+<ul>
+<li>独热编码<code>OneHotEncoder</code>或 pandas 中的<code>get_dummies</code>.</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>无序属性在连续化的时候, 不能像连续值一样直接使用值代替, 因为值之间存在大小, 从而会引入<strong>不当的有序关系</strong>.</p>
+<p>但其实对分类变量化为连续值, 或多或少会引入一些额外的有序关系.</p>
+</blockquote>
+<h2 id="对数几率回归">对数几率回归</h2>
+<p>// tomorrow</p>
+<h2 id="个人收获">个人收获</h2>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>西瓜书</tag>
+        <tag>线性模型</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习西瓜书——第02章模型评估和选择</title>
     <url>/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/</url>
     <content><![CDATA[<blockquote>
-<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择。</p>
-<p>主要的内容有：经验误差与过拟合、模型的评估方法(留出法/交叉验证/自助法)、性能度量(查准率/查全率/F1/ROC曲线等), 部分内容待更新.</p>
+<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择.</p>
+<p>主要的内容有: 经验误差与过拟合、模型的评估方法(留出法/交叉验证/自助法)、性能度量(查准率/查全率/F1/ROC曲线等), 部分内容待更新.</p>
 </blockquote>
 <span id="more"></span>
 <h2 id="经验误差与过拟合">2.1 经验误差与过拟合</h2>
@@ -144,6 +258,13 @@ FPR = \frac{FP}{TN + FP}
 <p>这一章主要是在讲如何对数据集进行划分, 如何评估模型的性能, 包括我还没完全捋清楚的假设检验部分, 都是在对模型性能的好坏进行评价, 对模型的可行性, 真实性进行分析.</p>
 <p>这些东西正是之后支撑我们来判断一个模型是好是坏, 是否可行的依据. 目前只是大概的了解了概念, 到了实际应用的时候还是要回过头来回顾前两章.</p>
 ]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>西瓜书</tag>
+        <tag>模型评估</tag>
+      </tags>
   </entry>
   <entry>
     <title>单链表解题技巧4——反转链表</title>
@@ -231,8 +352,8 @@ FPR = \frac{FP}{TN + FP}
     <title>机器学习西瓜书——第01章绪论</title>
     <url>/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</url>
     <content><![CDATA[<blockquote>
-<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会。</p>
-<p>主要的内容有：机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)</p>
+<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会.</p>
+<p>主要的内容有: 机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)</p>
 </blockquote>
 <span id="more"></span>
 <h2 id="引言">1.1 引言</h2>
@@ -382,8 +503,8 @@ FPR = \frac{FP}{TN + FP}
       </categories>
       <tags>
         <tag>leetcode题解</tag>
-        <tag>双指针</tag>
         <tag>c++</tag>
+        <tag>双指针</tag>
         <tag>数组</tag>
         <tag>二分查找</tag>
       </tags>
@@ -483,8 +604,8 @@ FPR = \frac{FP}{TN + FP}
       </categories>
       <tags>
         <tag>leetcode题解</tag>
-        <tag>双指针</tag>
         <tag>c++</tag>
+        <tag>双指针</tag>
         <tag>字符串</tag>
         <tag>滑动窗口</tag>
       </tags>
@@ -729,8 +850,8 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
-        <tag>双指针</tag>
         <tag>c++</tag>
+        <tag>双指针</tag>
         <tag>逻辑链接</tag>
       </tags>
   </entry>
@@ -840,9 +961,9 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
+        <tag>c++</tag>
         <tag>双指针</tag>
         <tag>快慢指针</tag>
-        <tag>c++</tag>
       </tags>
   </entry>
   <entry>
@@ -923,8 +1044,8 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
-        <tag>c++</tag>
         <tag>k路问题</tag>
+        <tag>c++</tag>
       </tags>
   </entry>
   <entry>
