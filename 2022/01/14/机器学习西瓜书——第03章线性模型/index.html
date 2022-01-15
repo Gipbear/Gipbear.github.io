@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/机器学习西瓜书——第03章线性模型/单位阶跃函数与对数几率函数.png">
 <meta property="article:published_time" content="2022-01-14T10:35:28.000Z">
-<meta property="article:modified_time" content="2022-01-15T16:32:12.937Z">
+<meta property="article:modified_time" content="2022-01-15T16:41:06.038Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="西瓜书">
 <meta property="article:tag" content="线性模型">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-16 00:32:12" itemprop="dateModified" datetime="2022-01-16T00:32:12+08:00">2022-01-16</time>
+                <time title="修改时间：2022-01-16 00:41:06" itemprop="dateModified" datetime="2022-01-16T00:41:06+08:00">2022-01-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.9k</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -342,12 +342,12 @@ x_{m1} &amp; x_{m2} &amp; \cdots &amp; x_{md} &amp; 1 \\
 \]</span></p>
 <p>令<span class="math inline">\(\boldsymbol{E_w} = (\boldsymbol{y}-\boldsymbol{X}\boldsymbol{w})^T(\boldsymbol{y}-\boldsymbol{X}\boldsymbol{w})\)</span>, 对<span class="math inline">\(\boldsymbol{w}\)</span>求导得到</p>
 <p><span class="math display">\[
-\frac{\partial\boldsymbol{E_w}}{\partial\boldsymbol{w}} = 2\boldsymbol{X}^{\prime T}(\boldsymbol{X}\boldsymbol{w}-\boldsymbol{y})
+\frac{\partial\boldsymbol{E_w}}{\partial\boldsymbol{w}} = 2\boldsymbol{X}^{T}(\boldsymbol{X}\boldsymbol{w}-\boldsymbol{y})
 \]</span></p>
 <p>令其为零可得到<span class="math inline">\(\boldsymbol{W}\)</span>的最优解的闭式解。</p>
-<p>以上是当矩阵<span class="math inline">\(X^TX\)</span><strong>满秩(可逆)</strong>时进行的计算, 而实际中, 很多的数据矩阵是<strong>非满秩</strong>的, 则有可能会解出多个解, 那么选择解由学习算法的归纳偏好决定, 常见做法是引入正则化.</p>
+<p>以上是当矩阵<span class="math inline">\(X^TX\)</span><strong>满秩(可逆)</strong>时进行的计算, 而实际中, 很多的数据矩阵是<strong>非满秩</strong>的, 则有可能会解出多个解, 那么选择解由学习算法的归纳偏好决定, 常见做法是引入<strong>正则化</strong>.</p>
 <h3 id="广义线性回归">广义线性回归</h3>
-<p>以上我们针对的是一个线性回归的模型, 显然预测得到的标记一定是一个线性的结果.</p>
+<p>以上我们针对的是一个简单线性回归的模型, 显然预测得到的标记一定是一个线性的结果.</p>
 <blockquote>
 <p>此时我们实验中获得了一组数据, 通过观察是符合<strong>指数</strong>函数形式的, 很明显是一个非线性的标记序列, 那这时是否可以使用线性回归呢?</p>
 </blockquote>
@@ -401,9 +401,10 @@ p(y=0|\boldsymbol{x}) = \frac{1}{1+e^{\boldsymbol{w}^{T}\boldsymbol{x} + b}}
 <p><span class="math display">\[
 \begin{aligned}
 L(\boldsymbol{w}, b) &amp;= \prod^m_{i=1}{p(y_i|\boldsymbol{x}_i;w,b)} \\
-l(\boldsymbol{w}, b) &amp;= \sum^m_{i=1}{\ln{[y_ip_1(\hat{\boldsymbol{x}}_i;\beta) + (1-y_i)p_0(\hat{\boldsymbol{x}}_i;\beta)]}}\end{aligned}
+l(\boldsymbol{w}, b) &amp;= \sum^m_{i=1}{\ln{[y_ip_1(\hat{\boldsymbol{x}}_i;\boldsymbol{w}, b) + (1-y_i)p_0(\hat{\boldsymbol{x}}_i;\boldsymbol{w}, b)]}}\end{aligned}
 \]</span></p>
-<p>其中为了便于讨论, 令<span class="math inline">\(\beta=(\boldsymbol{x};b), \hat{\boldsymbol{x}}=(\boldsymbol{x};1)\)</span>. 而<span class="math inline">\(p_1\)</span>是<span class="math inline">\(p(y=1|\boldsymbol{x})\)</span>, <span class="math inline">\(p_0\)</span>是<span class="math inline">\(p(y=0|\boldsymbol{x})\)</span>. 分别令<span class="math inline">\(y_i\)</span>为0或1:</p>
+<p>其中<span class="math inline">\(p_1\)</span>是<span class="math inline">\(p(y=1|\boldsymbol{x};\boldsymbol{w}, b)\)</span>, <span class="math inline">\(p_0\)</span>是<span class="math inline">\(p(y=0|\boldsymbol{x};\boldsymbol{w}, b)\)</span>.</p>
+<p>为了便于讨论, 令<span class="math inline">\(\beta=(\boldsymbol{x};b), \hat{\boldsymbol{x}}=(\boldsymbol{x};1)\)</span>, 使得<span class="math inline">\(\boldsymbol{w}^{T}\boldsymbol{x} + b\)</span>可以表示为<span class="math inline">\(\beta^T\boldsymbol{x}\)</span>. 再分别令<span class="math inline">\(y_i\)</span>为0或1:</p>
 <p><span class="math display">\[
 l(\beta) =
 \begin{cases}
