@@ -76,6 +76,53 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </categories>
   </entry>
   <entry>
+    <title>Flask | xm-select控件回显</title>
+    <url>/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
+    <content><![CDATA[<blockquote>
+<p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
+<p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="控件回显问题">控件回显问题</h2>
+<p>在Flask中调用<code>render_template</code>的时候页面会进行刷新，此时页面的<code>From</code>之类需要输入的控件在刷新后就会显示空白内容，因为刷新等于重新加载一次页面，虽然获取了输入的值，但是并没有保留在原本的控件 value 中。</p>
+<h3 id="解决显式控件回显问题方法">解决显式控件回显问题方法</h3>
+<p>本文所谓的显式控件是，控件的元素都是在HTML或JS中直接定义的，此事我们只需要找到控件所在的位置，给元素进行赋值，例如：</p>
+<p>app.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">            form_name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=form_name)</span><br></pre></td></tr></table></figure>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">style</span>=<span class="string">&quot;width: 220px&quot;</span>&gt;</span>姓名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; name &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>立即查看<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们这里是将从表单中获取的name值，再次赋值给name，也就是回显。</p>
+<p>其实也就是利用 Flask的<code>&#123;&#123; &#125;&#125;</code>进行传参，只不过这里是将参数传给<code>value</code>而已，与之前获取参数一节不过是举一反三。</p>
+<h3 id="解决隐式控件回显问题方法">解决隐式控件回显问题方法</h3>
+<p>在写小程序的时候，使用了layui框架的扩展插件<code>xm-select</code>，该插件主要是设计了好看的选择控件，例如单选多选等等，之后再开章节细讲。</p>
+<p>本人的调用的xm-select控件部分代码如下。</p>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+
+<p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
+
+<p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
+<p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>这样就成功完成了控件的回显。</p>
+<p>// Todo: 还有一个多选的回显，还为解决。</p>
+<h2 id="个人收获">个人收获</h2>
+<ol type="1">
+<li>学会举一反三，Flask传过来的值在HTML的任何一个位置都可以运用；</li>
+<li>当控件是动态显示的时候，一定会存在赋值取值的函数入口，查找说明文档是最快的方法。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>轻量Web</category>
+      </categories>
+      <tags>
+        <tag>Flask</tag>
+        <tag>layui</tag>
+        <tag>xm-select</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Flask | JS获取python中的JSON数据</title>
     <url>/2021/01/10/Flask%E2%80%94%E2%80%94JS%E8%8E%B7%E5%8F%96python%E4%B8%AD%E7%9A%84JSON%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<p>这是本博客第一篇正式文章，博客站点还没完全优化好，但是已经有值得记录的就先记录下来了。</p>
@@ -136,7 +183,7 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
   </entry>
   <entry>
     <title>Flask | xm-select控件回显</title>
-    <url>/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
+    <url>/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
     <content><![CDATA[<blockquote>
 <p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
 <p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
@@ -158,9 +205,9 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
 <p>index.html</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>运行结果如下：</p>
-
+<img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" class="" title="下拉框效果展示">
 <p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
-
+<img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" class="" title="开发人员工具下拉框元素代码">
 <p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
 <p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
@@ -310,50 +357,31 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
-    <title>Flask | xm-select控件回显</title>
-    <url>/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
+    <title>mysql中位数</title>
+    <url>/2021/02/06/mysql%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
     <content><![CDATA[<blockquote>
-<p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
-<p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
+<p>本文是在mysql中查询一列<strong>奇数</strong>个数据的中位数。</p>
 </blockquote>
 <span id="more"></span>
-<h2 id="控件回显问题">控件回显问题</h2>
-<p>在Flask中调用<code>render_template</code>的时候页面会进行刷新，此时页面的<code>From</code>之类需要输入的控件在刷新后就会显示空白内容，因为刷新等于重新加载一次页面，虽然获取了输入的值，但是并没有保留在原本的控件 value 中。</p>
-<h3 id="解决显式控件回显问题方法">解决显式控件回显问题方法</h3>
-<p>本文所谓的显式控件是，控件的元素都是在HTML或JS中直接定义的，此事我们只需要找到控件所在的位置，给元素进行赋值，例如：</p>
-<p>app.py</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">            form_name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=form_name)</span><br></pre></td></tr></table></figure>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">style</span>=<span class="string">&quot;width: 220px&quot;</span>&gt;</span>姓名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; name &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>立即查看<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我们这里是将从表单中获取的name值，再次赋值给name，也就是回显。</p>
-<p>其实也就是利用 Flask的<code>&#123;&#123; &#125;&#125;</code>进行传参，只不过这里是将参数传给<code>value</code>而已，与之前获取参数一节不过是举一反三。</p>
-<h3 id="解决隐式控件回显问题方法">解决隐式控件回显问题方法</h3>
-<p>在写小程序的时候，使用了layui框架的扩展插件<code>xm-select</code>，该插件主要是设计了好看的选择控件，例如单选多选等等，之后再开章节细讲。</p>
-<p>本人的调用的xm-select控件部分代码如下。</p>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>运行结果如下：</p>
-<img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" class="" title="下拉框效果展示">
-<p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
-<img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" class="" title="开发人员工具下拉框元素代码">
-<p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
-<p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<p>这样就成功完成了控件的回显。</p>
-<p>// Todo: 还有一个多选的回显，还为解决。</p>
+<p>在<a href="https://www.hackerrank.com/dashboard">HackerRank</a>刷题的时候遇到了一道需要查询中位数的题目。</p>
+<h2 id="题目">题目</h2>
+<p>将中位数定义为：将数据集的上半部分与下半部分分开的数字，也就是仅存在一个中位数。</p>
+<p>需要找出某列的中位数。</p>
+<h2 id="思路">思路</h2>
+<p>Station表中存在奇数个数据，那么我们要查找的LAT_N就是将数据分开后使得：上半部分个数=下半部分个数。</p>
+<p>于是我们需要在查询该表Station S的同时，再创建两个相同的Station表来计算上下部分的LAT_N个数，在检查记录的同时比较上下两部分的数量，当数量相同的时候，该S.LAT_N就是需要得到的中位数。</p>
+<h2 id="方案">方案</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select round(s.LAT_N,4)</span><br><span class="line">from station s</span><br><span class="line">where (select count(LAT_N)</span><br><span class="line">       from station</span><br><span class="line">       where LAT_N &lt; s.LAT_N) = (</span><br><span class="line">           select count(LAT_N)</span><br><span class="line">           from station</span><br><span class="line">           where (LAT_N &gt; s.LAT_N))</span><br></pre></td></tr></table></figure>
 <h2 id="个人收获">个人收获</h2>
-<ol type="1">
-<li>学会举一反三，Flask传过来的值在HTML的任何一个位置都可以运用；</li>
-<li>当控件是动态显示的时候，一定会存在赋值取值的函数入口，查找说明文档是最快的方法。</li>
-</ol>
+<p>当遇到比较抽象的问题的时候，需要学会转换思路，将抽象的中位数定义，转化为现实的，上下部分数量相同问题；也要熟悉mysql中创建新表和原表比较的方法。</p>
 ]]></content>
       <categories>
-        <category>轻量Web</category>
+        <category>增删改查</category>
       </categories>
       <tags>
-        <tag>Flask</tag>
-        <tag>layui</tag>
-        <tag>xm-select</tag>
+        <tag>select</tag>
+        <tag>中位数</tag>
+        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -429,34 +457,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </categories>
       <tags>
         <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mysql中位数</title>
-    <url>/2021/02/06/mysql%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是在mysql中查询一列<strong>奇数</strong>个数据的中位数。</p>
-</blockquote>
-<span id="more"></span>
-<p>在<a href="https://www.hackerrank.com/dashboard">HackerRank</a>刷题的时候遇到了一道需要查询中位数的题目。</p>
-<h2 id="题目">题目</h2>
-<p>将中位数定义为：将数据集的上半部分与下半部分分开的数字，也就是仅存在一个中位数。</p>
-<p>需要找出某列的中位数。</p>
-<h2 id="思路">思路</h2>
-<p>Station表中存在奇数个数据，那么我们要查找的LAT_N就是将数据分开后使得：上半部分个数=下半部分个数。</p>
-<p>于是我们需要在查询该表Station S的同时，再创建两个相同的Station表来计算上下部分的LAT_N个数，在检查记录的同时比较上下两部分的数量，当数量相同的时候，该S.LAT_N就是需要得到的中位数。</p>
-<h2 id="方案">方案</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select round(s.LAT_N,4)</span><br><span class="line">from station s</span><br><span class="line">where (select count(LAT_N)</span><br><span class="line">       from station</span><br><span class="line">       where LAT_N &lt; s.LAT_N) = (</span><br><span class="line">           select count(LAT_N)</span><br><span class="line">           from station</span><br><span class="line">           where (LAT_N &gt; s.LAT_N))</span><br></pre></td></tr></table></figure>
-<h2 id="个人收获">个人收获</h2>
-<p>当遇到比较抽象的问题的时候，需要学会转换思路，将抽象的中位数定义，转化为现实的，上下部分数量相同问题；也要熟悉mysql中创建新表和原表比较的方法。</p>
-]]></content>
-      <categories>
-        <category>增删改查</category>
-      </categories>
-      <tags>
-        <tag>select</tag>
-        <tag>中位数</tag>
-        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -706,6 +706,74 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
+    <title>单链表解题技巧3——相交链表</title>
+    <url>/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于单链表的判断相交问题，使用了两种方法，快慢指针和更好的逻辑连接方法。</p>
+<p>涉及 leetcode 的 <a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/">160. 相交链表</a>。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="相交链表">相交链表</h2>
+<h3 id="题目">题目</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/">160. 相交链表</a>：给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表不存在相交节点，返回 null 。</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3</p>
+<p>输出：Intersected at '8'</p>
+</blockquote>
+<p>示例2：</p>
+<blockquote>
+<p>输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3</p>
+<p>输出：Intersected at '8'</p>
+</blockquote>
+<h3 id="理解一下1">理解一下1</h3>
+<p>所谓链表相交，就是一个<code>Y型</code>的链表结构，在交点处汇流，需要注意的是:</p>
+<blockquote>
+<p>链表相交后不会分开！因为链表只有一个<code>next</code>，只有唯一后继。</p>
+</blockquote>
+<p>寻找两条链表相交的结点就是寻找<strong>相同的结点</strong>（而不是值！）</p>
+<p>基本的思路是：</p>
+<p>遍历第一条链表<code>l1</code>，嵌套遍历第二条链表<code>l2</code>，判断相同的结点即可。</p>
+<p>这种方法的时间复杂度达到了<code>O(n)</code>不是很好，于是便思考其他方法。</p>
+<ol type="1">
+<li>我们需要找到相交点，而最后相交点之后链的长度都是一样的；</li>
+<li>两个指针判断相等时需要同时到达相交点；</li>
+<li>那么自然就需要使得前面遍历的经过的结点数相同；</li>
+</ol>
+<h3 id="解法一双指针">解法一（双指针）</h3>
+<p>使用双指针来解决，我思考的时候还是比较自然的，表述可能不够清晰，自己动手比划比划就很清楚了。</p>
+<ol type="1">
+<li>当链长相同时，自然是一一比较即可（这种情况不用考虑，包含在下面）；</li>
+<li>链长不同是，短链的指针<code>l1</code>会先到达终点，而长链指针<code>l2</code>则还有<code>k</code>个结点，这个<code>k</code>刚好是两条链的长度之差；</li>
+<li>由此我们长链中再设一个指针<code>llong</code>，跟随<code>l2</code>继续前进;</li>
+<li>当<code>l2</code>到达终点时，<code>llong</code>距离链尾刚好与短链长度<strong>相同</strong>；</li>
+<li>此时在短链头设置一个指针<code>lshort</code>，与<code>llong</code>一同前进，一一比较即可。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">getIntersectionNode</span><span class="params">(ListNode *headA, ListNode *headB)</span> </span>&#123;</span><br><span class="line">    ListNode *la = headA, *lb = headB;</span><br><span class="line">    ListNode *lc, *llong, *lshort;</span><br><span class="line">    <span class="comment">// 依旧是快慢指针</span></span><br><span class="line">    <span class="comment">// la和lb同时前进</span></span><br><span class="line">    <span class="keyword">while</span>(la != <span class="literal">nullptr</span> &amp;&amp; lb != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        la = la-&gt;next;</span><br><span class="line">        lb = lb-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 选出长链和短链</span></span><br><span class="line">    <span class="keyword">if</span>(lb != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        lc = lb;</span><br><span class="line">        llong = headB;</span><br><span class="line">        lshort = headA;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        lc = la;</span><br><span class="line">        llong = headA;</span><br><span class="line">        lshort = headB;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 指向长链的快指针带着慢指针走到头</span></span><br><span class="line">    <span class="keyword">while</span>(lc != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        llong = llong-&gt;next;</span><br><span class="line">        lc = lc-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//短链从头开始和后出发的慢指针同时前进即可找到相同点</span></span><br><span class="line">    <span class="keyword">while</span>(lshort != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(lshort == llong)&#123;</span><br><span class="line">            <span class="keyword">return</span> llong;</span><br><span class="line">        &#125;</span><br><span class="line">        lshort = lshort-&gt;next;</span><br><span class="line">        llong = llong-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="解法二逻辑连接">解法二（逻辑连接）</h3>
+<p>继基本的分析思路，接下来要使得双指针同时到达交点：</p>
+<ol type="1">
+<li>只需要使得双指针在到达交点时经过相同个数的结点即可；</li>
+<li>而我们知道<code>A+B = B+A</code>；</li>
+<li>所以在A链前加上B链，在B链前加上A链，那么双指针同时从各自链出发，会在同一时刻到达相交点！</li>
+</ol>
+<figure class="highlight c++"><figcaption><span>[]</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">getIntersectionNode</span><span class="params">(ListNode *headA, ListNode *headB)</span> </span>&#123;</span><br><span class="line">    ListNode *la = headA, *lb = headB;</span><br><span class="line">    <span class="keyword">while</span>(la != lb)&#123;</span><br><span class="line">        <span class="comment">// A链完了去B链</span></span><br><span class="line">        <span class="keyword">if</span> (la != <span class="literal">nullptr</span>)</span><br><span class="line">            la = la-&gt;next;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            la = headB;</span><br><span class="line">        <span class="comment">// B链完了去A链</span></span><br><span class="line">        <span class="keyword">if</span> (lb != <span class="literal">nullptr</span>)</span><br><span class="line">            lb = lb-&gt;next;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            lb = headA;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> la;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="个人收获">个人收获</h2>
+<p>这次感觉自己有一点很好的使用了之前学过的双指针，毕竟学了会用才是真的学会了。</p>
+<p>另外将两个链表逻辑连接，使得两个链表的长度相同，这一点还是很值得学习的，不能作为套路，但是是一个很好的思考方向。</p>
+]]></content>
+      <categories>
+        <category>数据结构算法</category>
+      </categories>
+      <tags>
+        <tag>单链表</tag>
+        <tag>leetcode题解</tag>
+        <tag>c++</tag>
+        <tag>逻辑链接</tag>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>单链表解题技巧(2)——快慢指针</title>
     <url>/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/</url>
     <content><![CDATA[<blockquote>
@@ -814,74 +882,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
         <tag>c++</tag>
         <tag>双指针</tag>
         <tag>快慢指针</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>单链表解题技巧3——相交链表</title>
-    <url>/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是关于单链表的判断相交问题，使用了两种方法，快慢指针和更好的逻辑连接方法。</p>
-<p>涉及 leetcode 的 <a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/">160. 相交链表</a>。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="相交链表">相交链表</h2>
-<h3 id="题目">题目</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/">160. 相交链表</a>：给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表不存在相交节点，返回 null 。</p>
-<p>示例1：</p>
-<blockquote>
-<p>输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3</p>
-<p>输出：Intersected at '8'</p>
-</blockquote>
-<p>示例2：</p>
-<blockquote>
-<p>输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3</p>
-<p>输出：Intersected at '8'</p>
-</blockquote>
-<h3 id="理解一下1">理解一下1</h3>
-<p>所谓链表相交，就是一个<code>Y型</code>的链表结构，在交点处汇流，需要注意的是:</p>
-<blockquote>
-<p>链表相交后不会分开！因为链表只有一个<code>next</code>，只有唯一后继。</p>
-</blockquote>
-<p>寻找两条链表相交的结点就是寻找<strong>相同的结点</strong>（而不是值！）</p>
-<p>基本的思路是：</p>
-<p>遍历第一条链表<code>l1</code>，嵌套遍历第二条链表<code>l2</code>，判断相同的结点即可。</p>
-<p>这种方法的时间复杂度达到了<code>O(n)</code>不是很好，于是便思考其他方法。</p>
-<ol type="1">
-<li>我们需要找到相交点，而最后相交点之后链的长度都是一样的；</li>
-<li>两个指针判断相等时需要同时到达相交点；</li>
-<li>那么自然就需要使得前面遍历的经过的结点数相同；</li>
-</ol>
-<h3 id="解法一双指针">解法一（双指针）</h3>
-<p>使用双指针来解决，我思考的时候还是比较自然的，表述可能不够清晰，自己动手比划比划就很清楚了。</p>
-<ol type="1">
-<li>当链长相同时，自然是一一比较即可（这种情况不用考虑，包含在下面）；</li>
-<li>链长不同是，短链的指针<code>l1</code>会先到达终点，而长链指针<code>l2</code>则还有<code>k</code>个结点，这个<code>k</code>刚好是两条链的长度之差；</li>
-<li>由此我们长链中再设一个指针<code>llong</code>，跟随<code>l2</code>继续前进;</li>
-<li>当<code>l2</code>到达终点时，<code>llong</code>距离链尾刚好与短链长度<strong>相同</strong>；</li>
-<li>此时在短链头设置一个指针<code>lshort</code>，与<code>llong</code>一同前进，一一比较即可。</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">getIntersectionNode</span><span class="params">(ListNode *headA, ListNode *headB)</span> </span>&#123;</span><br><span class="line">    ListNode *la = headA, *lb = headB;</span><br><span class="line">    ListNode *lc, *llong, *lshort;</span><br><span class="line">    <span class="comment">// 依旧是快慢指针</span></span><br><span class="line">    <span class="comment">// la和lb同时前进</span></span><br><span class="line">    <span class="keyword">while</span>(la != <span class="literal">nullptr</span> &amp;&amp; lb != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        la = la-&gt;next;</span><br><span class="line">        lb = lb-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 选出长链和短链</span></span><br><span class="line">    <span class="keyword">if</span>(lb != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        lc = lb;</span><br><span class="line">        llong = headB;</span><br><span class="line">        lshort = headA;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        lc = la;</span><br><span class="line">        llong = headA;</span><br><span class="line">        lshort = headB;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 指向长链的快指针带着慢指针走到头</span></span><br><span class="line">    <span class="keyword">while</span>(lc != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        llong = llong-&gt;next;</span><br><span class="line">        lc = lc-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//短链从头开始和后出发的慢指针同时前进即可找到相同点</span></span><br><span class="line">    <span class="keyword">while</span>(lshort != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(lshort == llong)&#123;</span><br><span class="line">            <span class="keyword">return</span> llong;</span><br><span class="line">        &#125;</span><br><span class="line">        lshort = lshort-&gt;next;</span><br><span class="line">        llong = llong-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="解法二逻辑连接">解法二（逻辑连接）</h3>
-<p>继基本的分析思路，接下来要使得双指针同时到达交点：</p>
-<ol type="1">
-<li>只需要使得双指针在到达交点时经过相同个数的结点即可；</li>
-<li>而我们知道<code>A+B = B+A</code>；</li>
-<li>所以在A链前加上B链，在B链前加上A链，那么双指针同时从各自链出发，会在同一时刻到达相交点！</li>
-</ol>
-<figure class="highlight c++"><figcaption><span>[]</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode *<span class="title">getIntersectionNode</span><span class="params">(ListNode *headA, ListNode *headB)</span> </span>&#123;</span><br><span class="line">    ListNode *la = headA, *lb = headB;</span><br><span class="line">    <span class="keyword">while</span>(la != lb)&#123;</span><br><span class="line">        <span class="comment">// A链完了去B链</span></span><br><span class="line">        <span class="keyword">if</span> (la != <span class="literal">nullptr</span>)</span><br><span class="line">            la = la-&gt;next;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            la = headB;</span><br><span class="line">        <span class="comment">// B链完了去A链</span></span><br><span class="line">        <span class="keyword">if</span> (lb != <span class="literal">nullptr</span>)</span><br><span class="line">            lb = lb-&gt;next;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            lb = headA;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> la;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="个人收获">个人收获</h2>
-<p>这次感觉自己有一点很好的使用了之前学过的双指针，毕竟学了会用才是真的学会了。</p>
-<p>另外将两个链表逻辑连接，使得两个链表的长度相同，这一点还是很值得学习的，不能作为套路，但是是一个很好的思考方向。</p>
-]]></content>
-      <categories>
-        <category>数据结构算法</category>
-      </categories>
-      <tags>
-        <tag>单链表</tag>
-        <tag>leetcode题解</tag>
-        <tag>c++</tag>
-        <tag>双指针</tag>
-        <tag>逻辑链接</tag>
       </tags>
   </entry>
   <entry>
@@ -1065,44 +1065,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
         <tag>双指针</tag>
         <tag>字符串</tag>
         <tag>滑动窗口</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>幸存者偏差</title>
-    <url>/2021/02/05/%E5%B9%B8%E5%AD%98%E8%80%85%E5%81%8F%E5%B7%AE/</url>
-    <content><![CDATA[<blockquote>
-<p>本文主要解释了幸存者偏差的定义</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="定义">定义</h2>
-<p>幸存者偏差（Survivorship bias）是指从筛选之后的<u>“幸存者”样本</u>中得到结论，从而产生的偏差。</p>
-<h2 id="偏差影响">偏差影响</h2>
-<p>这种偏差属于认知上的偏差，仅考虑了获得的样本，而忽视了未通过筛选的样本。在这种偏差下往往会出现两种常见的错误：<strong>规则推导</strong>和<strong>因果推断</strong>。</p>
-<ul>
-<li><p>规则推导：现存的事物是曾经唯一存在过的事物。</p>
-<p>我们会假设自己所看到是事物是过去唯一的存在，而实际上很多过去的事物并未保存至今。（商朝流只传下青铜器，但是并不表示商朝只用青铜器）</p></li>
-<li><p>因果推断：某个机制中幸存下来的事物都会受到该机制的影响。</p>
-<p>并不是从该机制中幸存下来说明该机制影响了该事物，而是该事物满足了该机制的条件才得以幸存。</p></li>
-</ul>
-<h2 id="bi软件调研分析">BI软件调研分析</h2>
-<p>假设一家商业智能（BI）软件公司正在开展2周免费使用活动，一周后剩下少数用书仍在使用，并且这些用户都是数据分析师，借助该软件进行了更加复杂的分析。</p>
-<p>按照调研的结果，可能会得到两个<strong>错误</strong>的结论：</p>
-<ul>
-<li><p>BI软件的适用人群是数据分析师。</p>
-<p>在下结论之前，同样需要观察那些<u>“非幸存者”</u>（放弃使用的用户），我们并不知道这些用户中是否也有数据分析师。如果我们的调研用户全部是数据分析师，若离开的用户比剩下的用户更多时，那么得出的结论则恰恰相反。</p>
-<p>为了得到正确的结论，我们需要分析每一个一开始就加入使用的用户，找到真正能够区分同期群的用户特征。</p></li>
-<li><p>BI软件让深入数据分析变得更加容易：</p>
-<p>在调研中，我们并没有设置一个对照组来比较用户之间的<strong>分析能力</strong>，这些用户或许是在使用BI软件做最高级的任务，但是或许在其他软件上能够做更高级的事情，也获取用户本身就是资深的数据分析师，无论使用说明软件都能进行深入分析。而不是因为使用了该BI软件才能进行深入分析。</p>
-<p>若要衡量该软件的真正价值，则需要先评估用户分析水平，然后对比在相似的分析任务，操作不同软件的表现，从而得到有说服力的结论。</p></li>
-</ul>
-<h2 id="个人收获">个人收获</h2>
-<p>分析所有同期群的用户；衡量产品价值的时候需要和竞争对手的产品进行对比；对比用户使用前后的改变，得到产品带来的因果关系。</p>
-]]></content>
-      <categories>
-        <category>统计学</category>
-      </categories>
-      <tags>
-        <tag>误差</tag>
       </tags>
   </entry>
   <entry>
@@ -1420,6 +1382,44 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
+    <title>幸存者偏差</title>
+    <url>/2021/02/05/%E5%B9%B8%E5%AD%98%E8%80%85%E5%81%8F%E5%B7%AE/</url>
+    <content><![CDATA[<blockquote>
+<p>本文主要解释了幸存者偏差的定义</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="定义">定义</h2>
+<p>幸存者偏差（Survivorship bias）是指从筛选之后的<u>“幸存者”样本</u>中得到结论，从而产生的偏差。</p>
+<h2 id="偏差影响">偏差影响</h2>
+<p>这种偏差属于认知上的偏差，仅考虑了获得的样本，而忽视了未通过筛选的样本。在这种偏差下往往会出现两种常见的错误：<strong>规则推导</strong>和<strong>因果推断</strong>。</p>
+<ul>
+<li><p>规则推导：现存的事物是曾经唯一存在过的事物。</p>
+<p>我们会假设自己所看到是事物是过去唯一的存在，而实际上很多过去的事物并未保存至今。（商朝流只传下青铜器，但是并不表示商朝只用青铜器）</p></li>
+<li><p>因果推断：某个机制中幸存下来的事物都会受到该机制的影响。</p>
+<p>并不是从该机制中幸存下来说明该机制影响了该事物，而是该事物满足了该机制的条件才得以幸存。</p></li>
+</ul>
+<h2 id="bi软件调研分析">BI软件调研分析</h2>
+<p>假设一家商业智能（BI）软件公司正在开展2周免费使用活动，一周后剩下少数用书仍在使用，并且这些用户都是数据分析师，借助该软件进行了更加复杂的分析。</p>
+<p>按照调研的结果，可能会得到两个<strong>错误</strong>的结论：</p>
+<ul>
+<li><p>BI软件的适用人群是数据分析师。</p>
+<p>在下结论之前，同样需要观察那些<u>“非幸存者”</u>（放弃使用的用户），我们并不知道这些用户中是否也有数据分析师。如果我们的调研用户全部是数据分析师，若离开的用户比剩下的用户更多时，那么得出的结论则恰恰相反。</p>
+<p>为了得到正确的结论，我们需要分析每一个一开始就加入使用的用户，找到真正能够区分同期群的用户特征。</p></li>
+<li><p>BI软件让深入数据分析变得更加容易：</p>
+<p>在调研中，我们并没有设置一个对照组来比较用户之间的<strong>分析能力</strong>，这些用户或许是在使用BI软件做最高级的任务，但是或许在其他软件上能够做更高级的事情，也获取用户本身就是资深的数据分析师，无论使用说明软件都能进行深入分析。而不是因为使用了该BI软件才能进行深入分析。</p>
+<p>若要衡量该软件的真正价值，则需要先评估用户分析水平，然后对比在相似的分析任务，操作不同软件的表现，从而得到有说服力的结论。</p></li>
+</ul>
+<h2 id="个人收获">个人收获</h2>
+<p>分析所有同期群的用户；衡量产品价值的时候需要和竞争对手的产品进行对比；对比用户使用前后的改变，得到产品带来的因果关系。</p>
+]]></content>
+      <categories>
+        <category>统计学</category>
+      </categories>
+      <tags>
+        <tag>误差</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>快乐Linux学习（三）</title>
     <url>/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
@@ -1539,6 +1539,152 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快乐Linux学习（六）</title>
+    <url>/2021/02/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<p>本文主要是介绍Linux中的正则表达式</p>
+<p>适用于需要学习正则表达式的同学。</p>
+</blockquote>
+<span id="more"></span>
+<p>正则表达式是一种符号表示法，用来识别文本模式，与之前使用过的路径通配符有些相似，但是功能更强大。</p>
+<p>需要注意的是，很多系统和编程语言的都是具有正则表达式这个规则的，但是并不完全相同，此处仅学习Linux系统下POSIX标准中藐视的正则表达式，之后其他系统触类旁通学习即可。</p>
+<h2 id="grep">grep</h2>
+<p>主要使用的是grep程序，名字来自于“global regular expression print”，能够在文本文件中查找一个指定的正则表达式，并将匹配到的结果进行输出。</p>
+<p>例如先使用ls标准输出/usr/bin的目录名，再通过管道，grep从管道中接受输入，并将匹配结果进行输出。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls /usr/bin | grep zip</span><br></pre></td></tr></table></figure>
+<p>不通过管道的表达式如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">grep [options] regex [file...]</span><br></pre></td></tr></table></figure>
+<p>选项options有下列情况：</p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>-i</td>
+<td>忽略大小写</td>
+</tr>
+<tr class="even">
+<td>-v</td>
+<td>获得不匹配项</td>
+</tr>
+<tr class="odd">
+<td>-c</td>
+<td>获得匹配的数量</td>
+</tr>
+<tr class="even">
+<td>-l/-L</td>
+<td>打印存在匹配/不匹配项的文件夹名</td>
+</tr>
+<tr class="odd">
+<td>-n</td>
+<td>打印匹配项的行号和结果</td>
+</tr>
+</tbody>
+</table>
+<h2 id="元字符和原义字符">元字符和原义字符</h2>
+<p>上面grep后的<code>zip</code>，其中的“z”，“i”，“p”都是按照原本的意思和顺序进行匹配的，这些称为原义字符，需要使用其他规则进行匹配的时候，还包含如下<strong>元字符</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^ $ . [ ] &#123; &#125; - ? * + ( ) | \</span><br></pre></td></tr></table></figure>
+<p>其中POSIX 规范的字符集又将元字符又存在两种情况，基本正则表达式（BRE）和扩展的正则表达式（ERE），BRE中支持的是<code>^ $ . [ ] *</code>，ERE在此基础上扩展了<code>( ) &#123; &#125; ? + |</code>，使用的时候需要增加<code>-E</code>选项表示执行ERE标准。</p>
+<table>
+<thead>
+<tr class="header">
+<th>元字符</th>
+<th>解释</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>.</td>
+<td>任何字符</td>
+<td>可以用来匹配在某个位置的任意<strong>一个</strong>字符。</td>
+</tr>
+<tr class="even">
+<td>^ / $</td>
+<td>锚点</td>
+<td>该表达式在文本开头/末尾存在才会被匹配。“^$”组合可以匹配空行。</td>
+</tr>
+<tr class="odd">
+<td>[ ]</td>
+<td>指定字符集</td>
+<td>从中括号内的指定字符集匹配<strong>一个</strong>字符。元字符在被放置到中括号中后将会失去本身的特殊含义，除了“^”和“-”。</td>
+</tr>
+<tr class="even">
+<td>^</td>
+<td>否定</td>
+<td>在<strong>中括号内第一个字符</strong>时表示否定，匹配中括号内字符集以外的字符。</td>
+</tr>
+<tr class="odd">
+<td>-</td>
+<td>字符范围</td>
+<td>例如[a-z]，[B-Y]，[4-9a-h]等。</td>
+</tr>
+<tr class="even">
+<td>|</td>
+<td>交替</td>
+<td>允许从一系列表达式之间选择匹配项。</td>
+</tr>
+<tr class="odd">
+<td>？</td>
+<td></td>
+<td>匹配零个或一个元素。</td>
+</tr>
+<tr class="even">
+<td>*</td>
+<td></td>
+<td>匹配零个或多个元素。</td>
+</tr>
+<tr class="odd">
+<td>+</td>
+<td></td>
+<td>匹配一个或多个元素。</td>
+</tr>
+<tr class="even">
+<td>{ }</td>
+<td></td>
+<td>匹配特定个数的元素，n：元素只出现n次，n,m：元素出现[n,m]次，n,：元素出现不少于n次，,m：元素出现不多于m次。</td>
+</tr>
+</tbody>
+</table>
+<p>补充一些字符集：[:word:]=[:alnum:]+[_]；[:alnum:]=[:alpha:]+[:digit:]；[:blank:]=空格+tab；[:cntrl:]=0-31和127字符；[:lower:]；[:upper:]；[:punct:]=标点符号；[:print:]=[:graph:]+[:space:]；[:xdigit:]=[0-9A-Fa-f]</p>
+<p>其他的基本都可以被视为<strong>原义字符</strong>。元字符也可以被<strong>反斜杠</strong>转义为原义字符。</p>
+<blockquote>
+<p>所以之前在shell执行的时候，存在的一些元字符等特殊符号会被展开，这时候就可以使用引号阻止其展开。</p>
+</blockquote>
+<h2 id="应用正则表达式">应用正则表达式</h2>
+<h3 id="使用grep匹配">使用grep匹配</h3>
+<p>首先使用下列语句生成一个测试的搜索匹配列表，多尝试几次，生成不符合“(nnn) nnn-nnnn”格式的电话号码，以便用来匹配。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for i in &#123;1..10&#125;; do echo &quot;($&#123;RANDOM:0:3&#125;) $&#123;RANDOM:0:3&#125;-$&#123;RANDOM:0:4&#125;&quot; &gt;&gt;phonelist.txt; done</span><br></pre></td></tr></table></figure>
+<p>再使用cat和管道连接grep，因为使用了扩展的正则表达式，所以需要使用-E选项：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat phonelist.txt | grep -Ev &#x27;^\([0-9]&#123;3&#125;\) [0-9]&#123;3&#125;-[0-9]&#123;4&#125;&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="使用find查找">使用find查找</h3>
+<p>查找某个路径下的文件名是否符合满足正则表达式要求，例如查找当前路径下包含空格等不符合规范的路径名。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -regex &#x27;.*[^-\_./0-9a-zA-Z].*&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="利用locate查找文件">利用locate查找文件</h3>
+<p>locate支持基本的（--regexp）和扩展的（regex）正则表达式。例如搜索包含指定字符串的路径名。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">locate --regex &#x27;bin/(bz|gz|zip)&#x27;</span><br></pre></td></tr></table></figure>
+<h3 id="在lessvim中使用正则表达式">在less/vim中使用正则表达式</h3>
+<p>less是使用“<code>/</code>”命令输入正则表达式进行匹配</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">less phonelist.txt</span><br><span class="line">/^\([0-9]&#123;3&#125;\) [0-9]&#123;3&#125;-[0-9]&#123;4&#125;$</span><br></pre></td></tr></table></figure>
+<p>vim也类似，不过vim中使用扩展表达式会被认作为文本字符，需要使用反斜杠进行转义为元字符。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/([0-9]\&#123;3\&#125;) [0-9]\&#123;3\&#125;-[0-9]\&#123;4\&#125;</span><br></pre></td></tr></table></figure>
+<p>默认是没有高亮显示的，想要高亮显示的话可以在命令模式下输入<code>:set hlsearch</code>转化为高亮模式。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>本章主要学习的是正则表达式，了解到不同系统和语言会具有不完全相同的正则表达式，主要是用于之后的查找和筛选，以及在处理数据的时候能够利用规则直接提取相关信息，比较重要。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>正则表达式</tag>
       </tags>
   </entry>
   <entry>
@@ -1816,152 +1962,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
-    <title>快乐Linux学习（六）</title>
-    <url>/2021/02/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>本文主要是介绍Linux中的正则表达式</p>
-<p>适用于需要学习正则表达式的同学。</p>
-</blockquote>
-<span id="more"></span>
-<p>正则表达式是一种符号表示法，用来识别文本模式，与之前使用过的路径通配符有些相似，但是功能更强大。</p>
-<p>需要注意的是，很多系统和编程语言的都是具有正则表达式这个规则的，但是并不完全相同，此处仅学习Linux系统下POSIX标准中藐视的正则表达式，之后其他系统触类旁通学习即可。</p>
-<h2 id="grep">grep</h2>
-<p>主要使用的是grep程序，名字来自于“global regular expression print”，能够在文本文件中查找一个指定的正则表达式，并将匹配到的结果进行输出。</p>
-<p>例如先使用ls标准输出/usr/bin的目录名，再通过管道，grep从管道中接受输入，并将匹配结果进行输出。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ls /usr/bin | grep zip</span><br></pre></td></tr></table></figure>
-<p>不通过管道的表达式如下所示：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">grep [options] regex [file...]</span><br></pre></td></tr></table></figure>
-<p>选项options有下列情况：</p>
-<table>
-<thead>
-<tr class="header">
-<th>选项</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>-i</td>
-<td>忽略大小写</td>
-</tr>
-<tr class="even">
-<td>-v</td>
-<td>获得不匹配项</td>
-</tr>
-<tr class="odd">
-<td>-c</td>
-<td>获得匹配的数量</td>
-</tr>
-<tr class="even">
-<td>-l/-L</td>
-<td>打印存在匹配/不匹配项的文件夹名</td>
-</tr>
-<tr class="odd">
-<td>-n</td>
-<td>打印匹配项的行号和结果</td>
-</tr>
-</tbody>
-</table>
-<h2 id="元字符和原义字符">元字符和原义字符</h2>
-<p>上面grep后的<code>zip</code>，其中的“z”，“i”，“p”都是按照原本的意思和顺序进行匹配的，这些称为原义字符，需要使用其他规则进行匹配的时候，还包含如下<strong>元字符</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">^ $ . [ ] &#123; &#125; - ? * + ( ) | \</span><br></pre></td></tr></table></figure>
-<p>其中POSIX 规范的字符集又将元字符又存在两种情况，基本正则表达式（BRE）和扩展的正则表达式（ERE），BRE中支持的是<code>^ $ . [ ] *</code>，ERE在此基础上扩展了<code>( ) &#123; &#125; ? + |</code>，使用的时候需要增加<code>-E</code>选项表示执行ERE标准。</p>
-<table>
-<thead>
-<tr class="header">
-<th>元字符</th>
-<th>解释</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>.</td>
-<td>任何字符</td>
-<td>可以用来匹配在某个位置的任意<strong>一个</strong>字符。</td>
-</tr>
-<tr class="even">
-<td>^ / $</td>
-<td>锚点</td>
-<td>该表达式在文本开头/末尾存在才会被匹配。“^$”组合可以匹配空行。</td>
-</tr>
-<tr class="odd">
-<td>[ ]</td>
-<td>指定字符集</td>
-<td>从中括号内的指定字符集匹配<strong>一个</strong>字符。元字符在被放置到中括号中后将会失去本身的特殊含义，除了“^”和“-”。</td>
-</tr>
-<tr class="even">
-<td>^</td>
-<td>否定</td>
-<td>在<strong>中括号内第一个字符</strong>时表示否定，匹配中括号内字符集以外的字符。</td>
-</tr>
-<tr class="odd">
-<td>-</td>
-<td>字符范围</td>
-<td>例如[a-z]，[B-Y]，[4-9a-h]等。</td>
-</tr>
-<tr class="even">
-<td>|</td>
-<td>交替</td>
-<td>允许从一系列表达式之间选择匹配项。</td>
-</tr>
-<tr class="odd">
-<td>？</td>
-<td></td>
-<td>匹配零个或一个元素。</td>
-</tr>
-<tr class="even">
-<td>*</td>
-<td></td>
-<td>匹配零个或多个元素。</td>
-</tr>
-<tr class="odd">
-<td>+</td>
-<td></td>
-<td>匹配一个或多个元素。</td>
-</tr>
-<tr class="even">
-<td>{ }</td>
-<td></td>
-<td>匹配特定个数的元素，n：元素只出现n次，n,m：元素出现[n,m]次，n,：元素出现不少于n次，,m：元素出现不多于m次。</td>
-</tr>
-</tbody>
-</table>
-<p>补充一些字符集：[:word:]=[:alnum:]+[_]；[:alnum:]=[:alpha:]+[:digit:]；[:blank:]=空格+tab；[:cntrl:]=0-31和127字符；[:lower:]；[:upper:]；[:punct:]=标点符号；[:print:]=[:graph:]+[:space:]；[:xdigit:]=[0-9A-Fa-f]</p>
-<p>其他的基本都可以被视为<strong>原义字符</strong>。元字符也可以被<strong>反斜杠</strong>转义为原义字符。</p>
-<blockquote>
-<p>所以之前在shell执行的时候，存在的一些元字符等特殊符号会被展开，这时候就可以使用引号阻止其展开。</p>
-</blockquote>
-<h2 id="应用正则表达式">应用正则表达式</h2>
-<h3 id="使用grep匹配">使用grep匹配</h3>
-<p>首先使用下列语句生成一个测试的搜索匹配列表，多尝试几次，生成不符合“(nnn) nnn-nnnn”格式的电话号码，以便用来匹配。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for i in &#123;1..10&#125;; do echo &quot;($&#123;RANDOM:0:3&#125;) $&#123;RANDOM:0:3&#125;-$&#123;RANDOM:0:4&#125;&quot; &gt;&gt;phonelist.txt; done</span><br></pre></td></tr></table></figure>
-<p>再使用cat和管道连接grep，因为使用了扩展的正则表达式，所以需要使用-E选项：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat phonelist.txt | grep -Ev &#x27;^\([0-9]&#123;3&#125;\) [0-9]&#123;3&#125;-[0-9]&#123;4&#125;&#x27;</span><br></pre></td></tr></table></figure>
-<h3 id="使用find查找">使用find查找</h3>
-<p>查找某个路径下的文件名是否符合满足正则表达式要求，例如查找当前路径下包含空格等不符合规范的路径名。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find . -regex &#x27;.*[^-\_./0-9a-zA-Z].*&#x27;</span><br></pre></td></tr></table></figure>
-<h3 id="利用locate查找文件">利用locate查找文件</h3>
-<p>locate支持基本的（--regexp）和扩展的（regex）正则表达式。例如搜索包含指定字符串的路径名。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">locate --regex &#x27;bin/(bz|gz|zip)&#x27;</span><br></pre></td></tr></table></figure>
-<h3 id="在lessvim中使用正则表达式">在less/vim中使用正则表达式</h3>
-<p>less是使用“<code>/</code>”命令输入正则表达式进行匹配</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">less phonelist.txt</span><br><span class="line">/^\([0-9]&#123;3&#125;\) [0-9]&#123;3&#125;-[0-9]&#123;4&#125;$</span><br></pre></td></tr></table></figure>
-<p>vim也类似，不过vim中使用扩展表达式会被认作为文本字符，需要使用反斜杠进行转义为元字符。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/([0-9]\&#123;3\&#125;) [0-9]\&#123;3\&#125;-[0-9]\&#123;4\&#125;</span><br></pre></td></tr></table></figure>
-<p>默认是没有高亮显示的，想要高亮显示的话可以在命令模式下输入<code>:set hlsearch</code>转化为高亮模式。</p>
-<h2 id="个人收获">个人收获</h2>
-<p>本章主要学习的是正则表达式，了解到不同系统和语言会具有不完全相同的正则表达式，主要是用于之后的查找和筛选，以及在处理数据的时候能够利用规则直接提取相关信息，比较重要。</p>
-]]></content>
-      <categories>
-        <category>操作系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>正则表达式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>快乐Linux学习（四）</title>
     <url>/2021/01/28/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
@@ -2040,159 +2040,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </categories>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>快乐Linux学习（零）</title>
-    <url>/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%9B%B6%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
-<p>学习中途发现很有意思的东西，就分享在开篇了。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="linux-可以激发我们的想象">Linux 可以激发我们的想象</h2>
-<blockquote>
-<p>当我被要求解释 Windows 与 Linux 之间的差异时，我经常拿玩具来作比喻。 Windows 就像一个游戏机。你去商店，买了一个包装在盒子里面的全新的游戏 机。你把它带回家，打开盒子，开始玩游戏。精美的画面，动人的声音。玩了一段 时间之后，你厌倦了它自带的游戏，所以你返回商店，又买了另一个游戏机。这个 过程反复重复。最后，你玩腻了游戏机自带的游戏，你回到商店，告诉售货员，“我 想要一个这样的游戏！”但售货员告诉你没有这样的游戏存在，因为它没有“市场 需求”。然后你说，“但是我只需要修改一下这个游戏！“，售货员又告诉你不能修改 它。所有游戏都被封装在它们的存储器中。到头来，你发现你的玩具只局限于别人 为你规定好的游戏。</p>
-<p>另一方面，Linux 就像一个全世界上最大的建造模型。你打开它，发现它只是一 个巨大的部件集合。有许多钢支柱、螺钉、螺母、齿轮、滑轮、发动机和一些怎样 来建造它的说明书。然后你开始摆弄它。你建造了一个又一个样板模型。过了一会 儿，你发现你要建造自己的模型。你不必返回商店，因为你已经拥有了你需要的一 切。建造模型以你构想的形状为模板，搭建你想要的模型。 当然，选择哪一个玩具，是你的事情，那么你觉得哪个玩具更令人满意呢？</p>
-</blockquote>
-<p>Windows是经典模式，Linux是自定义模式。</p>
-<h2 id="个人收获">个人收获</h2>
-<p>个人喜好而已，“Just enjoy yourself”。</p>
-]]></content>
-      <categories>
-        <category>操作系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数组解题技巧1——前缀和数组</title>
-    <url>/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是关于数组的前缀和技巧，在快速计算一个数组区间内的元素之和时使用</p>
-<p>涉及 leetcode 的 <a href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>、<a href="https://leetcode-cn.com/problems/range-sum-query-2d-immutable">304. 二维区域和检索 - 矩阵不可变</a>和<a href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="区域检索">区域检索</h2>
-<h3 id="题目1">题目1</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>：给定一个整数数组 nums，求出数组从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点。</p>
-<p>示例1：</p>
-<blockquote>
-<p>输入：[ [ [-2, 0, 3, -5, 2, -1] ], [0, 2], [2, 5], [0, 5] ]</p>
-<p>输出：[null, 1, -1, -3]</p>
-</blockquote>
-<h3 id="理解一下1">理解一下1</h3>
-<p>题目的大概意思就是：计算数组内某个区域的和。</p>
-<p>代码要求有两点，一个是写出构造函数，一个是写出计算区域和的函数。</p>
-<p>基本的思路是：</p>
-<ol type="1">
-<li>构造函数直接将数组传递过去就行；</li>
-<li>在<code>sumRange</code>中使用循环计算<code>left</code>到<code>right</code>的和。</li>
-</ol>
-<p>很简单的嘛，OK确实，但是提交了发现超越的人数不多呀，这怎么行！</p>
-<p>仔细思考发现 OJ 测试的时候构造函数仅仅调用<strong>一次</strong>，而计算区域和函数调用了<strong>多次</strong>，所以我们需要优化<code>sumRange</code>函数。</p>
-<p>于是考虑使用前缀和，使得构造函数麻烦一些，但是使得<code>sumRange</code>函数<strong>简单</strong>一些：</p>
-<ol type="1">
-<li>使用构造函数时，直接在传递数组时，计算前<code>n</code>项的前缀累加和，时间复杂度为<code>O(n)</code>；</li>
-<li>然后<code>sumRange</code>函数计算<code>left</code>到<code>right</code>的区域和时，只需要使用第<code>right</code>项的前缀和减去第<code>left-1</code>项前缀和即可，<code>sumRange</code>的时间复杂度就是<code>O(1)</code>。</li>
-</ol>
-<h3 id="解题1">解题1</h3>
-<p>先看解法一：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; nums;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;nums = nums;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = left; i &lt;= right; i++)&#123;</span><br><span class="line">            sum += <span class="keyword">this</span>-&gt;nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>再看使用前缀和的解法：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; presums;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="comment">// 构造时为 n 的复杂度</span></span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">this</span>-&gt;presums.<span class="built_in">resize</span>(n+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n+<span class="number">1</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;presums[i] = <span class="keyword">this</span>-&gt;presums[i<span class="number">-1</span>] + nums[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 调用时仅需要直接索引相减即可</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>-&gt;presums[right+<span class="number">1</span>] - <span class="keyword">this</span>-&gt;presums[left];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>关于<a href="https://leetcode-cn.com/problems/range-sum-query-2d-immutable">304. 二维区域和检索 - 矩阵不可变</a>这题，只不过是从一维变化成了二维，大家举一反三即可。</p>
-<p>需要注意的仅仅是边界的细节问题。</p>
-<h2 id="和为-k-的子数组">和为 K 的子数组</h2>
-<h3 id="题目2">题目2</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>：给你一个整数数组 nums 和一个整数 k ，请你统计并返回该数组中和为 k 的连续子数组的个数。</p>
-<p>示例1：</p>
-<blockquote>
-<p>输入：nums = [1,1,1], k = 2</p>
-<p>输出：2</p>
-</blockquote>
-<p>示例2：</p>
-<blockquote>
-<p>输入：nums = [1,2,3], k = 3</p>
-<p>输出：2</p>
-</blockquote>
-<h3 id="理解一下2">理解一下2</h3>
-<p>题目的大概意思就是：计算出，给定数组中有多少个连续子数组的和为 K，也就是给定数组中有多少个区间和为K。</p>
-<p>最基本的思路就是穷举嘛，嵌套循环，计算所有区间的数组之和，判断其是否为 K。不过很遗憾，时间复杂度<span class="math inline">\(O(n^2)\)</span>在10000大小的测试案例中超时了。</p>
-<p>再仔细看看区域和为K，关于区域和那我们很自然的想到使用前缀和数组试试看了：</p>
-<ol type="1">
-<li>计算前缀和数组；</li>
-<li>我们要计算区域和，就得使用前缀和数组的端点值相减，并判断是否为K，如此一来时间复杂度又回到了<span class="math inline">\(O(n^2)\)</span>；</li>
-<li>换个思路，验证<code>i</code>处的前缀和<code>sum_i</code>减去<code>K</code>的差值<code>sum_j</code>，判断<code>sum_j</code>是否已经<strong>存在</strong>已知的前缀和数组中，若存在则统计<strong>出现次数</strong>即可！</li>
-<li><code>sum_j</code>出现的次数就是i为右端点的区间可以出现的次数，随着不断计算前缀和数组和计数，那么时间复杂度仅仅是计算前缀和的时间O(n)。</li>
-</ol>
-<h3 id="题解2">题解2</h3>
-<p>判断存在计数可以使用<strong>hash表</strong>来实现，快速高效。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">subarraySum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 使用hash表来记录前缀和出现的次数</span></span><br><span class="line">    unordered_map&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; presum;</span><br><span class="line">    <span class="comment">// 初始记录为 0，因为存在一个数等于 k 的情况</span></span><br><span class="line">    presum[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// count 记录个数，sum_i 计算前缀和</span></span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>, sum_i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num: nums)&#123;</span><br><span class="line">        sum_i += num;</span><br><span class="line">        <span class="keyword">int</span> sum_j = sum_i - k;</span><br><span class="line">        <span class="comment">// 相差为 k 的前缀和若存在，则区域相加为 k</span></span><br><span class="line">        <span class="keyword">if</span>(presum.<span class="built_in">find</span>(sum_j) != presum.<span class="built_in">end</span>())&#123;</span><br><span class="line">            <span class="comment">// 加上此前出现 sum_j 的次数</span></span><br><span class="line">            count += presum[sum_j];</span><br><span class="line">        &#125;</span><br><span class="line">        presum[sum_i]++; <span class="comment">// 出现次数加 1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="个人收获">个人收获</h2>
-<p>前缀和的计算方法主要适用于处理数组<strong>区域之和</strong>的问题，并且计算区域和<strong>频率较高</strong>时使用，能够达到较好的效果。</p>
-]]></content>
-      <categories>
-        <category>数据结构算法</category>
-      </categories>
-      <tags>
-        <tag>leetcode题解</tag>
-        <tag>c++</tag>
-        <tag>数组</tag>
-        <tag>前缀和</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数组解题技巧2——差分数组</title>
-    <url>/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是关于数组的差分数组技巧，在对元素数组区间进行加减计算时使用。</p>
-<p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/range-addition">370. 区间加法</a>、<a href="https://leetcode-cn.com/problems/corporate-flight-bookings">1109. 航班预订统计</a>和<a href="https://leetcode-cn.com/problems/car-pooling">1094. 拼车</a>。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="合并两个有序链表">合并两个有序链表</h2>
-<h3 id="题目1">题目1</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/range-addition">370. 区间加法</a>：假设你有一个长度为 n 的数组，初始情况下所有的数字均为 0，你将会被给出 k 个更新的操作。其中，每个操作会被表示为一个三元组：[startIndex, endIndex, inc]，你需要将子数组 A[startIndex ... endIndex]（包括 startIndex 和 endIndex）增加 inc。</p>
-<p>请你返回 k 次操作后的数组。</p>
-<p>示例1：</p>
-<blockquote>
-<p>输入：length = 5, updates = [ [1,3,2],[2,4,3],[0,2,-2] ]</p>
-<p>输出：[-2,0,3,5,3]</p>
-</blockquote>
-<h3 id="理解一下1">理解一下1</h3>
-<p>题目的大概意思就是：</p>
-<ol type="1">
-<li>初始数组为元素均为 0；</li>
-<li>三元组表示在区间<code>startIndex</code>到<code>endIndex</code>内的元素都加上<code>inc</code>。</li>
-</ol>
-<p>最直白的思路就是，将每个三元组表示的区间一个一个加上值，很快就能实现，但是复杂度太高会超时，那么怎么办呢？</p>
-<p>这里引入<strong>差分数组</strong>的概念：</p>
-<p>差分数组就是在原长度为<code>n</code>的<code>nums</code>数组上，构建一个长度为<code>n+1</code>的数组<code>diff</code>，<code>diff[i] = nums[i] - nums[i-1]</code>，也就是原数组相邻两项的之差。</p>
-<p>当差分数组计算完成之后再通过<code>nums[i] = nums[i-1] + diff[i]</code>即可还原得到相应的数组。</p>
-<blockquote>
-<p>对差分数组的第<code>i</code>项进行计算，都会同等影响到之后的剩余项，这就是差分数组的<strong>性质</strong>！</p>
-</blockquote>
-<p>因此，我们可以在差分数组上对第<code>first</code>项加上<code>seats</code>，使得后续的每一项都会增加<code>seats</code>，但是我们只想增加到第<code>last</code>项，所以在第<code>last+1</code>项之后再减去<code>seats</code>，就可以抵消该影响啦！</p>
-<p>ok，那我们就来看代码吧！</p>
-<h3 id="解题1">解题1</h3>
-<p>构建差分数组的时候，使得差分数组的长度为<code>n+1</code>可以使得不用判断数组越界的问题，这个和链表增加<strong>头结点</strong>有异曲同工之妙。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">getModifiedArray</span><span class="params">(<span class="keyword">int</span> length, vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; updates)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 实际上计算的nums是差分数组，只不过这里开始都为0</span></span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">nums</span><span class="params">(length+<span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; updates.<span class="built_in">size</span>(); i++)&#123;</span><br><span class="line">        nums[updates[i][<span class="number">0</span>]] += updates[i][<span class="number">2</span>];</span><br><span class="line">        nums[updates[i][<span class="number">1</span>]+<span class="number">1</span>] -= updates[i][<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 差分数组还原</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; length; i++)&#123;</span><br><span class="line">        nums[i] += nums[i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    nums.<span class="built_in">pop_back</span>();</span><br><span class="line">    <span class="keyword">return</span> nums;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>关于<a href="https://leetcode-cn.com/problems/corporate-flight-bookings">1109. 航班预订统计</a>和<a href="https://leetcode-cn.com/problems/car-pooling">1094. 拼车</a>这两个问题实际上就是将该简单问题应用到实际场景中了，学会了这个差分数组的思想就很容易了，只需要注意端点细节处理即可。</p>
-<h2 id="个人收获">个人收获</h2>
-<ol type="1">
-<li><p>前缀和数组用于计算区域和问题，差分数组用于区域元素同时加减问题，而且使用频率较高时使用效果较好。</p></li>
-<li><p>注意将数组长度扩大一个，这个在计算相邻项的时候就无需判断在数组最后是否会出现数组越界的问题，与链表中增加头结点的效果类似。</p></li>
-</ol>
-]]></content>
-      <categories>
-        <category>数据结构算法</category>
-      </categories>
-      <tags>
-        <tag>leetcode题解</tag>
-        <tag>c++</tag>
-        <tag>数组</tag>
-        <tag>差分数组</tag>
       </tags>
   </entry>
   <entry>
@@ -2280,73 +2127,71 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
-    <title>数组解题技巧3——二分查找</title>
-    <url>/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</url>
+    <title>数组解题技巧1——前缀和数组</title>
+    <url>/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/</url>
     <content><![CDATA[<blockquote>
-<p>本文是关于问题有序数组的二分查找问题，1.查找一个元素；2.查找区间全元素。</p>
-<p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>和<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>。</p>
+<p>本文是关于数组的前缀和技巧，在快速计算一个数组区间内的元素之和时使用</p>
+<p>涉及 leetcode 的 <a href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>、<a href="https://leetcode-cn.com/problems/range-sum-query-2d-immutable">304. 二维区域和检索 - 矩阵不可变</a>和<a href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>。</p>
 </blockquote>
 <span id="more"></span>
-<h2 id="二分查找">二分查找</h2>
+<h2 id="区域检索">区域检索</h2>
 <h3 id="题目1">题目1</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>：给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>：给定一个整数数组 nums，求出数组从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点。</p>
 <p>示例1：</p>
 <blockquote>
-<p>输入：nums = [-1,0,3,5,9,12], target = 9</p>
-<p>输出：4</p>
-</blockquote>
-<p>示例2：</p>
-<blockquote>
-<p>输入：nums = [-1,0,3,5,9,12], target = 2</p>
-<p>输出：-1</p>
+<p>输入：[ [ [-2, 0, 3, -5, 2, -1] ], [0, 2], [2, 5], [0, 5] ]</p>
+<p>输出：[null, 1, -1, -3]</p>
 </blockquote>
 <h3 id="理解一下1">理解一下1</h3>
-<p>题目的大概意思就是：在有序数组<code>nums</code>中找出与<code>target</code>相同的元素的索引位置。</p>
-<p>直接遍历的时间复杂度是O(n)，而这里是<strong>有序数组</strong>，那么就可以使用二分查找，由此时间复杂度为O(log n)。</p>
+<p>题目的大概意思就是：计算数组内某个区域的和。</p>
+<p>代码要求有两点，一个是写出构造函数，一个是写出计算区域和的函数。</p>
 <p>基本的思路是：</p>
 <ol type="1">
-<li>约束查找区间左索引指针<code>left</code>和右索引指针<code>right</code>，获得中间索引指针<code>mid</code>；</li>
-<li>判断<code>mid</code>指向的元素与<code>target</code>的大小：
+<li>构造函数直接将数组传递过去就行；</li>
+<li>在<code>sumRange</code>中使用循环计算<code>left</code>到<code>right</code>的和。</li>
+</ol>
+<p>很简单的嘛，OK确实，但是提交了发现超越的人数不多呀，这怎么行！</p>
+<p>仔细思考发现 OJ 测试的时候构造函数仅仅调用<strong>一次</strong>，而计算区域和函数调用了<strong>多次</strong>，所以我们需要优化<code>sumRange</code>函数。</p>
+<p>于是考虑使用前缀和，使得构造函数麻烦一些，但是使得<code>sumRange</code>函数<strong>简单</strong>一些：</p>
 <ol type="1">
-<li>等于<code>target</code>：返回该<code>mid</code>索引；</li>
-<li>大于<code>target</code>：说明在左侧，<code>right</code>向左收缩；</li>
-<li>小于<code>target</code>：说明在右侧，<code>left</code>向右收缩；</li>
-</ol></li>
+<li>使用构造函数时，直接在传递数组时，计算前<code>n</code>项的前缀累加和，时间复杂度为<code>O(n)</code>；</li>
+<li>然后<code>sumRange</code>函数计算<code>left</code>到<code>right</code>的区域和时，只需要使用第<code>right</code>项的前缀和减去第<code>left-1</code>项前缀和即可，<code>sumRange</code>的时间复杂度就是<code>O(1)</code>。</li>
 </ol>
 <h3 id="解题1">解题1</h3>
-<p>需要注意的是right和left是<strong>闭区间</strong>，并且while循环中使用的是<span class="math inline">\(\leq\)</span>。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>; <span class="comment">// 右侧需要减一</span></span><br><span class="line">    <span class="comment">// 计算 mid 时需要防止太大溢出</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid +<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="查找元素区间">查找元素区间</h2>
+<p>先看解法一：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; nums;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;nums = nums;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = left; i &lt;= right; i++)&#123;</span><br><span class="line">            sum += <span class="keyword">this</span>-&gt;nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>再看使用前缀和的解法：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; presums;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="comment">// 构造时为 n 的复杂度</span></span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">this</span>-&gt;presums.<span class="built_in">resize</span>(n+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n+<span class="number">1</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;presums[i] = <span class="keyword">this</span>-&gt;presums[i<span class="number">-1</span>] + nums[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 调用时仅需要直接索引相减即可</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>-&gt;presums[right+<span class="number">1</span>] - <span class="keyword">this</span>-&gt;presums[left];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>关于<a href="https://leetcode-cn.com/problems/range-sum-query-2d-immutable">304. 二维区域和检索 - 矩阵不可变</a>这题，只不过是从一维变化成了二维，大家举一反三即可。</p>
+<p>需要注意的仅仅是边界的细节问题。</p>
+<h2 id="和为-k-的子数组">和为 K 的子数组</h2>
 <h3 id="题目2">题目2</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>：给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。</p>
-<p>如果数组中不存在目标值 target，返回[-1, -1]。</p>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>：给你一个整数数组 nums 和一个整数 k ，请你统计并返回该数组中和为 k 的连续子数组的个数。</p>
 <p>示例1：</p>
 <blockquote>
-<p>输入：nums = [5,7,7,8,8,10], target = 8</p>
-<p>输出：[3,4]</p>
+<p>输入：nums = [1,1,1], k = 2</p>
+<p>输出：2</p>
 </blockquote>
 <p>示例2：</p>
 <blockquote>
-<p>输入：nums = [5,7,7,8,8,10], target = 6</p>
-<p>输出：[-1,-1]</p>
+<p>输入：nums = [1,2,3], k = 3</p>
+<p>输出：2</p>
 </blockquote>
 <h3 id="理解一下2">理解一下2</h3>
-<p>这道题目是想要寻找等于target的所有元素，由于是<strong>有序数组</strong>，所以由一个<strong>区间</strong>表示。主要的问题在于如何寻找到区间的<strong>左右边界</strong>。</p>
-<p>这里有两个思路，都是利用<strong>二分查找</strong>。</p>
-<h3 id="解题2.1">解题2.1</h3>
+<p>题目的大概意思就是：计算出，给定数组中有多少个连续子数组的和为 K，也就是给定数组中有多少个区间和为K。</p>
+<p>最基本的思路就是穷举嘛，嵌套循环，计算所有区间的数组之和，判断其是否为 K。不过很遗憾，时间复杂度<span class="math inline">\(O(n^2)\)</span>在10000大小的测试案例中超时了。</p>
+<p>再仔细看看区域和为K，关于区域和那我们很自然的想到使用前缀和数组试试看了：</p>
 <ol type="1">
-<li>按照普通的二分查找，找到寻找一个等于target的元素位置；</li>
-<li>若未找到则flag置为false；</li>
-<li>若找到了，那么向左右依次寻找临界点即可。</li>
+<li>计算前缀和数组；</li>
+<li>我们要计算区域和，就得使用前缀和数组的端点值相减，并判断是否为K，如此一来时间复杂度又回到了<span class="math inline">\(O(n^2)\)</span>；</li>
+<li>换个思路，验证<code>i</code>处的前缀和<code>sum_i</code>减去<code>K</code>的差值<code>sum_j</code>，判断<code>sum_j</code>是否已经<strong>存在</strong>已知的前缀和数组中，若存在则统计<strong>出现次数</strong>即可！</li>
+<li><code>sum_j</code>出现的次数就是i为右端点的区间可以出现的次数，随着不断计算前缀和数组和计数，那么时间复杂度仅仅是计算前缀和的时间O(n)。</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;  <span class="comment">// 此处判断元素相等则跳出循环</span></span><br><span class="line">            flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">        left = mid;</span><br><span class="line">        right = mid;</span><br><span class="line">        <span class="keyword">while</span>(--left &gt;= <span class="number">0</span> &amp;&amp; nums[left] == target);</span><br><span class="line">        <span class="keyword">while</span>(++right &lt; nums.<span class="built_in">size</span>() &amp;&amp; nums[right] == target);</span><br><span class="line">        <span class="keyword">return</span> &#123;++left, --right&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="题解2.2">题解2.2</h3>
-<p>与方法一不同，直接去寻找左右端点。</p>
-<p>需要修改的地方仅仅是在<strong>二分查找相等</strong>时和<strong>收缩边界</strong>的情况<strong>统一</strong>起来，如下：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="built_in">leftRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> right = <span class="built_in">rightRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">return</span> &#123;left, right&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">leftRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;  <span class="comment">// 右侧向左侧收缩，找到左端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(left &gt;= nums.<span class="built_in">size</span>() || nums[left] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rightRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;  <span class="comment">// 左侧向右侧收缩，找到右端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(right &lt; <span class="number">0</span> || nums[right] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="题解2">题解2</h3>
+<p>判断存在计数可以使用<strong>hash表</strong>来实现，快速高效。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">subarraySum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 使用hash表来记录前缀和出现的次数</span></span><br><span class="line">    unordered_map&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; presum;</span><br><span class="line">    <span class="comment">// 初始记录为 0，因为存在一个数等于 k 的情况</span></span><br><span class="line">    presum[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// count 记录个数，sum_i 计算前缀和</span></span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>, sum_i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num: nums)&#123;</span><br><span class="line">        sum_i += num;</span><br><span class="line">        <span class="keyword">int</span> sum_j = sum_i - k;</span><br><span class="line">        <span class="comment">// 相差为 k 的前缀和若存在，则区域相加为 k</span></span><br><span class="line">        <span class="keyword">if</span>(presum.<span class="built_in">find</span>(sum_j) != presum.<span class="built_in">end</span>())&#123;</span><br><span class="line">            <span class="comment">// 加上此前出现 sum_j 的次数</span></span><br><span class="line">            count += presum[sum_j];</span><br><span class="line">        &#125;</span><br><span class="line">        presum[sum_i]++; <span class="comment">// 出现次数加 1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="个人收获">个人收获</h2>
-<p>这里使用的二分查找比较简单，类似于一棵树，主要就是收缩区间和循环终止等一些细节问题。</p>
-<p>第二个关于区间问题的方法，在leetcode上虽然第一个方法的效率较高，但是第二个方法的模块化和层次化要更好，更适合进行改编改写。</p>
+<p>前缀和的计算方法主要适用于处理数组<strong>区域之和</strong>的问题，并且计算区域和<strong>频率较高</strong>时使用，能够达到较好的效果。</p>
 ]]></content>
       <categories>
         <category>数据结构算法</category>
@@ -2354,242 +2199,84 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       <tags>
         <tag>leetcode题解</tag>
         <tag>c++</tag>
-        <tag>双指针</tag>
         <tag>数组</tag>
-        <tag>二分查找</tag>
+        <tag>前缀和</tag>
       </tags>
   </entry>
   <entry>
-    <title>机器学习西瓜书——第02章模型评估和选择</title>
-    <url>/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/</url>
+    <title>快乐Linux学习（零）</title>
+    <url>/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E9%9B%B6%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
-<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择.</p>
-<p>主要的内容有: 经验误差与过拟合、模型的评估方法(留出法/交叉验证/自助法)、性能度量(查准率/查全率/F1/ROC曲线等), 部分内容待更新.</p>
+<p>本文是快乐学习Linux的第零篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>学习中途发现很有意思的东西，就分享在开篇了。</p>
 </blockquote>
 <span id="more"></span>
-<h2 id="经验误差与过拟合">2.1 经验误差与过拟合</h2>
-<h3 id="误差">误差</h3>
-<p><strong>错误率</strong>: 分类错误的样本数 <span class="math inline">\(a\)</span> 占样本总数 <span class="math inline">\(m\)</span> 的比例称为"错误率"(error rate).</p>
-<p><span class="math display">\[
-error rate = \frac{a}{m}
-\]</span></p>
-<p>与之相对的是<strong>精度</strong>(accuracy):</p>
-<p><span class="math display">\[
-accuracy = 1 - \frac{a}{m}
-\]</span></p>
-<p>学习器在训练集上的误差称为<strong>训练误差</strong>(training error)或<strong>经验误差</strong>(empirical error); 而在新样本上的误差称为<strong>泛化误差</strong>(generalization error).</p>
+<h2 id="linux-可以激发我们的想象">Linux 可以激发我们的想象</h2>
 <blockquote>
-<p>我们最『想』得到『泛化误差』尽可能的小, 但是我们在训练的时候并不知道新样本, 所以『实际上』能做的是使得『经验误差』尽可能的小.</p>
+<p>当我被要求解释 Windows 与 Linux 之间的差异时，我经常拿玩具来作比喻。 Windows 就像一个游戏机。你去商店，买了一个包装在盒子里面的全新的游戏 机。你把它带回家，打开盒子，开始玩游戏。精美的画面，动人的声音。玩了一段 时间之后，你厌倦了它自带的游戏，所以你返回商店，又买了另一个游戏机。这个 过程反复重复。最后，你玩腻了游戏机自带的游戏，你回到商店，告诉售货员，“我 想要一个这样的游戏！”但售货员告诉你没有这样的游戏存在，因为它没有“市场 需求”。然后你说，“但是我只需要修改一下这个游戏！“，售货员又告诉你不能修改 它。所有游戏都被封装在它们的存储器中。到头来，你发现你的玩具只局限于别人 为你规定好的游戏。</p>
+<p>另一方面，Linux 就像一个全世界上最大的建造模型。你打开它，发现它只是一 个巨大的部件集合。有许多钢支柱、螺钉、螺母、齿轮、滑轮、发动机和一些怎样 来建造它的说明书。然后你开始摆弄它。你建造了一个又一个样板模型。过了一会 儿，你发现你要建造自己的模型。你不必返回商店，因为你已经拥有了你需要的一 切。建造模型以你构想的形状为模板，搭建你想要的模型。 当然，选择哪一个玩具，是你的事情，那么你觉得哪个玩具更令人满意呢？</p>
 </blockquote>
-<h3 id="过拟合">过拟合</h3>
-<p>当我们训练模型学习训练样本的时候, 将训练样本学的"太好", 除了学习到数据集的普遍规律, 还将训练数据集的一些自身特点学习到了, 导致泛化性能下降, 这种现象称为<strong>过拟合</strong>(overfitting); 反之就是<strong>欠拟合</strong>(underfitting), 训练样本的普遍规律也没有学会.</p>
-<blockquote>
-<p>简单来说就是: 只会硬板照抄的学生 和 不好好学习的后进生.</p>
-</blockquote>
-<p>欠拟合是学习的不够好, 一般来说比较好解决, 例如在决策树中扩展分支, 在神经网络中增加训练轮数等.</p>
-<p>但是过拟合却是<strong>不可避免的</strong>, 只能做到缓解和减小其风险. 因为机器学习面临的问题是NP难, 但是有效算法是在有限时间内完成的, 不能完成 <span class="math inline">\(NP=P\)</span> 的证明.</p>
-<p>那么, 实际上有各种算法以及各种参数来训练模型, 如何选择? 这就是模型选择; 如何评估模型训练的好坏呢? 这就模型评估.</p>
-<h2 id="评估方法">2.2 评估方法</h2>
-<p>通过实验, 设置测试组对学习器的泛化误差来对模型进行选择. 需要一个测试集(testing set), 在学习器上得到的测试误差(testing error)与泛化误差近似.</p>
-<blockquote>
-<p>保证测试集中的数据尽可能未在训练集中出现.</p>
-</blockquote>
-<p>那么对于一个包含m个样本数据集D, 既要训练, 又要测试, 那么需要合适的划分方法得到训练集和测试集.</p>
-<h3 id="留出法hold-out">留出法(hold-out)</h3>
-<p>留出法<strong>直接</strong>将数据集<strong>划分</strong>为两个互斥的集合, 一个作为训练集S, 一个作为测试集T.</p>
-<p>需要注意的是: 训练集和测试集的划分要尽可能的保持<strong>数据分布一致</strong>, 避免因为数据划分过程引入额外的偏差, 从而对最终的结果产生影响.</p>
-<blockquote>
-<p>例如将男性的数据集作为训练集, 然后去评估女性的数据集得到的泛化误差, 很明显是不合理的. 应尽量保持男女同比例.</p>
-</blockquote>
-<p>一般划分数据的时候保留类别比例, 通常称为"分层采样"(stratified sampling). 虽然按照比例进行划分比较合适, 但是依旧可能会出现一些问题.</p>
-<blockquote>
-<p>例如购物消费数据降序排序, 划分前70%作为训练集,后30%作为测试集. 虽然此时男女比例可能是等比例划分的, 但是消费能力却是截然不同, 所以这种方式显然还欠缺考虑.</p>
-</blockquote>
-<p>所以在使用留出法的时候, 通常使用<strong>若干次随机抽样</strong>的方式进行划分, 然后对这几次的评估数据<strong>取均值</strong>.</p>
-<p>以上是为了更好使用留出法的一些方法, 但是留出法本身有一个<strong>固有缺陷</strong>: 训练集S较大时, 模型可以训练的更接近数据集D的模型, 但测试集T较小, 导致评估结果不够稳定; 若测试集T大了, 那么训练集S训练出的模型可能和数据集D差别较大, 从而降低了评估结果的保真性(fidelity).</p>
-<p>但是也没有完美的解决方法, 一般划2/3~4/5进行训练, 剩余作为测试.</p>
-<h3 id="交叉验证cross-validation">交叉验证(cross validation)</h3>
-<p>先将数据集划分为k个大小相同的互斥子集, 每个子集尽可能保持数据分布的一致性(分层抽样). 每次使用k-1个子集进行训练, 剩下的一个子集作为测试集. 从而获得k次测试结果并取均值. 所以通常也称为<strong>k-折交叉验证</strong>(k-fold cross validation).</p>
-<p>同样的, 为减小样本划分带来的影响, 通常使用p次随机划分, 然后取这p次k折交叉验证结果的均值.</p>
-<blockquote>
-<p>其中, 若令k=m,那么则会得到<strong>留一法</strong>(Leave-One-Out, LOO), 显然由于划分唯一, 不受随机划分的影响. 实际效果和训练集几乎相似, 但是同样有一个固有缺陷: 数据集较大时, 训练时间开销太大.</p>
-<p>所以: <strong>没有免费的午餐</strong>定理同样适用.</p>
-</blockquote>
-<h3 id="自助法bootstrapping">自助法(bootstrapping)</h3>
-<p>对给定的包含m个样本的数据集D, 进行m次<strong>抽样放回</strong>的过程, 得到数据集D'. 这个过程会使得某些样本可能会出现多次, 而某些样本却不会出现. 简单估计始终不被抽样的概率是<span class="math inline">\((1-\frac{1}{m})^m\)</span>, 取极限得到:</p>
-<p><span class="math display">\[
-\lim_{m\rightarrow \infin}{(1-\frac{1}{m})^m} \rightarrowtail \frac{1}{e} \approx 0.368
-\]</span></p>
-<p>将未出现约36.8%的数据作为测试集即可, 那么训练模型的时候使用m个样本作为训练集,测试集依旧有约1/3的数据作为测试.</p>
-<blockquote>
-<p>在数据集较小, 难以有效划分的时候比较有效.</p>
-<p>并能从初始数据集中产生多个不同的训练集, 对于集成学习等方法有很大好处.</p>
-</blockquote>
-<p>但在划分的时候改变了初始数据集的分布, 引入估计偏差, 所以在数据量足够的时候, 留出法和交叉验证更常用.</p>
-<h3 id="调参与最终模型">调参与最终模型</h3>
-<p>大部分的学习算法都需要一些参数进行设定, 参数的配置不同, 学习的模型往往有显著差距, 对参数(parameter)进行设定的过程称为参数调节或调参(parameter tuning).</p>
-<p>参数是在一定范围内进行取值, 并根据一定的步长进行调节. 那么我们最终的参数也只可能在我们划分的<strong>离散值</strong>中, 往往不一定能够达到"最佳", 但这也平衡了开销和性能.</p>
-<p>我们的调参是根据训练集S进行调参的, 最终的模型应该更根据选定的参数在<strong>完整的数据集</strong>中进行测试, 将最终的结果进行提交.</p>
-<blockquote>
-<p>通常将实际中遇到的数据称为测试数据, 而模型评估和选择中使用的数据集称为<strong>验证集</strong>(validation set).</p>
-</blockquote>
-<h2 id="性能度量">2.3 性能度量</h2>
-<p>那么对机器学习训练泛化性能的评估, 就是接下来的性能度量(performance measure). 不同的性能度量得到的评判标准也不同, 所以模型的"好坏"是相对的, 取决于算法和数据, 还取决于模型的任务需求.</p>
-<p>回归任务常用<strong>均方误差</strong>(mean squared error, MSE):</p>
-<p><span class="math display">\[
-E(f; D) = \frac{1}{m} \sum^m_{i=1}{(f(x_i)-y_i)^2}
-\]</span></p>
-<p>其中, <span class="math inline">\(f(x_i)\)</span>是模型对样本<span class="math inline">\(x_i\)</span>的预测, <span class="math inline">\(y_i\)</span>是真实标记.</p>
-<h3 id="查准率查全率与f1">查准率、查全率与F1</h3>
-<p>我们关心的问题有时候不仅仅是错误率或精度.</p>
-<blockquote>
-<p>例如我们不关心有多少比例的瓜判断错误, 而更加关心挑出的西瓜中有多少的比例是好瓜.</p>
-</blockquote>
-<p>此时就引入了查准率(precision)和查全率(recall):</p>
-<ul>
-<li><strong>查准率</strong>: 预测为正例中有多少是真的正例;</li>
-<li><strong>查全率</strong>: 实际为正例的有多少被预测为正例.</li>
-</ul>
-<p>对于二分类问题, 可将结果分为: 真正例(true positive)、假正例(false positive)、真反例(true negative)和假反例(false negative). 由此组成<strong>混淆矩阵</strong>(confusion matrix).</p>
-<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png" class="" title="混淆矩阵.png">
-<p><span class="math display">\[
-查准率P = \frac{TP}{TP+FP}
-\]</span></p>
-<p><span class="math display">\[
-查全率R = \frac{TP}{TP+FN}
-\]</span></p>
-<p>这两个度量往往相互制约, 总是一高一低.</p>
-<p>我们对学习器的预测样例的结果进行排序, 排在前面的样例认为是"最可能"为正例的样本, 按顺序逐个把样本作为正例进行预测, 则每个可计算出当前的查全率和查准率. 以此作为坐标轴可以绘制"P-R曲线".</p>
-<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/P-R%E5%9B%BE.png" class="" title="P-R图.png">
-<p>根据曲线, 我们可以发现A和B曲线<strong>包含</strong>C曲线, 那么可以认为训练得到曲线C的模型相对较差; 而A和B曲线发生了<strong>交叉</strong>, 那么性能的优劣则不好判断.</p>
-<p>引入"平衡点"(Break-Event Point, BEP)的概念, 在『查全率=查准率』处取得平衡点, 那么可以认为 A 优于 B.(挺草率的说)</p>
-<p>更常用的是F1常量:</p>
-<p><span class="math display">\[
-F1 = 2 \times \frac{1}{\frac{1}{P} + \frac{1}{R}} = \frac{2 \times P \times R}{P + R}
-\]</span></p>
-<p>在特定场景, 模型对于查全率和查准率的要求不同, 所以会赋予不同的权重来进行调整, 使得更符合模型的需求.</p>
-<p><span class="math display">\[
-F_\beta = \frac{(1+\beta^2) \times P \times R}{(\beta^2 \times P) + R}
-\]</span></p>
-<h4 id="多分类">多分类</h4>
-<p>以上是针对二分类问题提出了混淆矩阵, 那么对于多分类问题呢?</p>
-<p>一种方法是两两形成混淆矩阵, 先计算得到各自的查全率和查准率, <strong>再将取均值</strong>, 得到"宏查准率"(macro-P)和"宏查全率"(macro-R), 再计算"宏F1"(macro-F1).</p>
-<p>还有一种方法是各个混淆矩阵元素<strong>先取均值</strong>, 得到TP、FP、TN、FN的均值, 然后再基于这些均值计算得到"微查准率"(micro-P)和"微查全率"(micro-R), 再计算"微F1"(micro-F1).</p>
-<h3 id="roc与auc">ROC与AUC</h3>
-<p>很多的学习器是为了产生一个预测实值或概率预测, 然后将该概率预测与一个分类<strong>阈值</strong>(threshold)进行比较, 对测试样本进行排序, 最有可能的正例排在前面, 最不可能的正例排在最后面, 通过阈值将样本分为两部分.</p>
-<p>一般情况下, 我们根据任务需求来采用不同的截断点. 更重视"查准率", 则选择排序靠前的位置进行截断, 更重视"查全率", 则选择排序靠后的位置进行截断. 那么对<strong>排序质量</strong>的好坏直接影响了学习器在不同任务下的<strong>泛化性能</strong>的好坏. ROC曲线就是来研究学习器泛化性能的有力工具.</p>
-<p>『ROC曲线』原理与『P-R曲线』类似, 对学习器的预测样例的结果进行排序, 排在前面的样例认为是"最可能"为正例的样本, 按顺序逐个把样本作为正例进行预测, 则每个可计算出当前的<strong>真正例率</strong>(True Positive Rate, TPR)和<strong>假正例率</strong>(False Positive Rate, FPR):</p>
-<ul>
-<li>真正例率: 实际正例预测为正例的数量占所有实际正例的比例;</li>
-<li>假正例率: 实际反例预测为正例的数量占所有实际反例的比例.</li>
-</ul>
-<p><span class="math display">\[
-TPR = \frac{TP}{TP + FN}
-\]</span></p>
-<p><span class="math display">\[
-FPR = \frac{FP}{TN + FP}
-\]</span></p>
-<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/ROC%E6%9B%B2%E7%BA%BF%E4%B8%8EAUC.png" class="" title="ROC曲线与AUC.png">
-<p>如果要比较不同学习器的优劣, 就看ROC曲面下的<strong>面积AUC</strong>(Area Under ROC Curve).</p>
-<h3 id="代价敏感错误率与代价曲线">代价敏感错误率与代价曲线</h3>
-<p>// todo</p>
-<h2 id="比较检验">2.4 比较检验</h2>
-<p>假设检验</p>
-<p>交叉验证 t 检验</p>
-<p>McNemar 检验</p>
-<p>Friedman 检验与 Nemenyi 后续检验</p>
-<h2 id="偏差与方差">2.5 偏差与方差</h2>
+<p>Windows是经典模式，Linux是自定义模式。</p>
 <h2 id="个人收获">个人收获</h2>
-<p>这一章主要是在讲如何对数据集进行划分, 如何评估模型的性能, 包括我还没完全捋清楚的假设检验部分, 都是在对模型性能的好坏进行评价, 对模型的可行性, 真实性进行分析.</p>
-<p>这些东西正是之后支撑我们来判断一个模型是好是坏, 是否可行的依据. 目前只是大概的了解了概念, 到了实际应用的时候还是要回过头来回顾前两章.</p>
+<p>个人喜好而已，“Just enjoy yourself”。</p>
 ]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>操作系统</category>
       </categories>
       <tags>
-        <tag>西瓜书</tag>
-        <tag>模型评估</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
-    <title>机器学习西瓜书——第01章绪论</title>
-    <url>/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</url>
+    <title>数组解题技巧2——差分数组</title>
+    <url>/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/</url>
     <content><![CDATA[<blockquote>
-<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会.</p>
-<p>主要的内容有: 机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)</p>
+<p>本文是关于数组的差分数组技巧，在对元素数组区间进行加减计算时使用。</p>
+<p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/range-addition">370. 区间加法</a>、<a href="https://leetcode-cn.com/problems/corporate-flight-bookings">1109. 航班预订统计</a>和<a href="https://leetcode-cn.com/problems/car-pooling">1094. 拼车</a>。</p>
 </blockquote>
 <span id="more"></span>
-<h2 id="引言">1.1 引言</h2>
-<p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p>
+<h2 id="合并两个有序链表">合并两个有序链表</h2>
+<h3 id="题目1">题目1</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/range-addition">370. 区间加法</a>：假设你有一个长度为 n 的数组，初始情况下所有的数字均为 0，你将会被给出 k 个更新的操作。其中，每个操作会被表示为一个三元组：[startIndex, endIndex, inc]，你需要将子数组 A[startIndex ... endIndex]（包括 startIndex 和 endIndex）增加 inc。</p>
+<p>请你返回 k 次操作后的数组。</p>
+<p>示例1：</p>
 <blockquote>
-<p>所谓"经验"就是"数据";</p>
-<p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p>
+<p>输入：length = 5, updates = [ [1,3,2],[2,4,3],[0,2,-2] ]</p>
+<p>输出：[-2,0,3,5,3]</p>
 </blockquote>
-<h2 id="基本术语">1.2 基本术语</h2>
-<h3 id="数据部分">数据部分</h3>
-<ul>
-<li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li>
-<li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(sample);</p></li>
-<li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li>
-<li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute value). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (sample space) 或"输入空间".</p>
+<h3 id="理解一下1">理解一下1</h3>
+<p>题目的大概意思就是：</p>
+<ol type="1">
+<li>初始数组为元素均为 0；</li>
+<li>三元组表示在区间<code>startIndex</code>到<code>endIndex</code>内的元素都加上<code>inc</code>。</li>
+</ol>
+<p>最直白的思路就是，将每个三元组表示的区间一个一个加上值，很快就能实现，但是复杂度太高会超时，那么怎么办呢？</p>
+<p>这里引入<strong>差分数组</strong>的概念：</p>
+<p>差分数组就是在原长度为<code>n</code>的<code>nums</code>数组上，构建一个长度为<code>n+1</code>的数组<code>diff</code>，<code>diff[i] = nums[i] - nums[i-1]</code>，也就是原数组相邻两项的之差。</p>
+<p>当差分数组计算完成之后再通过<code>nums[i] = nums[i-1] + diff[i]</code>即可还原得到相应的数组。</p>
 <blockquote>
-<p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p>
-</blockquote></li>
-</ul>
-<h3 id="学习过程">学习过程</h3>
-<ul>
-<li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li>
-<li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training sample), 训练样本组成的集合称为"训练集"(training set);</p>
-<blockquote>
-<p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p>
-</blockquote></li>
-<li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li>
-<li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li>
-</ul>
-<h3 id="标记部分">标记部分</h3>
-<ul>
-<li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li>
-<li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li>
-</ul>
-<h3 id="学习任务">学习任务</h3>
-<ul>
-<li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li>
-<li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li>
-<li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li>
-<li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li>
-</ul>
-<h3 id="模型目标">模型目标</h3>
-<ul>
-<li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li>
-<li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li>
-<li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li>
-<li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li>
-<li>训练样本越多, 越有可能获得强泛化能力的模型.</li>
-</ul>
-<h2 id="假设空间">1.3 假设空间</h2>
-<p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p>
-<ul>
-<li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li>
-<li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li>
-</ul>
-<p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p>
-<blockquote>
-<p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p>
+<p>对差分数组的第<code>i</code>项进行计算，都会同等影响到之后的剩余项，这就是差分数组的<strong>性质</strong>！</p>
 </blockquote>
-<p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p>
-<p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 所以实际上存在很多的假设空间，但仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p>
-<h2 id="归纳偏好">1.4 归纳偏好</h2>
-<p>// todo</p>
+<p>因此，我们可以在差分数组上对第<code>first</code>项加上<code>seats</code>，使得后续的每一项都会增加<code>seats</code>，但是我们只想增加到第<code>last</code>项，所以在第<code>last+1</code>项之后再减去<code>seats</code>，就可以抵消该影响啦！</p>
+<p>ok，那我们就来看代码吧！</p>
+<h3 id="解题1">解题1</h3>
+<p>构建差分数组的时候，使得差分数组的长度为<code>n+1</code>可以使得不用判断数组越界的问题，这个和链表增加<strong>头结点</strong>有异曲同工之妙。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">getModifiedArray</span><span class="params">(<span class="keyword">int</span> length, vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; updates)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 实际上计算的nums是差分数组，只不过这里开始都为0</span></span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">nums</span><span class="params">(length+<span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; updates.<span class="built_in">size</span>(); i++)&#123;</span><br><span class="line">        nums[updates[i][<span class="number">0</span>]] += updates[i][<span class="number">2</span>];</span><br><span class="line">        nums[updates[i][<span class="number">1</span>]+<span class="number">1</span>] -= updates[i][<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 差分数组还原</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; length; i++)&#123;</span><br><span class="line">        nums[i] += nums[i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    nums.<span class="built_in">pop_back</span>();</span><br><span class="line">    <span class="keyword">return</span> nums;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于<a href="https://leetcode-cn.com/problems/corporate-flight-bookings">1109. 航班预订统计</a>和<a href="https://leetcode-cn.com/problems/car-pooling">1094. 拼车</a>这两个问题实际上就是将该简单问题应用到实际场景中了，学会了这个差分数组的思想就很容易了，只需要注意端点细节处理即可。</p>
 <h2 id="个人收获">个人收获</h2>
-<p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p>
-<p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>
+<ol type="1">
+<li><p>前缀和数组用于计算区域和问题，差分数组用于区域元素同时加减问题，而且使用频率较高时使用效果较好。</p></li>
+<li><p>注意将数组长度扩大一个，这个在计算相邻项的时候就无需判断在数组最后是否会出现数组越界的问题，与链表中增加头结点的效果类似。</p></li>
+</ol>
 ]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>数据结构算法</category>
       </categories>
       <tags>
-        <tag>西瓜书</tag>
-        <tag>名词解释</tag>
+        <tag>leetcode题解</tag>
+        <tag>c++</tag>
+        <tag>数组</tag>
+        <tag>差分数组</tag>
       </tags>
   </entry>
   <entry>
@@ -2746,11 +2433,472 @@ x&#39; = \frac{x-\mu}{\sigma}，\mu是样本均值，\sigma是样本标准差
       </categories>
   </entry>
   <entry>
+    <title>数组解题技巧3——二分查找</title>
+    <url>/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于问题有序数组的二分查找问题，1.查找一个元素；2.查找区间全元素。</p>
+<p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>和<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="二分查找">二分查找</h2>
+<h3 id="题目1">题目1</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>：给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：nums = [-1,0,3,5,9,12], target = 9</p>
+<p>输出：4</p>
+</blockquote>
+<p>示例2：</p>
+<blockquote>
+<p>输入：nums = [-1,0,3,5,9,12], target = 2</p>
+<p>输出：-1</p>
+</blockquote>
+<h3 id="理解一下1">理解一下1</h3>
+<p>题目的大概意思就是：在有序数组<code>nums</code>中找出与<code>target</code>相同的元素的索引位置。</p>
+<p>直接遍历的时间复杂度是O(n)，而这里是<strong>有序数组</strong>，那么就可以使用二分查找，由此时间复杂度为O(log n)。</p>
+<p>基本的思路是：</p>
+<ol type="1">
+<li>约束查找区间左索引指针<code>left</code>和右索引指针<code>right</code>，获得中间索引指针<code>mid</code>；</li>
+<li>判断<code>mid</code>指向的元素与<code>target</code>的大小：
+<ol type="1">
+<li>等于<code>target</code>：返回该<code>mid</code>索引；</li>
+<li>大于<code>target</code>：说明在左侧，<code>right</code>向左收缩；</li>
+<li>小于<code>target</code>：说明在右侧，<code>left</code>向右收缩；</li>
+</ol></li>
+</ol>
+<h3 id="解题1">解题1</h3>
+<p>需要注意的是right和left是<strong>闭区间</strong>，并且while循环中使用的是<span class="math inline">\(\leq\)</span>。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>; <span class="comment">// 右侧需要减一</span></span><br><span class="line">    <span class="comment">// 计算 mid 时需要防止太大溢出</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid +<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查找元素区间">查找元素区间</h2>
+<h3 id="题目2">题目2</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>：给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。</p>
+<p>如果数组中不存在目标值 target，返回[-1, -1]。</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：nums = [5,7,7,8,8,10], target = 8</p>
+<p>输出：[3,4]</p>
+</blockquote>
+<p>示例2：</p>
+<blockquote>
+<p>输入：nums = [5,7,7,8,8,10], target = 6</p>
+<p>输出：[-1,-1]</p>
+</blockquote>
+<h3 id="理解一下2">理解一下2</h3>
+<p>这道题目是想要寻找等于target的所有元素，由于是<strong>有序数组</strong>，所以由一个<strong>区间</strong>表示。主要的问题在于如何寻找到区间的<strong>左右边界</strong>。</p>
+<p>这里有两个思路，都是利用<strong>二分查找</strong>。</p>
+<h3 id="解题2.1">解题2.1</h3>
+<ol type="1">
+<li>按照普通的二分查找，找到寻找一个等于target的元素位置；</li>
+<li>若未找到则flag置为false；</li>
+<li>若找到了，那么向左右依次寻找临界点即可。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;  <span class="comment">// 此处判断元素相等则跳出循环</span></span><br><span class="line">            flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">        left = mid;</span><br><span class="line">        right = mid;</span><br><span class="line">        <span class="keyword">while</span>(--left &gt;= <span class="number">0</span> &amp;&amp; nums[left] == target);</span><br><span class="line">        <span class="keyword">while</span>(++right &lt; nums.<span class="built_in">size</span>() &amp;&amp; nums[right] == target);</span><br><span class="line">        <span class="keyword">return</span> &#123;++left, --right&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="题解2.2">题解2.2</h3>
+<p>与方法一不同，直接去寻找左右端点。</p>
+<p>需要修改的地方仅仅是在<strong>二分查找相等</strong>时和<strong>收缩边界</strong>的情况<strong>统一</strong>起来，如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="built_in">leftRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> right = <span class="built_in">rightRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">return</span> &#123;left, right&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">leftRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;  <span class="comment">// 右侧向左侧收缩，找到左端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(left &gt;= nums.<span class="built_in">size</span>() || nums[left] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rightRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;  <span class="comment">// 左侧向右侧收缩，找到右端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(right &lt; <span class="number">0</span> || nums[right] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="个人收获">个人收获</h2>
+<p>这里使用的二分查找比较简单，类似于一棵树，主要就是收缩区间和循环终止等一些细节问题。</p>
+<p>第二个关于区间问题的方法，在leetcode上虽然第一个方法的效率较高，但是第二个方法的模块化和层次化要更好，更适合进行改编改写。</p>
+]]></content>
+      <categories>
+        <category>数据结构算法</category>
+      </categories>
+      <tags>
+        <tag>leetcode题解</tag>
+        <tag>c++</tag>
+        <tag>双指针</tag>
+        <tag>数组</tag>
+        <tag>二分查找</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习西瓜书——第01章绪论</title>
+    <url>/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会.</p>
+<p>主要的内容有: 机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="引言">1.1 引言</h2>
+<p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p>
+<blockquote>
+<p>所谓"经验"就是"数据";</p>
+<p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p>
+</blockquote>
+<h2 id="基本术语">1.2 基本术语</h2>
+<h3 id="数据部分">数据部分</h3>
+<ul>
+<li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li>
+<li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(sample);</p></li>
+<li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li>
+<li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute value). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (sample space) 或"输入空间".</p>
+<blockquote>
+<p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p>
+</blockquote></li>
+</ul>
+<h3 id="学习过程">学习过程</h3>
+<ul>
+<li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li>
+<li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training sample), 训练样本组成的集合称为"训练集"(training set);</p>
+<blockquote>
+<p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p>
+</blockquote></li>
+<li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li>
+<li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li>
+</ul>
+<h3 id="标记部分">标记部分</h3>
+<ul>
+<li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li>
+<li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li>
+</ul>
+<h3 id="学习任务">学习任务</h3>
+<ul>
+<li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li>
+<li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li>
+<li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li>
+<li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li>
+</ul>
+<h3 id="模型目标">模型目标</h3>
+<ul>
+<li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li>
+<li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li>
+<li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li>
+<li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li>
+<li>训练样本越多, 越有可能获得强泛化能力的模型.</li>
+</ul>
+<h2 id="假设空间">1.3 假设空间</h2>
+<p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p>
+<ul>
+<li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li>
+<li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li>
+</ul>
+<p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p>
+<blockquote>
+<p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p>
+</blockquote>
+<p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p>
+<p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 所以实际上存在很多的假设空间，但仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p>
+<h2 id="归纳偏好">1.4 归纳偏好</h2>
+<p>// todo</p>
+<h2 id="个人收获">个人收获</h2>
+<p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p>
+<p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>西瓜书</tag>
+        <tag>名词解释</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习西瓜书——第02章模型评估和选择</title>
+    <url>/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第二章模型评估和选择.</p>
+<p>主要的内容有: 经验误差与过拟合、模型的评估方法(留出法/交叉验证/自助法)、性能度量(查准率/查全率/F1/ROC曲线等), 部分内容待更新.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="经验误差与过拟合">2.1 经验误差与过拟合</h2>
+<h3 id="误差">误差</h3>
+<p><strong>错误率</strong>: 分类错误的样本数 <span class="math inline">\(a\)</span> 占样本总数 <span class="math inline">\(m\)</span> 的比例称为"错误率"(error rate).</p>
+<p><span class="math display">\[
+error rate = \frac{a}{m}
+\]</span></p>
+<p>与之相对的是<strong>精度</strong>(accuracy):</p>
+<p><span class="math display">\[
+accuracy = 1 - \frac{a}{m}
+\]</span></p>
+<p>学习器在训练集上的误差称为<strong>训练误差</strong>(training error)或<strong>经验误差</strong>(empirical error); 而在新样本上的误差称为<strong>泛化误差</strong>(generalization error).</p>
+<blockquote>
+<p>我们最『想』得到『泛化误差』尽可能的小, 但是我们在训练的时候并不知道新样本, 所以『实际上』能做的是使得『经验误差』尽可能的小.</p>
+</blockquote>
+<h3 id="过拟合">过拟合</h3>
+<p>当我们训练模型学习训练样本的时候, 将训练样本学的"太好", 除了学习到数据集的普遍规律, 还将训练数据集的一些自身特点学习到了, 导致泛化性能下降, 这种现象称为<strong>过拟合</strong>(overfitting); 反之就是<strong>欠拟合</strong>(underfitting), 训练样本的普遍规律也没有学会.</p>
+<blockquote>
+<p>简单来说就是: 只会硬板照抄的学生 和 不好好学习的后进生.</p>
+</blockquote>
+<p>欠拟合是学习的不够好, 一般来说比较好解决, 例如在决策树中扩展分支, 在神经网络中增加训练轮数等.</p>
+<p>但是过拟合却是<strong>不可避免的</strong>, 只能做到缓解和减小其风险. 因为机器学习面临的问题是NP难, 但是有效算法是在有限时间内完成的, 不能完成 <span class="math inline">\(NP=P\)</span> 的证明.</p>
+<p>那么, 实际上有各种算法以及各种参数来训练模型, 如何选择? 这就是模型选择; 如何评估模型训练的好坏呢? 这就模型评估.</p>
+<h2 id="评估方法">2.2 评估方法</h2>
+<p>通过实验, 设置测试组对学习器的泛化误差来对模型进行选择. 需要一个测试集(testing set), 在学习器上得到的测试误差(testing error)与泛化误差近似.</p>
+<blockquote>
+<p>保证测试集中的数据尽可能未在训练集中出现.</p>
+</blockquote>
+<p>那么对于一个包含m个样本数据集D, 既要训练, 又要测试, 那么需要合适的划分方法得到训练集和测试集.</p>
+<h3 id="留出法hold-out">留出法(hold-out)</h3>
+<p>留出法<strong>直接</strong>将数据集<strong>划分</strong>为两个互斥的集合, 一个作为训练集S, 一个作为测试集T.</p>
+<p>需要注意的是: 训练集和测试集的划分要尽可能的保持<strong>数据分布一致</strong>, 避免因为数据划分过程引入额外的偏差, 从而对最终的结果产生影响.</p>
+<blockquote>
+<p>例如将男性的数据集作为训练集, 然后去评估女性的数据集得到的泛化误差, 很明显是不合理的. 应尽量保持男女同比例.</p>
+</blockquote>
+<p>一般划分数据的时候保留类别比例, 通常称为"分层采样"(stratified sampling). 虽然按照比例进行划分比较合适, 但是依旧可能会出现一些问题.</p>
+<blockquote>
+<p>例如购物消费数据降序排序, 划分前70%作为训练集,后30%作为测试集. 虽然此时男女比例可能是等比例划分的, 但是消费能力却是截然不同, 所以这种方式显然还欠缺考虑.</p>
+</blockquote>
+<p>所以在使用留出法的时候, 通常使用<strong>若干次随机抽样</strong>的方式进行划分, 然后对这几次的评估数据<strong>取均值</strong>.</p>
+<p>以上是为了更好使用留出法的一些方法, 但是留出法本身有一个<strong>固有缺陷</strong>: 训练集S较大时, 模型可以训练的更接近数据集D的模型, 但测试集T较小, 导致评估结果不够稳定; 若测试集T大了, 那么训练集S训练出的模型可能和数据集D差别较大, 从而降低了评估结果的保真性(fidelity).</p>
+<p>但是也没有完美的解决方法, 一般划2/3~4/5进行训练, 剩余作为测试.</p>
+<h3 id="交叉验证cross-validation">交叉验证(cross validation)</h3>
+<p>先将数据集划分为k个大小相同的互斥子集, 每个子集尽可能保持数据分布的一致性(分层抽样). 每次使用k-1个子集进行训练, 剩下的一个子集作为测试集. 从而获得k次测试结果并取均值. 所以通常也称为<strong>k-折交叉验证</strong>(k-fold cross validation).</p>
+<p>同样的, 为减小样本划分带来的影响, 通常使用p次随机划分, 然后取这p次k折交叉验证结果的均值.</p>
+<blockquote>
+<p>其中, 若令k=m,那么则会得到<strong>留一法</strong>(Leave-One-Out, LOO), 显然由于划分唯一, 不受随机划分的影响. 实际效果和训练集几乎相似, 但是同样有一个固有缺陷: 数据集较大时, 训练时间开销太大.</p>
+<p>所以: <strong>没有免费的午餐</strong>定理同样适用.</p>
+</blockquote>
+<h3 id="自助法bootstrapping">自助法(bootstrapping)</h3>
+<p>对给定的包含m个样本的数据集D, 进行m次<strong>抽样放回</strong>的过程, 得到数据集D'. 这个过程会使得某些样本可能会出现多次, 而某些样本却不会出现. 简单估计始终不被抽样的概率是<span class="math inline">\((1-\frac{1}{m})^m\)</span>, 取极限得到:</p>
+<p><span class="math display">\[
+\lim_{m\rightarrow \infin}{(1-\frac{1}{m})^m} \rightarrowtail \frac{1}{e} \approx 0.368
+\]</span></p>
+<p>将未出现约36.8%的数据作为测试集即可, 那么训练模型的时候使用m个样本作为训练集,测试集依旧有约1/3的数据作为测试.</p>
+<blockquote>
+<p>在数据集较小, 难以有效划分的时候比较有效.</p>
+<p>并能从初始数据集中产生多个不同的训练集, 对于集成学习等方法有很大好处.</p>
+</blockquote>
+<p>但在划分的时候改变了初始数据集的分布, 引入估计偏差, 所以在数据量足够的时候, 留出法和交叉验证更常用.</p>
+<h3 id="调参与最终模型">调参与最终模型</h3>
+<p>大部分的学习算法都需要一些参数进行设定, 参数的配置不同, 学习的模型往往有显著差距, 对参数(parameter)进行设定的过程称为参数调节或调参(parameter tuning).</p>
+<p>参数是在一定范围内进行取值, 并根据一定的步长进行调节. 那么我们最终的参数也只可能在我们划分的<strong>离散值</strong>中, 往往不一定能够达到"最佳", 但这也平衡了开销和性能.</p>
+<p>我们的调参是根据训练集S进行调参的, 最终的模型应该更根据选定的参数在<strong>完整的数据集</strong>中进行测试, 将最终的结果进行提交.</p>
+<blockquote>
+<p>通常将实际中遇到的数据称为测试数据, 而模型评估和选择中使用的数据集称为<strong>验证集</strong>(validation set).</p>
+</blockquote>
+<h2 id="性能度量">2.3 性能度量</h2>
+<p>那么对机器学习训练泛化性能的评估, 就是接下来的性能度量(performance measure). 不同的性能度量得到的评判标准也不同, 所以模型的"好坏"是相对的, 取决于算法和数据, 还取决于模型的任务需求.</p>
+<p>回归任务常用<strong>均方误差</strong>(mean squared error, MSE):</p>
+<p><span class="math display">\[
+E(f; D) = \frac{1}{m} \sum^m_{i=1}{(f(x_i)-y_i)^2}
+\]</span></p>
+<p>其中, <span class="math inline">\(f(x_i)\)</span>是模型对样本<span class="math inline">\(x_i\)</span>的预测, <span class="math inline">\(y_i\)</span>是真实标记.</p>
+<h3 id="查准率查全率与f1">查准率、查全率与F1</h3>
+<p>我们关心的问题有时候不仅仅是错误率或精度.</p>
+<blockquote>
+<p>例如我们不关心有多少比例的瓜判断错误, 而更加关心挑出的西瓜中有多少的比例是好瓜.</p>
+</blockquote>
+<p>此时就引入了查准率(precision)和查全率(recall):</p>
+<ul>
+<li><strong>查准率</strong>: 预测为正例中有多少是真的正例;</li>
+<li><strong>查全率</strong>: 实际为正例的有多少被预测为正例.</li>
+</ul>
+<p>对于二分类问题, 可将结果分为: 真正例(true positive)、假正例(false positive)、真反例(true negative)和假反例(false negative). 由此组成<strong>混淆矩阵</strong>(confusion matrix).</p>
+<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.png" class="" title="混淆矩阵.png">
+<p><span class="math display">\[
+查准率P = \frac{TP}{TP+FP}
+\]</span></p>
+<p><span class="math display">\[
+查全率R = \frac{TP}{TP+FN}
+\]</span></p>
+<p>这两个度量往往相互制约, 总是一高一低.</p>
+<p>我们对学习器的预测样例的结果进行排序, 排在前面的样例认为是"最可能"为正例的样本, 按顺序逐个把样本作为正例进行预测, 则每个可计算出当前的查全率和查准率. 以此作为坐标轴可以绘制"P-R曲线".</p>
+<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/P-R%E5%9B%BE.png" class="" title="P-R图.png">
+<p>根据曲线, 我们可以发现A和B曲线<strong>包含</strong>C曲线, 那么可以认为训练得到曲线C的模型相对较差; 而A和B曲线发生了<strong>交叉</strong>, 那么性能的优劣则不好判断.</p>
+<p>引入"平衡点"(Break-Event Point, BEP)的概念, 在『查全率=查准率』处取得平衡点, 那么可以认为 A 优于 B.(挺草率的说)</p>
+<p>更常用的是F1常量:</p>
+<p><span class="math display">\[
+F1 = 2 \times \frac{1}{\frac{1}{P} + \frac{1}{R}} = \frac{2 \times P \times R}{P + R}
+\]</span></p>
+<p>在特定场景, 模型对于查全率和查准率的要求不同, 所以会赋予不同的权重来进行调整, 使得更符合模型的需求.</p>
+<p><span class="math display">\[
+F_\beta = \frac{(1+\beta^2) \times P \times R}{(\beta^2 \times P) + R}
+\]</span></p>
+<h4 id="多分类">多分类</h4>
+<p>以上是针对二分类问题提出了混淆矩阵, 那么对于多分类问题呢?</p>
+<p>一种方法是两两形成混淆矩阵, 先计算得到各自的查全率和查准率, <strong>再将取均值</strong>, 得到"宏查准率"(macro-P)和"宏查全率"(macro-R), 再计算"宏F1"(macro-F1).</p>
+<p>还有一种方法是各个混淆矩阵元素<strong>先取均值</strong>, 得到TP、FP、TN、FN的均值, 然后再基于这些均值计算得到"微查准率"(micro-P)和"微查全率"(micro-R), 再计算"微F1"(micro-F1).</p>
+<h3 id="roc与auc">ROC与AUC</h3>
+<p>很多的学习器是为了产生一个预测实值或概率预测, 然后将该概率预测与一个分类<strong>阈值</strong>(threshold)进行比较, 对测试样本进行排序, 最有可能的正例排在前面, 最不可能的正例排在最后面, 通过阈值将样本分为两部分.</p>
+<p>一般情况下, 我们根据任务需求来采用不同的截断点. 更重视"查准率", 则选择排序靠前的位置进行截断, 更重视"查全率", 则选择排序靠后的位置进行截断. 那么对<strong>排序质量</strong>的好坏直接影响了学习器在不同任务下的<strong>泛化性能</strong>的好坏. ROC曲线就是来研究学习器泛化性能的有力工具.</p>
+<p>『ROC曲线』原理与『P-R曲线』类似, 对学习器的预测样例的结果进行排序, 排在前面的样例认为是"最可能"为正例的样本, 按顺序逐个把样本作为正例进行预测, 则每个可计算出当前的<strong>真正例率</strong>(True Positive Rate, TPR)和<strong>假正例率</strong>(False Positive Rate, FPR):</p>
+<ul>
+<li>真正例率: 实际正例预测为正例的数量占所有实际正例的比例;</li>
+<li>假正例率: 实际反例预测为正例的数量占所有实际反例的比例.</li>
+</ul>
+<p><span class="math display">\[
+TPR = \frac{TP}{TP + FN}
+\]</span></p>
+<p><span class="math display">\[
+FPR = \frac{FP}{TN + FP}
+\]</span></p>
+<img src="/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/ROC%E6%9B%B2%E7%BA%BF%E4%B8%8EAUC.png" class="" title="ROC曲线与AUC.png">
+<p>如果要比较不同学习器的优劣, 就看ROC曲面下的<strong>面积AUC</strong>(Area Under ROC Curve).</p>
+<h3 id="代价敏感错误率与代价曲线">代价敏感错误率与代价曲线</h3>
+<p>// todo</p>
+<h2 id="比较检验">2.4 比较检验</h2>
+<p>假设检验</p>
+<p>交叉验证 t 检验</p>
+<p>McNemar 检验</p>
+<p>Friedman 检验与 Nemenyi 后续检验</p>
+<h2 id="偏差与方差">2.5 偏差与方差</h2>
+<h2 id="个人收获">个人收获</h2>
+<p>这一章主要是在讲如何对数据集进行划分, 如何评估模型的性能, 包括我还没完全捋清楚的假设检验部分, 都是在对模型性能的好坏进行评价, 对模型的可行性, 真实性进行分析.</p>
+<p>这些东西正是之后支撑我们来判断一个模型是好是坏, 是否可行的依据. 目前只是大概的了解了概念, 到了实际应用的时候还是要回过头来回顾前两章.</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>西瓜书</tag>
+        <tag>模型评估</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>测量HTML元素长度</title>
+    <url>/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</url>
+    <content><![CDATA[<blockquote>
+<p>这次要推荐是提升html页面布局效率的chrome插件。</p>
+<p>适用于有 HTML + CSS 进行页面设计需求的人群。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="page-ruler-redux">Page Ruler Redux</h2>
+<p>该插件是<a href="https://chrome.google.com/webstore/detail/page-ruler-redux/giejhjebcalaheckengmchjekofhhmal">Page Ruler Redux</a>，直接点击链接就可以在<code>Chrome</code>应用商店进行下载了。</p>
+<p>下载完成并进行安装，使用<code>ALT + P</code>快捷键就可以将插件打开，戍边点击选择需要测量的区域即可。</p>
+<p>当然，这样直接点击有的时候会选的不太准确，可以打开元素模式，自动选择边界框，在调试的时候就可以自动选择元素边界，准确进行设计。</p>
+<img src="/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/01.png" class="" title="打开元素模式">
+<h2 id="ctrlshifti">Ctrl+Shift+I</h2>
+<p>2021年1月13日 更新：</p>
+<p>利用上面的插件来显示页面元素的width和height感觉是很方便，但我觉得更重要的应该是可以看到left和top等边距参数，这样可以准确控制页面的布局。</p>
+<p>同时当页面元素可以拖动和缩放的时候，我们打开插件进行测量，则页面可能会重新刷新，这个时候就比较不方便了，这时需要查看width和height的话，通过浏览器自带的<code>开发人员工具</code>，点击左上角的小箭头即可。将该页面独立出来，就可以直接查看页面元素的大小了。</p>
+<blockquote>
+<p>其实这个开发人员工具我用的很熟悉，但是当时想要测量页面元素却一时忘记，今天才反应过来，这可能就是灯下黑吧:joy:。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>插件</category>
+        <category>前端</category>
+      </categories>
+      <tags>
+        <tag>Chrome</tag>
+        <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>林骥的思维分析模型（一）</title>
+    <url>/2021/02/12/%E6%9E%97%E9%AA%A5%E7%9A%84%E6%80%9D%E7%BB%B4%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是在对林骥公众号中的100种思维分析模型（更新中）上进行自我理解。</p>
+<p>适用于想要了解多种分析模型的同学，主要是关于模型的一些应用和注意点，并没有具体的模型详解。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="福格行为模型">福格行为模型</h2>
+<p>该模型主要是用来分析<code>用户行为</code>的<u>产生原因</u>和<u>基础心理</u>。</p>
+<p><span class="math display">\[
+行为 = 动机 \times 能力 \times 触发
+\]</span> 用户的行为由三要素决定（例如购物）：</p>
+<ol type="1">
+<li>用户去做这件事情的动机（why用户购买产品）；</li>
+<li>用户完成这件事情的能力（how让用户方便购买）；</li>
+<li>触发用户去采取行动的信号（what触发用户想要购买）。</li>
+</ol>
+<p>在其中也暗含了4p营销理论：产品（Product）、价格（Price）、促销（Promotion）、渠道（Place）</p>
+<h2 id="杜邦分析模型">杜邦分析模型</h2>
+<p>该模型主要是对关键指标进行分解，在<code>财务分析</code>、<code>销售管理</code>方面有助于深入分析企业的经营业绩。</p>
+<p>杜邦分析模型将指标之间的<u>内在联系</u>结合起来，形成一套类似金字塔结构，层次清晰的指标体系，从而暴露出影响业务的关键因素。</p>
+<ol type="1">
+<li>从核心指标开始，逐层分解各个指标；</li>
+<li>制作杜邦分析图，填入相关指标数据；</li>
+<li>对比前后期数据，或者横向进行对比。</li>
+</ol>
+<h2 id="矩阵分析模型">矩阵分析模型</h2>
+<p>该模型也称作波士顿矩阵或四象限分析法。通过两个关键指标组成象限即可进行分析。主要是用来分析<code>产品和结构</code>，其中特别关注<strong>销售增长率</strong>和<strong>市场占有率</strong>这两个指标。</p>
+<ol type="1">
+<li>找出两种最关注的指标（销售增长率A和市场占有率B）；</li>
+<li>绘制四象限分析图表（假设增长方向为从左至右和从下至上）；</li>
+<li>分析总结并提出建议（AB均低的产品可以逐渐放弃，A高B低是有问题的产品，需要调整策略，A低B高则可以保持现状，AB均高的可以考虑加大投资）；</li>
+</ol>
+<p>针对不同的象限将产品进行分类，由此来采取不同的发展策略，从而实现产品结构的良性循环。</p>
+<h2 id="夏普利值模型">夏普利值模型</h2>
+<p>该模型综合考虑各方利益，使得所作和所得相等，保证利益分配的公平合理。主要在分配权力等问题上非常有用。</p>
+<ol type="1">
+<li>列举角色可能出现的各种分配情况；</li>
+<li>判断角色在分配过程是否起作用；</li>
+<li>计算分析角色起作用的占比情况。</li>
+</ol>
+<p>价值并不在于拥有的资源或历史贡献，而是在所有可能的合作中，不可或缺的程度。</p>
+<blockquote>
+<p>我们的成长也需要提高核心竞争力。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>他山之石</category>
+      </categories>
+      <tags>
+        <tag>思维方式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>用户偏好分析案例</title>
+    <url>/2021/02/21/%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是根据《活用数据|驱动业务的数据分析实战》中的案例进行的学习总结，主要是针对彩电用户的特征和行为，从研究调查问卷组成，以及分析问卷，来统计用户偏好。</p>
+<p>适用于需要结合案例学习数据分析方法的初学者。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="总体思路">总体思路</h2>
+<p>国内某彩电企业为了摆脱价格战，提高核心竞争力，从用户入手，针对不同用户偏好，展开差异化营销。同样地，我们需要明确研究目的和研究内容。</p>
+<p><code>研究目的</code>很简单，就是<strong>开展差异化营销</strong>。差异化营销是使得企业最大限度地满足用户需求，从而提高企业的营业业绩；那么差异化营销在该企业是否可行，就需要考虑多个维度的因素，基于时间思维和结构思维进行分析，将用户偏好分为五个阶段和七个要素。</p>
+<p><code>研究内容</code>就围绕五个阶段和七个要素进行展开：</p>
+<ul>
+<li>产生需求阶段：购买的原因（why）、决策时间（when）、了解程度（how much）</li>
+<li>信息收集阶段：获取信息的渠道（where）、关注哪些信息（what）</li>
+<li>方案比选阶段：比较时考虑的因素（what）、各因素考虑的程度（how）</li>
+<li>购买决策阶段：最终买的是什么（what）</li>
+<li>购后行为阶段：如何使用彩电（how）</li>
+</ul>
+<h2 id="调查问卷">调查问卷</h2>
+<p>根据以上的研究内容，设计一份调查问卷，来获得相应的调查数据，来进行定量分析。</p>
+<p>问卷结果由以下几个问题组成： 1. 问卷编号 2. 是否购买彩电：S1甄别问题 3. 产生需求阶段：Q1购买原因，Q2决策时间，Q3了解程度 4. 信息收集阶段：Q4信息渠道，Q5关注信息 5. 方案比选阶段：Q6刻录功能考虑程度，Q7耗电量考虑程度，Q8上网功能考虑程度，Q9他人推荐考虑程度，Q10促销活动考虑程度，Q11感兴趣的促销活动 6. 购买决策阶段：Q12品牌，Q13价格，Q14外观，Q15规格，Q16颜色 7. 购后行为阶段：Q17安装方式，Q18摆放位置 8. 用户背景信息：A1性别，A2年龄，A3学历，A4家庭收入，A5住房面积，A6家庭成员</p>
+<h2 id="调研计划">调研计划</h2>
+<p>完成调查问卷的创建之后，紧接着进行问卷调查，这里需要明确6个问题： * 调查方法：例如中心定点拦截访问（CIL） * 调查对象：某天之后购买过彩电的用户 * 调查地点与样本量： * 项目周期： * 项目成员及职责： * 项目经理：负责整个项目的统筹控制，业务沟通、制定方案、控制进度及质量、团队协调沟通 * 督导员：向项目经理汇报工作进展，招聘和监督访问员，对访问质量直接负责 * 访问员：负责实际访问，向督导员汇报工作进度 * 数据处理人员：调查问卷审核，数据录入，数据检查和对数据质量进行评价 * 数据分析人员：对调查和处理好的数据进行研究分析 * 报告撰写与宣讲人员：撰写分析报告并向相关领导汇报 * 项目质量与进度控制：安排跟访，保证数据真实有效性，并及时汇报和录入数据</p>
+<h2 id="数据处理">数据处理</h2>
+<p>调查得到的数据是最原始的数据，其中可能会出现很多的问题，所以需要对数据先进行处理，主要分为四个步骤： * 数据集成：将多个数据源的数据进行合并 * 数据转换：对数据进行标准化处理 * 数据消减：对数据进行聚合和降维，减小数据规模 * <strong>数据清洗</strong>：数据筛选、数据去重、填补缺失值和数据纠错。（本案例仅关注数据清洗）</p>
+<h3 id="数据编码">数据编码</h3>
+<p>其中方案比选阶段的Q6-Q10数据为数值数据，可以直接进行数据分析，而其他数据均为类别数据，需要使用编码格式进行数值转换</p>
+<p>针对<strong>不存在大小</strong>的分类数据，可以直接使用set容器去重，再使用map进行<strong>硬编码</strong>，若存在大小的，最好还是手动创建map参数。例如下面非比较类型分类数据的例子：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">&#x27;A&#x27;</span>:[<span class="string">&#x27;一&#x27;</span>,<span class="string">&#x27;二&#x27;</span>,<span class="string">&#x27;一&#x27;</span>,<span class="string">&#x27;三&#x27;</span>,<span class="string">&#x27;一&#x27;</span>,<span class="string">&#x27;一&#x27;</span>,<span class="string">&#x27;三&#x27;</span>],</span><br><span class="line">                   <span class="string">&#x27;B&#x27;</span>:[<span class="string">&#x27;aa&#x27;</span>,<span class="string">&#x27;bb&#x27;</span>,<span class="string">&#x27;cc&#x27;</span>,<span class="string">&#x27;cc&#x27;</span>,<span class="string">&#x27;bb&#x27;</span>,<span class="string">&#x27;aa&#x27;</span>,<span class="string">&#x27;dd&#x27;</span>],</span><br><span class="line">                   <span class="string">&#x27;C&#x27;</span>:[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>]&#125;)</span><br><span class="line"></span><br><span class="line">df_obj= df.select_dtypes(<span class="string">&#x27;object&#x27;</span>)</span><br><span class="line">datamap = []</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df_obj.columns:</span><br><span class="line">    datamap.append(&#123;elem: index+<span class="number">1</span> <span class="keyword">for</span> index, elem <span class="keyword">in</span> <span class="built_in">enumerate</span>(<span class="built_in">set</span>(df[col]))&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="数据清洗">数据清洗</h3>
+<p>首先通过数据筛选，将<code>S1甄别问题</code>为<code>1</code>的问卷筛选出来，因为购买了彩电的用户才是我们需要分析的用户。</p>
+<p>然后对数据进行去重，针对的是问卷编号，保证每个问卷仅出现一次。</p>
+<p>再对处理数据中存在的缺失值，可以找到缺失值的位置，找到相应问卷进行查看并填补；若问卷上也不存在，则对数值型数据使用统计值填补，对分类型数据使用众数填补；或者少量数据可以直接删除。</p>
+<p>最后进行数据纠错，数据的错误类型主要有两种，一种是非逻辑错误，就是在问卷调查或录入数据的时候出现差错，这需要加强调研的各个环节的质量监控；另一种是逻辑错误，例如，性别男为“1”，女为“2”，但是录入了3，这种属于逻辑错误，需要在数据编码的时候进行控制。</p>
+<h2 id="分析架构">分析架构</h2>
+<p>用户偏好分析主要分为三个部分：</p>
+<ol type="1">
+<li>用户基本特征描述：用户的特征不同，结论分析往往不同，可以协助业务方在下结论的时候注意应用对象。</li>
+<li>用户整体偏好分析：对于问卷中的数值数据可以使用<strong>均值分析</strong>用户整体偏好，对于非数值数值使用<strong>频数统计</strong>反映用户整体情况。</li>
+<li>各类用户偏好分析：将用户偏好和用户基本特征做<strong>比较均值</strong>或<strong>交叉分析</strong>。</li>
+</ol>
+<blockquote>
+<p>在此之前需要利用<strong>方差分析</strong>，检验不同用户之间是否存在<strong>显著差异</strong>，若存在，做差异对比才有意义。</p>
+</blockquote>
+<h2 id="实例演示">实例演示</h2>
+<p>详见我在Github上的<a href="https://github.com/Gipbear/data-analysis/blob/master/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90%E2%80%94%E2%80%94%E6%9F%90%E5%BD%A9%E7%94%B5%E4%BC%81%E4%B8%9A%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90/%E6%9F%90%E5%BD%A9%E7%94%B5%E4%BC%81%E4%B8%9A%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90.ipynb">代码</a></p>
+<h2 id="分析结果解读">分析结果解读</h2>
+<p>最后根据以上得到的各个分析结果，进行可视化图像进行分析比较，得到最终结论。</p>
+<p>// todo: 详细的会在之后学习了数据分析经验之后再来分析一下。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>总体上学到了有几点，首先是学会了如何设计一个比较全面的问卷调查方法，需要考虑需要的各个方面，从需求开始，从分支扩展，按照需要的、可能的、与结论相关的因素进行讨论，由此编写有效的问卷；其次第一次进行编码操作，之前学会的硬编码和热编码并没有使用，所以未知其用途，在这里发现在方差分析的时候，必须使用编码参数进行调用；最后，发现python或许是万能的，但并不是最方便的，这些统计分析之类的，需要自己慢慢编写程序，而在spss中却是及其方便，由此我以后或许可以尝试，使用python进行清洗整理数据以及机器学习相关，使用spss完成统计分析，以及使用tableau实现图表可视化。</p>
+]]></content>
+      <categories>
+        <category>数据分析实战</category>
+      </categories>
+      <tags>
+        <tag>调查问卷</tag>
+        <tag>数据编码</tag>
+        <tag>方差分析</tag>
+        <tag>频数统计</tag>
+        <tag>交叉分析</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习西瓜书——第03章线性模型</title>
     <url>/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<blockquote>
 <p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第三章线性模型.</p>
-<p>主要的内容有: 线性回归的基本形式、最小二乘法、广义线性回归、对数几率回归（逻辑回归）、分类数据连续化:</p>
+<p>主要的内容有: 线性回归的基本形式、最小二乘法、广义线性回归、对数几率回归（逻辑回归）、最大似然估计和分类数据连续化等.</p>
 </blockquote>
 <span id="more"></span>
 <h2 id="基本形式">3.1 基本形式</h2>
@@ -2853,7 +3001,7 @@ y = \frac{1}{1+e^{-(\boldsymbol{w}^{T}\boldsymbol{x} + b)}}
 <p>此时很关键的一步:</p>
 <ul>
 <li>将<span class="math inline">\(y\)</span>视作样本<span class="math inline">\(\boldsymbol{x}\)</span>为正例的可能性, 用后验概率表示为<span class="math inline">\(p(y=1|\boldsymbol{x})\)</span>;</li>
-<li>将<span class="math inline">\(1-y\)</span>视作样本<span class="math inline">\(\boldsymbol{x}\)</span>为反例的可能性, 用后验概率表示为<span class="math inline">\(P(y=0|\boldsymbol{x})\)</span>.</li>
+<li>将<span class="math inline">\(1-y\)</span>视作样本<span class="math inline">\(\boldsymbol{x}\)</span>为反例的可能性, 用后验概率表示为<span class="math inline">\(p(y=0|\boldsymbol{x})\)</span>.</li>
 </ul>
 <blockquote>
 <p>我们所谓的"几率"就是<span class="math inline">\(\frac{y}{1-y}\)</span>, <strong>反映了x作为正例的相对可能性</strong>. 再取对数, 所以就称为对数几率!</p>
@@ -2862,18 +3010,30 @@ y = \frac{1}{1+e^{-(\boldsymbol{w}^{T}\boldsymbol{x} + b)}}
 <p>那么问题回到如何确定模型中的<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>呢? 我们这里使用<strong>最大似然估计</strong>来解释, 同样的还可以使用信息论的角度来解释.</p>
 <p>根据以上的内容, 可以将模型表达写成:</p>
 <p><span class="math display">\[
-P(y=1|\boldsymbol{x}) = \frac{e^{\boldsymbol{w}^{T}\boldsymbol{x} + b}}{1+e^{\boldsymbol{w}^{T}\boldsymbol{x} + b}}
+p(y=1|\boldsymbol{x}) = \frac{e^{\boldsymbol{w}^{T}\boldsymbol{x} + b}}{1+e^{\boldsymbol{w}^{T}\boldsymbol{x} + b}}
 \]</span></p>
 <p><span class="math display">\[
-P(y=0|\boldsymbol{x}) = \frac{1}{1+e^{\boldsymbol{w}^{T}\boldsymbol{x} + b}}
+p(y=0|\boldsymbol{x}) = \frac{1}{1+e^{\boldsymbol{w}^{T}\boldsymbol{x} + b}}
 \]</span></p>
-<p>通过极大似然估计法就可以得到:</p>
+<p>通过极大似然估计法, 并取对数就可以得到:</p>
 <p><span class="math display">\[
-l(\boldsymbol{w}, b) = \sum^m_{i=1}{\ln{[y_ip_1(\hat{x}_i;\beta) + (1-y_i)p_0(\hat{x}_i;\beta)]}}
+\begin{aligned}
+L(\boldsymbol{w}, b) &amp;= \prod^m_{i=1}{p(y_i|\boldsymbol{x}_i;w,b)} \\
+l(\boldsymbol{w}, b) &amp;= \sum^m_{i=1}{\ln{[y_ip_1(\hat{\boldsymbol{x}}_i;\beta) + (1-y_i)p_0(\hat{\boldsymbol{x}}_i;\beta)]}}\end{aligned}
 \]</span></p>
-<p>其中<span class="math inline">\(p_1\)</span>是<span class="math inline">\(P(y=1|\boldsymbol{x})\)</span>, <span class="math inline">\(p_0\)</span>是<span class="math inline">\(P(y=0|\boldsymbol{x})\)</span>. 将其带入可得:</p>
-<p>$$</p>
-<p>$$</p>
+<p>其中为了便于讨论, 令<span class="math inline">\(\beta=(\boldsymbol{x};b), \hat{\boldsymbol{x}}=(\boldsymbol{x};1)\)</span>. 而<span class="math inline">\(p_1\)</span>是<span class="math inline">\(p(y=1|\boldsymbol{x})\)</span>, <span class="math inline">\(p_0\)</span>是<span class="math inline">\(p(y=0|\boldsymbol{x})\)</span>. 分别令<span class="math inline">\(y_i\)</span>为0或1:</p>
+<p><span class="math display">\[
+l(\beta) =
+\begin{cases}
+\sum\limits^m_{i=1}{- \ln{(1+e^{\beta^T\boldsymbol{x}_i})}}, \qquad &amp;y_i = 0 \\
+\sum\limits^m_{i=1}{\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsymbol{x}_i})}}, \qquad &amp;y_i = 1
+\end{cases}
+\]</span></p>
+<p>综合可得如下式子, 并且将其取负数得最小化:</p>
+<p><span class="math display">\[
+l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsymbol{x}_i})}]}
+\]</span></p>
+<p>这就是关于<span class="math inline">\(\beta\)</span>的高阶可导凸函数, 使用梯度下降等优化理论方法进行求解即可.</p>
 <h3 id="模型的优点">模型的优点</h3>
 <ol type="1">
 <li>该模型直接对分类的可能性进行建模, 也没有要求数据分布, 避免假设数据分布带来的不确定性问题;</li>
@@ -2898,6 +3058,12 @@ l(\boldsymbol{w}, b) = \sum^m_{i=1}{\ln{[y_ip_1(\hat{x}_i;\beta) + (1-y_i)p_0(\h
 <p>但其实对分类变量化为连续值, 或多或少会引入一些额外的有序关系.</p>
 </blockquote>
 <h2 id="个人收获">个人收获</h2>
+<ol type="1">
+<li>从单纯的线性模型, 推广到广义的线性模型, 再引出特殊的对数几率回归模型. 从特殊到一般再到特殊的方式, 很好的理清楚了简单线性回归和逻辑回归之间的关系.</li>
+<li>逻辑回归真正的名字应该是对数几率回归, 这对记忆和理解模型都有更好的可解释性.</li>
+<li>公式的推导依旧有难度, 目前处于抛开书想不到怎么推, 但结合西瓜书和南瓜书还是能够看懂推导过程.</li>
+</ol>
+<p>继续加油!</p>
 ]]></content>
       <categories>
         <category>机器学习</category>
@@ -2905,154 +3071,6 @@ l(\boldsymbol{w}, b) = \sum^m_{i=1}{\ln{[y_ip_1(\hat{x}_i;\beta) + (1-y_i)p_0(\h
       <tags>
         <tag>西瓜书</tag>
         <tag>线性模型</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>林骥的思维分析模型（一）</title>
-    <url>/2021/02/12/%E6%9E%97%E9%AA%A5%E7%9A%84%E6%80%9D%E7%BB%B4%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是在对林骥公众号中的100种思维分析模型（更新中）上进行自我理解。</p>
-<p>适用于想要了解多种分析模型的同学，主要是关于模型的一些应用和注意点，并没有具体的模型详解。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="福格行为模型">福格行为模型</h2>
-<p>该模型主要是用来分析<code>用户行为</code>的<u>产生原因</u>和<u>基础心理</u>。</p>
-<p><span class="math display">\[
-行为 = 动机 \times 能力 \times 触发
-\]</span> 用户的行为由三要素决定（例如购物）：</p>
-<ol type="1">
-<li>用户去做这件事情的动机（why用户购买产品）；</li>
-<li>用户完成这件事情的能力（how让用户方便购买）；</li>
-<li>触发用户去采取行动的信号（what触发用户想要购买）。</li>
-</ol>
-<p>在其中也暗含了4p营销理论：产品（Product）、价格（Price）、促销（Promotion）、渠道（Place）</p>
-<h2 id="杜邦分析模型">杜邦分析模型</h2>
-<p>该模型主要是对关键指标进行分解，在<code>财务分析</code>、<code>销售管理</code>方面有助于深入分析企业的经营业绩。</p>
-<p>杜邦分析模型将指标之间的<u>内在联系</u>结合起来，形成一套类似金字塔结构，层次清晰的指标体系，从而暴露出影响业务的关键因素。</p>
-<ol type="1">
-<li>从核心指标开始，逐层分解各个指标；</li>
-<li>制作杜邦分析图，填入相关指标数据；</li>
-<li>对比前后期数据，或者横向进行对比。</li>
-</ol>
-<h2 id="矩阵分析模型">矩阵分析模型</h2>
-<p>该模型也称作波士顿矩阵或四象限分析法。通过两个关键指标组成象限即可进行分析。主要是用来分析<code>产品和结构</code>，其中特别关注<strong>销售增长率</strong>和<strong>市场占有率</strong>这两个指标。</p>
-<ol type="1">
-<li>找出两种最关注的指标（销售增长率A和市场占有率B）；</li>
-<li>绘制四象限分析图表（假设增长方向为从左至右和从下至上）；</li>
-<li>分析总结并提出建议（AB均低的产品可以逐渐放弃，A高B低是有问题的产品，需要调整策略，A低B高则可以保持现状，AB均高的可以考虑加大投资）；</li>
-</ol>
-<p>针对不同的象限将产品进行分类，由此来采取不同的发展策略，从而实现产品结构的良性循环。</p>
-<h2 id="夏普利值模型">夏普利值模型</h2>
-<p>该模型综合考虑各方利益，使得所作和所得相等，保证利益分配的公平合理。主要在分配权力等问题上非常有用。</p>
-<ol type="1">
-<li>列举角色可能出现的各种分配情况；</li>
-<li>判断角色在分配过程是否起作用；</li>
-<li>计算分析角色起作用的占比情况。</li>
-</ol>
-<p>价值并不在于拥有的资源或历史贡献，而是在所有可能的合作中，不可或缺的程度。</p>
-<blockquote>
-<p>我们的成长也需要提高核心竞争力。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>他山之石</category>
-      </categories>
-      <tags>
-        <tag>思维方式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>测量HTML元素长度</title>
-    <url>/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/</url>
-    <content><![CDATA[<blockquote>
-<p>这次要推荐是提升html页面布局效率的chrome插件。</p>
-<p>适用于有 HTML + CSS 进行页面设计需求的人群。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="page-ruler-redux">Page Ruler Redux</h2>
-<p>该插件是<a href="https://chrome.google.com/webstore/detail/page-ruler-redux/giejhjebcalaheckengmchjekofhhmal">Page Ruler Redux</a>，直接点击链接就可以在<code>Chrome</code>应用商店进行下载了。</p>
-<p>下载完成并进行安装，使用<code>ALT + P</code>快捷键就可以将插件打开，戍边点击选择需要测量的区域即可。</p>
-<p>当然，这样直接点击有的时候会选的不太准确，可以打开元素模式，自动选择边界框，在调试的时候就可以自动选择元素边界，准确进行设计。</p>
-<img src="/2021/01/10/%E6%B5%8B%E9%87%8FHTML%E5%85%83%E7%B4%A0%E9%95%BF%E5%BA%A6/01.png" class="" title="打开元素模式">
-<h2 id="ctrlshifti">Ctrl+Shift+I</h2>
-<p>2021年1月13日 更新：</p>
-<p>利用上面的插件来显示页面元素的width和height感觉是很方便，但我觉得更重要的应该是可以看到left和top等边距参数，这样可以准确控制页面的布局。</p>
-<p>同时当页面元素可以拖动和缩放的时候，我们打开插件进行测量，则页面可能会重新刷新，这个时候就比较不方便了，这时需要查看width和height的话，通过浏览器自带的<code>开发人员工具</code>，点击左上角的小箭头即可。将该页面独立出来，就可以直接查看页面元素的大小了。</p>
-<blockquote>
-<p>其实这个开发人员工具我用的很熟悉，但是当时想要测量页面元素却一时忘记，今天才反应过来，这可能就是灯下黑吧:joy:。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>插件</category>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>Chrome</tag>
-        <tag>CSS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>用户偏好分析案例</title>
-    <url>/2021/02/21/%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是根据《活用数据|驱动业务的数据分析实战》中的案例进行的学习总结，主要是针对彩电用户的特征和行为，从研究调查问卷组成，以及分析问卷，来统计用户偏好。</p>
-<p>适用于需要结合案例学习数据分析方法的初学者。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="总体思路">总体思路</h2>
-<p>国内某彩电企业为了摆脱价格战，提高核心竞争力，从用户入手，针对不同用户偏好，展开差异化营销。同样地，我们需要明确研究目的和研究内容。</p>
-<p><code>研究目的</code>很简单，就是<strong>开展差异化营销</strong>。差异化营销是使得企业最大限度地满足用户需求，从而提高企业的营业业绩；那么差异化营销在该企业是否可行，就需要考虑多个维度的因素，基于时间思维和结构思维进行分析，将用户偏好分为五个阶段和七个要素。</p>
-<p><code>研究内容</code>就围绕五个阶段和七个要素进行展开：</p>
-<ul>
-<li>产生需求阶段：购买的原因（why）、决策时间（when）、了解程度（how much）</li>
-<li>信息收集阶段：获取信息的渠道（where）、关注哪些信息（what）</li>
-<li>方案比选阶段：比较时考虑的因素（what）、各因素考虑的程度（how）</li>
-<li>购买决策阶段：最终买的是什么（what）</li>
-<li>购后行为阶段：如何使用彩电（how）</li>
-</ul>
-<h2 id="调查问卷">调查问卷</h2>
-<p>根据以上的研究内容，设计一份调查问卷，来获得相应的调查数据，来进行定量分析。</p>
-<p>问卷结果由以下几个问题组成： 1. 问卷编号 2. 是否购买彩电：S1甄别问题 3. 产生需求阶段：Q1购买原因，Q2决策时间，Q3了解程度 4. 信息收集阶段：Q4信息渠道，Q5关注信息 5. 方案比选阶段：Q6刻录功能考虑程度，Q7耗电量考虑程度，Q8上网功能考虑程度，Q9他人推荐考虑程度，Q10促销活动考虑程度，Q11感兴趣的促销活动 6. 购买决策阶段：Q12品牌，Q13价格，Q14外观，Q15规格，Q16颜色 7. 购后行为阶段：Q17安装方式，Q18摆放位置 8. 用户背景信息：A1性别，A2年龄，A3学历，A4家庭收入，A5住房面积，A6家庭成员</p>
-<h2 id="调研计划">调研计划</h2>
-<p>完成调查问卷的创建之后，紧接着进行问卷调查，这里需要明确6个问题： * 调查方法：例如中心定点拦截访问（CIL） * 调查对象：某天之后购买过彩电的用户 * 调查地点与样本量： * 项目周期： * 项目成员及职责： * 项目经理：负责整个项目的统筹控制，业务沟通、制定方案、控制进度及质量、团队协调沟通 * 督导员：向项目经理汇报工作进展，招聘和监督访问员，对访问质量直接负责 * 访问员：负责实际访问，向督导员汇报工作进度 * 数据处理人员：调查问卷审核，数据录入，数据检查和对数据质量进行评价 * 数据分析人员：对调查和处理好的数据进行研究分析 * 报告撰写与宣讲人员：撰写分析报告并向相关领导汇报 * 项目质量与进度控制：安排跟访，保证数据真实有效性，并及时汇报和录入数据</p>
-<h2 id="数据处理">数据处理</h2>
-<p>调查得到的数据是最原始的数据，其中可能会出现很多的问题，所以需要对数据先进行处理，主要分为四个步骤： * 数据集成：将多个数据源的数据进行合并 * 数据转换：对数据进行标准化处理 * 数据消减：对数据进行聚合和降维，减小数据规模 * <strong>数据清洗</strong>：数据筛选、数据去重、填补缺失值和数据纠错。（本案例仅关注数据清洗）</p>
-<h3 id="数据编码">数据编码</h3>
-<p>其中方案比选阶段的Q6-Q10数据为数值数据，可以直接进行数据分析，而其他数据均为类别数据，需要使用编码格式进行数值转换</p>
-<p>针对<strong>不存在大小</strong>的分类数据，可以直接使用set容器去重，再使用map进行<strong>硬编码</strong>，若存在大小的，最好还是手动创建map参数。例如下面非比较类型分类数据的例子：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">&#x27;A&#x27;</span>:[<span class="string">&#x27;一&#x27;</span>,<span class="string">&#x27;二&#x27;</span>,<span class="string">&#x27;一&#x27;</span>,<span class="string">&#x27;三&#x27;</span>,<span class="string">&#x27;一&#x27;</span>,<span class="string">&#x27;一&#x27;</span>,<span class="string">&#x27;三&#x27;</span>],</span><br><span class="line">                   <span class="string">&#x27;B&#x27;</span>:[<span class="string">&#x27;aa&#x27;</span>,<span class="string">&#x27;bb&#x27;</span>,<span class="string">&#x27;cc&#x27;</span>,<span class="string">&#x27;cc&#x27;</span>,<span class="string">&#x27;bb&#x27;</span>,<span class="string">&#x27;aa&#x27;</span>,<span class="string">&#x27;dd&#x27;</span>],</span><br><span class="line">                   <span class="string">&#x27;C&#x27;</span>:[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>]&#125;)</span><br><span class="line"></span><br><span class="line">df_obj= df.select_dtypes(<span class="string">&#x27;object&#x27;</span>)</span><br><span class="line">datamap = []</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df_obj.columns:</span><br><span class="line">    datamap.append(&#123;elem: index+<span class="number">1</span> <span class="keyword">for</span> index, elem <span class="keyword">in</span> <span class="built_in">enumerate</span>(<span class="built_in">set</span>(df[col]))&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="数据清洗">数据清洗</h3>
-<p>首先通过数据筛选，将<code>S1甄别问题</code>为<code>1</code>的问卷筛选出来，因为购买了彩电的用户才是我们需要分析的用户。</p>
-<p>然后对数据进行去重，针对的是问卷编号，保证每个问卷仅出现一次。</p>
-<p>再对处理数据中存在的缺失值，可以找到缺失值的位置，找到相应问卷进行查看并填补；若问卷上也不存在，则对数值型数据使用统计值填补，对分类型数据使用众数填补；或者少量数据可以直接删除。</p>
-<p>最后进行数据纠错，数据的错误类型主要有两种，一种是非逻辑错误，就是在问卷调查或录入数据的时候出现差错，这需要加强调研的各个环节的质量监控；另一种是逻辑错误，例如，性别男为“1”，女为“2”，但是录入了3，这种属于逻辑错误，需要在数据编码的时候进行控制。</p>
-<h2 id="分析架构">分析架构</h2>
-<p>用户偏好分析主要分为三个部分：</p>
-<ol type="1">
-<li>用户基本特征描述：用户的特征不同，结论分析往往不同，可以协助业务方在下结论的时候注意应用对象。</li>
-<li>用户整体偏好分析：对于问卷中的数值数据可以使用<strong>均值分析</strong>用户整体偏好，对于非数值数值使用<strong>频数统计</strong>反映用户整体情况。</li>
-<li>各类用户偏好分析：将用户偏好和用户基本特征做<strong>比较均值</strong>或<strong>交叉分析</strong>。</li>
-</ol>
-<blockquote>
-<p>在此之前需要利用<strong>方差分析</strong>，检验不同用户之间是否存在<strong>显著差异</strong>，若存在，做差异对比才有意义。</p>
-</blockquote>
-<h2 id="实例演示">实例演示</h2>
-<p>详见我在Github上的<a href="https://github.com/Gipbear/data-analysis/blob/master/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90%E2%80%94%E2%80%94%E6%9F%90%E5%BD%A9%E7%94%B5%E4%BC%81%E4%B8%9A%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90/%E6%9F%90%E5%BD%A9%E7%94%B5%E4%BC%81%E4%B8%9A%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90.ipynb">代码</a></p>
-<h2 id="分析结果解读">分析结果解读</h2>
-<p>最后根据以上得到的各个分析结果，进行可视化图像进行分析比较，得到最终结论。</p>
-<p>// todo: 详细的会在之后学习了数据分析经验之后再来分析一下。</p>
-<h2 id="个人收获">个人收获</h2>
-<p>总体上学到了有几点，首先是学会了如何设计一个比较全面的问卷调查方法，需要考虑需要的各个方面，从需求开始，从分支扩展，按照需要的、可能的、与结论相关的因素进行讨论，由此编写有效的问卷；其次第一次进行编码操作，之前学会的硬编码和热编码并没有使用，所以未知其用途，在这里发现在方差分析的时候，必须使用编码参数进行调用；最后，发现python或许是万能的，但并不是最方便的，这些统计分析之类的，需要自己慢慢编写程序，而在spss中却是及其方便，由此我以后或许可以尝试，使用python进行清洗整理数据以及机器学习相关，使用spss完成统计分析，以及使用tableau实现图表可视化。</p>
-]]></content>
-      <categories>
-        <category>数据分析实战</category>
-      </categories>
-      <tags>
-        <tag>调查问卷</tag>
-        <tag>数据编码</tag>
-        <tag>方差分析</tag>
-        <tag>频数统计</tag>
-        <tag>交叉分析</tag>
       </tags>
   </entry>
   <entry>
