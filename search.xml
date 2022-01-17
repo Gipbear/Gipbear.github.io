@@ -7,7 +7,24 @@
 <p>本文是关于一些西瓜书学习过程中的一些数学理论的汇总.</p>
 </blockquote>
 <span id="more"></span>
+<h2 id="分类变量化为连续值">分类变量化为连续值</h2>
+<p>有时我们的有些数据可能是离散的, 这时候我们会考虑将数据化为<strong>连续值</strong>.</p>
+<ul>
+<li>在<strong>有序</strong>(order)数据中, 比如"低" "中" "高"等, 可以使用<span class="math inline">\(\{0, 0.5, 1\}\)</span>来表示.
+<ul>
+<li>直接使用<code>map</code>映射, 或使用<code>LabelEncoder</code>.</li>
+</ul></li>
+<li>在<strong>无序</strong>数据中, 比如"西瓜" "南瓜" "冬瓜"等, 就需要使用<span class="math inline">\((1,0,0), (0,1,0), (0,0,1)\)</span>来表示.
+<ul>
+<li>独热编码<code>OneHotEncoder</code>或 pandas 中的<code>get_dummies</code>.</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>无序属性在连续化的时候, 不能像连续值一样直接使用值代替, 因为值之间存在大小, 从而会引入<strong>不当的有序关系</strong>.</p>
+<p>但其实对分类变量化为连续值, 或多或少会引入一些额外的有序关系.</p>
+</blockquote>
 <h2 id="广义特征值与广义瑞利商">广义特征值与广义瑞利商</h2>
+<p>// 尽量今天完成</p>
 <h3 id="广义特征值">广义特征值</h3>
 <h3 id="广义瑞利商">广义瑞利商</h3>
 <h2 id="拉格朗日乘子法">拉格朗日乘子法</h2>
@@ -117,7 +134,7 @@ y = \frac{1}{1+e^{-z}}
 <img src="./机器学习西瓜书——第03章线性模型/单位阶跃函数与对数几率函数.png" alt="单位阶跃函数与对数几率函数.png" /><figcaption aria-hidden="true">单位阶跃函数与对数几率函数.png</figcaption>
 </figure>
 <p>这是一个形如s型曲线的图像, 通过设置不同的<strong>阈值</strong>, 使得取值被划分为0或1, 所以这也是为什么虽然叫做回归函数, 却经常被用作<strong>分类</strong>.</p>
-<h3 id="模型的表示">模型的表示</h3>
+<h3 id="模型的表示模型">模型的表示(模型)</h3>
 <p>将线性模型带入sigmoid函数中, 可以得到:</p>
 <p><span class="math display">\[
 y = \frac{1}{1+e^{-(\boldsymbol{w}^{T}\boldsymbol{x} + b)}}
@@ -134,7 +151,7 @@ y = \frac{1}{1+e^{-(\boldsymbol{w}^{T}\boldsymbol{x} + b)}}
 <blockquote>
 <p>我们所谓的"几率"就是<span class="math inline">\(\frac{y}{1-y}\)</span>, <strong>反映了x作为正例的相对可能性</strong>. 再取对数, 所以就称为对数几率!</p>
 </blockquote>
-<h3 id="求解策略">求解策略</h3>
+<h3 id="最大似然估计策略">最大似然估计(策略)</h3>
 <p>那么问题回到如何确定模型中的<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>呢? 我们这里使用<strong>最大似然估计</strong>来解释, 同样的还可以使用信息论的角度来解释.</p>
 <p>根据以上的内容, 可以将模型表达写成:</p>
 <p><span class="math display">\[
@@ -190,9 +207,9 @@ l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsym
 <blockquote>
 <p><span class="math inline">\(\|X\|^2_2这叫做二范数的平方, 表示向量之间的距离, 可以使用向量的内积进行计算\)</span></p>
 </blockquote>
-<p>:warning: 我们需要注意!!!, 我们的目的是为了求出投影直线的<strong>方向</strong>, 所以<span class="math inline">\(\boldsymbol{w}\)</span>的大小无关紧要, 这也是下面很多步骤中的必要条件.</p>
+<p>我们需要注意 :warning: ! 我们的目的是为了求出投影直线的<strong>方向</strong>, 所以<span class="math inline">\(\boldsymbol{w}\)</span>的大小无关紧要, 这也是下面很多步骤中的必要条件.</p>
 <h3 id="损失函数策略">损失函数(策略)</h3>
-<p>同时考虑两者, 可以得到我们的最大化目标:</p>
+<p>同时考虑以上两者, 可以得到我们的最大化目标:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \max J &amp;= \frac{\|\boldsymbol{w}^T\mu_0 - \boldsymbol{w}^T\mu_1\|^2_2}{\boldsymbol{w}^T\Sigma_0\boldsymbol{w} + \boldsymbol{w}^T\Sigma_1\boldsymbol{w}} \\
@@ -205,7 +222,7 @@ l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsym
 <p><span class="math display">\[
 \max J = \frac{\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w}}{\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w}}
 \]</span></p>
-<p>以上这个最大化的目标函数其实就是<span class="math inline">\(\boldsymbol{S}_b\)</span>与<span class="math inline">\(\boldsymbol{S}_w\)</span>的"<a href="">广义瑞利商</a>".</p>
+<p>以上这个最大化的目标函数其实就是<span class="math inline">\(\boldsymbol{S}_b\)</span>与<span class="math inline">\(\boldsymbol{S}_w\)</span>的"<a href="https://gipbear.github.io/2022/01/17/机器学习中可能会使用的理论/#广义瑞利商">广义瑞利商</a>".</p>
 <p>并注意到我们需要求解的<span class="math inline">\(\boldsymbol{w}\)</span>只与方向有关, 而与大小无关, 那么不失一般性的, 可以令分母<span class="math inline">\(\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w}=1\)</span>, 由此等价于:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -214,7 +231,7 @@ l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsym
 \end{aligned}
 \]</span></p>
 <h3 id="拉格朗日乘子法求解">拉格朗日乘子法(求解)</h3>
-<p>关于这种<strong>仅含有等式约束</strong>的问题, 可以使用拉格朗日乘子法进行求解.</p>
+<p>关于这种<strong>仅含有等式约束</strong>的问题, 可以使用<a href="https://gipbear.github.io/2022/01/17/机器学习中可能会使用的理论/#拉格朗日乘子法">拉格朗日乘子法</a>进行求解.</p>
 <p>即, 可得:</p>
 <p><span class="math display">\[
 L(\boldsymbol{w}, \lambda) = -\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w} + \lambda(\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w} - 1)
@@ -231,27 +248,17 @@ L(\boldsymbol{w}, \lambda) = -\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w} +
 <p><span class="math display">\[
 \boldsymbol{w} = \boldsymbol{S}^{-1}_w(\mu_0-\mu_1)
 \]</span></p>
-<h2 id="其他">其他</h2>
-<h3 id="分类变量化为连续值">分类变量化为连续值</h3>
-<p>有时我们的有些数据可能是离散的, 这时候我们会考虑将数据化为<strong>连续值</strong>.</p>
-<ul>
-<li>在<strong>有序</strong>(order)数据中, 比如"低" "中" "高"等, 可以使用<span class="math inline">\(\{0, 0.5, 1\}\)</span>来表示.
-<ul>
-<li>直接使用<code>map</code>映射, 或使用<code>LabelEncoder</code>.</li>
-</ul></li>
-<li>在<strong>无序</strong>数据中, 比如"西瓜" "南瓜" "冬瓜"等, 就需要使用<span class="math inline">\((1,0,0), (0,1,0), (0,0,1)\)</span>来表示.
-<ul>
-<li>独热编码<code>OneHotEncoder</code>或 pandas 中的<code>get_dummies</code>.</li>
-</ul></li>
-</ul>
 <blockquote>
-<p>无序属性在连续化的时候, 不能像连续值一样直接使用值代替, 因为值之间存在大小, 从而会引入<strong>不当的有序关系</strong>.</p>
-<p>但其实对分类变量化为连续值, 或多或少会引入一些额外的有序关系.</p>
+<p>可以发现, 我们求得的<span class="math inline">\(\boldsymbol{w}\)</span>的值, 就是<span class="math inline">\(\boldsymbol{S}_b\)</span>对应于<span class="math inline">\(\boldsymbol{S}_b\)</span>的广义特征值对应的特征向量</p>
 </blockquote>
+<h3 id="多分类问题">多分类问题</h3>
+<p>而多分类的问题中, 只不过是求矩阵<span class="math inline">\(\boldsymbol{W}\)</span>, 使得<span class="math inline">\(\boldsymbol{S}_b\boldsymbol{W} = \lambda\boldsymbol{S}_w\boldsymbol{W}\)</span>.</p>
+<p>我们将<span class="math inline">\(\boldsymbol{W}\)</span>拆分为多个二分类问题可得: <span class="math inline">\(\boldsymbol{W} = \{\boldsymbol{w}_1, \boldsymbol{w}_1, \dots, \boldsymbol{w}_n\}\)</span>, 结合<a href="https://gipbear.github.io/2022/01/17/机器学习中可能会使用的理论/#广义特征值与广义瑞利商">广义特征值与广义瑞利商的性质</a>可以得到<span class="math inline">\(\boldsymbol{W}\)</span>其实就是<span class="math inline">\(\boldsymbol{S}_b\)</span>相对于<span class="math inline">\(\boldsymbol{S}_w\)</span>最大的非零广义特征值所对应的特征向量组成的矩阵!</p>
 <h2 id="个人收获">个人收获</h2>
 <ol type="1">
 <li>从单纯的线性模型, 推广到广义的线性模型, 再引出特殊的对数几率回归模型. 从特殊到一般再到特殊的方式, 很好的理清楚了简单线性回归和逻辑回归之间的关系.</li>
 <li>逻辑回归真正的名字应该是对数几率回归, 这对记忆和理解模型都有更好的可解释性.</li>
+<li>线性判别分析法这次终于学明白了! 从"模型-策略-求解"三方面进行学习果然思路清楚了很多.</li>
 <li>公式的推导依旧有难度, 目前处于抛开书想不到怎么推, 但结合西瓜书和南瓜书还是能够看懂推导过程.</li>
 </ol>
 <p>继续加油!</p>
@@ -653,8 +660,8 @@ FPR = \frac{FP}{TN + FP}
       </categories>
       <tags>
         <tag>leetcode题解</tag>
-        <tag>双指针</tag>
         <tag>c++</tag>
+        <tag>双指针</tag>
         <tag>数组</tag>
         <tag>二分查找</tag>
       </tags>
@@ -754,8 +761,8 @@ FPR = \frac{FP}{TN + FP}
       </categories>
       <tags>
         <tag>leetcode题解</tag>
-        <tag>双指针</tag>
         <tag>c++</tag>
+        <tag>双指针</tag>
         <tag>字符串</tag>
         <tag>滑动窗口</tag>
       </tags>
@@ -1000,9 +1007,9 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
-        <tag>逻辑链接</tag>
-        <tag>双指针</tag>
         <tag>c++</tag>
+        <tag>双指针</tag>
+        <tag>逻辑链接</tag>
       </tags>
   </entry>
   <entry>
@@ -1111,8 +1118,8 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
-        <tag>双指针</tag>
         <tag>c++</tag>
+        <tag>双指针</tag>
         <tag>快慢指针</tag>
       </tags>
   </entry>
@@ -1194,8 +1201,8 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
-        <tag>c++</tag>
         <tag>k路问题</tag>
+        <tag>c++</tag>
       </tags>
   </entry>
   <entry>

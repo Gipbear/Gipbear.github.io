@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/机器学习西瓜书——第03章线性模型/单位阶跃函数与对数几率函数.png">
 <meta property="og:image" content="http://example.com/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/机器学习西瓜书——第03章线性模型/LDA示意图.png">
 <meta property="article:published_time" content="2022-01-14T10:35:28.000Z">
-<meta property="article:modified_time" content="2022-01-17T12:23:00.453Z">
+<meta property="article:modified_time" content="2022-01-17T13:04:32.264Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="西瓜书">
 <meta property="article:tag" content="线性模型">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-17 20:23:00" itemprop="dateModified" datetime="2022-01-17T20:23:00+08:00">2022-01-17</time>
+                <time title="修改时间：2022-01-17 21:04:32" itemprop="dateModified" datetime="2022-01-17T21:04:32+08:00">2022-01-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,7 +260,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.7k</span>
+              <span>7.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -372,7 +372,7 @@ y = \frac{1}{1+e^{-z}}
 <img src="./机器学习西瓜书——第03章线性模型/单位阶跃函数与对数几率函数.png" alt="单位阶跃函数与对数几率函数.png" /><figcaption aria-hidden="true">单位阶跃函数与对数几率函数.png</figcaption>
 </figure>
 <p>这是一个形如s型曲线的图像, 通过设置不同的<strong>阈值</strong>, 使得取值被划分为0或1, 所以这也是为什么虽然叫做回归函数, 却经常被用作<strong>分类</strong>.</p>
-<h3 id="模型的表示">模型的表示</h3>
+<h3 id="模型的表示模型">模型的表示(模型)</h3>
 <p>将线性模型带入sigmoid函数中, 可以得到:</p>
 <p><span class="math display">\[
 y = \frac{1}{1+e^{-(\boldsymbol{w}^{T}\boldsymbol{x} + b)}}
@@ -389,7 +389,7 @@ y = \frac{1}{1+e^{-(\boldsymbol{w}^{T}\boldsymbol{x} + b)}}
 <blockquote>
 <p>我们所谓的"几率"就是<span class="math inline">\(\frac{y}{1-y}\)</span>, <strong>反映了x作为正例的相对可能性</strong>. 再取对数, 所以就称为对数几率!</p>
 </blockquote>
-<h3 id="求解策略">求解策略</h3>
+<h3 id="最大似然估计策略">最大似然估计(策略)</h3>
 <p>那么问题回到如何确定模型中的<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>呢? 我们这里使用<strong>最大似然估计</strong>来解释, 同样的还可以使用信息论的角度来解释.</p>
 <p>根据以上的内容, 可以将模型表达写成:</p>
 <p><span class="math display">\[
@@ -445,9 +445,9 @@ l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsym
 <blockquote>
 <p><span class="math inline">\(\|X\|^2_2这叫做二范数的平方, 表示向量之间的距离, 可以使用向量的内积进行计算\)</span></p>
 </blockquote>
-<p>:warning: 我们需要注意!!!, 我们的目的是为了求出投影直线的<strong>方向</strong>, 所以<span class="math inline">\(\boldsymbol{w}\)</span>的大小无关紧要, 这也是下面很多步骤中的必要条件.</p>
+<p>我们需要注意 :warning: ! 我们的目的是为了求出投影直线的<strong>方向</strong>, 所以<span class="math inline">\(\boldsymbol{w}\)</span>的大小无关紧要, 这也是下面很多步骤中的必要条件.</p>
 <h3 id="损失函数策略">损失函数(策略)</h3>
-<p>同时考虑两者, 可以得到我们的最大化目标:</p>
+<p>同时考虑以上两者, 可以得到我们的最大化目标:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \max J &amp;= \frac{\|\boldsymbol{w}^T\mu_0 - \boldsymbol{w}^T\mu_1\|^2_2}{\boldsymbol{w}^T\Sigma_0\boldsymbol{w} + \boldsymbol{w}^T\Sigma_1\boldsymbol{w}} \\
@@ -460,7 +460,7 @@ l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsym
 <p><span class="math display">\[
 \max J = \frac{\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w}}{\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w}}
 \]</span></p>
-<p>以上这个最大化的目标函数其实就是<span class="math inline">\(\boldsymbol{S}_b\)</span>与<span class="math inline">\(\boldsymbol{S}_w\)</span>的"<a href="">广义瑞利商</a>".</p>
+<p>以上这个最大化的目标函数其实就是<span class="math inline">\(\boldsymbol{S}_b\)</span>与<span class="math inline">\(\boldsymbol{S}_w\)</span>的"<a target="_blank" rel="noopener" href="https://gipbear.github.io/2022/01/17/机器学习中可能会使用的理论/#广义瑞利商">广义瑞利商</a>".</p>
 <p>并注意到我们需要求解的<span class="math inline">\(\boldsymbol{w}\)</span>只与方向有关, 而与大小无关, 那么不失一般性的, 可以令分母<span class="math inline">\(\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w}=1\)</span>, 由此等价于:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -469,7 +469,7 @@ l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsym
 \end{aligned}
 \]</span></p>
 <h3 id="拉格朗日乘子法求解">拉格朗日乘子法(求解)</h3>
-<p>关于这种<strong>仅含有等式约束</strong>的问题, 可以使用拉格朗日乘子法进行求解.</p>
+<p>关于这种<strong>仅含有等式约束</strong>的问题, 可以使用<a target="_blank" rel="noopener" href="https://gipbear.github.io/2022/01/17/机器学习中可能会使用的理论/#拉格朗日乘子法">拉格朗日乘子法</a>进行求解.</p>
 <p>即, 可得:</p>
 <p><span class="math display">\[
 L(\boldsymbol{w}, \lambda) = -\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w} + \lambda(\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w} - 1)
@@ -486,27 +486,17 @@ L(\boldsymbol{w}, \lambda) = -\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w} +
 <p><span class="math display">\[
 \boldsymbol{w} = \boldsymbol{S}^{-1}_w(\mu_0-\mu_1)
 \]</span></p>
-<h2 id="其他">其他</h2>
-<h3 id="分类变量化为连续值">分类变量化为连续值</h3>
-<p>有时我们的有些数据可能是离散的, 这时候我们会考虑将数据化为<strong>连续值</strong>.</p>
-<ul>
-<li>在<strong>有序</strong>(order)数据中, 比如"低" "中" "高"等, 可以使用<span class="math inline">\(\{0, 0.5, 1\}\)</span>来表示.
-<ul>
-<li>直接使用<code>map</code>映射, 或使用<code>LabelEncoder</code>.</li>
-</ul></li>
-<li>在<strong>无序</strong>数据中, 比如"西瓜" "南瓜" "冬瓜"等, 就需要使用<span class="math inline">\((1,0,0), (0,1,0), (0,0,1)\)</span>来表示.
-<ul>
-<li>独热编码<code>OneHotEncoder</code>或 pandas 中的<code>get_dummies</code>.</li>
-</ul></li>
-</ul>
 <blockquote>
-<p>无序属性在连续化的时候, 不能像连续值一样直接使用值代替, 因为值之间存在大小, 从而会引入<strong>不当的有序关系</strong>.</p>
-<p>但其实对分类变量化为连续值, 或多或少会引入一些额外的有序关系.</p>
+<p>可以发现, 我们求得的<span class="math inline">\(\boldsymbol{w}\)</span>的值, 就是<span class="math inline">\(\boldsymbol{S}_b\)</span>对应于<span class="math inline">\(\boldsymbol{S}_b\)</span>的广义特征值对应的特征向量</p>
 </blockquote>
+<h3 id="多分类问题">多分类问题</h3>
+<p>而多分类的问题中, 只不过是求矩阵<span class="math inline">\(\boldsymbol{W}\)</span>, 使得<span class="math inline">\(\boldsymbol{S}_b\boldsymbol{W} = \lambda\boldsymbol{S}_w\boldsymbol{W}\)</span>.</p>
+<p>我们将<span class="math inline">\(\boldsymbol{W}\)</span>拆分为多个二分类问题可得: <span class="math inline">\(\boldsymbol{W} = \{\boldsymbol{w}_1, \boldsymbol{w}_1, \dots, \boldsymbol{w}_n\}\)</span>, 结合<a target="_blank" rel="noopener" href="https://gipbear.github.io/2022/01/17/机器学习中可能会使用的理论/#广义特征值与广义瑞利商">广义特征值与广义瑞利商的性质</a>可以得到<span class="math inline">\(\boldsymbol{W}\)</span>其实就是<span class="math inline">\(\boldsymbol{S}_b\)</span>相对于<span class="math inline">\(\boldsymbol{S}_w\)</span>最大的非零广义特征值所对应的特征向量组成的矩阵!</p>
 <h2 id="个人收获">个人收获</h2>
 <ol type="1">
 <li>从单纯的线性模型, 推广到广义的线性模型, 再引出特殊的对数几率回归模型. 从特殊到一般再到特殊的方式, 很好的理清楚了简单线性回归和逻辑回归之间的关系.</li>
 <li>逻辑回归真正的名字应该是对数几率回归, 这对记忆和理解模型都有更好的可解释性.</li>
+<li>线性判别分析法这次终于学明白了! 从"模型-策略-求解"三方面进行学习果然思路清楚了很多.</li>
 <li>公式的推导依旧有难度, 目前处于抛开书想不到怎么推, 但结合西瓜书和南瓜书还是能够看懂推导过程.</li>
 </ol>
 <p>继续加油!</p>
@@ -621,7 +611,7 @@ L(\boldsymbol{w}, \lambda) = -\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w} +
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">3.1 基本形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">2.</span> <span class="nav-text">3.2 线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">最小二乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">矩阵形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">2.3.</span> <span class="nav-text">广义线性回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92"><span class="nav-number">3.</span> <span class="nav-text">3.3 对数几率回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.1.</span> <span class="nav-text">模型的表示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">求解策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">3.3.</span> <span class="nav-text">模型的优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">3.4 线性判别分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">针对二分类问题(模型)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E7%AD%96%E7%95%A5"><span class="nav-number">4.2.</span> <span class="nav-text">损失函数(策略)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E6%B1%82%E8%A7%A3"><span class="nav-number">4.3.</span> <span class="nav-text">拉格朗日乘子法(求解)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E5%8F%98%E9%87%8F%E5%8C%96%E4%B8%BA%E8%BF%9E%E7%BB%AD%E5%80%BC"><span class="nav-number">5.1.</span> <span class="nav-text">分类变量化为连续值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">6.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">3.1 基本形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">2.</span> <span class="nav-text">3.2 线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95"><span class="nav-number">2.1.</span> <span class="nav-text">最小二乘法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">矩阵形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">2.3.</span> <span class="nav-text">广义线性回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92"><span class="nav-number">3.</span> <span class="nav-text">3.3 对数几率回归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%A1%A8%E7%A4%BA%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.</span> <span class="nav-text">模型的表示(模型)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1%E7%AD%96%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">最大似然估计(策略)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BC%98%E7%82%B9"><span class="nav-number">3.3.</span> <span class="nav-text">模型的优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%88%A4%E5%88%AB%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">3.4 线性判别分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.1.</span> <span class="nav-text">针对二分类问题(模型)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E7%AD%96%E7%95%A5"><span class="nav-number">4.2.</span> <span class="nav-text">损失函数(策略)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95%E6%B1%82%E8%A7%A3"><span class="nav-number">4.3.</span> <span class="nav-text">拉格朗日乘子法(求解)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">4.4.</span> <span class="nav-text">多分类问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">5.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -707,7 +697,7 @@ L(\boldsymbol{w}, \lambda) = -\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w} +
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:30</span>
+    <span title="站点阅读时长">1:31</span>
 </div>
 
 
