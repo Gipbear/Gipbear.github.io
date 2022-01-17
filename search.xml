@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>机器学习中可能会使用的理论</title>
+    <url>/2022/01/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E7%90%86%E8%AE%BA/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于一些西瓜书学习过程中的一些数学理论的汇总.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="广义特征值与广义瑞利商">广义特征值与广义瑞利商</h2>
+<h3 id="广义特征值">广义特征值</h3>
+<h3 id="广义瑞利商">广义瑞利商</h3>
+<h2 id="拉格朗日乘子法">拉格朗日乘子法</h2>
+<h2 id="个人收获">个人收获</h2>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>ML理论</tag>
+        <tag>西瓜书</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习西瓜书——第03章线性模型</title>
     <url>/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<blockquote>
@@ -23,7 +44,7 @@ f(x) = \boldsymbol{w}^{T}\boldsymbol{x} + b
 <h2 id="线性回归">3.2 线性回归</h2>
 <p>线性回归是来学习一个线性模型, 来预测<strong>连续值</strong>. 使得预测的连续值<span class="math inline">\(f(x_i)\)</span>尽可能是与真实值<span class="math inline">\(y_i\)</span>接近, 即, 使得<span class="math inline">\(f(x_i) \approxeq y_{i}\)</span>.</p>
 <h3 id="最小二乘法">最小二乘法</h3>
-<p>那么我们如何来衡量<span class="math inline">\(f(x_i)\)</span>与<span class="math inline">\(y_i\)</span>之间的差距呢, 这时候可以上文提过的<a href="https://gipbear.github.io/2022/01/14/机器学习西瓜书——第03章线性模型">均方误差(MSE)</a>来衡量<span class="math inline">\(f(x_i)\)</span>与<span class="math inline">\(y_i\)</span>之间的差距. 并使其最小化, 就可以得到我们先想要的<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>:</p>
+<p>那么我们如何来衡量<span class="math inline">\(f(x_i)\)</span>与<span class="math inline">\(y_i\)</span>之间的差距呢, 这时候可以上文提过的<a href="https://gipbear.github.io/2022/01/11/机器学习西瓜书——第02章模型评估和选择/#性能度量">均方误差(MSE)</a>来衡量<span class="math inline">\(f(x_i)\)</span>与<span class="math inline">\(y_i\)</span>之间的差距. 并使其最小化, 就可以得到我们先想要的<span class="math inline">\(\boldsymbol{w}\)</span>和<span class="math inline">\(b\)</span>:</p>
 <p><span class="math display">\[
 \begin{aligned}
 (w^*, b^*)
@@ -86,7 +107,7 @@ x_{m1} &amp; x_{m2} &amp; \cdots &amp; x_{md} &amp; 1 \\
 <p><span class="math display">\[
 y = g^{-1}(\boldsymbol{w}^{T}\boldsymbol{x} + b)
 \]</span></p>
-<h2 id="对数几率回归">对数几率回归</h2>
+<h2 id="对数几率回归">3.3 对数几率回归</h2>
 <p><strong>对数几率回归</strong>也就是我们之前经常听说的<strong>逻辑回归</strong>. 但是逻辑(logistic)其实并不合适, 而对数几率(log odds, logit)才是这个模型的本质, 下面详细介绍.</p>
 <p>我们在上面所提到的广义线性回归中, 使用一个特定的函数来代替单调可微函数<span class="math inline">\(g^{-1}(\cdot)\)</span>——<strong>sigmoid函数</strong>.</p>
 <p><span class="math display">\[
@@ -148,6 +169,68 @@ l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsym
 <li>而且得到了近似概率预测, 对许多需要利用概率辅助决策的任务有很大的帮助;</li>
 <li>求解的目标函数是任意阶可导的凸函数, 有很好的数学性质, 许多值优化算法都可以用来求解最优解.</li>
 </ol>
+<h2 id="线性判别分析">3.4 线性判别分析</h2>
+<p>线性判别分析(linear Discrimination Analysis, LDA)是一种典型的二分类方法.</p>
+<p>主要思想是: 在给定的训练样本集中, 试图寻找一条直线, 并让所有的样本点投影到该直线上, 其中<strong>同类样本点的投影之间尽可能的接近, 异类样本点的投影之间尽可能远离</strong>.当需要对新样本进行分类时, 同样将新样本投影到该直线上, 根据其位置判断属于哪一类.</p>
+<figure>
+<img src="./机器学习西瓜书——第03章线性模型/LDA示意图.png" alt="LDA示意图.png" /><figcaption aria-hidden="true">LDA示意图.png</figcaption>
+</figure>
+<h3 id="针对二分类问题模型">针对二分类问题(模型)</h3>
+<p>接下来, 首先对一些符号进行说明. 数据集: <span class="math inline">\(D=\{(\boldsymbol{x}_i,y_i)\}^m_{i=1}\)</span>, 其中标记取值为0或1: <span class="math inline">\(y_i=\{0,1\}\)</span>, 第<span class="math inline">\(i=\{0, 1\}\)</span>类示例的集合为<span class="math inline">\(X_i\)</span>, 均值向量为<span class="math inline">\(\mu_i\)</span>, 协方差矩阵为<span class="math inline">\(\Sigma_i\)</span>.</p>
+<blockquote>
+<p>协方差矩阵<span class="math inline">\(\Sigma\)</span>(读<code>Sigma</code>)与求和符号<span class="math inline">\(\sum\)</span>(读<code>sum</code>)还是不一样的,注意通过上下文进行区分.</p>
+<p>协方差矩阵表示的是各个<strong>属性</strong>之间的相关性, 为0表示不相关. 因此协方差矩阵的大小与属性的个数有关, 而与样本的个数无关.</p>
+</blockquote>
+<p>根据以上对符号的定义,</p>
+<ol type="1">
+<li>将样本点投影到直线上得到: <span class="math inline">\(\boldsymbol{w}^T\mu_0\)</span> 和 <span class="math inline">\(\boldsymbol{w}^T\mu_1\)</span>;</li>
+<li>将所有样本点投影到直线上得到两类样本的协方差为: <span class="math inline">\(\boldsymbol{w}^T\Sigma_0\boldsymbol{w}\)</span> 和 <span class="math inline">\(\boldsymbol{w}^T\Sigma_1\boldsymbol{w}\)</span>.</li>
+</ol>
+<p>由于我们的目的是使得两类样本之间的距离尽可能的大, 而样本内的距离尽可能的小, 那么就需要使得<span class="math inline">\(\|\boldsymbol{w}^T\mu_0 - \boldsymbol{w}^T\mu_1\|^2_2\)</span>尽可能的大, 而<span class="math inline">\(\boldsymbol{w}^T\Sigma_0\boldsymbol{w} + \boldsymbol{w}^T\Sigma_1\boldsymbol{w}\)</span>尽可能的小.</p>
+<blockquote>
+<p><span class="math inline">\(\|X\|^2_2这叫做二范数的平方, 表示向量之间的距离, 可以使用向量的内积进行计算\)</span></p>
+</blockquote>
+<p>:warning: 我们需要注意!!!, 我们的目的是为了求出投影直线的<strong>方向</strong>, 所以<span class="math inline">\(\boldsymbol{w}\)</span>的大小无关紧要, 这也是下面很多步骤中的必要条件.</p>
+<h3 id="损失函数策略">损失函数(策略)</h3>
+<p>同时考虑两者, 可以得到我们的最大化目标:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\max J &amp;= \frac{\|\boldsymbol{w}^T\mu_0 - \boldsymbol{w}^T\mu_1\|^2_2}{\boldsymbol{w}^T\Sigma_0\boldsymbol{w} + \boldsymbol{w}^T\Sigma_1\boldsymbol{w}} \\
+&amp;= \frac{\|(\mu_0-\mu_1)^T\boldsymbol{w}\|^2_2}{\boldsymbol{w}^T(\Sigma_0+\Sigma_1)\boldsymbol{w}} \\
+&amp;= \frac{w^T (\mu_0-\mu_1)(\mu_0-\mu_1)^T \boldsymbol{w}}{\boldsymbol{w}^T(\Sigma_0+\Sigma_1)\boldsymbol{w}}
+\end{aligned}
+\]</span></p>
+<p>并定义"类内散度矩阵"(within-class scatter matrix): <span class="math inline">\(\boldsymbol{S}_w = \Sigma_0 + \Sigma_1\)</span>, "类间散度矩阵"(between-class scatter matrix): <span class="math inline">\(\boldsymbol{S}_b = (\mu_0-\mu_1)(\mu_0-\mu_1)^T\)</span>.</p>
+<p>那么上式可以表示为:</p>
+<p><span class="math display">\[
+\max J = \frac{\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w}}{\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w}}
+\]</span></p>
+<p>以上这个最大化的目标函数其实就是<span class="math inline">\(\boldsymbol{S}_b\)</span>与<span class="math inline">\(\boldsymbol{S}_w\)</span>的"<a href="">广义瑞利商</a>".</p>
+<p>并注意到我们需要求解的<span class="math inline">\(\boldsymbol{w}\)</span>只与方向有关, 而与大小无关, 那么不失一般性的, 可以令分母<span class="math inline">\(\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w}=1\)</span>, 由此等价于:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \min_{\boldsymbol{w}}\quad&amp;{-\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w}} \\
+  s.t. \quad &amp;\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w}=1
+\end{aligned}
+\]</span></p>
+<h3 id="拉格朗日乘子法求解">拉格朗日乘子法(求解)</h3>
+<p>关于这种<strong>仅含有等式约束</strong>的问题, 可以使用拉格朗日乘子法进行求解.</p>
+<p>即, 可得:</p>
+<p><span class="math display">\[
+L(\boldsymbol{w}, \lambda) = -\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w} + \lambda(\boldsymbol{w}^T \boldsymbol{S}_w \boldsymbol{w} - 1)
+\]</span></p>
+<p>再对<span class="math inline">\(\boldsymbol{w}\)</span>求偏导可得:</p>
+<p><span class="math display">\[
+\frac{\partial{L(\boldsymbol{w}, \lambda)}}{\partial{\boldsymbol{w}}} = -(\boldsymbol{S}_b+\boldsymbol{S}_b^T)\boldsymbol{w} + \lambda(\boldsymbol{S}_w+\boldsymbol{S}_w^T)\boldsymbol{w}
+\]</span></p>
+<p>令等式为0可得:</p>
+<p><span class="math display">\[
+\boldsymbol{S}_b\boldsymbol{w} = \lambda\boldsymbol{S}_w\boldsymbol{w}
+\]</span></p>
+<p>因为<span class="math inline">\((\mu_0-\mu_1)^T\boldsymbol{w}\)</span>为实数, 所以<span class="math inline">\(\boldsymbol{S}_b\boldsymbol{w} = (\mu_0-\mu_1)(\mu_0-\mu_1)^T\boldsymbol{w}\)</span>的方向恒为<span class="math inline">\((\mu_0-\mu_1)\)</span>, 所以可以解得:</p>
+<p><span class="math display">\[
+\boldsymbol{w} = \boldsymbol{S}^{-1}_w(\mu_0-\mu_1)
+\]</span></p>
 <h2 id="其他">其他</h2>
 <h3 id="分类变量化为连续值">分类变量化为连续值</h3>
 <p>有时我们的有些数据可能是离散的, 这时候我们会考虑将数据化为<strong>连续值</strong>.</p>
@@ -570,8 +653,8 @@ FPR = \frac{FP}{TN + FP}
       </categories>
       <tags>
         <tag>leetcode题解</tag>
-        <tag>c++</tag>
         <tag>双指针</tag>
+        <tag>c++</tag>
         <tag>数组</tag>
         <tag>二分查找</tag>
       </tags>
@@ -671,8 +754,8 @@ FPR = \frac{FP}{TN + FP}
       </categories>
       <tags>
         <tag>leetcode题解</tag>
-        <tag>c++</tag>
         <tag>双指针</tag>
+        <tag>c++</tag>
         <tag>字符串</tag>
         <tag>滑动窗口</tag>
       </tags>
@@ -917,9 +1000,9 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
-        <tag>c++</tag>
-        <tag>双指针</tag>
         <tag>逻辑链接</tag>
+        <tag>双指针</tag>
+        <tag>c++</tag>
       </tags>
   </entry>
   <entry>
@@ -1028,8 +1111,8 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
-        <tag>c++</tag>
         <tag>双指针</tag>
+        <tag>c++</tag>
         <tag>快慢指针</tag>
       </tags>
   </entry>
@@ -1111,8 +1194,8 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>单链表</tag>
         <tag>leetcode题解</tag>
-        <tag>k路问题</tag>
         <tag>c++</tag>
+        <tag>k路问题</tag>
       </tags>
   </entry>
   <entry>
