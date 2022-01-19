@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-17T13:05:10.982Z</updated>
+  <updated>2022-01-19T13:37:13.906Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,13 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>c++数据结构之vector的常见用法</title>
+    <link href="http://example.com/2022/01/19/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/"/>
+    <id>http://example.com/2022/01/19/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/</id>
+    <published>2022-01-19T12:34:03.000Z</published>
+    <updated>2022-01-19T13:37:13.906Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文是关于c++中常用的数组<code>vector</code>的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的<a href="https://gipbear.github.io/tags/leetcode题解/">leetcode题解</a>中经常会使用的.</p></blockquote><span id="more"></span><h2 id="数组-vector">数组 vector</h2><p>一般大家应该都学习过C语言, 在C语言中, <strong>数组</strong>通常使用<code>int[]</code>来表示, 但是在使用的过程中, 通常会出现一些麻烦(大佬轻喷), 比如静态初始化大小不能直接使用参数而是一个常量, 动态申请空间需要使用<code>malloc</code>等. 虽然手动分配内存可能会给代码带来一定的效率提升, 但是复杂的细节操作让我这个从<code>python</code>转来刷题应试的小白很难接受呀.</p><p>所以一般直接使用标准库提供的<code>vector</code>(很多人都是这么建议的), 这个是比<code>int[]</code>更加的高级的容器, 可以自动扩容, 让你不需要操心细节, 非常nice:man_technologist:!</p><p>那么接下来我们来看一下vector的一些常见用法吧:</p><h2 id="常见用法">常见用法</h2><p>首先需要导入标准库</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br></pre></td></tr></table></figure><h3 id="初始化">初始化</h3><p>一维数组初始化</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="keyword">int</span>&gt; res1;  <span class="comment">//简单初始化一个空数组</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res2</span><span class="params">(n+<span class="number">1</span>)</span></span>;  <span class="comment">//初始化大小为 n+1 大小的数组</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res3</span><span class="params">(n+<span class="number">1</span>, <span class="number">666</span>)</span></span>;  <span class="comment">//初始化大小为 n+1 大小的数组, 初始值为 666</span></span><br><span class="line">vector&lt;<span class="keyword">int</span>&gt; res4&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;  <span class="comment">// 直接初始化内容</span></span><br></pre></td></tr></table></figure><p>二维数组初始化</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res1;  <span class="comment">// 初始化一个二维数组;</span></span><br><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">res2</span>(n, vector&lt;<span class="keyword">int</span>&gt;(m, <span class="number">2</span>))  <span class="comment">// 初始化一个二维数组, 大小为n*m, 默认值为2.</span></span><br></pre></td></tr></table></figure><p>其中的元素也可以是其他类型, 例如<code>string</code>, <code>bool</code>等.</p><h3 id="查询属性">查询属性</h3><ol type="1"><li><p><strong>数组大小</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">size</span>();  <span class="comment">// 返回数组的大小</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>判断数组是否为空</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">empty</span>()</span><br></pre></td></tr></table></figure></p></li><li><p>返回数组头的指针</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">begin</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>返回数组尾+1的指针, 注意是指向<strong>最后的后一个</strong>, 也就是空</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">end</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>得到数组头的引用</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">front</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>得到数组尾的引用</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">back</span>();</span><br></pre></td></tr></table></figure></p></li></ol><h3 id="增删改查">增删改查</h3><ol type="1"><li><p><strong>增加元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">push_back</span>(元素);  <span class="comment">// 在尾部插入一个元素</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>删除元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">pop_back</span>(元素);  <span class="comment">// 删除最后一个元素</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>修改元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res[pos] = 值;  <span class="comment">//  直接在第pos个位置修改为某个值</span></span><br></pre></td></tr></table></figure></p></li><li><p>查找元素(按索引查找)</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res[pos];  <span class="comment">// 直接查找第pos个位置的元素</span></span><br></pre></td></tr></table></figure></p></li><li><p>那如果想查找值是否在数组中(按值查找) <code>vector</code>没有直接的方法, 就需要使用标准库中的find方法来查找(这也是我写这篇的起因, 以后还有不懂的就加进来).</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span>  <span class="comment">// 首先必须导入标准库, 该库提供了大量基于迭代器的模板函数</span></span></span><br><span class="line"><span class="built_in">find</span>(res.<span class="built_in">begin</span>(), res.<span class="built_in">end</span>(), key)  <span class="comment">// 返回范围内第一个等于给定key的元素位置指针, 一般用于判断是否存在</span></span><br></pre></td></tr></table></figure></p></li></ol><h3 id="其他">其他</h3><ol type="1"><li><p>重新定义数组大小</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">resize</span>(m);  <span class="comment">// 数组大小重新定义为m</span></span><br></pre></td></tr></table></figure></p></li><li><p>清空数组</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">clear</span>();  <span class="comment">// 清空数组</span></span><br></pre></td></tr></table></figure></p></li><li><p>与另一个数组交换数据</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">swap</span>(res1, res2)  <span class="comment">// res1与res2交换数组</span></span><br></pre></td></tr></table></figure></p></li></ol><p>以上<strong>加粗</strong>的也是比较常用的, 其实也很简单啦, 不用很复杂的操作.</p><h2 id="个人收获">个人收获</h2><p>这些方法对比python的list来学其实很简单, 只不过换了一个函数名而已, 当然还是有很多操作不一样, 比如指针操作, 记住就好了, 积少成多, 熟能生巧!</p>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是关于c++中常用的数组&lt;code&gt;vector&lt;/code&gt;的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的&lt;a href=&quot;https://gipbear.github.io/tags/leetcode题解/&quot;&gt;leetcode题解&lt;/a&gt;中经常会使用的.&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="语言特性" scheme="http://example.com/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/"/>
+    
+    
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="vector" scheme="http://example.com/tags/vector/"/>
+    
+  </entry>
+  
+  <entry>
     <title>机器学习中可能会使用的理论</title>
     <link href="http://example.com/2022/01/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E7%90%86%E8%AE%BA/"/>
     <id>http://example.com/2022/01/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E7%90%86%E8%AE%BA/</id>
     <published>2022-01-17T12:24:01.000Z</published>
-    <updated>2022-01-17T13:05:10.982Z</updated>
+    <updated>2022-01-19T12:28:18.746Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>本文是关于一些西瓜书学习过程中的一些数学理论的汇总.</p></blockquote><span id="more"></span><h2 id="分类变量化为连续值">分类变量化为连续值</h2><p>有时我们的有些数据可能是离散的, 这时候我们会考虑将数据化为<strong>连续值</strong>.</p><ul><li>在<strong>有序</strong>(order)数据中, 比如"低" "中" "高"等, 可以使用<span class="math inline">\(\{0, 0.5, 1\}\)</span>来表示.<ul><li>直接使用<code>map</code>映射, 或使用<code>LabelEncoder</code>.</li></ul></li><li>在<strong>无序</strong>数据中, 比如"西瓜" "南瓜" "冬瓜"等, 就需要使用<span class="math inline">\((1,0,0), (0,1,0), (0,0,1)\)</span>来表示.<ul><li>独热编码<code>OneHotEncoder</code>或 pandas 中的<code>get_dummies</code>.</li></ul></li></ul><blockquote><p>无序属性在连续化的时候, 不能像连续值一样直接使用值代替, 因为值之间存在大小, 从而会引入<strong>不当的有序关系</strong>.</p><p>但其实对分类变量化为连续值, 或多或少会引入一些额外的有序关系.</p></blockquote><h2 id="广义特征值与广义瑞利商">广义特征值与广义瑞利商</h2><p>// 尽量今天完成</p><h3 id="广义特征值">广义特征值</h3><h3 id="广义瑞利商">广义瑞利商</h3><h2 id="拉格朗日乘子法">拉格朗日乘子法</h2>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>本文是关于一些西瓜书学习过程中的一些数学理论的汇总.</p></blockquote><span id="more"></span><h2 id="分类变量化为连续值">分类变量化为连续值</h2><p>有时我们的有些数据可能是离散的, 这时候我们会考虑将数据化为<strong>连续值</strong>.</p><ul><li>在<strong>有序</strong>(order)数据中, 比如"低" "中" "高"等, 可以使用<span class="math inline">\(\{0, 0.5, 1\}\)</span>来表示.<ul><li>直接使用<code>map</code>映射, 或使用<code>LabelEncoder</code>.</li></ul></li><li>在<strong>无序</strong>数据中, 比如"西瓜" "南瓜" "冬瓜"等, 就需要使用<span class="math inline">\((1,0,0), (0,1,0), (0,0,1)\)</span>来表示.<ul><li>独热编码<code>OneHotEncoder</code>或 pandas 中的<code>get_dummies</code>.</li></ul></li></ul><blockquote><p>无序属性在连续化的时候, 不能像连续值一样直接使用值代替, 因为值之间存在大小, 从而会引入<strong>不当的有序关系</strong>.</p><p>但其实对分类变量化为连续值, 或多或少会引入一些额外的有序关系.</p></blockquote><h2 id="广义特征值与广义瑞利商">广义特征值与广义瑞利商</h2><p>// 可恶， 快写完了</p><h3 id="广义特征值">广义特征值</h3><h3 id="广义瑞利商">广义瑞利商</h3><h2 id="拉格朗日乘子法">拉格朗日乘子法</h2>]]></content>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -113,11 +138,11 @@
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
     <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
-    
-    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="迭代和递归" scheme="http://example.com/tags/%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92/"/>
     
@@ -169,9 +194,9 @@
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
@@ -201,9 +226,9 @@
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
@@ -233,9 +258,9 @@
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
     <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
     
@@ -263,9 +288,9 @@
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
-    
     <category term="c++" scheme="http://example.com/tags/c/"/>
+    
+    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
     <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
     
@@ -317,11 +342,11 @@
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
     <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
-    
-    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
@@ -349,11 +374,11 @@
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
     <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
-    
-    <category term="c++" scheme="http://example.com/tags/c/"/>
     
     <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
@@ -381,13 +406,13 @@
     <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
+    <category term="c++" scheme="http://example.com/tags/c/"/>
+    
     <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
     
     <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
     <category term="k路问题" scheme="http://example.com/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
-    
-    <category term="c++" scheme="http://example.com/tags/c/"/>
     
   </entry>
   
@@ -550,30 +575,6 @@
     <category term="波特五力" scheme="http://example.com/tags/%E6%B3%A2%E7%89%B9%E4%BA%94%E5%8A%9B/"/>
     
     <category term="波士顿矩阵" scheme="http://example.com/tags/%E6%B3%A2%E5%A3%AB%E9%A1%BF%E7%9F%A9%E9%98%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>林骥的思维分析模型（一）</title>
-    <link href="http://example.com/2021/02/12/%E6%9E%97%E9%AA%A5%E7%9A%84%E6%80%9D%E7%BB%B4%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://example.com/2021/02/12/%E6%9E%97%E9%AA%A5%E7%9A%84%E6%80%9D%E7%BB%B4%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/</id>
-    <published>2021-02-12T04:14:05.000Z</published>
-    <updated>2021-12-29T12:02:44.391Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>本文是在对林骥公众号中的100种思维分析模型（更新中）上进行自我理解。</p><p>适用于想要了解多种分析模型的同学，主要是关于模型的一些应用和注意点，并没有具体的模型详解。</p></blockquote><span id="more"></span><h2 id="福格行为模型">福格行为模型</h2><p>该模型主要是用来分析<code>用户行为</code>的<u>产生原因</u>和<u>基础心理</u>。</p><p><span class="math display">\[行为 = 动机 \times 能力 \times 触发\]</span> 用户的行为由三要素决定（例如购物）：</p><ol type="1"><li>用户去做这件事情的动机（why用户购买产品）；</li><li>用户完成这件事情的能力（how让用户方便购买）；</li><li>触发用户去采取行动的信号（what触发用户想要购买）。</li></ol><p>在其中也暗含了4p营销理论：产品（Product）、价格（Price）、促销（Promotion）、渠道（Place）</p><h2 id="杜邦分析模型">杜邦分析模型</h2><p>该模型主要是对关键指标进行分解，在<code>财务分析</code>、<code>销售管理</code>方面有助于深入分析企业的经营业绩。</p><p>杜邦分析模型将指标之间的<u>内在联系</u>结合起来，形成一套类似金字塔结构，层次清晰的指标体系，从而暴露出影响业务的关键因素。</p><ol type="1"><li>从核心指标开始，逐层分解各个指标；</li><li>制作杜邦分析图，填入相关指标数据；</li><li>对比前后期数据，或者横向进行对比。</li></ol><h2 id="矩阵分析模型">矩阵分析模型</h2><p>该模型也称作波士顿矩阵或四象限分析法。通过两个关键指标组成象限即可进行分析。主要是用来分析<code>产品和结构</code>，其中特别关注<strong>销售增长率</strong>和<strong>市场占有率</strong>这两个指标。</p><ol type="1"><li>找出两种最关注的指标（销售增长率A和市场占有率B）；</li><li>绘制四象限分析图表（假设增长方向为从左至右和从下至上）；</li><li>分析总结并提出建议（AB均低的产品可以逐渐放弃，A高B低是有问题的产品，需要调整策略，A低B高则可以保持现状，AB均高的可以考虑加大投资）；</li></ol><p>针对不同的象限将产品进行分类，由此来采取不同的发展策略，从而实现产品结构的良性循环。</p><h2 id="夏普利值模型">夏普利值模型</h2><p>该模型综合考虑各方利益，使得所作和所得相等，保证利益分配的公平合理。主要在分配权力等问题上非常有用。</p><ol type="1"><li>列举角色可能出现的各种分配情况；</li><li>判断角色在分配过程是否起作用；</li><li>计算分析角色起作用的占比情况。</li></ol><p>价值并不在于拥有的资源或历史贡献，而是在所有可能的合作中，不可或缺的程度。</p><blockquote><p>我们的成长也需要提高核心竞争力。</p></blockquote>]]></content>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文是在对林骥公众号中的100种思维分析模型（更新中）上进行自我理解。&lt;/p&gt;
-&lt;p&gt;适用于想要了解多种分析模型的同学，主要是关于模型的一些应用和注意点，并没有具体的模型详解。&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="他山之石" scheme="http://example.com/categories/%E4%BB%96%E5%B1%B1%E4%B9%8B%E7%9F%B3/"/>
-    
-    
-    <category term="思维方式" scheme="http://example.com/tags/%E6%80%9D%E7%BB%B4%E6%96%B9%E5%BC%8F/"/>
     
   </entry>
   
