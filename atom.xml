@@ -3,11 +3,11 @@
   <title>Grizzly&#39;s daily</title>
   
   
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="http://gipbear.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
-  <updated>2022-01-19T13:37:13.906Z</updated>
-  <id>http://example.com/</id>
+  <link href="http://gipbear.github.io/"/>
+  <updated>2022-01-19T13:40:27.315Z</updated>
+  <id>http://gipbear.github.io/</id>
   
   <author>
     <name>Grizzly</name>
@@ -18,12 +18,12 @@
   
   <entry>
     <title>c++数据结构之vector的常见用法</title>
-    <link href="http://example.com/2022/01/19/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/"/>
-    <id>http://example.com/2022/01/19/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/</id>
+    <link href="http://gipbear.github.io/2022/01/19/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/"/>
+    <id>http://gipbear.github.io/2022/01/19/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/</id>
     <published>2022-01-19T12:34:03.000Z</published>
-    <updated>2022-01-19T13:37:13.906Z</updated>
+    <updated>2022-01-19T13:40:27.315Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>本文是关于c++中常用的数组<code>vector</code>的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的<a href="https://gipbear.github.io/tags/leetcode题解/">leetcode题解</a>中经常会使用的.</p></blockquote><span id="more"></span><h2 id="数组-vector">数组 vector</h2><p>一般大家应该都学习过C语言, 在C语言中, <strong>数组</strong>通常使用<code>int[]</code>来表示, 但是在使用的过程中, 通常会出现一些麻烦(大佬轻喷), 比如静态初始化大小不能直接使用参数而是一个常量, 动态申请空间需要使用<code>malloc</code>等. 虽然手动分配内存可能会给代码带来一定的效率提升, 但是复杂的细节操作让我这个从<code>python</code>转来刷题应试的小白很难接受呀.</p><p>所以一般直接使用标准库提供的<code>vector</code>(很多人都是这么建议的), 这个是比<code>int[]</code>更加的高级的容器, 可以自动扩容, 让你不需要操心细节, 非常nice:man_technologist:!</p><p>那么接下来我们来看一下vector的一些常见用法吧:</p><h2 id="常见用法">常见用法</h2><p>首先需要导入标准库</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br></pre></td></tr></table></figure><h3 id="初始化">初始化</h3><p>一维数组初始化</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="keyword">int</span>&gt; res1;  <span class="comment">//简单初始化一个空数组</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res2</span><span class="params">(n+<span class="number">1</span>)</span></span>;  <span class="comment">//初始化大小为 n+1 大小的数组</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res3</span><span class="params">(n+<span class="number">1</span>, <span class="number">666</span>)</span></span>;  <span class="comment">//初始化大小为 n+1 大小的数组, 初始值为 666</span></span><br><span class="line">vector&lt;<span class="keyword">int</span>&gt; res4&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;  <span class="comment">// 直接初始化内容</span></span><br></pre></td></tr></table></figure><p>二维数组初始化</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res1;  <span class="comment">// 初始化一个二维数组;</span></span><br><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">res2</span>(n, vector&lt;<span class="keyword">int</span>&gt;(m, <span class="number">2</span>))  <span class="comment">// 初始化一个二维数组, 大小为n*m, 默认值为2.</span></span><br></pre></td></tr></table></figure><p>其中的元素也可以是其他类型, 例如<code>string</code>, <code>bool</code>等.</p><h3 id="查询属性">查询属性</h3><ol type="1"><li><p><strong>数组大小</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">size</span>();  <span class="comment">// 返回数组的大小</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>判断数组是否为空</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">empty</span>()</span><br></pre></td></tr></table></figure></p></li><li><p>返回数组头的指针</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">begin</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>返回数组尾+1的指针, 注意是指向<strong>最后的后一个</strong>, 也就是空</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">end</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>得到数组头的引用</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">front</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>得到数组尾的引用</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">back</span>();</span><br></pre></td></tr></table></figure></p></li></ol><h3 id="增删改查">增删改查</h3><ol type="1"><li><p><strong>增加元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">push_back</span>(元素);  <span class="comment">// 在尾部插入一个元素</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>删除元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">pop_back</span>(元素);  <span class="comment">// 删除最后一个元素</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>修改元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res[pos] = 值;  <span class="comment">//  直接在第pos个位置修改为某个值</span></span><br></pre></td></tr></table></figure></p></li><li><p>查找元素(按索引查找)</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res[pos];  <span class="comment">// 直接查找第pos个位置的元素</span></span><br></pre></td></tr></table></figure></p></li><li><p>那如果想查找值是否在数组中(按值查找) <code>vector</code>没有直接的方法, 就需要使用标准库中的find方法来查找(这也是我写这篇的起因, 以后还有不懂的就加进来).</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span>  <span class="comment">// 首先必须导入标准库, 该库提供了大量基于迭代器的模板函数</span></span></span><br><span class="line"><span class="built_in">find</span>(res.<span class="built_in">begin</span>(), res.<span class="built_in">end</span>(), key)  <span class="comment">// 返回范围内第一个等于给定key的元素位置指针, 一般用于判断是否存在</span></span><br></pre></td></tr></table></figure></p></li></ol><h3 id="其他">其他</h3><ol type="1"><li><p>重新定义数组大小</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">resize</span>(m);  <span class="comment">// 数组大小重新定义为m</span></span><br></pre></td></tr></table></figure></p></li><li><p>清空数组</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">clear</span>();  <span class="comment">// 清空数组</span></span><br></pre></td></tr></table></figure></p></li><li><p>与另一个数组交换数据</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">swap</span>(res1, res2)  <span class="comment">// res1与res2交换数组</span></span><br></pre></td></tr></table></figure></p></li></ol><p>以上<strong>加粗</strong>的也是比较常用的, 其实也很简单啦, 不用很复杂的操作.</p><h2 id="个人收获">个人收获</h2><p>这些方法对比python的list来学其实很简单, 只不过换了一个函数名而已, 当然还是有很多操作不一样, 比如指针操作, 记住就好了, 积少成多, 熟能生巧!</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>本文是关于c++中常用的数组<code>vector</code>的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的<a href="https://gipbear.github.io/tags/leetcode题解/">leetcode题解</a>中经常会使用的.</p></blockquote><span id="more"></span><h2 id="数组-vector">数组 vector</h2><p>一般大家应该都学习过C语言, 在C语言中, <strong>数组</strong>通常使用<code>int[]</code>来表示, 但是在使用的过程中, 通常会出现一些麻烦(大佬轻喷), 比如静态初始化大小不能直接使用参数而是一个常量, 动态申请空间需要使用<code>malloc</code>等. 虽然手动分配内存可能会给代码带来一定的效率提升, 但是复杂的细节操作让我这个从<code>python</code>转来刷题应试的小白很难接受呀.</p><p>所以一般直接使用标准库提供的<code>vector</code>(很多人都是这么建议的), 这个是比<code>int[]</code>更加的高级的容器, 可以自动扩容, 让你不需要操心细节, 非常nice:man_technologist:!</p><p>那么接下来我们来看一下vector的一些常见用法吧:</p><h2 id="常见用法">常见用法</h2><p>首先需要导入标准库</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br></pre></td></tr></table></figure><h3 id="初始化">初始化</h3><p>一维数组初始化</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="keyword">int</span>&gt; res1;  <span class="comment">//简单初始化一个空数组</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res2</span><span class="params">(n+<span class="number">1</span>)</span></span>;  <span class="comment">//初始化大小为 n+1 大小的数组</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res3</span><span class="params">(n+<span class="number">1</span>, <span class="number">666</span>)</span></span>;  <span class="comment">//初始化大小为 n+1 大小的数组, 初始值为 666</span></span><br><span class="line">vector&lt;<span class="keyword">int</span>&gt; res4&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;  <span class="comment">// 直接初始化内容</span></span><br></pre></td></tr></table></figure><p>二维数组初始化</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res1;  <span class="comment">// 初始化一个二维数组;</span></span><br><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">res2</span>(n, vector&lt;<span class="keyword">int</span>&gt;(m, <span class="number">2</span>))  <span class="comment">// 初始化一个二维数组, 大小为n*m, 默认值为2.</span></span><br></pre></td></tr></table></figure><p>其中的元素也可以是其他类型, 例如<code>string</code>, <code>bool</code>等.</p><h3 id="查询属性">查询属性</h3><ol type="1"><li><p><strong>数组大小</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">size</span>();  <span class="comment">// 返回数组的大小</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>判断数组是否为空</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">empty</span>()</span><br></pre></td></tr></table></figure></p></li><li><p>返回数组头的指针</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">begin</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>返回数组尾+1的指针, 注意是指向<strong>最后的后一个</strong>, 也就是空</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">end</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>得到数组头的引用</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">front</span>();</span><br></pre></td></tr></table></figure></p></li><li><p>得到数组尾的引用</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">back</span>();</span><br></pre></td></tr></table></figure></p></li></ol><h3 id="增删改查">增删改查</h3><ol type="1"><li><p><strong>增加元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">push_back</span>(元素);  <span class="comment">// 在尾部插入一个元素</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>删除元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">pop_back</span>(元素);  <span class="comment">// 删除最后一个元素</span></span><br></pre></td></tr></table></figure></p></li><li><p><strong>修改元素</strong></p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res[pos] = 值;  <span class="comment">//  直接在第pos个位置修改为某个值</span></span><br></pre></td></tr></table></figure></p></li><li><p>查找元素(按索引查找)</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res[pos];  <span class="comment">// 直接查找第pos个位置的元素</span></span><br></pre></td></tr></table></figure></p></li><li><p>那如果想查找值是否在数组中(按值查找) <code>vector</code>没有直接的方法, 就需要使用标准库中的find方法来查找(这也是我写这篇的起因, 以后还有不懂的就加进来).</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span>  <span class="comment">// 首先必须导入标准库, 该库提供了大量基于迭代器的模板函数</span></span></span><br><span class="line"><span class="built_in">find</span>(res.<span class="built_in">begin</span>(), res.<span class="built_in">end</span>(), key)  <span class="comment">// 返回范围内第一个等于给定key的元素位置指针, 一般用于判断是否存在</span></span><br></pre></td></tr></table></figure></p></li></ol><h3 id="其他">其他</h3><ol type="1"><li><p>重新定义数组大小</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">resize</span>(m);  <span class="comment">// 数组大小重新定义为m</span></span><br></pre></td></tr></table></figure></p></li><li><p>清空数组</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">clear</span>();  <span class="comment">// 清空数组</span></span><br></pre></td></tr></table></figure></p></li><li><p>与另一个数组交换数据</p><p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">swap</span>(res1, res2)  <span class="comment">// res1与res2交换数组</span></span><br></pre></td></tr></table></figure></p></li></ol><p>以上<strong>加粗</strong>的也是比较常用的, 其实也很简单啦, 不用很复杂的操作.</p><h2 id="个人收获">个人收获</h2><p>这些方法对比<code>python</code>的<code>list</code>来学其实很简单, 只不过换了一个函数名而已, 当然还是有很多操作不一样, 比如指针操作, 记住就好了, 积少成多, 熟能生巧!</p>]]></content>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -32,19 +32,19 @@
     
     
     
-    <category term="语言特性" scheme="http://example.com/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/"/>
+    <category term="语言特性" scheme="http://gipbear.github.io/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="vector" scheme="http://example.com/tags/vector/"/>
+    <category term="vector" scheme="http://gipbear.github.io/tags/vector/"/>
     
   </entry>
   
   <entry>
     <title>机器学习中可能会使用的理论</title>
-    <link href="http://example.com/2022/01/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E7%90%86%E8%AE%BA/"/>
-    <id>http://example.com/2022/01/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E7%90%86%E8%AE%BA/</id>
+    <link href="http://gipbear.github.io/2022/01/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E7%90%86%E8%AE%BA/"/>
+    <id>http://gipbear.github.io/2022/01/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E7%90%86%E8%AE%BA/</id>
     <published>2022-01-17T12:24:01.000Z</published>
     <updated>2022-01-19T12:28:18.746Z</updated>
     
@@ -57,19 +57,19 @@
     
     
     
-    <category term="机器学习" scheme="http://example.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <category term="机器学习" scheme="http://gipbear.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="ML理论" scheme="http://example.com/tags/ML%E7%90%86%E8%AE%BA/"/>
+    <category term="ML理论" scheme="http://gipbear.github.io/tags/ML%E7%90%86%E8%AE%BA/"/>
     
-    <category term="西瓜书" scheme="http://example.com/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
+    <category term="西瓜书" scheme="http://gipbear.github.io/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
     
   </entry>
   
   <entry>
     <title>机器学习西瓜书——第03章线性模型</title>
-    <link href="http://example.com/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/"/>
-    <id>http://example.com/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/</id>
+    <link href="http://gipbear.github.io/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/"/>
+    <id>http://gipbear.github.io/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/</id>
     <published>2022-01-14T10:35:28.000Z</published>
     <updated>2022-01-17T13:49:54.662Z</updated>
     
@@ -83,19 +83,19 @@
     
     
     
-    <category term="机器学习" scheme="http://example.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <category term="机器学习" scheme="http://gipbear.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="西瓜书" scheme="http://example.com/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
+    <category term="西瓜书" scheme="http://gipbear.github.io/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
     
-    <category term="线性模型" scheme="http://example.com/tags/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/"/>
+    <category term="线性模型" scheme="http://gipbear.github.io/tags/%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/"/>
     
   </entry>
   
   <entry>
     <title>机器学习西瓜书——第02章模型评估和选择</title>
-    <link href="http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/"/>
-    <id>http://example.com/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/</id>
+    <link href="http://gipbear.github.io/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/"/>
+    <id>http://gipbear.github.io/2022/01/11/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC02%E7%AB%A0%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E5%92%8C%E9%80%89%E6%8B%A9/</id>
     <published>2022-01-11T11:36:17.000Z</published>
     <updated>2022-01-14T13:36:08.574Z</updated>
     
@@ -109,19 +109,19 @@
     
     
     
-    <category term="机器学习" scheme="http://example.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <category term="机器学习" scheme="http://gipbear.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="西瓜书" scheme="http://example.com/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
+    <category term="西瓜书" scheme="http://gipbear.github.io/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
     
-    <category term="模型评估" scheme="http://example.com/tags/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/"/>
+    <category term="模型评估" scheme="http://gipbear.github.io/tags/%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/"/>
     
   </entry>
   
   <entry>
     <title>单链表解题技巧4——反转链表</title>
-    <link href="http://example.com/2022/01/11/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A74%E2%80%94%E2%80%94%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/"/>
-    <id>http://example.com/2022/01/11/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A74%E2%80%94%E2%80%94%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</id>
+    <link href="http://gipbear.github.io/2022/01/11/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A74%E2%80%94%E2%80%94%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/"/>
+    <id>http://gipbear.github.io/2022/01/11/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A74%E2%80%94%E2%80%94%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</id>
     <published>2022-01-11T10:44:35.000Z</published>
     <updated>2022-01-11T11:20:17.403Z</updated>
     
@@ -135,23 +135,23 @@
     
     
     
-    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    <category term="数据结构算法" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
+    <category term="单链表" scheme="http://gipbear.github.io/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    <category term="leetcode题解" scheme="http://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="迭代和递归" scheme="http://example.com/tags/%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92/"/>
+    <category term="迭代和递归" scheme="http://gipbear.github.io/tags/%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92/"/>
     
   </entry>
   
   <entry>
     <title>机器学习西瓜书——第01章绪论</title>
-    <link href="http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/"/>
-    <id>http://example.com/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</id>
+    <link href="http://gipbear.github.io/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/"/>
+    <id>http://gipbear.github.io/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</id>
     <published>2022-01-10T13:21:36.000Z</published>
     <updated>2022-01-14T13:36:39.407Z</updated>
     
@@ -165,19 +165,19 @@
     
     
     
-    <category term="机器学习" scheme="http://example.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    <category term="机器学习" scheme="http://gipbear.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
     
-    <category term="西瓜书" scheme="http://example.com/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
+    <category term="西瓜书" scheme="http://gipbear.github.io/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
     
-    <category term="名词解释" scheme="http://example.com/tags/%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/"/>
+    <category term="名词解释" scheme="http://gipbear.github.io/tags/%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/"/>
     
   </entry>
   
   <entry>
     <title>数组解题技巧3——二分查找</title>
-    <link href="http://example.com/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
-    <id>http://example.com/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</id>
+    <link href="http://gipbear.github.io/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
+    <id>http://gipbear.github.io/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</id>
     <published>2022-01-10T11:18:35.000Z</published>
     <updated>2022-01-10T12:57:32.852Z</updated>
     
@@ -191,25 +191,25 @@
     
     
     
-    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    <category term="数据结构算法" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    <category term="leetcode题解" scheme="http://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    <category term="双指针" scheme="http://gipbear.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
-    <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
+    <category term="数组" scheme="http://gipbear.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
-    <category term="二分查找" scheme="http://example.com/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
+    <category term="二分查找" scheme="http://gipbear.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
     
   </entry>
   
   <entry>
     <title>字符串解题技巧1——滑动窗口</title>
-    <link href="http://example.com/2022/01/09/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"/>
-    <id>http://example.com/2022/01/09/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</id>
+    <link href="http://gipbear.github.io/2022/01/09/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"/>
+    <id>http://gipbear.github.io/2022/01/09/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</id>
     <published>2022-01-09T13:51:01.000Z</published>
     <updated>2022-01-10T09:32:13.774Z</updated>
     
@@ -223,25 +223,25 @@
     
     
     
-    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    <category term="数据结构算法" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    <category term="leetcode题解" scheme="http://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    <category term="双指针" scheme="http://gipbear.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
-    <category term="字符串" scheme="http://example.com/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <category term="字符串" scheme="http://gipbear.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
-    <category term="滑动窗口" scheme="http://example.com/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"/>
+    <category term="滑动窗口" scheme="http://gipbear.github.io/tags/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/"/>
     
   </entry>
   
   <entry>
     <title>数组解题技巧2——差分数组</title>
-    <link href="http://example.com/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/"/>
-    <id>http://example.com/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/</id>
+    <link href="http://gipbear.github.io/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/"/>
+    <id>http://gipbear.github.io/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/</id>
     <published>2022-01-07T15:42:27.000Z</published>
     <updated>2022-01-10T09:31:53.337Z</updated>
     
@@ -255,23 +255,23 @@
     
     
     
-    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    <category term="数据结构算法" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    <category term="leetcode题解" scheme="http://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
+    <category term="数组" scheme="http://gipbear.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
-    <category term="差分数组" scheme="http://example.com/tags/%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/"/>
+    <category term="差分数组" scheme="http://gipbear.github.io/tags/%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/"/>
     
   </entry>
   
   <entry>
     <title>数组解题技巧1——前缀和数组</title>
-    <link href="http://example.com/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/"/>
-    <id>http://example.com/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/</id>
+    <link href="http://gipbear.github.io/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/"/>
+    <id>http://gipbear.github.io/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/</id>
     <published>2022-01-07T14:44:22.000Z</published>
     <updated>2022-01-10T09:31:44.684Z</updated>
     
@@ -285,23 +285,23 @@
     
     
     
-    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    <category term="数据结构算法" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    <category term="leetcode题解" scheme="http://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="数组" scheme="http://example.com/tags/%E6%95%B0%E7%BB%84/"/>
+    <category term="数组" scheme="http://gipbear.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
-    <category term="前缀和" scheme="http://example.com/tags/%E5%89%8D%E7%BC%80%E5%92%8C/"/>
+    <category term="前缀和" scheme="http://gipbear.github.io/tags/%E5%89%8D%E7%BC%80%E5%92%8C/"/>
     
   </entry>
   
   <entry>
     <title>加快国内访问GitHub速度</title>
-    <link href="http://example.com/2022/01/07/%E5%8A%A0%E5%BF%AB%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AEGitHub%E9%80%9F%E5%BA%A6/"/>
-    <id>http://example.com/2022/01/07/%E5%8A%A0%E5%BF%AB%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AEGitHub%E9%80%9F%E5%BA%A6/</id>
+    <link href="http://gipbear.github.io/2022/01/07/%E5%8A%A0%E5%BF%AB%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AEGitHub%E9%80%9F%E5%BA%A6/"/>
+    <id>http://gipbear.github.io/2022/01/07/%E5%8A%A0%E5%BF%AB%E5%9B%BD%E5%86%85%E8%AE%BF%E9%97%AEGitHub%E9%80%9F%E5%BA%A6/</id>
     <published>2022-01-07T08:16:03.000Z</published>
     <updated>2022-01-08T08:30:33.761Z</updated>
     
@@ -315,17 +315,17 @@
     
     
     
-    <category term="配置" scheme="http://example.com/categories/%E9%85%8D%E7%BD%AE/"/>
+    <category term="配置" scheme="http://gipbear.github.io/categories/%E9%85%8D%E7%BD%AE/"/>
     
     
-    <category term="GitHub" scheme="http://example.com/tags/GitHub/"/>
+    <category term="GitHub" scheme="http://gipbear.github.io/tags/GitHub/"/>
     
   </entry>
   
   <entry>
     <title>单链表解题技巧3——相交链表</title>
-    <link href="http://example.com/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/"/>
-    <id>http://example.com/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/</id>
+    <link href="http://gipbear.github.io/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/"/>
+    <id>http://gipbear.github.io/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/</id>
     <published>2022-01-06T12:54:24.000Z</published>
     <updated>2022-01-10T09:31:02.773Z</updated>
     
@@ -339,25 +339,25 @@
     
     
     
-    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    <category term="数据结构算法" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
+    <category term="单链表" scheme="http://gipbear.github.io/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    <category term="leetcode题解" scheme="http://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    <category term="双指针" scheme="http://gipbear.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
-    <category term="逻辑链接" scheme="http://example.com/tags/%E9%80%BB%E8%BE%91%E9%93%BE%E6%8E%A5/"/>
+    <category term="逻辑链接" scheme="http://gipbear.github.io/tags/%E9%80%BB%E8%BE%91%E9%93%BE%E6%8E%A5/"/>
     
   </entry>
   
   <entry>
     <title>单链表解题技巧(2)——快慢指针</title>
-    <link href="http://example.com/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/"/>
-    <id>http://example.com/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/</id>
+    <link href="http://gipbear.github.io/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/"/>
+    <id>http://gipbear.github.io/2022/01/06/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/</id>
     <published>2022-01-06T11:00:57.000Z</published>
     <updated>2022-01-10T09:31:01.563Z</updated>
     
@@ -371,25 +371,25 @@
     
     
     
-    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    <category term="数据结构算法" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
+    <category term="单链表" scheme="http://gipbear.github.io/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    <category term="leetcode题解" scheme="http://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="双指针" scheme="http://example.com/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
+    <category term="双指针" scheme="http://gipbear.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
-    <category term="快慢指针" scheme="http://example.com/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/"/>
+    <category term="快慢指针" scheme="http://gipbear.github.io/tags/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88/"/>
     
   </entry>
   
   <entry>
     <title>单链表解题技巧(1)——合并有序链表</title>
-    <link href="http://example.com/2022/01/05/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%90%88%E5%B9%B6%E9%93%BE%E8%A1%A8/"/>
-    <id>http://example.com/2022/01/05/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%90%88%E5%B9%B6%E9%93%BE%E8%A1%A8/</id>
+    <link href="http://gipbear.github.io/2022/01/05/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%90%88%E5%B9%B6%E9%93%BE%E8%A1%A8/"/>
+    <id>http://gipbear.github.io/2022/01/05/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%90%88%E5%B9%B6%E9%93%BE%E8%A1%A8/</id>
     <published>2022-01-05T12:49:18.000Z</published>
     <updated>2022-01-10T09:31:19.591Z</updated>
     
@@ -403,23 +403,23 @@
     
     
     
-    <category term="数据结构算法" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
+    <category term="数据结构算法" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/"/>
     
     
-    <category term="c++" scheme="http://example.com/tags/c/"/>
+    <category term="c++" scheme="http://gipbear.github.io/tags/c/"/>
     
-    <category term="单链表" scheme="http://example.com/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
+    <category term="单链表" scheme="http://gipbear.github.io/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/"/>
     
-    <category term="leetcode题解" scheme="http://example.com/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
+    <category term="leetcode题解" scheme="http://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
-    <category term="k路问题" scheme="http://example.com/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
+    <category term="k路问题" scheme="http://gipbear.github.io/tags/k%E8%B7%AF%E9%97%AE%E9%A2%98/"/>
     
   </entry>
   
   <entry>
     <title>微信聊天记录制作词云图</title>
-    <link href="http://example.com/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/"/>
-    <id>http://example.com/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/</id>
+    <link href="http://gipbear.github.io/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/"/>
+    <id>http://gipbear.github.io/2022/01/01/%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91%E5%9B%BE/</id>
     <published>2022-01-01T02:45:12.000Z</published>
     <updated>2022-01-01T04:33:47.324Z</updated>
     
@@ -434,17 +434,17 @@
     
     
     
-    <category term="工具" scheme="http://example.com/categories/%E5%B7%A5%E5%85%B7/"/>
+    <category term="工具" scheme="http://gipbear.github.io/categories/%E5%B7%A5%E5%85%B7/"/>
     
     
-    <category term="词云" scheme="http://example.com/tags/%E8%AF%8D%E4%BA%91/"/>
+    <category term="词云" scheme="http://gipbear.github.io/tags/%E8%AF%8D%E4%BA%91/"/>
     
   </entry>
   
   <entry>
     <title>hexo的迁移</title>
-    <link href="http://example.com/2021/12/29/hexo%E7%9A%84%E8%BF%81%E7%A7%BB/"/>
-    <id>http://example.com/2021/12/29/hexo%E7%9A%84%E8%BF%81%E7%A7%BB/</id>
+    <link href="http://gipbear.github.io/2021/12/29/hexo%E7%9A%84%E8%BF%81%E7%A7%BB/"/>
+    <id>http://gipbear.github.io/2021/12/29/hexo%E7%9A%84%E8%BF%81%E7%A7%BB/</id>
     <published>2021-12-29T09:05:01.000Z</published>
     <updated>2021-12-29T12:02:08.983Z</updated>
     
@@ -457,17 +457,17 @@
     
     
     
-    <category term="配置" scheme="http://example.com/categories/%E9%85%8D%E7%BD%AE/"/>
+    <category term="配置" scheme="http://gipbear.github.io/categories/%E9%85%8D%E7%BD%AE/"/>
     
     
-    <category term="hexo" scheme="http://example.com/tags/hexo/"/>
+    <category term="hexo" scheme="http://gipbear.github.io/tags/hexo/"/>
     
   </entry>
   
   <entry>
     <title>STP分析</title>
-    <link href="http://example.com/2021/02/25/STP%E5%88%86%E6%9E%90/"/>
-    <id>http://example.com/2021/02/25/STP%E5%88%86%E6%9E%90/</id>
+    <link href="http://gipbear.github.io/2021/02/25/STP%E5%88%86%E6%9E%90/"/>
+    <id>http://gipbear.github.io/2021/02/25/STP%E5%88%86%E6%9E%90/</id>
     <published>2021-02-25T07:18:22.000Z</published>
     <updated>2021-02-25T14:17:24.000Z</updated>
     
@@ -481,17 +481,17 @@
     
     
     
-    <category term="数据分析实战" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/"/>
+    <category term="数据分析实战" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/"/>
     
     
-    <category term="STP" scheme="http://example.com/tags/STP/"/>
+    <category term="STP" scheme="http://gipbear.github.io/tags/STP/"/>
     
   </entry>
   
   <entry>
     <title>用户偏好分析案例</title>
-    <link href="http://example.com/2021/02/21/%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/"/>
-    <id>http://example.com/2021/02/21/%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/</id>
+    <link href="http://gipbear.github.io/2021/02/21/%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/"/>
+    <id>http://gipbear.github.io/2021/02/21/%E7%94%A8%E6%88%B7%E5%81%8F%E5%A5%BD%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/</id>
     <published>2021-02-21T08:11:43.000Z</published>
     <updated>2021-02-25T08:01:02.000Z</updated>
     
@@ -505,25 +505,25 @@
     
     
     
-    <category term="数据分析实战" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/"/>
+    <category term="数据分析实战" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/"/>
     
     
-    <category term="调查问卷" scheme="http://example.com/tags/%E8%B0%83%E6%9F%A5%E9%97%AE%E5%8D%B7/"/>
+    <category term="调查问卷" scheme="http://gipbear.github.io/tags/%E8%B0%83%E6%9F%A5%E9%97%AE%E5%8D%B7/"/>
     
-    <category term="数据编码" scheme="http://example.com/tags/%E6%95%B0%E6%8D%AE%E7%BC%96%E7%A0%81/"/>
+    <category term="数据编码" scheme="http://gipbear.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BC%96%E7%A0%81/"/>
     
-    <category term="方差分析" scheme="http://example.com/tags/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/"/>
+    <category term="方差分析" scheme="http://gipbear.github.io/tags/%E6%96%B9%E5%B7%AE%E5%88%86%E6%9E%90/"/>
     
-    <category term="频数统计" scheme="http://example.com/tags/%E9%A2%91%E6%95%B0%E7%BB%9F%E8%AE%A1/"/>
+    <category term="频数统计" scheme="http://gipbear.github.io/tags/%E9%A2%91%E6%95%B0%E7%BB%9F%E8%AE%A1/"/>
     
-    <category term="交叉分析" scheme="http://example.com/tags/%E4%BA%A4%E5%8F%89%E5%88%86%E6%9E%90/"/>
+    <category term="交叉分析" scheme="http://gipbear.github.io/tags/%E4%BA%A4%E5%8F%89%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
   <entry>
     <title>快乐Linux学习（六）</title>
-    <link href="http://example.com/2021/02/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/"/>
-    <id>http://example.com/2021/02/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/</id>
+    <link href="http://gipbear.github.io/2021/02/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/"/>
+    <id>http://gipbear.github.io/2021/02/19/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89/</id>
     <published>2021-02-19T13:25:05.000Z</published>
     <updated>2021-03-12T03:25:02.000Z</updated>
     
@@ -537,19 +537,19 @@
     
     
     
-    <category term="操作系统" scheme="http://example.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    <category term="操作系统" scheme="http://gipbear.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
     
     
-    <category term="Linux" scheme="http://example.com/tags/Linux/"/>
+    <category term="Linux" scheme="http://gipbear.github.io/tags/Linux/"/>
     
-    <category term="正则表达式" scheme="http://example.com/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    <category term="正则表达式" scheme="http://gipbear.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>战略分析案例——网上商城</title>
-    <link href="http://example.com/2021/02/16/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/"/>
-    <id>http://example.com/2021/02/16/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/</id>
+    <link href="http://gipbear.github.io/2021/02/16/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/"/>
+    <id>http://gipbear.github.io/2021/02/16/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/</id>
     <published>2021-02-16T11:42:23.000Z</published>
     <updated>2021-02-25T07:42:18.000Z</updated>
     
@@ -563,18 +563,18 @@
     
     
     
-    <category term="数据分析实战" scheme="http://example.com/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/"/>
+    <category term="数据分析实战" scheme="http://gipbear.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98/"/>
     
     
-    <category term="战略分析" scheme="http://example.com/tags/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90/"/>
+    <category term="战略分析" scheme="http://gipbear.github.io/tags/%E6%88%98%E7%95%A5%E5%88%86%E6%9E%90/"/>
     
-    <category term="PEST" scheme="http://example.com/tags/PEST/"/>
+    <category term="PEST" scheme="http://gipbear.github.io/tags/PEST/"/>
     
-    <category term="SWOT" scheme="http://example.com/tags/SWOT/"/>
+    <category term="SWOT" scheme="http://gipbear.github.io/tags/SWOT/"/>
     
-    <category term="波特五力" scheme="http://example.com/tags/%E6%B3%A2%E7%89%B9%E4%BA%94%E5%8A%9B/"/>
+    <category term="波特五力" scheme="http://gipbear.github.io/tags/%E6%B3%A2%E7%89%B9%E4%BA%94%E5%8A%9B/"/>
     
-    <category term="波士顿矩阵" scheme="http://example.com/tags/%E6%B3%A2%E5%A3%AB%E9%A1%BF%E7%9F%A9%E9%98%B5/"/>
+    <category term="波士顿矩阵" scheme="http://gipbear.github.io/tags/%E6%B3%A2%E5%A3%AB%E9%A1%BF%E7%9F%A9%E9%98%B5/"/>
     
   </entry>
   
