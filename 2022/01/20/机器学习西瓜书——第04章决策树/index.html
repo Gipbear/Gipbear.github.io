@@ -22,23 +22,21 @@
     var CONFIG = {"hostname":"gipbear.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是关于数组的差分数组技巧，在对元素数组区间进行加减计算时使用。 涉及 leetcode 的370. 区间加法、1109. 航班预订统计和1094. 拼车。">
+  <meta name="description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第四章决策树的学习. 主要的内容有: 决策树的基本流程、信息熵、信息增益(ID3决策树)、信息增益率(C4.5决策树)和基尼指数(CART决策树)等.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数组解题技巧2——差分数组">
-<meta property="og:url" content="https://gipbear.github.io/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/index.html">
+<meta property="og:title" content="机器学习西瓜书——第04章决策树">
+<meta property="og:url" content="https://gipbear.github.io/2022/01/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC04%E7%AB%A0%E5%86%B3%E7%AD%96%E6%A0%91/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是关于数组的差分数组技巧，在对元素数组区间进行加减计算时使用。 涉及 leetcode 的370. 区间加法、1109. 航班预订统计和1094. 拼车。">
+<meta property="og:description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第四章决策树的学习. 主要的内容有: 决策树的基本流程、信息熵、信息增益(ID3决策树)、信息增益率(C4.5决策树)和基尼指数(CART决策树)等.">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-07T15:42:27.000Z">
-<meta property="article:modified_time" content="2022-01-10T09:31:53.337Z">
+<meta property="article:published_time" content="2022-01-19T16:06:16.000Z">
+<meta property="article:modified_time" content="2022-01-20T09:19:45.995Z">
 <meta property="article:author" content="Grizzly">
-<meta property="article:tag" content="c++">
-<meta property="article:tag" content="leetcode题解">
-<meta property="article:tag" content="数组">
-<meta property="article:tag" content="差分数组">
+<meta property="article:tag" content="西瓜书">
+<meta property="article:tag" content="决策树">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://gipbear.github.io/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/">
+<link rel="canonical" href="https://gipbear.github.io/2022/01/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC04%E7%AB%A0%E5%86%B3%E7%AD%96%E6%A0%91/">
 
 
 <script id="page-configurations">
@@ -51,7 +49,7 @@
   };
 </script>
 
-  <title>数组解题技巧2——差分数组 | Grizzly's daily</title>
+  <title>机器学习西瓜书——第04章决策树 | Grizzly's daily</title>
   
 
 
@@ -203,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://gipbear.github.io/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/">
+    <link itemprop="mainEntityOfPage" href="https://gipbear.github.io/2022/01/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC04%E7%AB%A0%E5%86%B3%E7%AD%96%E6%A0%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -216,7 +214,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          数组解题技巧2——差分数组
+          机器学习西瓜书——第04章决策树
         </h1>
 
         <div class="post-meta">
@@ -226,23 +224,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-01-07 23:42:27" itemprop="dateCreated datePublished" datetime="2022-01-07T23:42:27+08:00">2022-01-07</time>
+              <time title="创建时间：2022-01-20 00:06:16 / 修改时间：17:19:45" itemprop="dateCreated datePublished" datetime="2022-01-20T00:06:16+08:00">2022-01-20</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-10 17:31:53" itemprop="dateModified" datetime="2022-01-10T17:31:53+08:00">2022-01-10</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">数据结构算法</span></a>
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
                 </span>
             </span>
 
@@ -259,14 +251,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -279,43 +271,100 @@
 
       
         <blockquote>
-<p>本文是关于数组的差分数组技巧，在对元素数组区间进行加减计算时使用。</p>
-<p>涉及 leetcode 的<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/range-addition">370. 区间加法</a>、<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/corporate-flight-bookings">1109. 航班预订统计</a>和<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/car-pooling">1094. 拼车</a>。</p>
+<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第四章决策树的学习.</p>
+<p>主要的内容有: 决策树的基本流程、信息熵、信息增益(ID3决策树)、信息增益率(C4.5决策树)和基尼指数(CART决策树)等.</p>
 </blockquote>
 <span id="more"></span>
-<h2 id="合并两个有序链表">合并两个有序链表</h2>
-<h3 id="题目1">题目1</h3>
-<p>首先来看题目<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/range-addition">370. 区间加法</a>：假设你有一个长度为 n 的数组，初始情况下所有的数字均为 0，你将会被给出 k 个更新的操作。其中，每个操作会被表示为一个三元组：[startIndex, endIndex, inc]，你需要将子数组 A[startIndex ... endIndex]（包括 startIndex 和 endIndex）增加 inc。</p>
-<p>请你返回 k 次操作后的数组。</p>
-<p>示例1：</p>
-<blockquote>
-<p>输入：length = 5, updates = [ [1,3,2],[2,4,3],[0,2,-2] ]</p>
-<p>输出：[-2,0,3,5,3]</p>
-</blockquote>
-<h3 id="理解一下1">理解一下1</h3>
-<p>题目的大概意思就是：</p>
+<h2 id="基本流程模型">4.1 基本流程(模型)</h2>
+<p>决策树(decision tree)是基于<strong>树结构</strong>来进行决策的, 是符合人类习惯的一种决策机制.</p>
+<p>其中, 叶结点对应的是决策结果, 其他结点对应的是一个属性决策『决定按照什么属性, 将结点中的样本集合划分为子结点』, 从根结点到每个叶子结点的路径对应了一个决策序列.</p>
+<p>既然是一棵树, 那么自然就符合递归的定义, 那么什么时候停止决策呢? 有如下三种情况:</p>
 <ol type="1">
-<li>初始数组为元素均为 0；</li>
-<li>三元组表示在区间<code>startIndex</code>到<code>endIndex</code>内的元素都加上<code>inc</code>。</li>
+<li>当前结点包含的样本均属于<code>同一标记</code>, 无需划分.</li>
+<li>当前结点包含的样本均属于<code>同一属性</code>, 不可划分; 其归属标记为<strong>该结点</strong>中包含样本数量最多的标记.</li>
+<li>当前结点样本集合为<code>空</code>, 不可划分; 其归属标记为<strong>父结点</strong>中包含样本数量最多的标记.</li>
 </ol>
-<p>最直白的思路就是，将每个三元组表示的区间一个一个加上值，很快就能实现，但是复杂度太高会超时，那么怎么办呢？</p>
-<p>这里引入<strong>差分数组</strong>的概念：</p>
-<p>差分数组就是在原长度为<code>n</code>的<code>nums</code>数组上，构建一个长度为<code>n+1</code>的数组<code>diff</code>，<code>diff[i] = nums[i] - nums[i-1]</code>，也就是原数组相邻两项的之差。</p>
-<p>当差分数组计算完成之后再通过<code>nums[i] = nums[i-1] + diff[i]</code>即可还原得到相应的数组。</p>
 <blockquote>
-<p>对差分数组的第<code>i</code>项进行计算，都会同等影响到之后的剩余项，这就是差分数组的<strong>性质</strong>！</p>
+<p>其中第三种情况我的理解是:</p>
+<p>在父结点的样本中, 不存在该属性标记, 所以结点划分的时候该结点的样本为空, 但是我们依旧需要考虑这种情况, 因为我们是针对训练集进行的训练, 但是模型在应用的新样本中, 有可能会遇到该情况, 所以也需要考虑在分支上.</p>
+<p>那如何归类呢? 就是按照父结点中样本数量最多的标记来标记该结点!</p>
 </blockquote>
-<p>因此，我们可以在差分数组上对第<code>first</code>项加上<code>seats</code>，使得后续的每一项都会增加<code>seats</code>，但是我们只想增加到第<code>last</code>项，所以在第<code>last+1</code>项之后再减去<code>seats</code>，就可以抵消该影响啦！</p>
-<p>ok，那我们就来看代码吧！</p>
-<h3 id="解题1">解题1</h3>
-<p>构建差分数组的时候，使得差分数组的长度为<code>n+1</code>可以使得不用判断数组越界的问题，这个和链表增加<strong>头结点</strong>有异曲同工之妙。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">getModifiedArray</span><span class="params">(<span class="keyword">int</span> length, vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt;&amp; updates)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 实际上计算的nums是差分数组，只不过这里开始都为0</span></span><br><span class="line">    <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">nums</span><span class="params">(length+<span class="number">1</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; updates.<span class="built_in">size</span>(); i++)&#123;</span><br><span class="line">        nums[updates[i][<span class="number">0</span>]] += updates[i][<span class="number">2</span>];</span><br><span class="line">        nums[updates[i][<span class="number">1</span>]+<span class="number">1</span>] -= updates[i][<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 差分数组还原</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; length; i++)&#123;</span><br><span class="line">        nums[i] += nums[i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    nums.<span class="built_in">pop_back</span>();</span><br><span class="line">    <span class="keyword">return</span> nums;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>关于<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/corporate-flight-bookings">1109. 航班预订统计</a>和<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/car-pooling">1094. 拼车</a>这两个问题实际上就是将该简单问题应用到实际场景中了，学会了这个差分数组的思想就很容易了，只需要注意端点细节处理即可。</p>
+<p>我们的目的就是在生成树结点的过程中去做出<code>正确</code>的决策划分, 通过训练集构建的决策树需要能够在进行分类决策的时候<strong>泛化能力</strong>更强.</p>
+<p>什么决策才是正确的决策呢?</p>
+<h2 id="划分选择">4.2 划分选择</h2>
+<p>正确的划分是将决策树的分支结点所包含的样本尽可能<strong>属于同一标记</strong>. 即, 结点的<strong>纯度</strong>(purity)最高.</p>
+<h3 id="信息熵">信息熵</h3>
+<p>想要度量结点的<code>纯度</code>, 我们一般使用<strong>信息熵</strong>(information entropy)这个指标.</p>
+<blockquote>
+<p>首先, 假设当前的样本集合<span class="math inline">\(D\)</span>中包含<span class="math inline">\(n\)</span>类样本，其中，第<span class="math inline">\(k\)</span>类样本所占的比例为<span class="math inline">\(p_k,(k=1, 2, 3, ···, n)\)</span>则D的信息熵定义为：</p>
+</blockquote>
+<p><span class="math display">\[
+Ent(D) = -\sum^n_{k=1} {p_k\log_2{p_k}}
+\]</span></p>
+<p>其数值则表示数据的混乱程度，<code>信息熵值越大则数据越混乱</code>，则表示不确定性越大，所包含的信息量也就越大，也就越难决策。</p>
+<blockquote>
+<p>这里需要注意信息熵是<strong>负数</strong>.</p>
+</blockquote>
+<p>好嘞, 有了信息熵的基础, 那接下来我们就可以利用信息熵来构建决策树模型.</p>
+<h3 id="信息增益id3决策树">信息增益(ID3决策树)</h3>
+<p>有了信息熵的定义, 我们就可以计算<strong>当前结点</strong>对于分类信息的信息熵, 然后按照哪个属性进行划分呢? 这时候就需要使用到<strong>信息增益</strong>(information gain)了.</p>
+<p>按照如下思路进行考虑:</p>
+<ol type="1">
+<li><strong>目的</strong>: 我们的目的是找出最适合进行决策的<strong>属性</strong>;</li>
+<li><strong>计算</strong>: 那么不妨假设按照<code>属性A</code>进行决策, 那么当前结点中属于<code>属性A</code>的样本中按照<span class="math inline">\(v\)</span>个<code>属性取值</code>计算得到的信息熵总和是多少呢?</li>
+<li><strong>权重</strong>: 由于属于<code>属性A</code>中每个<code>属性取值</code>的样本个数不同, 那么对于信息熵总和的影响自然也就不同, 所以在计算的时候需要赋予一定的权重, 最简单的就是第v个属性取值占该属性样本的比重<span class="math inline">\(\frac{|D^v|}{|D|}\)</span></li>
+<li><strong>循环</strong>: 依次类推计算当前结点各个属性的信息熵.</li>
+<li><strong>结果</strong>: 所以, 信息增益就是用<strong>当前结点</strong>的信息熵, 分别减去<strong>按照各个属性</strong>决策的信息熵总和, 由于这里是<strong>减</strong>, 自然是选择<strong>信息增益越大</strong>的属性越好啦!</li>
+</ol>
+<p>得到的信息增益计算公式:</p>
+<p><span class="math display">\[
+Gain(D,a) = Ent(D) - \sum_{v=1}^V{\frac{|D^v|}{|D|}Ent(D^v)}
+\]</span></p>
+<p>著名的<strong>ID3决策树</strong>就是使用信息增益来实现属性划分的.</p>
+<h3 id="增益率c4.5决策树">增益率(C4.5决策树)</h3>
+<p>但是我们容易发现, 若将『编号』这种属性进行计算的时候</p>
+<p><span class="math display">\[
+\begin{aligned}
+Gain(D,编号)
+&amp;= Ent(D) - \sum_{v=1}^V{\frac{1}{V}Ent(1)} \\
+&amp;= Ent(D) - Ent(1) \\
+&amp;= Ent(D)
+\end{aligned}
+\]</span></p>
+<p>很明显这种取值不重复的属性的信息增益极大, 换句话说, 是『<strong>属性取值很多</strong>』的属性, 但这很明显不符合我们的预期, 因为我们都知道编号这种属性基本上是没有意义的.</p>
+<p>由此, 我们引入了<strong>信息增益率</strong>(gain ratio)的概念.</p>
+<p>那么我们理解一下是什么是信息增益率? 信息增益自然就是上面提到的部分, 那么『率』呢? 就需要相对于某个值了.</p>
+<p>这里引入一个属性"<strong>固有值</strong>"(intrinsic value)的概念:</p>
+<p><span class="math display">\[
+IV(a) = -\sum_{v=1}^V {\frac{|D^v|}{|D|}\log_2{\frac{|D^v|}{|D|}}}
+\]</span></p>
+<blockquote>
+<p>是不是跟信息增益很相似? 类比一下: 这就是衡量该属性取值的『混乱程度』, 数值越大越混乱, 自然就越不能要.</p>
+</blockquote>
+<p>所以将信息增益率定义为:</p>
+<p><span class="math display">\[
+Gain_ratio(D, a) = \frac{Gain(D, a)}{IV(a)}
+\]</span></p>
+<p>由于固有值在分母, 所以信息增益率整体会偏好选择属性数目较少的属性.</p>
+<p>著名的<strong>C4.5决策树</strong>就是利用了信息增益率的方法来实现决策树的, 但不是直接选择增益率最大的属性, 而是使用<strong>启发式</strong>的方法: 先选择<strong>信息增益</strong>高于平均水平的属性, 再从中选择出<strong>增益率</strong>最高的.</p>
+<h3 id="基尼指数cart决策树">基尼指数(CART决策树)</h3>
+<p>最后要提的就是<strong>基尼指数</strong>(Gini index)了, 这是使用了一个与信息熵类似的概念——基尼值, 它们都是来衡量数据集的<code>纯度</code>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+Gini(D)
+&amp;= \sum^n_{i=1}\sum_{j\neq{i}}{p_ip_j}
+&amp;= 1 - \sum^n_{i=1}{p_i^2}
+\end{aligned}
+\]</span></p>
+<p>正如公式表示的, 基尼值反映了在样本中随机抽取两个样本, 其标记不一致的概率. 反过来就是用<code>1</code>减去<code>一致</code>的概率, 同样考虑样本个数<strong>权重</strong>的影响, 得到基尼指数计算公式:</p>
+<p><span class="math display">\[
+Gini_index(D, a) = \sum^V_{v=1}{\frac{|D^v|}{|D|}Gini(D^v)}
+\]</span></p>
+<p>著名的<strong>CART决策树</strong>就是使用了基尼指数来划分属性的.</p>
 <h2 id="个人收获">个人收获</h2>
-<ol type="1">
-<li><p>前缀和数组用于计算区域和问题，差分数组用于区域元素同时加减问题，而且使用频率较高时使用效果较好。</p></li>
-<li><p>注意将数组长度扩大一个，这个在计算相邻项的时候就无需判断在数组最后是否会出现数组越界的问题，与链表中增加头结点的效果类似。</p></li>
-</ol>
+<p>学习了决策树模型的三种建模方式, 起码知道了ID3有比较明显的缺陷, 所以一般可以使用C4.5或CART决策树.</p>
+<p>决策树一般不会直接使用, 多使用在森林等集成算法中, 之后再进一步学习.</p>
+<p>关于后续的剪枝处理也会抽空尽快学习.</p>
 
     </div>
     <div>    
@@ -341,7 +390,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://gipbear.github.io/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A72%E2%80%94%E2%80%94%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/" title="数组解题技巧2——差分数组">https://gipbear.github.io/2022/01/07/数组解题技巧2——差分数组/</a>
+    <a href="https://gipbear.github.io/2022/01/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC04%E7%AB%A0%E5%86%B3%E7%AD%96%E6%A0%91/" title="机器学习西瓜书——第04章决策树">https://gipbear.github.io/2022/01/20/机器学习西瓜书——第04章决策树/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -352,10 +401,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i>c++</a>
-              <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag"><i class="fa fa-tag"></i>leetcode题解</a>
-              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i>数组</a>
-              <a href="/tags/%E5%B7%AE%E5%88%86%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i>差分数组</a>
+              <a href="/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/" rel="tag"><i class="fa fa-tag"></i>西瓜书</a>
+              <a href="/tags/%E5%86%B3%E7%AD%96%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i>决策树</a>
           </div>
 
         
@@ -364,13 +411,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/" rel="prev" title="数组解题技巧1——前缀和数组">
-      <i class="fa fa-chevron-left"></i> 数组解题技巧1——前缀和数组
+    <a href="/2022/01/19/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" rel="prev" title="c++数据结构之vector的常见用法">
+      <i class="fa fa-chevron-left"></i> c++数据结构之vector的常见用法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/01/09/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" rel="next" title="字符串解题技巧1——滑动窗口">
-      字符串解题技巧1——滑动窗口 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -429,7 +473,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">合并两个有序链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE1"><span class="nav-number">1.1.</span> <span class="nav-text">题目1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E4%B8%80%E4%B8%8B1"><span class="nav-number">1.2.</span> <span class="nav-text">理解一下1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%A2%981"><span class="nav-number">1.3.</span> <span class="nav-text">解题1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">2.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">4.1 基本流程(模型)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%92%E5%88%86%E9%80%89%E6%8B%A9"><span class="nav-number">2.</span> <span class="nav-text">4.2 划分选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%86%B5"><span class="nav-number">2.1.</span> <span class="nav-text">信息熵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E5%A2%9E%E7%9B%8Aid3%E5%86%B3%E7%AD%96%E6%A0%91"><span class="nav-number">2.2.</span> <span class="nav-text">信息增益(ID3决策树)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E7%9B%8A%E7%8E%87c4.5%E5%86%B3%E7%AD%96%E6%A0%91"><span class="nav-number">2.3.</span> <span class="nav-text">增益率(C4.5决策树)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E5%B0%BC%E6%8C%87%E6%95%B0cart%E5%86%B3%E7%AD%96%E6%A0%91"><span class="nav-number">2.4.</span> <span class="nav-text">基尼指数(CART决策树)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">3.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
