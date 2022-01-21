@@ -284,6 +284,8 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
 <p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">res.<span class="built_in">clear</span>();  <span class="comment">// 清空数组</span></span><br></pre></td></tr></table></figure></p></li>
 <li><p>与另一个数组交换数据</p>
 <p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">swap</span>(res1, res2);  <span class="comment">// res1与res2交换数组</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>数组求和 需要借助库函数实现</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;numeric&gt;</span></span></span><br><span class="line"><span class="built_in">accumulate</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), <span class="number">0</span>)  <span class="comment">// 从0为基准开始求和</span></span><br></pre></td></tr></table></figure></p></li>
 </ol>
 <p>以上<strong>加粗</strong>的也是比较常用的, 其实也很简单啦, 不用很复杂的操作.</p>
 <h2 id="个人收获">个人收获</h2>
@@ -295,81 +297,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       <tags>
         <tag>c++</tag>
         <tag>vector</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo的迁移</title>
-    <url>/2021/12/29/hexo%E7%9A%84%E8%BF%81%E7%A7%BB/</url>
-    <content><![CDATA[<blockquote>
-<p>为了重新开始写点东西，而且换了电脑，所以将博客进行了一次迁移，在此记录一些坑，其实真的很简单！，本质上就是拷贝！</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="安装必备环境">安装必备环境</h2>
-<p>有关一些环境的准备在<a href="https://gipbear.github.io/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">hexo 的安装和配置</a>说明过了，当然，这不完全相同，我这次在新电脑中并没有采用yarn来安装，不过这个无所谓。</p>
-<p>简单说明一下需要安装<code>git客户端</code>和<code>nodejs</code>，至今的npm一般在安装nodejs中都已经包含了。</p>
-<p>安装<code>hexo</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-<h2 id="git关联github">git关联github</h2>
-<p>首先，生成本地密钥（如果已经有了则不需要），这会在本地用户的<code>.ssh</code>文件夹中出现一个私钥<code>id_rsa</code>（妥善保管！），以及一个公钥<code>id_rsa.pub</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;example@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-<p>然后在个人Github的Settings中找到侧边<a href="https://github.com/settings/keys">SSH and GPG keys</a>，点击<code>New SSH key</code>，将公钥<code>id_rsa.pub</code>中的内容复制到其中即可。</p>
-<p>会发个邮件给你的邮箱，点击确认一下。</p>
-<p>在git中输入</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh git@github.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 出现如下内容即可：</span></span><br><span class="line"><span class="comment"># PTY allocation request failed on channel 0</span></span><br><span class="line"><span class="comment"># Hi XXX! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br><span class="line"><span class="comment"># Connection to github.com closed.</span></span><br></pre></td></tr></table></figure>
-<h2 id="新建空文件夹用来做为博客使用">新建空文件夹用来做为博客使用</h2>
-<p>初始化hexo至空文件夹<code>hexo_blog</code>中。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init hexo_blog</span><br></pre></td></tr></table></figure>
-<p>切换至<code>hexo_blog</code>文件夹中</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> hexo_blog</span><br></pre></td></tr></table></figure>
-<p>尝试启动hexo</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p>很不幸，我出现了一些问题</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ERROR Cannot find module <span class="string">&#x27;hexo&#x27;</span> from <span class="string">&#x27;E:\hexo_blog&#x27;</span></span><br><span class="line">ERROR Local hexo loading failed <span class="keyword">in</span> E:\hexo_blog</span><br><span class="line">ERROR Try running: <span class="string">&#x27;rm -rf node_modules &amp;&amp; npm install --force&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>于是我按照他的建议，执行了如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rm -rf node_modules &amp;&amp; npm install --force</span><br></pre></td></tr></table></figure>
-<p>很不幸，又出了问题：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm WARN using --force I sure hope you know what you are doing.</span><br><span class="line">npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix<span class="comment">#deprecated</span></span><br><span class="line">npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url<span class="comment">#deprecated</span></span><br><span class="line">npm ERR! Unexpected end of JSON input <span class="keyword">while</span> parsing near <span class="string">&#x27;...a69f8709d4bd17ffe153b&#x27;</span></span><br><span class="line"></span><br><span class="line">npm ERR! A complete <span class="built_in">log</span> of this run can be found <span class="keyword">in</span>:</span><br><span class="line">npm ERR!     C:\Users\username\AppData\Roaming\npm-cache\_logs\2021-12-29T08_54_26_243Z-debug.log</span><br></pre></td></tr></table></figure>
-<p>经查找，发现只需要清除一下npm的cache即可，<a href="https://segmentfault.com/a/1190000015646531">原文在此</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm cache clean --force</span><br></pre></td></tr></table></figure>
-<p>接下来再本地<code>hexo s</code>启动一下服务试试看，发现大功告成！</p>
-<blockquote>
-<p>以上步骤大致如此，不行就删了博客文件夹重来，反正也是空空的！</p>
-<p>放心大胆的试吧</p>
-</blockquote>
-<h2 id="迁移博客">迁移博客</h2>
-<p>实际上只需要将原电脑上的文章和一些配置拷贝过来即可，主要是三个文件夹和一个配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">scaffolds</span><br><span class="line"><span class="built_in">source</span></span><br><span class="line">themes</span><br><span class="line">_config.yml</span><br></pre></td></tr></table></figure>
-<p>首先清除public中的内容，然后重新再生成内容，并发布</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo d</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
-<h2 id="完成">完成</h2>
-<p>OK，至此就完成了，本质上也就是重新搭建博客，然后将配置文件和已经有的内容给拷贝过来就可以了，也没有很麻烦嘛!</p>
-<h2 id="关于一些小问题">关于一些小问题</h2>
-<p>迁移之后有很多东西可能跟之前不一样了，包括版本，安装的包之类的，所以还需要根据具体情况来自己踩坑，目前我发现了两个。</p>
-<blockquote>
-<p>插件都是需要自己在新设备上重新安装的，这个没有在上面的步骤中拷贝过来！！</p>
-</blockquote>
-<h3 id="本地图片上传失败">本地图片上传失败</h3>
-<p>原本安装的<code>hexo-asset-image</code>插件不能使用了，重新安装后出现了严重警告和错误，经过查找资料发现是该插件不能用了，所以采用其他方法。参考<a href="https://blog.pakro.top/2021/solve_the_problem_that_after_upgrade_to_hexo5_local_image_cannot_be_displayed_while_deployed/">解决 hexo5 本地图像上传后无法显示的问题</a></p>
-<p>首先，卸载安装的<code>hexo-asset-image</code>；</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-<p>然后，同样修改修改博客配置文件<code>_config.yml</code>中的 <code>post_asset_folder</code>为<code>true</code>；</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>最后，安装<code>post_asset_folder</code>。</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>在之后在博客中就正常使用原方法传文件即可。</p>
-<h3 id="主题中添加搜索功能">主题中添加搜索功能</h3>
-<p>安装<code>hexo-generator-searchdb</code>插件：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-<p>首先修改<strong>博客</strong>配置文件<code>_config.yml</code>，如下：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">10000</span></span><br></pre></td></tr></table></figure>
-<p>然后，修改<strong>主题</strong>配置文件<code>_config.yml</code>如下：</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span>  <span class="comment"># trigger若为auto, 通过改变输入触发搜索；trigger若为manual, 通过按下enter键或者点击搜索按钮触发搜索</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span>  <span class="comment"># 展示每篇文章的前n个结果，如果想要展示所有结果，设置为-1</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span>  <span class="comment"># 将html字符串转义为可读的字符串。</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span>  <span class="comment"># 当加载页面时预加载搜索结果</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>配置</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -501,6 +428,106 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
+    <title>hexo的迁移</title>
+    <url>/2021/12/29/hexo%E7%9A%84%E8%BF%81%E7%A7%BB/</url>
+    <content><![CDATA[<blockquote>
+<p>为了重新开始写点东西，而且换了电脑，所以将博客进行了一次迁移，在此记录一些坑，其实真的很简单！，本质上就是拷贝！</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="安装必备环境">安装必备环境</h2>
+<p>有关一些环境的准备在<a href="https://gipbear.github.io/2021/01/05/hexo%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE/">hexo 的安装和配置</a>说明过了，当然，这不完全相同，我这次在新电脑中并没有采用yarn来安装，不过这个无所谓。</p>
+<p>简单说明一下需要安装<code>git客户端</code>和<code>nodejs</code>，至今的npm一般在安装nodejs中都已经包含了。</p>
+<p>安装<code>hexo</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+<h2 id="git关联github">git关联github</h2>
+<p>首先，生成本地密钥（如果已经有了则不需要），这会在本地用户的<code>.ssh</code>文件夹中出现一个私钥<code>id_rsa</code>（妥善保管！），以及一个公钥<code>id_rsa.pub</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;example@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+<p>然后在个人Github的Settings中找到侧边<a href="https://github.com/settings/keys">SSH and GPG keys</a>，点击<code>New SSH key</code>，将公钥<code>id_rsa.pub</code>中的内容复制到其中即可。</p>
+<p>会发个邮件给你的邮箱，点击确认一下。</p>
+<p>在git中输入</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh git@github.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 出现如下内容即可：</span></span><br><span class="line"><span class="comment"># PTY allocation request failed on channel 0</span></span><br><span class="line"><span class="comment"># Hi XXX! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br><span class="line"><span class="comment"># Connection to github.com closed.</span></span><br></pre></td></tr></table></figure>
+<h2 id="新建空文件夹用来做为博客使用">新建空文件夹用来做为博客使用</h2>
+<p>初始化hexo至空文件夹<code>hexo_blog</code>中。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo init hexo_blog</span><br></pre></td></tr></table></figure>
+<p>切换至<code>hexo_blog</code>文件夹中</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> hexo_blog</span><br></pre></td></tr></table></figure>
+<p>尝试启动hexo</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p>很不幸，我出现了一些问题</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ERROR Cannot find module <span class="string">&#x27;hexo&#x27;</span> from <span class="string">&#x27;E:\hexo_blog&#x27;</span></span><br><span class="line">ERROR Local hexo loading failed <span class="keyword">in</span> E:\hexo_blog</span><br><span class="line">ERROR Try running: <span class="string">&#x27;rm -rf node_modules &amp;&amp; npm install --force&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>于是我按照他的建议，执行了如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rm -rf node_modules &amp;&amp; npm install --force</span><br></pre></td></tr></table></figure>
+<p>很不幸，又出了问题：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm WARN using --force I sure hope you know what you are doing.</span><br><span class="line">npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix<span class="comment">#deprecated</span></span><br><span class="line">npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url<span class="comment">#deprecated</span></span><br><span class="line">npm ERR! Unexpected end of JSON input <span class="keyword">while</span> parsing near <span class="string">&#x27;...a69f8709d4bd17ffe153b&#x27;</span></span><br><span class="line"></span><br><span class="line">npm ERR! A complete <span class="built_in">log</span> of this run can be found <span class="keyword">in</span>:</span><br><span class="line">npm ERR!     C:\Users\username\AppData\Roaming\npm-cache\_logs\2021-12-29T08_54_26_243Z-debug.log</span><br></pre></td></tr></table></figure>
+<p>经查找，发现只需要清除一下npm的cache即可，<a href="https://segmentfault.com/a/1190000015646531">原文在此</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm cache clean --force</span><br></pre></td></tr></table></figure>
+<p>接下来再本地<code>hexo s</code>启动一下服务试试看，发现大功告成！</p>
+<blockquote>
+<p>以上步骤大致如此，不行就删了博客文件夹重来，反正也是空空的！</p>
+<p>放心大胆的试吧</p>
+</blockquote>
+<h2 id="迁移博客">迁移博客</h2>
+<p>实际上只需要将原电脑上的文章和一些配置拷贝过来即可，主要是三个文件夹和一个配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">scaffolds</span><br><span class="line"><span class="built_in">source</span></span><br><span class="line">themes</span><br><span class="line">_config.yml</span><br></pre></td></tr></table></figure>
+<p>首先清除public中的内容，然后重新再生成内容，并发布</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo d</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+<h2 id="完成">完成</h2>
+<p>OK，至此就完成了，本质上也就是重新搭建博客，然后将配置文件和已经有的内容给拷贝过来就可以了，也没有很麻烦嘛!</p>
+<h2 id="关于一些小问题">关于一些小问题</h2>
+<p>迁移之后有很多东西可能跟之前不一样了，包括版本，安装的包之类的，所以还需要根据具体情况来自己踩坑，目前我发现了两个。</p>
+<blockquote>
+<p>插件都是需要自己在新设备上重新安装的，这个没有在上面的步骤中拷贝过来！！</p>
+</blockquote>
+<h3 id="本地图片上传失败">本地图片上传失败</h3>
+<p>原本安装的<code>hexo-asset-image</code>插件不能使用了，重新安装后出现了严重警告和错误，经过查找资料发现是该插件不能用了，所以采用其他方法。参考<a href="https://blog.pakro.top/2021/solve_the_problem_that_after_upgrade_to_hexo5_local_image_cannot_be_displayed_while_deployed/">解决 hexo5 本地图像上传后无法显示的问题</a></p>
+<p>首先，卸载安装的<code>hexo-asset-image</code>；</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm uninstall hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+<p>然后，同样修改修改博客配置文件<code>_config.yml</code>中的 <code>post_asset_folder</code>为<code>true</code>；</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>最后，安装<code>post_asset_folder</code>。</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>在之后在博客中就正常使用原方法传文件即可。</p>
+<h3 id="主题中添加搜索功能">主题中添加搜索功能</h3>
+<p>安装<code>hexo-generator-searchdb</code>插件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+<p>首先修改<strong>博客</strong>配置文件<code>_config.yml</code>，如下：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+<p>然后，修改<strong>主题</strong>配置文件<code>_config.yml</code>如下：</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">trigger:</span> <span class="string">auto</span>  <span class="comment"># trigger若为auto, 通过改变输入触发搜索；trigger若为manual, 通过按下enter键或者点击搜索按钮触发搜索</span></span><br><span class="line">  <span class="attr">top_n_per_article:</span> <span class="number">1</span>  <span class="comment"># 展示每篇文章的前n个结果，如果想要展示所有结果，设置为-1</span></span><br><span class="line">  <span class="attr">unescape:</span> <span class="literal">false</span>  <span class="comment"># 将html字符串转义为可读的字符串。</span></span><br><span class="line">  <span class="attr">preload:</span> <span class="literal">false</span>  <span class="comment"># 当加载页面时预加载搜索结果</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>配置</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python常用函数</title>
+    <url>/2021/02/06/python%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
+    <content><![CDATA[<blockquote>
+<p>本文罗列了回顾python时候的一些常用函数</p>
+</blockquote>
+<span id="more"></span>
+<ul>
+<li><p><a href="https://www.hackerrank.com/challenges/text-alignment/problem">文字对齐</a>：</p>
+<p><code>string.ljust(width,'-')</code>string在左侧；<code>string.center(width,'-')</code>string居中；<code>string.rjust(width,'-')</code>string在右侧</p></li>
+<li><p><a href="https://www.hackerrank.com/challenges/text-wrap/problem">文本自动换行</a>：</p>
+<p><code>textwrap.wrap(string, width)</code>获得list，使用<code>'\n'.join()</code>进行连接</p></li>
+<li><p><a href="https://www.hackerrank.com/challenges/python-string-formatting/problem">矩阵显示多进制</a>：</p>
+<p>二进制八进制以及十六进制的格式化显示，矩阵间距为二进制宽度。使用format进行格式化</p></li>
+<li></li>
+</ul>
+<h2 id="个人收获">个人收获</h2>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>函数</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mysql中位数</title>
     <url>/2021/02/06/mysql%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
     <content><![CDATA[<blockquote>
@@ -529,28 +556,43 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
-    <title>python常用函数</title>
-    <url>/2021/02/06/python%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</url>
+    <title>mysql导出表结构与数据</title>
+    <url>/2021/01/18/mysql%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<blockquote>
-<p>本文罗列了回顾python时候的一些常用函数</p>
+<p>本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为<code>.sql</code>文件，以及如何执行<code>.sql</code>文件。</p>
+<p>适用于需要简单数据库迁移的读者。</p>
 </blockquote>
 <span id="more"></span>
-<ul>
-<li><p><a href="https://www.hackerrank.com/challenges/text-alignment/problem">文字对齐</a>：</p>
-<p><code>string.ljust(width,'-')</code>string在左侧；<code>string.center(width,'-')</code>string居中；<code>string.rjust(width,'-')</code>string在右侧</p></li>
-<li><p><a href="https://www.hackerrank.com/challenges/text-wrap/problem">文本自动换行</a>：</p>
-<p><code>textwrap.wrap(string, width)</code>获得list，使用<code>'\n'.join()</code>进行连接</p></li>
-<li><p><a href="https://www.hackerrank.com/challenges/python-string-formatting/problem">矩阵显示多进制</a>：</p>
-<p>二进制八进制以及十六进制的格式化显示，矩阵间距为二进制宽度。使用format进行格式化</p></li>
-<li></li>
-</ul>
-<h2 id="个人收获">个人收获</h2>
+<h2 id="导出数据表">导出数据表</h2>
+<p>MySQL导出表结构主要是使用<code>mysqldump</code>命令。该命令是在<code>cmd</code>下执行的，而非MySQL命令行中，使用相对路径，会将文件保存在当前目录下。</p>
+<ol type="1">
+<li><p>导出数据库<code>dbname</code>中全部表结构至<code>db.sql</code>中：</p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
+<li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构至<code>db.sql</code>中：</p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
+<li><p>导出数据库<code>dbname</code>中全部表结构及其数据至<code>db.sql</code>中（不加-d）：</p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p dbname &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
+<li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构及其数据至<code>db.sql</code>中：</p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h2 id="导入数据表">导入数据表</h2>
+<p>当我们拥有一个sql文件的时候，我们就可以直接执行sql脚本来完成任务。</p>
+<ol type="1">
+<li><p>在cmd下执行命令：需要选择MySQL的sever下的目录，如果目录存在空格，则需要使用双引号，若sql文件中存在<code>use 数据库</code>则不需要指定<code>-D数据库</code></p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql&quot; –uroot –p -D dbname &lt; C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></p></li>
+<li><p>在MySQL命令行中执行命令：sql文件需要是绝对路径</p>
+<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者推荐下面这个</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<p>在导入数据库的时候，有可能会出现错误<code>MySQL server has gone away</code>。原因一般是操作sql的时间太长，或者插入数据库的数据量太大，一般来说，可以将数据分批插入，或者修改<code>max_allowed_packet</code>参数的配置。</p>
+<p>首先查看max_allowed_packet的值，使用<code>show global variables like 'max_allowed_packet'</code>查看对应的值，之后输入语句进行调整，由于<code>db.sql</code>文件太大，本人这里设置为100M：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> max_allowed_packet<span class="operator">=</span><span class="number">1024</span><span class="operator">*</span><span class="number">1024</span><span class="operator">*</span><span class="number">100</span></span><br></pre></td></tr></table></figure>
+<p>接下来再读取sql文件导入数据库的时候问题就不大了</p>
 ]]></content>
       <categories>
-        <category>python</category>
+        <category>数据库</category>
       </categories>
       <tags>
-        <tag>函数</tag>
+        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -602,46 +644,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </categories>
       <tags>
         <tag>词云</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mysql导出表结构与数据</title>
-    <url>/2021/01/18/mysql%E5%AF%BC%E5%87%BA%E8%A1%A8%E7%BB%93%E6%9E%84%E4%B8%8E%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是关于如何将MySQL数据库中某数据库的数据表结构以及表数据导出为<code>.sql</code>文件，以及如何执行<code>.sql</code>文件。</p>
-<p>适用于需要简单数据库迁移的读者。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="导出数据表">导出数据表</h2>
-<p>MySQL导出表结构主要是使用<code>mysqldump</code>命令。该命令是在<code>cmd</code>下执行的，而非MySQL命令行中，使用相对路径，会将文件保存在当前目录下。</p>
-<ol type="1">
-<li><p>导出数据库<code>dbname</code>中全部表结构至<code>db.sql</code>中：</p>
-<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
-<li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构至<code>db.sql</code>中：</p>
-<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p -d dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
-<li><p>导出数据库<code>dbname</code>中全部表结构及其数据至<code>db.sql</code>中（不加-d）：</p>
-<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p dbname &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
-<li><p>导出数据库<code>dbname</code>中某张表<code>tablename</code>结构及其数据至<code>db.sql</code>中：</p>
-<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqldump -uroot -p dbname tablename &gt;db.sql</span><br></pre></td></tr></table></figure></p></li>
-</ol>
-<h2 id="导入数据表">导入数据表</h2>
-<p>当我们拥有一个sql文件的时候，我们就可以直接执行sql脚本来完成任务。</p>
-<ol type="1">
-<li><p>在cmd下执行命令：需要选择MySQL的sever下的目录，如果目录存在空格，则需要使用双引号，若sql文件中存在<code>use 数据库</code>则不需要指定<code>-D数据库</code></p>
-<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql&quot; –uroot –p -D dbname &lt; C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></p></li>
-<li><p>在MySQL命令行中执行命令：sql文件需要是绝对路径</p>
-<p><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">source C:\Users\username\Desktop\db.sql</span><br><span class="line">-- 或者推荐下面这个</span><br><span class="line">\. C:\Users\username\Desktop\db.sql</span><br></pre></td></tr></table></figure></p></li>
-</ol>
-<p>在导入数据库的时候，有可能会出现错误<code>MySQL server has gone away</code>。原因一般是操作sql的时间太长，或者插入数据库的数据量太大，一般来说，可以将数据分批插入，或者修改<code>max_allowed_packet</code>参数的配置。</p>
-<p>首先查看max_allowed_packet的值，使用<code>show global variables like 'max_allowed_packet'</code>查看对应的值，之后输入语句进行调整，由于<code>db.sql</code>文件太大，本人这里设置为100M：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> max_allowed_packet<span class="operator">=</span><span class="number">1024</span><span class="operator">*</span><span class="number">1024</span><span class="operator">*</span><span class="number">100</span></span><br></pre></td></tr></table></figure>
-<p>接下来再读取sql文件导入数据库的时候问题就不大了</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
       </tags>
   </entry>
   <entry>
@@ -954,6 +956,88 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
+    <title>单链表解题技巧4——反转链表</title>
+    <url>/2022/01/11/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A74%E2%80%94%E2%80%94%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于单链表的反转问题, 存在反转全部链表和部分区间链表的情况.</p>
+<p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/reverse-linked-list/">206. 反转链表</a>和<a href="https://leetcode-cn.com/problems/reverse-linked-list-ii/">92. 反转链表 II</a>.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="反转链表">反转链表</h2>
+<h3 id="题目1">题目1</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/reverse-linked-list/">206. 反转链表</a>: 给你单链表的头节点 head , 请你反转链表, 并返回反转后的链表.</p>
+<p>示例1:</p>
+<blockquote>
+<p>输入: head = [1,2,3,4,5]</p>
+<p>输出: [5,4,3,2,1]</p>
+</blockquote>
+<p>示例2:</p>
+<blockquote>
+<p>输入: head = []</p>
+<p>输出: []</p>
+</blockquote>
+<h3 id="理解一下1">理解一下1</h3>
+<p>反转很好理解, 链表本来是指向其<strong>唯一后继</strong>, 现在只不过是去指向其<strong>唯一前趋</strong>.</p>
+<p>基本的思路是:</p>
+<ol type="1">
+<li>需要三个指针, 一个指向前趋, 一个指向当前结点, 一个指向后继;</li>
+<li>然后循环迭代, 变换指针的移动即可.</li>
+</ol>
+<p>以上的是最基本的迭代思维, 那么尝试使用递归的思想来解决呢?</p>
+<ol type="1">
+<li>首先递归反转某个结点后的所有链表;</li>
+<li>直至base case: 空链或唯一结点;</li>
+<li>然后将反转后的链表与该结点连接上即可.</li>
+</ol>
+<h3 id="解题1">解题1</h3>
+<p>首先是迭代的算法:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode *h = <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode * p = head, *q = head;</span><br><span class="line">    <span class="keyword">while</span>(p != <span class="literal">nullptr</span> &amp;&amp; p-&gt;next != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        q = p-&gt;next;</span><br><span class="line">        p-&gt;next = h;</span><br><span class="line">        h = p;</span><br><span class="line">        p = q;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;next = h;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是递归的解法, 最后三行不好理解的话画个图就知道了:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 使用last指向翻转head后的链表</span></span><br><span class="line">    ListNode *last = <span class="built_in">reverseList</span>(head-&gt;next);</span><br><span class="line">    <span class="comment">// 这里需要画个图才能解释</span></span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    <span class="comment">// 最后head去指向空</span></span><br><span class="line">    head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="反转部分链表">反转部分链表</h2>
+<h3 id="题目2">题目2</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/reverse-linked-list-ii/">92. 反转链表 II</a>: 给你单链表的头指针 head 和两个整数 left 和 right, 其中 left &lt;= right . 请你反转从位置 left 到位置 right 的链表节点, 返回<strong>反转后的链表</strong>.</p>
+<p>示例1:</p>
+<blockquote>
+<p>输入: head = [1,2,3,4,5], left = 2, right = 4</p>
+<p>输出: [1,4,3,2,5]</p>
+</blockquote>
+<p>示例2:</p>
+<blockquote>
+<p>输入: head = [5], left = 1, right = 1</p>
+<p>输出: [5]</p>
+</blockquote>
+<h3 id="理解一下2">理解一下2</h3>
+<p>与上一题不同的是, 这题需要将链表的部分区间进行翻转, 这就需要将链表分为三个部分处理: 前部分-翻转部分-后部分, 这会显得比较麻烦.</p>
+<p>那么我们考虑一个问题: <strong>反转链表前N个结点</strong>, 那么链表就只需要分为: 翻转部分-后部分, 相比而言简单一些了.</p>
+<p>反转前N个结点的基本的思路是:</p>
+<ol type="1">
+<li>通过N设置对反转<strong>结束</strong>的判断, 同时需要一个指针来表示<strong>后继</strong>;</li>
+<li>与第一题一样翻转;</li>
+</ol>
+<p>那么对于我们的区间就很简单了:</p>
+<ol type="1">
+<li>不断递归或迭代后移至需要反转的结点;</li>
+<li>然后不就是<strong>反转链表前N个结点</strong>的问题嘛!</li>
+</ol>
+<h3 id="解题2">解题2</h3>
+<p>由于结点和指针相对较多, 要仔细判断清楚.</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseBetween</span><span class="params">(ListNode* head, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">reverseTopN</span>(head, right);</span><br><span class="line">    head-&gt;next = <span class="built_in">reverseBetween</span>(head-&gt;next, left<span class="number">-1</span>, right<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ListNode * rest;</span><br><span class="line"><span class="function">ListNode* <span class="title">reverseTopN</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">        rest = head-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    ListNode * last = <span class="built_in">reverseTopN</span>(head-&gt;next, n<span class="number">-1</span>);</span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    head-&gt;next = rest;</span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="个人收获">个人收获</h2>
+<p>在这里反转链表的问题上, 迭代和递归的时间复杂度都是O(n), 所以选择使用哪个都差不多, 但是递归的空间复杂度却是O(n), 所以实际应用的时候还是迭代较好.</p>
+<p>不过这里让我对递归有了更好的认知, 写递归函数, 就是要<strong>相信这个递归函数可以做到它该做的</strong>, 然后我们将<code>base case</code>和其他需要准备的做好就可以了, 剩下的就相信它!</p>
+]]></content>
+      <categories>
+        <category>数据结构算法</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+        <tag>单链表</tag>
+        <tag>leetcode题解</tag>
+        <tag>迭代和递归</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>字符串解题技巧1——滑动窗口</title>
     <url>/2022/01/09/%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</url>
     <content><![CDATA[<blockquote>
@@ -1055,88 +1139,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
-    <title>单链表解题技巧4——反转链表</title>
-    <url>/2022/01/11/%E5%8D%95%E9%93%BE%E8%A1%A8%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A74%E2%80%94%E2%80%94%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是关于单链表的反转问题, 存在反转全部链表和部分区间链表的情况.</p>
-<p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/reverse-linked-list/">206. 反转链表</a>和<a href="https://leetcode-cn.com/problems/reverse-linked-list-ii/">92. 反转链表 II</a>.</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="反转链表">反转链表</h2>
-<h3 id="题目1">题目1</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/reverse-linked-list/">206. 反转链表</a>: 给你单链表的头节点 head , 请你反转链表, 并返回反转后的链表.</p>
-<p>示例1:</p>
-<blockquote>
-<p>输入: head = [1,2,3,4,5]</p>
-<p>输出: [5,4,3,2,1]</p>
-</blockquote>
-<p>示例2:</p>
-<blockquote>
-<p>输入: head = []</p>
-<p>输出: []</p>
-</blockquote>
-<h3 id="理解一下1">理解一下1</h3>
-<p>反转很好理解, 链表本来是指向其<strong>唯一后继</strong>, 现在只不过是去指向其<strong>唯一前趋</strong>.</p>
-<p>基本的思路是:</p>
-<ol type="1">
-<li>需要三个指针, 一个指向前趋, 一个指向当前结点, 一个指向后继;</li>
-<li>然后循环迭代, 变换指针的移动即可.</li>
-</ol>
-<p>以上的是最基本的迭代思维, 那么尝试使用递归的思想来解决呢?</p>
-<ol type="1">
-<li>首先递归反转某个结点后的所有链表;</li>
-<li>直至base case: 空链或唯一结点;</li>
-<li>然后将反转后的链表与该结点连接上即可.</li>
-</ol>
-<h3 id="解题1">解题1</h3>
-<p>首先是迭代的算法:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode *h = <span class="literal">nullptr</span>;</span><br><span class="line">    ListNode * p = head, *q = head;</span><br><span class="line">    <span class="keyword">while</span>(p != <span class="literal">nullptr</span> &amp;&amp; p-&gt;next != <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        q = p-&gt;next;</span><br><span class="line">        p-&gt;next = h;</span><br><span class="line">        h = p;</span><br><span class="line">        p = q;</span><br><span class="line">    &#125;</span><br><span class="line">    p-&gt;next = h;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后是递归的解法, 最后三行不好理解的话画个图就知道了:</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(head == <span class="literal">nullptr</span> || head-&gt;next == <span class="literal">nullptr</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 使用last指向翻转head后的链表</span></span><br><span class="line">    ListNode *last = <span class="built_in">reverseList</span>(head-&gt;next);</span><br><span class="line">    <span class="comment">// 这里需要画个图才能解释</span></span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    <span class="comment">// 最后head去指向空</span></span><br><span class="line">    head-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="反转部分链表">反转部分链表</h2>
-<h3 id="题目2">题目2</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/reverse-linked-list-ii/">92. 反转链表 II</a>: 给你单链表的头指针 head 和两个整数 left 和 right, 其中 left &lt;= right . 请你反转从位置 left 到位置 right 的链表节点, 返回<strong>反转后的链表</strong>.</p>
-<p>示例1:</p>
-<blockquote>
-<p>输入: head = [1,2,3,4,5], left = 2, right = 4</p>
-<p>输出: [1,4,3,2,5]</p>
-</blockquote>
-<p>示例2:</p>
-<blockquote>
-<p>输入: head = [5], left = 1, right = 1</p>
-<p>输出: [5]</p>
-</blockquote>
-<h3 id="理解一下2">理解一下2</h3>
-<p>与上一题不同的是, 这题需要将链表的部分区间进行翻转, 这就需要将链表分为三个部分处理: 前部分-翻转部分-后部分, 这会显得比较麻烦.</p>
-<p>那么我们考虑一个问题: <strong>反转链表前N个结点</strong>, 那么链表就只需要分为: 翻转部分-后部分, 相比而言简单一些了.</p>
-<p>反转前N个结点的基本的思路是:</p>
-<ol type="1">
-<li>通过N设置对反转<strong>结束</strong>的判断, 同时需要一个指针来表示<strong>后继</strong>;</li>
-<li>与第一题一样翻转;</li>
-</ol>
-<p>那么对于我们的区间就很简单了:</p>
-<ol type="1">
-<li>不断递归或迭代后移至需要反转的结点;</li>
-<li>然后不就是<strong>反转链表前N个结点</strong>的问题嘛!</li>
-</ol>
-<h3 id="解题2">解题2</h3>
-<p>由于结点和指针相对较多, 要仔细判断清楚.</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseBetween</span><span class="params">(ListNode* head, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">reverseTopN</span>(head, right);</span><br><span class="line">    head-&gt;next = <span class="built_in">reverseBetween</span>(head-&gt;next, left<span class="number">-1</span>, right<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ListNode * rest;</span><br><span class="line"><span class="function">ListNode* <span class="title">reverseTopN</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</span><br><span class="line">        rest = head-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">    ListNode * last = <span class="built_in">reverseTopN</span>(head-&gt;next, n<span class="number">-1</span>);</span><br><span class="line">    head-&gt;next-&gt;next = head;</span><br><span class="line">    head-&gt;next = rest;</span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="个人收获">个人收获</h2>
-<p>在这里反转链表的问题上, 迭代和递归的时间复杂度都是O(n), 所以选择使用哪个都差不多, 但是递归的空间复杂度却是O(n), 所以实际应用的时候还是迭代较好.</p>
-<p>不过这里让我对递归有了更好的认知, 写递归函数, 就是要<strong>相信这个递归函数可以做到它该做的</strong>, 然后我们将<code>base case</code>和其他需要准备的做好就可以了, 剩下的就相信它!</p>
-]]></content>
-      <categories>
-        <category>数据结构算法</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-        <tag>单链表</tag>
-        <tag>leetcode题解</tag>
-        <tag>迭代和递归</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>幸存者偏差</title>
     <url>/2021/02/05/%E5%B9%B8%E5%AD%98%E8%80%85%E5%81%8F%E5%B7%AE/</url>
     <content><![CDATA[<blockquote>
@@ -1172,6 +1174,128 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </categories>
       <tags>
         <tag>误差</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>快乐Linux学习（三）</title>
+    <url>/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
+<p>适用于学习Linux系统中shell特性和键盘操作的读者。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="字符展开">字符展开</h2>
+<p>每当我们在bash中输入一串命令，bash就会在执行命令之前将命令进行<code>展开</code>操作。</p>
+<p>我们可以使用<code>echo</code>来显示一行文本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo This is a test.</span><br></pre></td></tr></table></figure>
+<p>那么不出意外将会输出结果<code>This is a test.</code>，当我们输入：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo *</span><br></pre></td></tr></table></figure>
+<p>就会出现意外了:joy:，结果是根据通配符含义的“<code>*</code>”匹配当前文件夹的任何内容，而不是我们想要打印的“<code>*</code>”，这就意味着我们的命令有了自己的想法，想要按照自身的规则先进行展开成完全态，再执行命令。</p>
+<h3 id="路径名展开">路径名展开</h3>
+<p>以上这样的展开被称为路径名展开，例如打印当前目录所有的以<code>l</code>开头的文件或目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo l*</span><br></pre></td></tr></table></figure>
+<p>但是无法显示隐藏文件的展开路径，但是<code>办法总比困难多</code>。我们进行尝试：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo .*</span><br></pre></td></tr></table></figure>
+<p>几乎成功了，但是存在了不需要的<code>.</code>和<code>..</code>。换个方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -d .[!.]?* | less</span><br></pre></td></tr></table></figure>
+<p>仅展示以<code>.</code>开头，第二个符号不是<code>.</code>，并且至少再包含一个符号，之后可以紧跟任意多个字符。</p>
+<blockquote>
+<p>我们可以发现，对于文件和目录进行打印输出的时候，使用echo和ls的结果似乎差不多，但是细心的话，我们可以发现，ls文件名之间的间距是根据<code>制表符</code>规定的，而echo每两个文件名之间的间距是<code>一个空格</code>，其中原因也是shell的命令展开。</p>
+</blockquote>
+<h3 id="算数表达式展开">算数表达式展开</h3>
+<p>算术表达式是形如<code>$((expression))</code>，表达式中不在意空格，并且可以嵌套存在，需要注意的是除法“<code>/</code>”，由于表达式仅支持<strong>整数操作</strong>，所以除法操作得到的结果是<strong>舍尾的整数</strong>，想要获得余数可以使用“<code>%</code>”进行操作。</p>
+<h3 id="花括号展开">花括号展开</h3>
+<p>花括号是为了获得多个具有一定重复规律的字符串而出现的，举个例子:bulb:：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo hello-&#123;R,G,B&#125;-world</span><br></pre></td></tr></table></figure>
+<p>则结果会生成<code>hello-R-world hello-G-world hello-B-world</code>，或者想要生成2019-01至2021-12的文件夹来存放相应内容，可以使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir &#123;2019..2021&#125;-0&#123;1..9&#125; &#123;2019..2021&#125;-1&#123;0..2&#125;</span><br></pre></td></tr></table></figure>
+<p>其中花括号内可以包含字符串列表，整数区间和字符区间，区间使用<code>..</code>来表示区间范围，其中字符区间全部是大写或全部是小写的时候没有任何问题，但是在大写到小写的区间内，由于<code>ASCII</code>码的原因，会存在几个过度的字符，这需要注意一下。</p>
+<p>同样的，花括号也可以<code>嵌套</code>。</p>
+<h3 id="参数展开">参数展开</h3>
+<p>参数展开在此处简要体提及，之后会在shell脚本中详细阐述。</p>
+<p>我们查看一下可以使用的有效参数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printenv | less</span><br></pre></td></tr></table></figure>
+<p>这些参数可以使用 <code>$</code>符号进行调用，来显示参数对应的值：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $USER</span><br></pre></td></tr></table></figure>
+<p><strong>命令替换</strong>功能也能将命令的输出作为一个展开模式来使用，例如将找到cp目录的<strong>结果作为展开的参数</strong>给ls进行打印：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l $(which cp)</span><br></pre></td></tr></table></figure>
+<p>同样的，管道线也适用参数展开，在旧版bash中也可以使用<code>ls -l `which cp`</code>达到同样效果。</p>
+<h3 id="引用">引用</h3>
+<p>这里的引用指的是一种引用机制，用来有选择的禁止不需要的展开。什么叫做不需要的展开，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo This is a     Test</span><br></pre></td></tr></table></figure>
+<p>但是结果是<code>This is a Test</code>，中间想要的空格被自动展开后再进行单词分割（空格、制表符、换行符等界定符）而失去了。再比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo The total price is $100.00</span><br></pre></td></tr></table></figure>
+<p>但是结果却是<code>The total price is 00.00</code>，原因是<code>$1</code>被视作名为变量1的参数。</p>
+<p>为了禁止这些不需要的展开，所以出现了引用机制，这里有两种类型，一种是<strong>双引号</strong>，一种是<strong>单引号</strong>。</p>
+<p>使用双引号的时候，shell使用的一些特殊字符将会失去其特殊含义，<u>单词分割，路径名展开，波浪线展开（用户名）和花括号展开</u>都会被禁止。</p>
+<p>例如这个存在空格的破损文件名<code>word count.txt</code>，正常情况下ls的时候会认作两个参数，而使用双引号的时候就会关闭单词分割，从而视作一个参数来正确读取，并且可以使用mv进行重命名。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l &quot;word count.txt&quot;</span><br><span class="line">mv &quot;word count.txt&quot; word_count.txt</span><br></pre></td></tr></table></figure>
+<p>再比如打印日历：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $(cal)</span><br></pre></td></tr></table></figure>
+<p>这就是被单词分割的后果！可以尝试加上双引号，一下子好看了有木有:laughing:！</p>
+<p>但是对于<code>$，\和`</code>并不会被禁止，也就是意味着参数展开，算术展开和命令替换仍然会被执行。</p>
+<p>这就需要使用单引号来<strong>禁止全部展开</strong>，通过以下对比进行说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`</span><br><span class="line">echo &quot;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&quot;</span><br><span class="line">echo &#x27;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&#x27;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于转义字符“<code>\</code>”有一个很有趣的东西，echo加上<code>-e</code>能够解释转义字符，例如，10秒后响铃:alarm_clock:：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sleep 10; echo -e &quot;Time&#x27;s up \a&quot;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="键盘的高级操作">键盘的高级操作</h2>
+<p>这里再附带说一下键盘有关的高级操作，<code>命令行的目标是懒惰</code>，各种简短而丰富的命令是为了更少的敲击键盘和无需使用鼠标，来专注于工作本身。</p>
+<p>在命令行中存在很多的按键，来快速编辑，例如：</p>
+<table>
+<thead>
+<tr class="header">
+<th>按键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ctrl-a</td>
+<td>光标移动到行首</td>
+</tr>
+<tr class="even">
+<td>Ctrl-e</td>
+<td>光标移动到行尾</td>
+</tr>
+<tr class="odd">
+<td>Alt-f</td>
+<td>光标向前移动一个字</td>
+</tr>
+<tr class="even">
+<td>Alt-b</td>
+<td>光标向后移动一个字</td>
+</tr>
+<tr class="odd">
+<td>Ctrl-l</td>
+<td>清空屏幕，与clear相同</td>
+</tr>
+<tr class="even">
+<td>Alt-l</td>
+<td>光标至字尾的字符转化为小写字母</td>
+</tr>
+<tr class="odd">
+<td>Alt-u</td>
+<td>光标至字尾的字符转化为大写字母</td>
+</tr>
+</tbody>
+</table>
+<h3 id="自动补全">自动补全</h3>
+<p>自动补全是shell一个很方便的方法，Linux系统不一样可能机制不同，WSL中是只有一个匹配的则敲击<code>一下tab</code>键即可，存在多个匹配条件，则连续敲击<code>两下tab</code>键显示。</p>
+<h3 id="历史命令">历史命令</h3>
+<p>使用上下键就可以浏览之前输入过的历史命令，不过还可以使用history进行查看：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">history | less</span><br></pre></td></tr></table></figure>
+<p>在每个历史命令中，每行会有一个序号，我们在命令行直接输入<code>!80</code>就可以直接执行第80行的命令了。</p>
+<p>使用<code>Ctrl-r</code>可以进入搜索模式，输入部分命令内容，继续按下<code>Ctrl-r</code>就可以从<strong>现在</strong>到<strong>过去</strong>进行历史命令匹配了。</p>
+<h2 id="个人收获">个人收获</h2>
+<p>总之，Linux中的shell是一个很有趣的事物，准确的理解其中展开和引用机制可以很好的发挥shell的能力。对于最后提及的键盘快捷键，暂时来说只是锦上添花，更多的还是关注命令本身。</p>
+]]></content>
+      <categories>
+        <category>操作系统</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1607,128 +1731,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
-    <title>快乐Linux学习（三）</title>
-    <url>/2021/01/27/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是快乐学习Linux的第三篇，是基于Windows的Linux子系统（WSL）进行操作的。</p>
-<p>适用于学习Linux系统中shell特性和键盘操作的读者。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="字符展开">字符展开</h2>
-<p>每当我们在bash中输入一串命令，bash就会在执行命令之前将命令进行<code>展开</code>操作。</p>
-<p>我们可以使用<code>echo</code>来显示一行文本：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo This is a test.</span><br></pre></td></tr></table></figure>
-<p>那么不出意外将会输出结果<code>This is a test.</code>，当我们输入：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo *</span><br></pre></td></tr></table></figure>
-<p>就会出现意外了:joy:，结果是根据通配符含义的“<code>*</code>”匹配当前文件夹的任何内容，而不是我们想要打印的“<code>*</code>”，这就意味着我们的命令有了自己的想法，想要按照自身的规则先进行展开成完全态，再执行命令。</p>
-<h3 id="路径名展开">路径名展开</h3>
-<p>以上这样的展开被称为路径名展开，例如打印当前目录所有的以<code>l</code>开头的文件或目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo l*</span><br></pre></td></tr></table></figure>
-<p>但是无法显示隐藏文件的展开路径，但是<code>办法总比困难多</code>。我们进行尝试：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo .*</span><br></pre></td></tr></table></figure>
-<p>几乎成功了，但是存在了不需要的<code>.</code>和<code>..</code>。换个方法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -d .[!.]?* | less</span><br></pre></td></tr></table></figure>
-<p>仅展示以<code>.</code>开头，第二个符号不是<code>.</code>，并且至少再包含一个符号，之后可以紧跟任意多个字符。</p>
-<blockquote>
-<p>我们可以发现，对于文件和目录进行打印输出的时候，使用echo和ls的结果似乎差不多，但是细心的话，我们可以发现，ls文件名之间的间距是根据<code>制表符</code>规定的，而echo每两个文件名之间的间距是<code>一个空格</code>，其中原因也是shell的命令展开。</p>
-</blockquote>
-<h3 id="算数表达式展开">算数表达式展开</h3>
-<p>算术表达式是形如<code>$((expression))</code>，表达式中不在意空格，并且可以嵌套存在，需要注意的是除法“<code>/</code>”，由于表达式仅支持<strong>整数操作</strong>，所以除法操作得到的结果是<strong>舍尾的整数</strong>，想要获得余数可以使用“<code>%</code>”进行操作。</p>
-<h3 id="花括号展开">花括号展开</h3>
-<p>花括号是为了获得多个具有一定重复规律的字符串而出现的，举个例子:bulb:：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo hello-&#123;R,G,B&#125;-world</span><br></pre></td></tr></table></figure>
-<p>则结果会生成<code>hello-R-world hello-G-world hello-B-world</code>，或者想要生成2019-01至2021-12的文件夹来存放相应内容，可以使用：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir &#123;2019..2021&#125;-0&#123;1..9&#125; &#123;2019..2021&#125;-1&#123;0..2&#125;</span><br></pre></td></tr></table></figure>
-<p>其中花括号内可以包含字符串列表，整数区间和字符区间，区间使用<code>..</code>来表示区间范围，其中字符区间全部是大写或全部是小写的时候没有任何问题，但是在大写到小写的区间内，由于<code>ASCII</code>码的原因，会存在几个过度的字符，这需要注意一下。</p>
-<p>同样的，花括号也可以<code>嵌套</code>。</p>
-<h3 id="参数展开">参数展开</h3>
-<p>参数展开在此处简要体提及，之后会在shell脚本中详细阐述。</p>
-<p>我们查看一下可以使用的有效参数：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">printenv | less</span><br></pre></td></tr></table></figure>
-<p>这些参数可以使用 <code>$</code>符号进行调用，来显示参数对应的值：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $USER</span><br></pre></td></tr></table></figure>
-<p><strong>命令替换</strong>功能也能将命令的输出作为一个展开模式来使用，例如将找到cp目录的<strong>结果作为展开的参数</strong>给ls进行打印：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l $(which cp)</span><br></pre></td></tr></table></figure>
-<p>同样的，管道线也适用参数展开，在旧版bash中也可以使用<code>ls -l `which cp`</code>达到同样效果。</p>
-<h3 id="引用">引用</h3>
-<p>这里的引用指的是一种引用机制，用来有选择的禁止不需要的展开。什么叫做不需要的展开，如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo This is a     Test</span><br></pre></td></tr></table></figure>
-<p>但是结果是<code>This is a Test</code>，中间想要的空格被自动展开后再进行单词分割（空格、制表符、换行符等界定符）而失去了。再比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo The total price is $100.00</span><br></pre></td></tr></table></figure>
-<p>但是结果却是<code>The total price is 00.00</code>，原因是<code>$1</code>被视作名为变量1的参数。</p>
-<p>为了禁止这些不需要的展开，所以出现了引用机制，这里有两种类型，一种是<strong>双引号</strong>，一种是<strong>单引号</strong>。</p>
-<p>使用双引号的时候，shell使用的一些特殊字符将会失去其特殊含义，<u>单词分割，路径名展开，波浪线展开（用户名）和花括号展开</u>都会被禁止。</p>
-<p>例如这个存在空格的破损文件名<code>word count.txt</code>，正常情况下ls的时候会认作两个参数，而使用双引号的时候就会关闭单词分割，从而视作一个参数来正确读取，并且可以使用mv进行重命名。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -l &quot;word count.txt&quot;</span><br><span class="line">mv &quot;word count.txt&quot; word_count.txt</span><br></pre></td></tr></table></figure>
-<p>再比如打印日历：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $(cal)</span><br></pre></td></tr></table></figure>
-<p>这就是被单词分割的后果！可以尝试加上双引号，一下子好看了有木有:laughing:！</p>
-<p>但是对于<code>$，\和`</code>并不会被禁止，也就是意味着参数展开，算术展开和命令替换仍然会被执行。</p>
-<p>这就需要使用单引号来<strong>禁止全部展开</strong>，通过以下对比进行说明：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`</span><br><span class="line">echo &quot;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&quot;</span><br><span class="line">echo &#x27;text ~/.txt &#123;a,b&#125; \$100 $(echo ~) $((2+2)) $USER `which cp`&#x27;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>对于转义字符“<code>\</code>”有一个很有趣的东西，echo加上<code>-e</code>能够解释转义字符，例如，10秒后响铃:alarm_clock:：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sleep 10; echo -e &quot;Time&#x27;s up \a&quot;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="键盘的高级操作">键盘的高级操作</h2>
-<p>这里再附带说一下键盘有关的高级操作，<code>命令行的目标是懒惰</code>，各种简短而丰富的命令是为了更少的敲击键盘和无需使用鼠标，来专注于工作本身。</p>
-<p>在命令行中存在很多的按键，来快速编辑，例如：</p>
-<table>
-<thead>
-<tr class="header">
-<th>按键</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ctrl-a</td>
-<td>光标移动到行首</td>
-</tr>
-<tr class="even">
-<td>Ctrl-e</td>
-<td>光标移动到行尾</td>
-</tr>
-<tr class="odd">
-<td>Alt-f</td>
-<td>光标向前移动一个字</td>
-</tr>
-<tr class="even">
-<td>Alt-b</td>
-<td>光标向后移动一个字</td>
-</tr>
-<tr class="odd">
-<td>Ctrl-l</td>
-<td>清空屏幕，与clear相同</td>
-</tr>
-<tr class="even">
-<td>Alt-l</td>
-<td>光标至字尾的字符转化为小写字母</td>
-</tr>
-<tr class="odd">
-<td>Alt-u</td>
-<td>光标至字尾的字符转化为大写字母</td>
-</tr>
-</tbody>
-</table>
-<h3 id="自动补全">自动补全</h3>
-<p>自动补全是shell一个很方便的方法，Linux系统不一样可能机制不同，WSL中是只有一个匹配的则敲击<code>一下tab</code>键即可，存在多个匹配条件，则连续敲击<code>两下tab</code>键显示。</p>
-<h3 id="历史命令">历史命令</h3>
-<p>使用上下键就可以浏览之前输入过的历史命令，不过还可以使用history进行查看：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">history | less</span><br></pre></td></tr></table></figure>
-<p>在每个历史命令中，每行会有一个序号，我们在命令行直接输入<code>!80</code>就可以直接执行第80行的命令了。</p>
-<p>使用<code>Ctrl-r</code>可以进入搜索模式，输入部分命令内容，继续按下<code>Ctrl-r</code>就可以从<strong>现在</strong>到<strong>过去</strong>进行历史命令匹配了。</p>
-<h2 id="个人收获">个人收获</h2>
-<p>总之，Linux中的shell是一个很有趣的事物，准确的理解其中展开和引用机制可以很好的发挥shell的能力。对于最后提及的键盘快捷键，暂时来说只是锦上添花，更多的还是关注命令本身。</p>
-]]></content>
-      <categories>
-        <category>操作系统</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>快乐Linux学习（五）</title>
     <url>/2021/02/01/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
@@ -2055,83 +2057,6 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
       </tags>
   </entry>
   <entry>
-    <title>数组解题技巧1——前缀和数组</title>
-    <url>/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是关于数组的前缀和技巧，在快速计算一个数组区间内的元素之和时使用</p>
-<p>涉及 leetcode 的 <a href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>、<a href="https://leetcode-cn.com/problems/range-sum-query-2d-immutable">304. 二维区域和检索 - 矩阵不可变</a>和<a href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="区域检索">区域检索</h2>
-<h3 id="题目1">题目1</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>：给定一个整数数组 nums，求出数组从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点。</p>
-<p>示例1：</p>
-<blockquote>
-<p>输入：[ [ [-2, 0, 3, -5, 2, -1] ], [0, 2], [2, 5], [0, 5] ]</p>
-<p>输出：[null, 1, -1, -3]</p>
-</blockquote>
-<h3 id="理解一下1">理解一下1</h3>
-<p>题目的大概意思就是：计算数组内某个区域的和。</p>
-<p>代码要求有两点，一个是写出构造函数，一个是写出计算区域和的函数。</p>
-<p>基本的思路是：</p>
-<ol type="1">
-<li>构造函数直接将数组传递过去就行；</li>
-<li>在<code>sumRange</code>中使用循环计算<code>left</code>到<code>right</code>的和。</li>
-</ol>
-<p>很简单的嘛，OK确实，但是提交了发现超越的人数不多呀，这怎么行！</p>
-<p>仔细思考发现 OJ 测试的时候构造函数仅仅调用<strong>一次</strong>，而计算区域和函数调用了<strong>多次</strong>，所以我们需要优化<code>sumRange</code>函数。</p>
-<p>于是考虑使用前缀和，使得构造函数麻烦一些，但是使得<code>sumRange</code>函数<strong>简单</strong>一些：</p>
-<ol type="1">
-<li>使用构造函数时，直接在传递数组时，计算前<code>n</code>项的前缀累加和，时间复杂度为<code>O(n)</code>；</li>
-<li>然后<code>sumRange</code>函数计算<code>left</code>到<code>right</code>的区域和时，只需要使用第<code>right</code>项的前缀和减去第<code>left-1</code>项前缀和即可，<code>sumRange</code>的时间复杂度就是<code>O(1)</code>。</li>
-</ol>
-<h3 id="解题1">解题1</h3>
-<p>先看解法一：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; nums;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;nums = nums;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = left; i &lt;= right; i++)&#123;</span><br><span class="line">            sum += <span class="keyword">this</span>-&gt;nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>再看使用前缀和的解法：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; presums;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="comment">// 构造时为 n 的复杂度</span></span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">this</span>-&gt;presums.<span class="built_in">resize</span>(n+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n+<span class="number">1</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;presums[i] = <span class="keyword">this</span>-&gt;presums[i<span class="number">-1</span>] + nums[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 调用时仅需要直接索引相减即可</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>-&gt;presums[right+<span class="number">1</span>] - <span class="keyword">this</span>-&gt;presums[left];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>关于<a href="https://leetcode-cn.com/problems/range-sum-query-2d-immutable">304. 二维区域和检索 - 矩阵不可变</a>这题，只不过是从一维变化成了二维，大家举一反三即可。</p>
-<p>需要注意的仅仅是边界的细节问题。</p>
-<h2 id="和为-k-的子数组">和为 K 的子数组</h2>
-<h3 id="题目2">题目2</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>：给你一个整数数组 nums 和一个整数 k ，请你统计并返回该数组中和为 k 的连续子数组的个数。</p>
-<p>示例1：</p>
-<blockquote>
-<p>输入：nums = [1,1,1], k = 2</p>
-<p>输出：2</p>
-</blockquote>
-<p>示例2：</p>
-<blockquote>
-<p>输入：nums = [1,2,3], k = 3</p>
-<p>输出：2</p>
-</blockquote>
-<h3 id="理解一下2">理解一下2</h3>
-<p>题目的大概意思就是：计算出，给定数组中有多少个连续子数组的和为 K，也就是给定数组中有多少个区间和为K。</p>
-<p>最基本的思路就是穷举嘛，嵌套循环，计算所有区间的数组之和，判断其是否为 K。不过很遗憾，时间复杂度<span class="math inline">\(O(n^2)\)</span>在10000大小的测试案例中超时了。</p>
-<p>再仔细看看区域和为K，关于区域和那我们很自然的想到使用前缀和数组试试看了：</p>
-<ol type="1">
-<li>计算前缀和数组；</li>
-<li>我们要计算区域和，就得使用前缀和数组的端点值相减，并判断是否为K，如此一来时间复杂度又回到了<span class="math inline">\(O(n^2)\)</span>；</li>
-<li>换个思路，验证<code>i</code>处的前缀和<code>sum_i</code>减去<code>K</code>的差值<code>sum_j</code>，判断<code>sum_j</code>是否已经<strong>存在</strong>已知的前缀和数组中，若存在则统计<strong>出现次数</strong>即可！</li>
-<li><code>sum_j</code>出现的次数就是i为右端点的区间可以出现的次数，随着不断计算前缀和数组和计数，那么时间复杂度仅仅是计算前缀和的时间O(n)。</li>
-</ol>
-<h3 id="题解2">题解2</h3>
-<p>判断存在计数可以使用<strong>hash表</strong>来实现，快速高效。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">subarraySum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 使用hash表来记录前缀和出现的次数</span></span><br><span class="line">    unordered_map&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; presum;</span><br><span class="line">    <span class="comment">// 初始记录为 0，因为存在一个数等于 k 的情况</span></span><br><span class="line">    presum[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// count 记录个数，sum_i 计算前缀和</span></span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>, sum_i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num: nums)&#123;</span><br><span class="line">        sum_i += num;</span><br><span class="line">        <span class="keyword">int</span> sum_j = sum_i - k;</span><br><span class="line">        <span class="comment">// 相差为 k 的前缀和若存在，则区域相加为 k</span></span><br><span class="line">        <span class="keyword">if</span>(presum.<span class="built_in">find</span>(sum_j) != presum.<span class="built_in">end</span>())&#123;</span><br><span class="line">            <span class="comment">// 加上此前出现 sum_j 的次数</span></span><br><span class="line">            count += presum[sum_j];</span><br><span class="line">        &#125;</span><br><span class="line">        presum[sum_i]++; <span class="comment">// 出现次数加 1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="个人收获">个人收获</h2>
-<p>前缀和的计算方法主要适用于处理数组<strong>区域之和</strong>的问题，并且计算区域和<strong>频率较高</strong>时使用，能够达到较好的效果。</p>
-]]></content>
-      <categories>
-        <category>数据结构算法</category>
-      </categories>
-      <tags>
-        <tag>c++</tag>
-        <tag>leetcode题解</tag>
-        <tag>数组</tag>
-        <tag>前缀和</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>快乐Linux学习（四）</title>
     <url>/2021/01/28/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
@@ -2294,6 +2219,163 @@ P(A) = P(A|B_1)P(B_1) + P(A|B_n)P(B_n) + \dots + P(A|B_n)P(B_n)
         <tag>SWOT</tag>
         <tag>波特五力</tag>
         <tag>波士顿矩阵</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数组解题技巧1——前缀和数组</title>
+    <url>/2022/01/07/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A71%E2%80%94%E2%80%94%E5%89%8D%E7%BC%80%E5%92%8C%E6%95%B0%E7%BB%84/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于数组的前缀和技巧，在快速计算一个数组区间内的元素之和时使用</p>
+<p>涉及 leetcode 的 <a href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>、<a href="https://leetcode-cn.com/problems/range-sum-query-2d-immutable">304. 二维区域和检索 - 矩阵不可变</a>和<a href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="区域检索">区域检索</h2>
+<h3 id="题目1">题目1</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/range-sum-query-immutable">303. 区域和检索 - 数组不可变</a>：给定一个整数数组 nums，求出数组从索引 i 到 j（i ≤ j）范围内元素的总和，包含 i、j 两点。</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：[ [ [-2, 0, 3, -5, 2, -1] ], [0, 2], [2, 5], [0, 5] ]</p>
+<p>输出：[null, 1, -1, -3]</p>
+</blockquote>
+<h3 id="理解一下1">理解一下1</h3>
+<p>题目的大概意思就是：计算数组内某个区域的和。</p>
+<p>代码要求有两点，一个是写出构造函数，一个是写出计算区域和的函数。</p>
+<p>基本的思路是：</p>
+<ol type="1">
+<li>构造函数直接将数组传递过去就行；</li>
+<li>在<code>sumRange</code>中使用循环计算<code>left</code>到<code>right</code>的和。</li>
+</ol>
+<p>很简单的嘛，OK确实，但是提交了发现超越的人数不多呀，这怎么行！</p>
+<p>仔细思考发现 OJ 测试的时候构造函数仅仅调用<strong>一次</strong>，而计算区域和函数调用了<strong>多次</strong>，所以我们需要优化<code>sumRange</code>函数。</p>
+<p>于是考虑使用前缀和，使得构造函数麻烦一些，但是使得<code>sumRange</code>函数<strong>简单</strong>一些：</p>
+<ol type="1">
+<li>使用构造函数时，直接在传递数组时，计算前<code>n</code>项的前缀累加和，时间复杂度为<code>O(n)</code>；</li>
+<li>然后<code>sumRange</code>函数计算<code>left</code>到<code>right</code>的区域和时，只需要使用第<code>right</code>项的前缀和减去第<code>left-1</code>项前缀和即可，<code>sumRange</code>的时间复杂度就是<code>O(1)</code>。</li>
+</ol>
+<h3 id="解题1">解题1</h3>
+<p>先看解法一：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; nums;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="keyword">this</span>-&gt;nums = nums;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = left; i &lt;= right; i++)&#123;</span><br><span class="line">            sum += <span class="keyword">this</span>-&gt;nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>再看使用前缀和的解法：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NumArray</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; presums;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">NumArray</span>(vector&lt;<span class="keyword">int</span>&gt;&amp; nums) &#123;</span><br><span class="line">        <span class="comment">// 构造时为 n 的复杂度</span></span><br><span class="line">        <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">this</span>-&gt;presums.<span class="built_in">resize</span>(n+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n+<span class="number">1</span>; i++)&#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;presums[i] = <span class="keyword">this</span>-&gt;presums[i<span class="number">-1</span>] + nums[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 调用时仅需要直接索引相减即可</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>-&gt;presums[right+<span class="number">1</span>] - <span class="keyword">this</span>-&gt;presums[left];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>关于<a href="https://leetcode-cn.com/problems/range-sum-query-2d-immutable">304. 二维区域和检索 - 矩阵不可变</a>这题，只不过是从一维变化成了二维，大家举一反三即可。</p>
+<p>需要注意的仅仅是边界的细节问题。</p>
+<h2 id="和为-k-的子数组">和为 K 的子数组</h2>
+<h3 id="题目2">题目2</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/subarray-sum-equals-k">560. 和为 K 的子数组</a>：给你一个整数数组 nums 和一个整数 k ，请你统计并返回该数组中和为 k 的连续子数组的个数。</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：nums = [1,1,1], k = 2</p>
+<p>输出：2</p>
+</blockquote>
+<p>示例2：</p>
+<blockquote>
+<p>输入：nums = [1,2,3], k = 3</p>
+<p>输出：2</p>
+</blockquote>
+<h3 id="理解一下2">理解一下2</h3>
+<p>题目的大概意思就是：计算出，给定数组中有多少个连续子数组的和为 K，也就是给定数组中有多少个区间和为K。</p>
+<p>最基本的思路就是穷举嘛，嵌套循环，计算所有区间的数组之和，判断其是否为 K。不过很遗憾，时间复杂度<span class="math inline">\(O(n^2)\)</span>在10000大小的测试案例中超时了。</p>
+<p>再仔细看看区域和为K，关于区域和那我们很自然的想到使用前缀和数组试试看了：</p>
+<ol type="1">
+<li>计算前缀和数组；</li>
+<li>我们要计算区域和，就得使用前缀和数组的端点值相减，并判断是否为K，如此一来时间复杂度又回到了<span class="math inline">\(O(n^2)\)</span>；</li>
+<li>换个思路，验证<code>i</code>处的前缀和<code>sum_i</code>减去<code>K</code>的差值<code>sum_j</code>，判断<code>sum_j</code>是否已经<strong>存在</strong>已知的前缀和数组中，若存在则统计<strong>出现次数</strong>即可！</li>
+<li><code>sum_j</code>出现的次数就是i为右端点的区间可以出现的次数，随着不断计算前缀和数组和计数，那么时间复杂度仅仅是计算前缀和的时间O(n)。</li>
+</ol>
+<h3 id="题解2">题解2</h3>
+<p>判断存在计数可以使用<strong>hash表</strong>来实现，快速高效。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">subarraySum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 使用hash表来记录前缀和出现的次数</span></span><br><span class="line">    unordered_map&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; presum;</span><br><span class="line">    <span class="comment">// 初始记录为 0，因为存在一个数等于 k 的情况</span></span><br><span class="line">    presum[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// count 记录个数，sum_i 计算前缀和</span></span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>, sum_i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num: nums)&#123;</span><br><span class="line">        sum_i += num;</span><br><span class="line">        <span class="keyword">int</span> sum_j = sum_i - k;</span><br><span class="line">        <span class="comment">// 相差为 k 的前缀和若存在，则区域相加为 k</span></span><br><span class="line">        <span class="keyword">if</span>(presum.<span class="built_in">find</span>(sum_j) != presum.<span class="built_in">end</span>())&#123;</span><br><span class="line">            <span class="comment">// 加上此前出现 sum_j 的次数</span></span><br><span class="line">            count += presum[sum_j];</span><br><span class="line">        &#125;</span><br><span class="line">        presum[sum_i]++; <span class="comment">// 出现次数加 1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="个人收获">个人收获</h2>
+<p>前缀和的计算方法主要适用于处理数组<strong>区域之和</strong>的问题，并且计算区域和<strong>频率较高</strong>时使用，能够达到较好的效果。</p>
+]]></content>
+      <categories>
+        <category>数据结构算法</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+        <tag>leetcode题解</tag>
+        <tag>数组</tag>
+        <tag>前缀和</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数组解题技巧3——二分查找</title>
+    <url>/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于问题有序数组的二分查找问题，1.查找一个元素；2.查找区间全元素。</p>
+<p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>和<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="二分查找">二分查找</h2>
+<h3 id="题目1">题目1</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>：给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：nums = [-1,0,3,5,9,12], target = 9</p>
+<p>输出：4</p>
+</blockquote>
+<p>示例2：</p>
+<blockquote>
+<p>输入：nums = [-1,0,3,5,9,12], target = 2</p>
+<p>输出：-1</p>
+</blockquote>
+<h3 id="理解一下1">理解一下1</h3>
+<p>题目的大概意思就是：在有序数组<code>nums</code>中找出与<code>target</code>相同的元素的索引位置。</p>
+<p>直接遍历的时间复杂度是O(n)，而这里是<strong>有序数组</strong>，那么就可以使用二分查找，由此时间复杂度为O(log n)。</p>
+<p>基本的思路是：</p>
+<ol type="1">
+<li>约束查找区间左索引指针<code>left</code>和右索引指针<code>right</code>，获得中间索引指针<code>mid</code>；</li>
+<li>判断<code>mid</code>指向的元素与<code>target</code>的大小：
+<ol type="1">
+<li>等于<code>target</code>：返回该<code>mid</code>索引；</li>
+<li>大于<code>target</code>：说明在左侧，<code>right</code>向左收缩；</li>
+<li>小于<code>target</code>：说明在右侧，<code>left</code>向右收缩；</li>
+</ol></li>
+</ol>
+<h3 id="解题1">解题1</h3>
+<p>需要注意的是right和left是<strong>闭区间</strong>，并且while循环中使用的是<span class="math inline">\(\leq\)</span>。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>; <span class="comment">// 右侧需要减一</span></span><br><span class="line">    <span class="comment">// 计算 mid 时需要防止太大溢出</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid +<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查找元素区间">查找元素区间</h2>
+<h3 id="题目2">题目2</h3>
+<p>首先来看题目<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>：给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。</p>
+<p>如果数组中不存在目标值 target，返回[-1, -1]。</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：nums = [5,7,7,8,8,10], target = 8</p>
+<p>输出：[3,4]</p>
+</blockquote>
+<p>示例2：</p>
+<blockquote>
+<p>输入：nums = [5,7,7,8,8,10], target = 6</p>
+<p>输出：[-1,-1]</p>
+</blockquote>
+<h3 id="理解一下2">理解一下2</h3>
+<p>这道题目是想要寻找等于target的所有元素，由于是<strong>有序数组</strong>，所以由一个<strong>区间</strong>表示。主要的问题在于如何寻找到区间的<strong>左右边界</strong>。</p>
+<p>这里有两个思路，都是利用<strong>二分查找</strong>。</p>
+<h3 id="解题2.1">解题2.1</h3>
+<ol type="1">
+<li>按照普通的二分查找，找到寻找一个等于target的元素位置；</li>
+<li>若未找到则flag置为false；</li>
+<li>若找到了，那么向左右依次寻找临界点即可。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;  <span class="comment">// 此处判断元素相等则跳出循环</span></span><br><span class="line">            flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">        left = mid;</span><br><span class="line">        right = mid;</span><br><span class="line">        <span class="keyword">while</span>(--left &gt;= <span class="number">0</span> &amp;&amp; nums[left] == target);</span><br><span class="line">        <span class="keyword">while</span>(++right &lt; nums.<span class="built_in">size</span>() &amp;&amp; nums[right] == target);</span><br><span class="line">        <span class="keyword">return</span> &#123;++left, --right&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="题解2.2">题解2.2</h3>
+<p>与方法一不同，直接去寻找左右端点。</p>
+<p>需要修改的地方仅仅是在<strong>二分查找相等</strong>时和<strong>收缩边界</strong>的情况<strong>统一</strong>起来，如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="built_in">leftRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> right = <span class="built_in">rightRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">return</span> &#123;left, right&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">leftRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;  <span class="comment">// 右侧向左侧收缩，找到左端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(left &gt;= nums.<span class="built_in">size</span>() || nums[left] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rightRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;  <span class="comment">// 左侧向右侧收缩，找到右端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(right &lt; <span class="number">0</span> || nums[right] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="个人收获">个人收获</h2>
+<p>这里使用的二分查找比较简单，类似于一棵树，主要就是收缩区间和循环终止等一些细节问题。</p>
+<p>第二个关于区间问题的方法，在leetcode上虽然第一个方法的效率较高，但是第二个方法的模块化和层次化要更好，更适合进行改编改写。</p>
+]]></content>
+      <categories>
+        <category>数据结构算法</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+        <tag>leetcode题解</tag>
+        <tag>双指针</tag>
+        <tag>数组</tag>
+        <tag>二分查找</tag>
       </tags>
   </entry>
   <entry>
@@ -2578,83 +2660,84 @@ x&#39; = \frac{x-\mu}{\sigma}，\mu是样本均值，\sigma是样本标准差
       </categories>
   </entry>
   <entry>
-    <title>数组解题技巧3——二分查找</title>
-    <url>/2022/01/10/%E6%95%B0%E7%BB%84%E8%A7%A3%E9%A2%98%E6%8A%80%E5%B7%A73%E2%80%94%E2%80%94%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</url>
+    <title>机器学习西瓜书——第01章绪论</title>
+    <url>/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</url>
     <content><![CDATA[<blockquote>
-<p>本文是关于问题有序数组的二分查找问题，1.查找一个元素；2.查找区间全元素。</p>
-<p>涉及 leetcode 的<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>和<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>。</p>
+<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会.</p>
+<p>主要的内容有: 机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)</p>
 </blockquote>
 <span id="more"></span>
-<h2 id="二分查找">二分查找</h2>
-<h3 id="题目1">题目1</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/binary-search/">704. 二分查找</a>：给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。</p>
-<p>示例1：</p>
+<h2 id="引言">1.1 引言</h2>
+<p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p>
 <blockquote>
-<p>输入：nums = [-1,0,3,5,9,12], target = 9</p>
-<p>输出：4</p>
+<p>所谓"经验"就是"数据";</p>
+<p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p>
 </blockquote>
-<p>示例2：</p>
+<h2 id="基本术语">1.2 基本术语</h2>
+<h3 id="数据部分">数据部分</h3>
+<ul>
+<li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li>
+<li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(sample);</p></li>
+<li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li>
+<li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute value). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (sample space) 或"输入空间".</p>
 <blockquote>
-<p>输入：nums = [-1,0,3,5,9,12], target = 2</p>
-<p>输出：-1</p>
-</blockquote>
-<h3 id="理解一下1">理解一下1</h3>
-<p>题目的大概意思就是：在有序数组<code>nums</code>中找出与<code>target</code>相同的元素的索引位置。</p>
-<p>直接遍历的时间复杂度是O(n)，而这里是<strong>有序数组</strong>，那么就可以使用二分查找，由此时间复杂度为O(log n)。</p>
-<p>基本的思路是：</p>
-<ol type="1">
-<li>约束查找区间左索引指针<code>left</code>和右索引指针<code>right</code>，获得中间索引指针<code>mid</code>；</li>
-<li>判断<code>mid</code>指向的元素与<code>target</code>的大小：
-<ol type="1">
-<li>等于<code>target</code>：返回该<code>mid</code>索引；</li>
-<li>大于<code>target</code>：说明在左侧，<code>right</code>向左收缩；</li>
-<li>小于<code>target</code>：说明在右侧，<code>left</code>向右收缩；</li>
-</ol></li>
-</ol>
-<h3 id="解题1">解题1</h3>
-<p>需要注意的是right和left是<strong>闭区间</strong>，并且while循环中使用的是<span class="math inline">\(\leq\)</span>。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>; <span class="comment">// 右侧需要减一</span></span><br><span class="line">    <span class="comment">// 计算 mid 时需要防止太大溢出</span></span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid +<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="查找元素区间">查找元素区间</h2>
-<h3 id="题目2">题目2</h3>
-<p>首先来看题目<a href="https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/">34. 在排序数组中查找元素的第一个和最后一个位置</a>：给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。</p>
-<p>如果数组中不存在目标值 target，返回[-1, -1]。</p>
-<p>示例1：</p>
+<p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p>
+</blockquote></li>
+</ul>
+<h3 id="学习过程">学习过程</h3>
+<ul>
+<li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li>
+<li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training sample), 训练样本组成的集合称为"训练集"(training set);</p>
 <blockquote>
-<p>输入：nums = [5,7,7,8,8,10], target = 8</p>
-<p>输出：[3,4]</p>
-</blockquote>
-<p>示例2：</p>
+<p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p>
+</blockquote></li>
+<li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li>
+<li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li>
+</ul>
+<h3 id="标记部分">标记部分</h3>
+<ul>
+<li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li>
+<li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li>
+</ul>
+<h3 id="学习任务">学习任务</h3>
+<ul>
+<li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li>
+<li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li>
+<li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li>
+<li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li>
+</ul>
+<h3 id="模型目标">模型目标</h3>
+<ul>
+<li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li>
+<li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li>
+<li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li>
+<li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li>
+<li>训练样本越多, 越有可能获得强泛化能力的模型.</li>
+</ul>
+<h2 id="假设空间">1.3 假设空间</h2>
+<p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p>
+<ul>
+<li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li>
+<li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li>
+</ul>
+<p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p>
 <blockquote>
-<p>输入：nums = [5,7,7,8,8,10], target = 6</p>
-<p>输出：[-1,-1]</p>
+<p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p>
 </blockquote>
-<h3 id="理解一下2">理解一下2</h3>
-<p>这道题目是想要寻找等于target的所有元素，由于是<strong>有序数组</strong>，所以由一个<strong>区间</strong>表示。主要的问题在于如何寻找到区间的<strong>左右边界</strong>。</p>
-<p>这里有两个思路，都是利用<strong>二分查找</strong>。</p>
-<h3 id="解题2.1">解题2.1</h3>
-<ol type="1">
-<li>按照普通的二分查找，找到寻找一个等于target的元素位置；</li>
-<li>若未找到则flag置为false；</li>
-<li>若找到了，那么向左右依次寻找临界点即可。</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">bool</span> flag = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] == target)&#123;  <span class="comment">// 此处判断元素相等则跳出循环</span></span><br><span class="line">            flag = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">        left = mid;</span><br><span class="line">        right = mid;</span><br><span class="line">        <span class="keyword">while</span>(--left &gt;= <span class="number">0</span> &amp;&amp; nums[left] == target);</span><br><span class="line">        <span class="keyword">while</span>(++right &lt; nums.<span class="built_in">size</span>() &amp;&amp; nums[right] == target);</span><br><span class="line">        <span class="keyword">return</span> &#123;++left, --right&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="number">-1</span>,<span class="number">-1</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="题解2.2">题解2.2</h3>
-<p>与方法一不同，直接去寻找左右端点。</p>
-<p>需要修改的地方仅仅是在<strong>二分查找相等</strong>时和<strong>收缩边界</strong>的情况<strong>统一</strong>起来，如下：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">searchRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="built_in">leftRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> right = <span class="built_in">rightRange</span>(nums, target);</span><br><span class="line">    <span class="keyword">return</span> &#123;left, right&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">leftRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;  <span class="comment">// 右侧向左侧收缩，找到左端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(left &gt;= nums.<span class="built_in">size</span>() || nums[left] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rightRange</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>, right = nums.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(left &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</span><br><span class="line">            right = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            left = mid + <span class="number">1</span>;  <span class="comment">// 左侧向右侧收缩，找到右端点</span></span><br><span class="line">        &#125;</span><br><span class="line">        mid = left + (right-left)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(right &lt; <span class="number">0</span> || nums[right] != target)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p>
+<p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 所以实际上存在很多的假设空间，但仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p>
+<h2 id="归纳偏好">1.4 归纳偏好</h2>
+<p>// todo</p>
 <h2 id="个人收获">个人收获</h2>
-<p>这里使用的二分查找比较简单，类似于一棵树，主要就是收缩区间和循环终止等一些细节问题。</p>
-<p>第二个关于区间问题的方法，在leetcode上虽然第一个方法的效率较高，但是第二个方法的模块化和层次化要更好，更适合进行改编改写。</p>
+<p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p>
+<p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>
 ]]></content>
       <categories>
-        <category>数据结构算法</category>
+        <category>机器学习</category>
       </categories>
       <tags>
-        <tag>c++</tag>
-        <tag>leetcode题解</tag>
-        <tag>双指针</tag>
-        <tag>数组</tag>
-        <tag>二分查找</tag>
+        <tag>西瓜书</tag>
+        <tag>名词解释</tag>
       </tags>
   </entry>
   <entry>
@@ -2807,87 +2890,6 @@ FPR = \frac{FP}{TN + FP}
       <tags>
         <tag>西瓜书</tag>
         <tag>模型评估</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>机器学习西瓜书——第01章绪论</title>
-    <url>/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会.</p>
-<p>主要的内容有: 机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="引言">1.1 引言</h2>
-<p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p>
-<blockquote>
-<p>所谓"经验"就是"数据";</p>
-<p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p>
-</blockquote>
-<h2 id="基本术语">1.2 基本术语</h2>
-<h3 id="数据部分">数据部分</h3>
-<ul>
-<li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li>
-<li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(sample);</p></li>
-<li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li>
-<li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute value). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (sample space) 或"输入空间".</p>
-<blockquote>
-<p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p>
-</blockquote></li>
-</ul>
-<h3 id="学习过程">学习过程</h3>
-<ul>
-<li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li>
-<li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training sample), 训练样本组成的集合称为"训练集"(training set);</p>
-<blockquote>
-<p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p>
-</blockquote></li>
-<li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li>
-<li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li>
-</ul>
-<h3 id="标记部分">标记部分</h3>
-<ul>
-<li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li>
-<li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li>
-</ul>
-<h3 id="学习任务">学习任务</h3>
-<ul>
-<li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li>
-<li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li>
-<li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li>
-<li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li>
-</ul>
-<h3 id="模型目标">模型目标</h3>
-<ul>
-<li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li>
-<li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li>
-<li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li>
-<li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li>
-<li>训练样本越多, 越有可能获得强泛化能力的模型.</li>
-</ul>
-<h2 id="假设空间">1.3 假设空间</h2>
-<p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p>
-<ul>
-<li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li>
-<li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li>
-</ul>
-<p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p>
-<blockquote>
-<p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p>
-</blockquote>
-<p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p>
-<p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 所以实际上存在很多的假设空间，但仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p>
-<h2 id="归纳偏好">1.4 归纳偏好</h2>
-<p>// todo</p>
-<h2 id="个人收获">个人收获</h2>
-<p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p>
-<p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>西瓜书</tag>
-        <tag>名词解释</tag>
       </tags>
   </entry>
   <entry>
@@ -3120,60 +3122,6 @@ L(\boldsymbol{w}, \lambda) = -\boldsymbol{w}^T \boldsymbol{S}_b \boldsymbol{w} +
       </tags>
   </entry>
   <entry>
-    <title>林骥的思维分析模型（一）</title>
-    <url>/2021/02/12/%E6%9E%97%E9%AA%A5%E7%9A%84%E6%80%9D%E7%BB%B4%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<blockquote>
-<p>本文是在对林骥公众号中的100种思维分析模型（更新中）上进行自我理解。</p>
-<p>适用于想要了解多种分析模型的同学，主要是关于模型的一些应用和注意点，并没有具体的模型详解。</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="福格行为模型">福格行为模型</h2>
-<p>该模型主要是用来分析<code>用户行为</code>的<u>产生原因</u>和<u>基础心理</u>。</p>
-<p><span class="math display">\[
-行为 = 动机 \times 能力 \times 触发
-\]</span> 用户的行为由三要素决定（例如购物）：</p>
-<ol type="1">
-<li>用户去做这件事情的动机（why用户购买产品）；</li>
-<li>用户完成这件事情的能力（how让用户方便购买）；</li>
-<li>触发用户去采取行动的信号（what触发用户想要购买）。</li>
-</ol>
-<p>在其中也暗含了4p营销理论：产品（Product）、价格（Price）、促销（Promotion）、渠道（Place）</p>
-<h2 id="杜邦分析模型">杜邦分析模型</h2>
-<p>该模型主要是对关键指标进行分解，在<code>财务分析</code>、<code>销售管理</code>方面有助于深入分析企业的经营业绩。</p>
-<p>杜邦分析模型将指标之间的<u>内在联系</u>结合起来，形成一套类似金字塔结构，层次清晰的指标体系，从而暴露出影响业务的关键因素。</p>
-<ol type="1">
-<li>从核心指标开始，逐层分解各个指标；</li>
-<li>制作杜邦分析图，填入相关指标数据；</li>
-<li>对比前后期数据，或者横向进行对比。</li>
-</ol>
-<h2 id="矩阵分析模型">矩阵分析模型</h2>
-<p>该模型也称作波士顿矩阵或四象限分析法。通过两个关键指标组成象限即可进行分析。主要是用来分析<code>产品和结构</code>，其中特别关注<strong>销售增长率</strong>和<strong>市场占有率</strong>这两个指标。</p>
-<ol type="1">
-<li>找出两种最关注的指标（销售增长率A和市场占有率B）；</li>
-<li>绘制四象限分析图表（假设增长方向为从左至右和从下至上）；</li>
-<li>分析总结并提出建议（AB均低的产品可以逐渐放弃，A高B低是有问题的产品，需要调整策略，A低B高则可以保持现状，AB均高的可以考虑加大投资）；</li>
-</ol>
-<p>针对不同的象限将产品进行分类，由此来采取不同的发展策略，从而实现产品结构的良性循环。</p>
-<h2 id="夏普利值模型">夏普利值模型</h2>
-<p>该模型综合考虑各方利益，使得所作和所得相等，保证利益分配的公平合理。主要在分配权力等问题上非常有用。</p>
-<ol type="1">
-<li>列举角色可能出现的各种分配情况；</li>
-<li>判断角色在分配过程是否起作用；</li>
-<li>计算分析角色起作用的占比情况。</li>
-</ol>
-<p>价值并不在于拥有的资源或历史贡献，而是在所有可能的合作中，不可或缺的程度。</p>
-<blockquote>
-<p>我们的成长也需要提高核心竞争力。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>他山之石</category>
-      </categories>
-      <tags>
-        <tag>思维方式</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>机器学习西瓜书——第04章决策树</title>
     <url>/2022/01/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC04%E7%AB%A0%E5%86%B3%E7%AD%96%E6%A0%91/</url>
     <content><![CDATA[<blockquote>
@@ -3308,6 +3256,60 @@ Gini_index(D, a) = \sum^V_{v=1}{\frac{|D^v|}{|D|}Gini(D^v)}
       <tags>
         <tag>Chrome</tag>
         <tag>CSS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>林骥的思维分析模型（一）</title>
+    <url>/2021/02/12/%E6%9E%97%E9%AA%A5%E7%9A%84%E6%80%9D%E7%BB%B4%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是在对林骥公众号中的100种思维分析模型（更新中）上进行自我理解。</p>
+<p>适用于想要了解多种分析模型的同学，主要是关于模型的一些应用和注意点，并没有具体的模型详解。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="福格行为模型">福格行为模型</h2>
+<p>该模型主要是用来分析<code>用户行为</code>的<u>产生原因</u>和<u>基础心理</u>。</p>
+<p><span class="math display">\[
+行为 = 动机 \times 能力 \times 触发
+\]</span> 用户的行为由三要素决定（例如购物）：</p>
+<ol type="1">
+<li>用户去做这件事情的动机（why用户购买产品）；</li>
+<li>用户完成这件事情的能力（how让用户方便购买）；</li>
+<li>触发用户去采取行动的信号（what触发用户想要购买）。</li>
+</ol>
+<p>在其中也暗含了4p营销理论：产品（Product）、价格（Price）、促销（Promotion）、渠道（Place）</p>
+<h2 id="杜邦分析模型">杜邦分析模型</h2>
+<p>该模型主要是对关键指标进行分解，在<code>财务分析</code>、<code>销售管理</code>方面有助于深入分析企业的经营业绩。</p>
+<p>杜邦分析模型将指标之间的<u>内在联系</u>结合起来，形成一套类似金字塔结构，层次清晰的指标体系，从而暴露出影响业务的关键因素。</p>
+<ol type="1">
+<li>从核心指标开始，逐层分解各个指标；</li>
+<li>制作杜邦分析图，填入相关指标数据；</li>
+<li>对比前后期数据，或者横向进行对比。</li>
+</ol>
+<h2 id="矩阵分析模型">矩阵分析模型</h2>
+<p>该模型也称作波士顿矩阵或四象限分析法。通过两个关键指标组成象限即可进行分析。主要是用来分析<code>产品和结构</code>，其中特别关注<strong>销售增长率</strong>和<strong>市场占有率</strong>这两个指标。</p>
+<ol type="1">
+<li>找出两种最关注的指标（销售增长率A和市场占有率B）；</li>
+<li>绘制四象限分析图表（假设增长方向为从左至右和从下至上）；</li>
+<li>分析总结并提出建议（AB均低的产品可以逐渐放弃，A高B低是有问题的产品，需要调整策略，A低B高则可以保持现状，AB均高的可以考虑加大投资）；</li>
+</ol>
+<p>针对不同的象限将产品进行分类，由此来采取不同的发展策略，从而实现产品结构的良性循环。</p>
+<h2 id="夏普利值模型">夏普利值模型</h2>
+<p>该模型综合考虑各方利益，使得所作和所得相等，保证利益分配的公平合理。主要在分配权力等问题上非常有用。</p>
+<ol type="1">
+<li>列举角色可能出现的各种分配情况；</li>
+<li>判断角色在分配过程是否起作用；</li>
+<li>计算分析角色起作用的占比情况。</li>
+</ol>
+<p>价值并不在于拥有的资源或历史贡献，而是在所有可能的合作中，不可或缺的程度。</p>
+<blockquote>
+<p>我们的成长也需要提高核心竞争力。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>他山之石</category>
+      </categories>
+      <tags>
+        <tag>思维方式</tag>
       </tags>
   </entry>
   <entry>
