@@ -22,16 +22,19 @@
     var CONFIG = {"hostname":"gipbear.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第六章支持向量机. 主要的内容有:">
+  <meta name="description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第六章支持向量机. 主要的内容有: 支持向量机的模型理解、支持向量、硬间隔与软间隔、在不等式约束下使用拉格朗日乘子法转化为对偶问题、KKT条件、支持向量回归等.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习西瓜书——第06章支持向量机">
 <meta property="og:url" content="https://gipbear.github.io/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第六章支持向量机. 主要的内容有:">
+<meta property="og:description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第六章支持向量机. 主要的内容有: 支持向量机的模型理解、支持向量、硬间隔与软间隔、在不等式约束下使用拉格朗日乘子法转化为对偶问题、KKT条件、支持向量回归等.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gipbear.github.io/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E4%B8%8E%E9%97%B4%E9%9A%94.png">
+<meta property="og:image" content="https://gipbear.github.io/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/%E8%BD%AF%E9%97%B4%E9%9A%94.png">
+<meta property="og:image" content="https://gipbear.github.io/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png">
+<meta property="og:image" content="https://gipbear.github.io/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E5%9B%9E%E5%BD%92.png">
 <meta property="article:published_time" content="2022-01-26T07:52:34.000Z">
-<meta property="article:modified_time" content="2022-01-27T11:43:05.748Z">
+<meta property="article:modified_time" content="2022-01-27T14:55:06.327Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="西瓜书">
 <meta property="article:tag" content="支持向量机">
@@ -234,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-27 19:43:05" itemprop="dateModified" datetime="2022-01-27T19:43:05+08:00">2022-01-27</time>
+                <time title="修改时间：2022-01-27 22:55:06" itemprop="dateModified" datetime="2022-01-27T22:55:06+08:00">2022-01-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -280,9 +283,10 @@
       
         <blockquote>
 <p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第六章支持向量机.</p>
-<p>主要的内容有:</p>
+<p>主要的内容有: 支持向量机的模型理解、支持向量、硬间隔与软间隔、在不等式约束下使用拉格朗日乘子法转化为对偶问题、KKT条件、支持向量回归等.</p>
 </blockquote>
 <span id="more"></span>
+<p>[toc]</p>
 <h2 id="间隔与支持向量">6.1 间隔与支持向量</h2>
 <p>面对二分类问题, 最基本的想法是基于训练集, 在样本空间中找到一个合适的<strong>划分超平面</strong>, 从而将样本划分为两类. 但是划分超平面有很多, 选择最合适的超平面就是我们接下来要解决的问题了.</p>
 <p>所谓『最合适』就是指: 不仅在训练集中表现良好, 更要在新的测试集中表现良好, 即泛化性能最好. 那么最直观的就行找到「正中间」的那个超平面.</p>
@@ -345,11 +349,95 @@ s.t. &amp;\quad\sum^m_{i=1}{\alpha_i y_i} = 0
 \]</span></p>
 <p>那么模型就转化为求解<span class="math inline">\(\boldsymbol{\alpha}\)</span>, 而<span class="math inline">\(\boldsymbol{\alpha}\)</span>是拉格朗日乘子, 与不等式约束条件个数有关, 即与<strong>样本个数成正比</strong>. 而我们原本的模型是求出<span class="math inline">\(\boldsymbol{w}\)</span>, 其实也是可以直接优化的, 但是<span class="math inline">\(\boldsymbol{w}\)</span>表示模型的特征, 所以<strong>原模型与样本的特征数成正比</strong>.</p>
 <p>所以当我们遇到样本数较少, 而特征数较多的情况下可以选择使用对偶问题进行求解. 所以支持向量机在<strong>小样本</strong>中使用效果相对较好.</p>
+<h3 id="kkt条件">KKT条件</h3>
+<p>在上述的过程中, 我们使用了<strong>拉格朗日乘子法</strong>, 但是在<a href="https://gipbear.github.io/2022/01/17/机器学习中可能会使用的理论/#拉格朗日乘子法">这里</a>我介绍过, 拉格朗日乘子法是针对<strong>等式约束</strong>的, 如果是<strong>不等式约束</strong>, 则需要满足<code>KKT条件</code>, 这里是:</p>
+<p><span class="math display">\[
+\begin{cases}
+  \alpha_i \geq 0; \\
+  1-y_i(\boldsymbol{w}^T\boldsymbol{x}_i + b) \leq 0; \\
+  \alpha_i(1-y_i(\boldsymbol{w}^T\boldsymbol{x}_i + b)) = 0.
+\end{cases}
+\]</span></p>
+<p>:warning:在这里可以发现<strong>很重要的结论</strong>:</p>
+<ol type="1">
+<li>由第三个条件可以推出, 要么<span class="math inline">\(\alpha_i = 0\)</span>, 要么<span class="math inline">\(y_if(\boldsymbol{x}_i) = 1\)</span>!</li>
+<li>若<span class="math inline">\(\alpha_i = 0\)</span>, 那么该样本点不对模型产生影响;</li>
+<li>若<span class="math inline">\(y_if(\boldsymbol{x}_i) = 1\)</span>, 也就是等式约束, 那么该样本点在<strong>最大间隔边界上</strong>!, 此处的样本就是支持向量!</li>
+</ol>
+<p>也就是说, 我们的模型仅仅与<strong>支持向量</strong>有关, 这也是为什么叫做支持向量机的原因.</p>
+<h3 id="smo算法">SMO算法</h3>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+todo 至于求解的SMO算法以及核函数/核方法之类的后续再补.</li>
+</ul>
 <h2 id="核函数">6.3 核函数</h2>
-<h2 id="软间隔与正则化">6.4 软间隔与正则化</h2>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+todo</li>
+</ul>
+<h2 id="软间隔">6.4 软间隔</h2>
+<p>在上述的内容中, 我们要求样本严格可分, 来得到一个『间隔』使得样本分开, 这个间隔称为"<strong>硬间隔</strong>"(hard margin). 但是在实际的情况中, 有很多样本并不是严格线性可分, 可能存在部分(<strong>少量</strong>)的『出错点』.</p>
+<img src="/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/%E8%BD%AF%E9%97%B4%E9%9A%94.png" class="" title="软间隔.png">
+<p>所以我们需要寻找一个允许存在误差的间隔, 称之为"<strong>软间隔</strong>"(soft margin). 当然, 存在的误差要尽可能的少, 所以我们在优化目标上增加『损失函数』, 使得不满足约束的, 赋予一定损失, 满足约束的没有损失:</p>
+<p><span class="math display">\[
+\min_{(\boldsymbol{w}, b)} {\frac{1}{2}\|\boldsymbol{w}\|^2} + C\sum^m_{i=1}\ell_{0/1}(y_i(\boldsymbol{w}^T\boldsymbol{x}_i + b)-1) \tag{9}
+\]</span></p>
+<p>其中<span class="math inline">\(C\)</span>是一个常数, 若定义<span class="math inline">\(C\)</span>很大, 则对损失要求严格, 反之则越宽松. <span class="math inline">\(\ell_{0/1}\)</span>则代表『0/1损失函数』, 但是非凸, 非连续, 数学性质不好, 所以常使用『hinge(合页)损失』.</p>
+<p>那么损失函数变成</p>
+<p><span class="math display">\[
+\min_{(\boldsymbol{w}, b)} {\frac{1}{2}\|\boldsymbol{w}\|^2} + C\sum^m_{i=1}{\max{(0, 1-y_i(\boldsymbol{w}^T\boldsymbol{x}_i + b))}} \tag{10}
+\]</span></p>
+<p>还有常见的指数损失和对率损失等.</p>
+<img src="/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/%E5%B8%B8%E8%A7%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0.png" class="" title="常见损失函数.png">
+<p>引入<strong>松弛变量</strong>(slack variable)<span class="math inline">\(\xi_i\)</span>, 那么可以重写为</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \min_{(\boldsymbol{w}, b)} &amp;\quad{\frac{1}{2}\|\boldsymbol{w}\|^2} + C\sum^m_{i=1}{\xi_i} \\
+  s.t. &amp;\quad 1-y_i(\boldsymbol{w}^T\boldsymbol{x} + b) \leq \xi_i \\
+  &amp;\quad \xi_i \geq 0, i = 1,2,\dots, m. \tag{11}
+\end{aligned}
+\]</span></p>
+<p>这就是常见的<strong>软间隔支持向量机</strong>.</p>
+<p>故意化简为上述形式, 那么就可以和普通支持向量机一样使用拉格朗日函数化为对偶问题再进行求解.</p>
 <h2 id="支持向量回归">6.5 支持向量回归</h2>
+<p>之前提到过的<a href="https://gipbear.github.io/2022/01/14/机器学习西瓜书——第03章线性模型/#线性回归">线性回归模型</a>, 是学习得到一条线<span class="math inline">\(f(x)\)</span>, 而将支持向量运用于回归的问题上, 是学习得到一条「间隔带」<span class="math inline">\(f(x)\pm\epsilon\)</span>.</p>
+<img src="/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E5%9B%9E%E5%BD%92.png" class="" title="支持向量回归">
+<p>为了类似支持向量的分类模型, 写出如下形式:</p>
+<p><span class="math display">\[
+\min_{(\boldsymbol{w}, b)} {\frac{1}{2}\|\boldsymbol{w}\|^2} + C\sum^m_{i=1}\ell_{\epsilon}(f(\boldsymbol{x}_i)-y_i) \tag{12}
+\]</span></p>
+<p>其中<span class="math inline">\(C\)</span>为正则化尝试, <span class="math inline">\(\ell_{\epsilon}\)</span>是<span class="math inline">\(\epsilon\)</span>-不敏感损失函数</p>
+<p><span class="math display">\[
+\ell_{\epsilon}(z) =
+\begin{cases}
+  0, &amp;if |z| \leq \epsilon; \\
+  |z| - \epsilon, &amp; otherwise.
+\end{cases}
+\]</span></p>
+<p>模仿软间隔支持向量机的形式, 再引入松弛变量<span class="math inline">\(\xi_i\)</span>和<span class="math inline">\(\hat{\xi}_i\)</span>, 两个松弛变量的原因是正负两侧的松弛程度可以不一样, 从而重写为:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \min_{(\boldsymbol{w}, b, \xi_i, \hat{\xi}_i)} &amp;\quad{\frac{1}{2}\|\boldsymbol{w}\|^2} + C\sum^m_{i=1}{(\xi_i + \hat{\xi}_i)} \\
+  s.t. &amp;\quad f(\boldsymbol{x}_i) - y_i \leq \xi_i + \epsilon \\
+  &amp;\quad y_i - f(\boldsymbol{x}_i) \leq \hat{\xi}_i + \epsilon \\
+  &amp;\quad \xi_i \geq 0, \hat{\xi_i} \geq 0, i = 1,2,\dots, m. \tag{11}
+\end{aligned}
+\]</span></p>
+<p>又是类似的优化形式, 同样使用拉格朗日函数转化后求解.</p>
 <h2 id="核方法">6.6 核方法</h2>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+todo</li>
+</ul>
 <h2 id="个人收获">个人收获</h2>
+<p>首先这一章对我来说是比较困难的, 主要是有些地方懵懵懂懂, 需要花一定的时间来消化.</p>
+<ol type="1">
+<li>这次对拉格朗日函数有了更进一步的理解!, 终于明白为什么之前说拉格朗日乘子法只能用于等式约束, 而这里可以用于不等式约束, 原来是KKT条件的作用.</li>
+<li>之前两次都是看到KKT条件然后放弃, 因为不理解这几个条件是干什么的, 这次终于明白了, 是增加约束, 使得不等式项消失, 而保留等式, 从而满足拉格朗日乘子法的使用条件, 也是因此获得支持向量.</li>
+<li>软间隔这次也明白了, 是为了容错, 从而增加了松弛变量, 变化为相同形式求解.</li>
+<li>关于支持向量回归这里, 我倒是感觉意义不大(不是), 所以没有太深入理解.</li>
+<li>在拉格朗日乘子法这里还有一个对偶函数, 听的有些懵懵的, 后续再进一步整理这个理论.</li>
+</ol>
 
     </div>
     <div>    
@@ -458,7 +546,7 @@ s.t. &amp;\quad\sum^m_{i=1}{\alpha_i y_i} = 0
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B4%E9%9A%94%E4%B8%8E%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">6.1 间隔与支持向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">6.2 对偶问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">6.3 核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E9%97%B4%E9%9A%94%E4%B8%8E%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">6.4 软间隔与正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E5%9B%9E%E5%BD%92"><span class="nav-number">5.</span> <span class="nav-text">6.5 支持向量回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">6.6 核方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">7.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B4%E9%9A%94%E4%B8%8E%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">6.1 间隔与支持向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">6.2 对偶问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kkt%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">KKT条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#smo%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">SMO算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">6.3 核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E9%97%B4%E9%9A%94"><span class="nav-number">4.</span> <span class="nav-text">6.4 软间隔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E5%9B%9E%E5%BD%92"><span class="nav-number">5.</span> <span class="nav-text">6.5 支持向量回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">6.6 核方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">7.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -538,13 +626,13 @@ s.t. &amp;\quad\sum^m_{i=1}{\alpha_i y_i} = 0
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">115k</span>
+    <span title="站点总字数">118k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:45</span>
+    <span title="站点阅读时长">1:47</span>
 </div>
 
 
