@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>cpp数据结构之string的常见用法</title>
+    <url>/2022/02/02/cpp%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bstring%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于c++中常用的数组<code>string</code>的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的<a href="https://gipbear.github.io/tags/leetcode题解/">leetcode题解</a>中经常会使用的.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="字符串-string">字符串 string</h2>
+<p>字符串可以说是基本的数据类型, 也可以说是数据结构, 其本质是<code>多个字符顺序组成</code>的数据结构.</p>
+<h2 id="常见用法">常见用法</h2>
+<p>首先导入标准库</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="初始化">初始化</h3>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">string s;</span><br><span class="line">string s = <span class="string">&quot;hello world!&quot;</span>;</span><br><span class="line"></span><br><span class="line">cin &gt;&gt; s; <span class="comment">// 写入s</span></span><br><span class="line"><span class="built_in">getline</span>(cin, s);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="查询属性">查询属性</h3>
+<ol type="1">
+<li><p>字符串长度</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">s.<span class="built_in">size</span>();</span><br></pre></td></tr></table></figure></p></li>
+<li><p>判断字符串是否为空</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">s.<span class="built_in">empty</span>();</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h3 id="增删改查">增删改查</h3>
+<ol type="1">
+<li><p>增加元素</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 末尾添加</span></span><br><span class="line">s1 += <span class="string">&quot;hhh&quot;</span> <span class="comment">// 添加字符串</span></span><br><span class="line">s1 += <span class="string">&#x27;g&#x27;</span> <span class="comment">// 添加字符</span></span><br><span class="line">s.<span class="built_in">push_back</span>(<span class="string">&#x27;a&#x27;</span>) <span class="comment">// 该方法只能添加字符</span></span><br><span class="line">s.<span class="built_in">append</span>(); <span class="comment">// 方法很丰富, 可以自行查询</span></span><br><span class="line"><span class="comment">// 插入</span></span><br><span class="line">s.<span class="built_in">insert</span>(<span class="number">6</span>, <span class="string">&quot;hhh&quot;</span>);  <span class="comment">// 只支持插入字符串</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>删除元素</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">s.<span class="built_in">erase</span>(<span class="number">6</span>); <span class="comment">// 索引6之后字符串都删除</span></span><br><span class="line">s.<span class="built_in">erase</span>(<span class="number">4</span>,<span class="number">6</span>); <span class="comment">// 索引4之后删除6个字符</span></span><br><span class="line">s.<span class="built_in">clear</span>(); <span class="comment">// 清空</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>修改元素</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">s.<span class="built_in">replace</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="string">&quot;python&quot;</span>); <span class="comment">// 索引1开始的2个字符串替换成python</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>查找元素</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">s[<span class="number">0</span>]; <span class="comment">// 直接去除第0个元素</span></span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h3 id="其他">其他</h3>
+<ol type="1">
+<li><p>字符子串</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">s.<span class="built_in">substr</span>(<span class="number">4</span>,<span class="number">5</span>); <span class="comment">// 从索引4开始的5个字符</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>正则匹配 使用正则表达式进行一些处理, 相比于直接模拟较慢, 但是很方便. 有些大部分的内容和之前在<a href="https://gipbear.github.io/2021/02/19/快乐Linux学习（六）/">linux中的正则</a>很相似.</p>
+<p><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;regex&gt;</span></span></span><br><span class="line">string s = <span class="string">&quot;文本&quot;</span>;</span><br><span class="line"><span class="function">regex <span class="title">s_reg</span><span class="params">(<span class="string">&quot;正则表达式&quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">bool</span> res = <span class="built_in">regex_match</span>(s, s_reg);</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h2 id="个人收获">个人收获</h2>
+<p>字符串本质上和数组很相似, 有些处理的技巧也很相似, 多刷题, 多熟悉, 多总结!</p>
+]]></content>
+      <categories>
+        <category>语言特性</category>
+      </categories>
+      <tags>
+        <tag>c++</tag>
+        <tag>string</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>机器学习西瓜书——第06章支持向量机</title>
     <url>/2022/01/26/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC06%E7%AB%A0%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/</url>
     <content><![CDATA[<blockquote>
@@ -418,8 +468,8 @@ Gini_index(D, a) = \sum^V_{v=1}{\frac{|D^v|}{|D|}Gini(D^v)}
       </tags>
   </entry>
   <entry>
-    <title>c++数据结构之vector的常见用法</title>
-    <url>/2022/01/19/c-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/</url>
+    <title>cpp数据结构之vector的常见用法</title>
+    <url>/2022/01/19/cpp%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<blockquote>
 <p>本文是关于c++中常用的数组<code>vector</code>的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的<a href="https://gipbear.github.io/tags/leetcode题解/">leetcode题解</a>中经常会使用的.</p>
 </blockquote>
@@ -3479,53 +3529,6 @@ x&#39; = \frac{x-\mu}{\sigma}，\mu是样本均值，\sigma是样本标准差
   </entry>
   <entry>
     <title>Flask | xm-select控件回显</title>
-    <url>/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
-    <content><![CDATA[<blockquote>
-<p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
-<p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="控件回显问题">控件回显问题</h2>
-<p>在Flask中调用<code>render_template</code>的时候页面会进行刷新，此时页面的<code>From</code>之类需要输入的控件在刷新后就会显示空白内容，因为刷新等于重新加载一次页面，虽然获取了输入的值，但是并没有保留在原本的控件 value 中。</p>
-<h3 id="解决显式控件回显问题方法">解决显式控件回显问题方法</h3>
-<p>本文所谓的显式控件是，控件的元素都是在HTML或JS中直接定义的，此事我们只需要找到控件所在的位置，给元素进行赋值，例如：</p>
-<p>app.py</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">            form_name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=form_name)</span><br></pre></td></tr></table></figure>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">style</span>=<span class="string">&quot;width: 220px&quot;</span>&gt;</span>姓名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; name &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>立即查看<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我们这里是将从表单中获取的name值，再次赋值给name，也就是回显。</p>
-<p>其实也就是利用 Flask的<code>&#123;&#123; &#125;&#125;</code>进行传参，只不过这里是将参数传给<code>value</code>而已，与之前获取参数一节不过是举一反三。</p>
-<h3 id="解决隐式控件回显问题方法">解决隐式控件回显问题方法</h3>
-<p>在写小程序的时候，使用了layui框架的扩展插件<code>xm-select</code>，该插件主要是设计了好看的选择控件，例如单选多选等等，之后再开章节细讲。</p>
-<p>本人的调用的xm-select控件部分代码如下。</p>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>运行结果如下：</p>
-
-<p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
-
-<p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
-<p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<p>这样就成功完成了控件的回显。</p>
-<p>// Todo: 还有一个多选的回显，还为解决。</p>
-<h2 id="个人收获">个人收获</h2>
-<ol type="1">
-<li>学会举一反三，Flask传过来的值在HTML的任何一个位置都可以运用；</li>
-<li>当控件是动态显示的时候，一定会存在赋值取值的函数入口，查找说明文档是最快的方法。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>轻量Web</category>
-      </categories>
-      <tags>
-        <tag>Flask</tag>
-        <tag>layui</tag>
-        <tag>xm-select</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Flask | xm-select控件回显</title>
     <url>/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
     <content><![CDATA[<blockquote>
 <p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
@@ -3551,6 +3554,53 @@ x&#39; = \frac{x-\mu}{\sigma}，\mu是样本均值，\sigma是样本标准差
 <img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" class="" title="下拉框效果展示">
 <p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
 <img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" class="" title="开发人员工具下拉框元素代码">
+<p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
+<p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>这样就成功完成了控件的回显。</p>
+<p>// Todo: 还有一个多选的回显，还为解决。</p>
+<h2 id="个人收获">个人收获</h2>
+<ol type="1">
+<li>学会举一反三，Flask传过来的值在HTML的任何一个位置都可以运用；</li>
+<li>当控件是动态显示的时候，一定会存在赋值取值的函数入口，查找说明文档是最快的方法。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>轻量Web</category>
+      </categories>
+      <tags>
+        <tag>Flask</tag>
+        <tag>layui</tag>
+        <tag>xm-select</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flask | xm-select控件回显</title>
+    <url>/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
+    <content><![CDATA[<blockquote>
+<p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
+<p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="控件回显问题">控件回显问题</h2>
+<p>在Flask中调用<code>render_template</code>的时候页面会进行刷新，此时页面的<code>From</code>之类需要输入的控件在刷新后就会显示空白内容，因为刷新等于重新加载一次页面，虽然获取了输入的值，但是并没有保留在原本的控件 value 中。</p>
+<h3 id="解决显式控件回显问题方法">解决显式控件回显问题方法</h3>
+<p>本文所谓的显式控件是，控件的元素都是在HTML或JS中直接定义的，此事我们只需要找到控件所在的位置，给元素进行赋值，例如：</p>
+<p>app.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">            form_name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=form_name)</span><br></pre></td></tr></table></figure>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">style</span>=<span class="string">&quot;width: 220px&quot;</span>&gt;</span>姓名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; name &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>立即查看<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们这里是将从表单中获取的name值，再次赋值给name，也就是回显。</p>
+<p>其实也就是利用 Flask的<code>&#123;&#123; &#125;&#125;</code>进行传参，只不过这里是将参数传给<code>value</code>而已，与之前获取参数一节不过是举一反三。</p>
+<h3 id="解决隐式控件回显问题方法">解决隐式控件回显问题方法</h3>
+<p>在写小程序的时候，使用了layui框架的扩展插件<code>xm-select</code>，该插件主要是设计了好看的选择控件，例如单选多选等等，之后再开章节细讲。</p>
+<p>本人的调用的xm-select控件部分代码如下。</p>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+
+<p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
+
 <p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
 <p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
