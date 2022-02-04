@@ -1,6 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>seleniumn使用</title>
+    <url>/2022/02/04/seleniumn%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是关于爬虫工具selenium的介绍, 包括安装和常见的使用方法, 稍作整理以备之后使用.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="selenium-安装">selenium 安装</h2>
+<p>selenium是一款常用的爬虫工具, 与常见的爬虫库相比, 它是直接模拟并调用浏览器直接运行, 从而可以避免很多的反爬机制, 某些程度上类似于按键精灵. 但功能更强大, 自定义性更强.</p>
+<p>首先我们需要在python环境中安装selenium库.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip install selenium</span><br><span class="line">conda install selenium</span><br></pre></td></tr></table></figure>
+<p>除了基本python依赖库, 我们还需要安装<strong>浏览器驱动</strong>, 由于我使用chrome较多, 这里选择的是<code>chomedriver</code>, 其他浏览器需要寻找对应驱动.</p>
+<ol type="1">
+<li>首先打开chrome浏览器, 在地址栏输入<code>Chrome://version</code>, 查看浏览器对应版本号, 例如目前我的是:<code>98.0.4758.82 (正式版本) （64 位）</code>.</li>
+<li>然后在<a href="https://chromedriver.storage.googleapis.com/index.html">chromedriver网址</a>中寻找到对应版本<strong>下载并解压</strong>即可.(这是<a href="https://sites.google.com/chromium.org/driver/">官网</a>, 有墙)</li>
+<li>最后将<code>chromedriver.exe</code>放在python环境的<code>Scripts</code>文件夹中, 或项目文件夹中, 或者<del>放在喜欢的文件夹下</del>(不是).</li>
+</ol>
+<p>ok, 然后就开始我们的学习之路吧!</p>
+<h2 id="基本用法">基本用法</h2>
+<ol type="1">
+<li><p>导入库</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br></pre></td></tr></table></figure></p></li>
+<li><p>初始化浏览器 若已经放入<code>Scripts</code>文件夹中, 则直接调用.</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化选择chrome浏览器</span></span><br><span class="line">browser = webdriver.Chrome()</span><br></pre></td></tr></table></figure></p>
+<p>否则需要手动选择浏览器的路径, 相对路径或绝对路径都可以.</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化选择chrome浏览器</span></span><br><span class="line">browser = webdriver.Chrome(path)</span><br></pre></td></tr></table></figure></p>
+<p>这时运行会发现有一个chrome浏览器自动弹出, 若我们想要程序安静运行的时候, 就可以设置<strong>无界面</strong>, 也叫<code>无头浏览器</code>.</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 参数设置</span></span><br><span class="line">option = webdriver.ChromeOptions()</span><br><span class="line">option.add_argument(<span class="string">&quot;headless&quot;</span>)</span><br><span class="line"></span><br><span class="line">browser = webdriver.Chrome(options=option)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>访问网址</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 访问百度</span></span><br><span class="line">browser.get(<span class="string">r&#x27;https://www.baidu.com/&#x27;</span>)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>关闭浏览器</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 关闭浏览器</span></span><br><span class="line">browser.close()</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h3 id="浏览器设置">浏览器设置</h3>
+<ol type="1">
+<li><p>浏览器大小</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 全屏</span></span><br><span class="line">browser.maximize_window()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分辨率 600*800</span></span><br><span class="line">browser.set_window_size(<span class="number">600</span>,<span class="number">800</span>)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>浏览器刷新 同刷新键, 最好写个异常检测</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># 刷新页面</span></span><br><span class="line">    browser.refresh()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;刷新页面&#x27;</span>)</span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;刷新失败&#x27;</span>)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>前进/后退功能</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 后退</span></span><br><span class="line">browser.back()</span><br><span class="line"><span class="comment"># 前进</span></span><br><span class="line">browser.forward()</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h2 id="网页基本信息">网页基本信息</h2>
+<p>当前网页的标题等信息.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 网页标题</span></span><br><span class="line"><span class="built_in">print</span>(browser.title)</span><br><span class="line"><span class="comment"># 当前网址</span></span><br><span class="line"><span class="built_in">print</span>(browser.current_url)</span><br><span class="line"><span class="comment"># 浏览器名称</span></span><br><span class="line"><span class="built_in">print</span>(browser.name)    </span><br></pre></td></tr></table></figure>
+<p>也可以直接获取网页源码, 这就可以直接使用<code>正则表达式</code>、<code>Bs4</code>和<code>xpath</code>等工具进行解析了.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(browser.page_source)</span><br></pre></td></tr></table></figure>
+<h2 id="定位页面元素">定位页面元素</h2>
+<p>定位页面元素, 即直接寻找浏览器的中渲染后的元素, 而不是源代码, 以如下搜索框标签为例</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 百度页面的搜索框 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">id</span>=<span class="string">&quot;kw&quot;</span> <span class="attr">name</span>=<span class="string">&quot;wd&quot;</span> <span class="attr">class</span>=<span class="string">&quot;s_ipt&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&quot;</span> <span class="attr">maxlength</span>=<span class="string">&quot;255&quot;</span> <span class="attr">autocomplete</span>=<span class="string">&quot;off&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol type="1">
+<li><p>按照id/name/class定位</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在百度搜索框中输入python</span></span><br><span class="line">browser.find_element_by_id(<span class="string">&#x27;kw&#x27;</span>).send_keys(<span class="string">&#x27;python&#x27;</span>)</span><br><span class="line">browser.find_element_by_name(<span class="string">&#x27;wd&#x27;</span>).send_keys(<span class="string">&#x27;python&#x27;</span>)</span><br><span class="line">browser.find_element_by_class_name(<span class="string">&#x27;s_ipt&#x27;</span>).send_keys(<span class="string">&#x27;python&#x27;</span>)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>按照tag定位 但是实际上一个页面可能会存在很多个相同的tag, 这时候会使得tag<strong>指向模糊</strong>, 从而引发报错.</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在百度搜索框中输入python</span></span><br><span class="line">browser.find_element_by_tag_name(<span class="string">&#x27;input&#x27;</span>).send_keys(<span class="string">&#x27;python&#x27;</span>)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>link定位 定位连接名称, 例如在百度左上角链接的例子中进行定位.</p>
+<p><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;s-top-left&quot;</span> <span class="attr">class</span>=<span class="string">&quot;s-top-left-new s-isindex-wrap&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://news.baidu.com&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">class</span>=<span class="string">&quot;mnav c-font-normal c-color-t&quot;</span>&gt;</span>新闻<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.hao123.com&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">class</span>=<span class="string">&quot;mnav c-font-normal c-color-t&quot;</span>&gt;</span>hao123<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://map.baidu.com&quot;</span> <span class="attr">target</span>=<span class="string">&quot;_blank&quot;</span> <span class="attr">class</span>=<span class="string">&quot;mnav c-font-normal c-color-t&quot;</span>&gt;</span>地图<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>直接根据链接的名称来定位.</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 点击新闻链接</span></span><br><span class="line">browser.find_element_by_link_text(<span class="string">&#x27;新闻&#x27;</span>).click()</span><br></pre></td></tr></table></figure></p>
+<p>但有时候链接名称很长, 可以使用<strong>模糊</strong>定位<code>partial</code>, 当然, 链接指向得唯一.</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 点击含有闻的链接</span></span><br><span class="line">browser.find_element_by_partial_link_text(<span class="string">&#x27;闻&#x27;</span>).click()</span><br></pre></td></tr></table></figure></p></li>
+<li><p>xpath定位 以上的方法必须保证<strong>元素唯一</strong>, 当元素不唯一的时候, 就需要使用xpath来进行唯一定位了, 例如使用xpath来寻找搜索框的位置.</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在百度搜索框中输入python</span></span><br><span class="line">browser.find_element_by_xpath(<span class="string">&quot;//*[@id=&#x27;kw&#x27;]&quot;</span>).send_keys(<span class="string">&#x27;python&#x27;</span>)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>css定位 该方法比xpath简洁且更快一些</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在百度搜索框中输入python</span></span><br><span class="line">browser.find_element_by_css_selector(<span class="string">&#x27;#kw&#x27;</span>).send_keys(<span class="string">&#x27;python&#x27;</span>)</span><br></pre></td></tr></table></figure></p></li>
+<li><p>定位多个元素 当然, 有时候我们就是需要多个元素, 那么就只需要使用<code>复数s</code>即可.</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># element s</span></span><br><span class="line">browser.find_elements_by_class_name(name)</span><br><span class="line">browser.find_elements_by_id(id_)</span><br><span class="line">browser.find_elements_by_name(name)</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h2 id="明天">明天</h2>
+<h2 id="其他">其他</h2>
+<ol type="1">
+<li><p>截图 可以保存为base64/png/file三种</p>
+<p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">browser.get_screenshot_as_file(<span class="string">&#x27;截图.png&#x27;</span>)</span><br></pre></td></tr></table></figure></p></li>
+</ol>
+<h2 id="个人收获">个人收获</h2>
+]]></content>
+      <categories>
+        <category>我的小工具</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>爬虫</tag>
+        <tag>selenium</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>cpp数据结构之string的常见用法</title>
     <url>/2022/02/02/cpp%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bstring%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<blockquote>
@@ -3529,53 +3614,6 @@ x&#39; = \frac{x-\mu}{\sigma}，\mu是样本均值，\sigma是样本标准差
   </entry>
   <entry>
     <title>Flask | xm-select控件回显</title>
-    <url>/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
-    <content><![CDATA[<blockquote>
-<p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
-<p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
-</blockquote>
-<span id="more"></span>
-<h2 id="控件回显问题">控件回显问题</h2>
-<p>在Flask中调用<code>render_template</code>的时候页面会进行刷新，此时页面的<code>From</code>之类需要输入的控件在刷新后就会显示空白内容，因为刷新等于重新加载一次页面，虽然获取了输入的值，但是并没有保留在原本的控件 value 中。</p>
-<h3 id="解决显式控件回显问题方法">解决显式控件回显问题方法</h3>
-<p>本文所谓的显式控件是，控件的元素都是在HTML或JS中直接定义的，此事我们只需要找到控件所在的位置，给元素进行赋值，例如：</p>
-<p>app.py</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">            form_name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=form_name)</span><br></pre></td></tr></table></figure>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">style</span>=<span class="string">&quot;width: 220px&quot;</span>&gt;</span>姓名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; name &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>立即查看<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>我们这里是将从表单中获取的name值，再次赋值给name，也就是回显。</p>
-<p>其实也就是利用 Flask的<code>&#123;&#123; &#125;&#125;</code>进行传参，只不过这里是将参数传给<code>value</code>而已，与之前获取参数一节不过是举一反三。</p>
-<h3 id="解决隐式控件回显问题方法">解决隐式控件回显问题方法</h3>
-<p>在写小程序的时候，使用了layui框架的扩展插件<code>xm-select</code>，该插件主要是设计了好看的选择控件，例如单选多选等等，之后再开章节细讲。</p>
-<p>本人的调用的xm-select控件部分代码如下。</p>
-<p>index.html</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>运行结果如下：</p>
-<img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" class="" title="下拉框效果展示">
-<p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
-<img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" class="" title="开发人员工具下拉框元素代码">
-<p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
-<p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<p>这样就成功完成了控件的回显。</p>
-<p>// Todo: 还有一个多选的回显，还为解决。</p>
-<h2 id="个人收获">个人收获</h2>
-<ol type="1">
-<li>学会举一反三，Flask传过来的值在HTML的任何一个位置都可以运用；</li>
-<li>当控件是动态显示的时候，一定会存在赋值取值的函数入口，查找说明文档是最快的方法。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>轻量Web</category>
-      </categories>
-      <tags>
-        <tag>Flask</tag>
-        <tag>layui</tag>
-        <tag>xm-select</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Flask | xm-select控件回显</title>
     <url>/2021/01/13/Flask%20%20xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
     <content><![CDATA[<blockquote>
 <p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
@@ -3601,6 +3639,53 @@ x&#39; = \frac{x-\mu}{\sigma}，\mu是样本均值，\sigma是样本标准差
 
 <p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
 
+<p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
+<p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>这样就成功完成了控件的回显。</p>
+<p>// Todo: 还有一个多选的回显，还为解决。</p>
+<h2 id="个人收获">个人收获</h2>
+<ol type="1">
+<li>学会举一反三，Flask传过来的值在HTML的任何一个位置都可以运用；</li>
+<li>当控件是动态显示的时候，一定会存在赋值取值的函数入口，查找说明文档是最快的方法。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>轻量Web</category>
+      </categories>
+      <tags>
+        <tag>Flask</tag>
+        <tag>layui</tag>
+        <tag>xm-select</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flask | xm-select控件回显</title>
+    <url>/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/</url>
+    <content><![CDATA[<blockquote>
+<p>本文适用于Flask + Layui + HTML + JS 的场景，其他场景不保证完全适用。</p>
+<p>本文是关于Flask下控件回显问题的解决方案，包括xm-select单选框的回显问题</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="控件回显问题">控件回显问题</h2>
+<p>在Flask中调用<code>render_template</code>的时候页面会进行刷新，此时页面的<code>From</code>之类需要输入的控件在刷新后就会显示空白内容，因为刷新等于重新加载一次页面，虽然获取了输入的值，但是并没有保留在原本的控件 value 中。</p>
+<h3 id="解决显式控件回显问题方法">解决显式控件回显问题方法</h3>
+<p>本文所谓的显式控件是，控件的元素都是在HTML或JS中直接定义的，此事我们只需要找到控件所在的位置，给元素进行赋值，例如：</p>
+<p>app.py</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hello</span>():</span></span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">            form_name = request.form[<span class="string">&#x27;name&#x27;</span>]</span><br><span class="line">	<span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>,name=form_name)</span><br></pre></td></tr></table></figure>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">style</span>=<span class="string">&quot;width: 220px&quot;</span>&gt;</span>姓名：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&#123;&#123; name &#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>立即查看<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">from</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我们这里是将从表单中获取的name值，再次赋值给name，也就是回显。</p>
+<p>其实也就是利用 Flask的<code>&#123;&#123; &#125;&#125;</code>进行传参，只不过这里是将参数传给<code>value</code>而已，与之前获取参数一节不过是举一反三。</p>
+<h3 id="解决隐式控件回显问题方法">解决隐式控件回显问题方法</h3>
+<p>在写小程序的时候，使用了layui框架的扩展插件<code>xm-select</code>，该插件主要是设计了好看的选择控件，例如单选多选等等，之后再开章节细讲。</p>
+<p>本人的调用的xm-select控件部分代码如下。</p>
+<p>index.html</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">&quot;layui-form layui-form-pane&quot;</span> <span class="attr">style</span>=<span class="string">&quot;font-family: 微软雅黑&quot;</span> <span class="attr">method</span>=<span class="string">&quot;POST&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-inline layui-col-md6&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">class</span>=<span class="string">&quot;layui-form-label&quot;</span>&gt;</span>小区选择<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;layui-input-block&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">name</span>=<span class="string">&quot;sites&quot;</span> <span class="attr">class</span>=<span class="string">&quot;xm-select-demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/01%E4%B8%8B%E6%8B%89%E6%A1%86%E6%98%BE%E5%BC%8F.png" class="" title="下拉框效果展示">
+<p>但是在提交表单之后，界面进行刷新，页面中选择的参数就会消失，此时我们去寻找对应的控件，就傻眼了。</p>
+<img src="/2021/01/13/Flask%E4%B8%8B%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE%E9%97%AE%E9%A2%98%E2%80%94%E2%80%94xm-select%E6%8E%A7%E4%BB%B6%E5%9B%9E%E6%98%BE/02%E4%B8%8B%E6%8B%89%E6%A1%86%E5%85%83%E7%B4%A0%E4%BB%A3%E7%A0%81.png" class="" title="开发人员工具下拉框元素代码">
 <p>我们只能在①处找到自己写的代码，而下拉框②这些都是动态生成的，对于我这个前端新手来说还是很厉害的，所以，我去查找<a href="https://maplemei.gitee.io/xm-select/#/shi-li-fang-fa">说明文档</a>，事实证明说明文档是很重要的。</p>
 <p>从中我们得知，在进行<code>xmSelect.render()</code>后会返回一个<code>xmSelect</code>对象，也就是我们的下拉框对象，使用<code>getValue</code>可以获取下拉框的当前值，使用<code>setValue</code>可以设置下拉框的当前值，也就我们所需要的回显，调用格式如下：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">sites_select.setValue([</span><br><span class="line">    &#123;<span class="attr">name</span>: sitesname, <span class="attr">value</span>: sitesname, <span class="attr">selected</span>: <span class="literal">true</span>&#125;</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
