@@ -22,15 +22,16 @@
     var CONFIG = {"hostname":"gipbear.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第三章线性模型. 主要的内容有: 线性回归的基本形式、最小二乘法、广义线性回归、对数几率回归（逻辑回归）、最大似然估计、线性判别分析、广义瑞利商、拉格朗日乘子法等.">
+  <meta name="description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第三章线性模型. 主要的内容有: 线性回归的基本形式、最小二乘法、广义线性回归、对数几率回归（逻辑回归）、最大似然估计、线性判别分析、广义瑞利商、拉格朗日乘子法等.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习西瓜书——第03章线性模型">
 <meta property="og:url" content="https://gipbear.github.io/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第三章线性模型. 主要的内容有: 线性回归的基本形式、最小二乘法、广义线性回归、对数几率回归（逻辑回归）、最大似然估计、线性判别分析、广义瑞利商、拉格朗日乘子法等.">
+<meta property="og:description" content="本文是关于周志华老师编写的机器学习书籍『西瓜书』的第三章线性模型. 主要的内容有: 线性回归的基本形式、最小二乘法、广义线性回归、对数几率回归（逻辑回归）、最大似然估计、线性判别分析、广义瑞利商、拉格朗日乘子法等.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://gipbear.github.io/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/%E5%8D%95%E4%BD%8D%E9%98%B6%E8%B7%83%E5%87%BD%E6%95%B0%E4%B8%8E%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%87%BD%E6%95%B0.png">
 <meta property="og:image" content="https://gipbear.github.io/2022/01/14/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC03%E7%AB%A0%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B/LDA%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png?v8">
 <meta property="article:published_time" content="2022-01-14T10:35:28.000Z">
 <meta property="article:modified_time" content="2022-01-27T15:12:23.896Z">
 <meta property="article:author" content="Grizzly">
@@ -83,6 +84,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="Grizzly's daily" type="application/atom+xml">
 </head>
 
@@ -441,7 +444,7 @@ l(\beta) = -\sum^m_{i=1}{[y_i\beta^T\boldsymbol{x}_i - \ln{(1+e^{\beta^T\boldsym
 <blockquote>
 <p><span class="math inline">\(\|X\|^2_2这叫做二范数的平方, 表示向量之间的距离, 可以使用向量的内积进行计算\)</span></p>
 </blockquote>
-<p>我们需要注意 :warning: ! 我们的目的是为了求出投影直线的<strong>方向</strong>, 所以<span class="math inline">\(\boldsymbol{w}\)</span>的大小无关紧要, 这也是下面很多步骤中的必要条件.</p>
+<p>我们需要注意 <span class="github-emoji"><span>⚠</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span> ! 我们的目的是为了求出投影直线的<strong>方向</strong>, 所以<span class="math inline">\(\boldsymbol{w}\)</span>的大小无关紧要, 这也是下面很多步骤中的必要条件.</p>
 <h3 id="损失函数策略">损失函数(策略)</h3>
 <p>同时考虑以上两者, 可以得到我们的最大化目标:</p>
 <p><span class="math display">\[

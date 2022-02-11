@@ -22,18 +22,20 @@
     var CONFIG = {"hostname":"gipbear.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是快乐学习Linux的第二篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统查看命令帮助和重定向的读者。">
+  <meta name="description" content="本文是快乐学习Linux的第二篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统查看命令帮助和重定向的读者。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快乐Linux学习（二）">
 <meta property="og:url" content="https://gipbear.github.io/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是快乐学习Linux的第二篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统查看命令帮助和重定向的读者。">
+<meta property="og:description" content="本文是快乐学习Linux的第二篇，是基于Windows的Linux子系统（WSL）进行操作的。 适用于学习Linux系统查看命令帮助和重定向的读者。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f613.png?v8">
 <meta property="article:published_time" content="2021-01-22T02:47:39.000Z">
 <meta property="article:modified_time" content="2021-01-26T16:06:02.000Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f613.png?v8">
 
 <link rel="canonical" href="https://gipbear.github.io/2021/01/22/%E5%BF%AB%E4%B9%90Linux%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89/">
 
@@ -79,6 +81,8 @@
   </style>
 </noscript>
 
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
 <link rel="alternate" href="/atom.xml" title="Grizzly's daily" type="application/atom+xml">
 </head>
 
@@ -305,13 +309,13 @@
 <h3 id="alias别名">alias别名</h3>
 <p>自定义自己的命令，建立在其他命令之上。</p>
 <p>运行命令的时候可以使用<code>；</code>进行隔开，使得命令可以依次执行。例如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr; ls; cd -</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr; ls; cd -</span><br></pre></td></tr></tbody></table></figure>
 <p>之后使用alias进行重命名。首先需要查看该命令的名字是否被占用。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type test # 发现已经被占用</span><br><span class="line">type foo # 发现还没有使用</span><br><span class="line">alias # 查看所有创建的alias</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type test # 发现已经被占用</span><br><span class="line">type foo # 发现还没有使用</span><br><span class="line">alias # 查看所有创建的alias</span><br></pre></td></tr></tbody></table></figure>
 <p>利用其创建alias别名，命令字符串需要紧跟<code>=</code>。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias foo=&#x27;cd /usr; ls; cd -&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias foo='cd /usr; ls; cd -'</span><br></pre></td></tr></tbody></table></figure>
 <p>删除别名使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unalias foo</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unalias foo</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="io-重定向">I/O 重定向</h2>
 <p>I/O重定向（I/O代表输入/输出）是一个Linux很有意思的一个特性，可以对Linux的输入和输出进行重定向，来获得想要的结果。</p>
 <h3 id="标准输入标准输出和错误">标准输入、标准输出和错误</h3>
@@ -320,66 +324,66 @@
 <p>而！此处要提到的I/O重定向，可以允许我们<code>更改输出地点和输入来源</code>。仔细想想，会发现其中有很多的操作空间。</p>
 <h3 id="标准输出重定向">标准输出重定向</h3>
 <p>很简单是使用“<code>&gt;</code>”符号就可以进行标准输出的重定向了。例如直接将ls的内容存储到一个<strong>ls-output.txt</strong>文件中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /usr/bin &gt; ls-output.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /usr/bin &gt; ls-output.txt</span><br></pre></td></tr></tbody></table></figure>
 <p>可以发现在当前目录新建了一个<strong>ls-output.txt</strong>文件，可以使用less查看其中的信息。</p>
 <p>但是当我们ls一个不存在的目录，就会出现报错的信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /user/bin &gt; ls-output.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /user/bin &gt; ls-output.txt</span><br></pre></td></tr></tbody></table></figure>
 <p>此时我们<code>ls -l ls-output.txt</code>，我们很惊喜的发现，该文件是一个<code>0</code>字节的文件，说明了两点事情：第一，标准输出的重定向会在每重定向的时候<strong>覆盖</strong>原本的文件；第二，我们的错误信息并没有重定向到<strong>ls-output.txt</strong>文件中。</p>
 <p>对于覆盖问题，若我们想要在文件最后<strong>继续增加</strong>标准输入，而不是直接覆盖文件，则可以使用“<code>&gt;&gt;</code>”符号进行追加：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -l /usr/bin &gt;&gt; ls-output.txt</span><br><span class="line">ls -l /usr/bin &gt;&gt; ls-output.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls -l /usr/bin &gt;&gt; ls-output.txt</span><br><span class="line">ls -l /usr/bin &gt;&gt; ls-output.txt</span><br></pre></td></tr></tbody></table></figure>
 <p>重复执行两次之后，我们就会发现，该文件大小扩大了一倍，确实是对内容进行了追加。</p>
 <p>同样的，若我们需要<strong>清空</strong>一个文件，则可以简单的使用如下命令即可：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; ls-output.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; ls-output.txt</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="标准错误重定向">标准错误重定向</h3>
 <p>之前提示输入错误的信息，是因为我们此处仅使用了“<code>&gt;</code>”符号重定向了标准输出，而未重定向标准错误。</p>
 <p>但是遗憾的是在Linux中没有特定的符号来重定向标准错误，于是需要借用Linux内定义的<strong>文件描述符</strong>，每个文件描述符对应一个标准流，前三个文件描述符0、1、2分别对应标准输入、输入和错误。</p>
 <p>所以重定向标准错误的时候只需要使用“<code>2&gt;</code>”即可：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /user/bin 2&gt; ls-error.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /user/bin 2&gt; ls-error.txt</span><br></pre></td></tr></tbody></table></figure>
 <p>有的时候，我们想要将错误进行隐藏，我们就可以将其重定向到<code>/dev/null</code>中。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /user/bin 2&gt; /dev/bin</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /user/bin 2&gt; /dev/bin</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 <p>使用<code>ls -l /dev/null</code>的时候可以发现null的文件属性是<code>c</code>，指的是串行端口设备。</p>
 <p>// todo：解释串行端口设备和其他文件属性类型。</p>
 </blockquote>
 <p>当我们想要将标准输入和错误<strong>联合输入</strong>在同一个文件中，我们有两种方法，一个是旧版的shell中，在标准输出<strong>之后，再</strong>重定向标准错误（文件描述符2）到标准输出（文件描述符1），注意顺序，否则不起作用：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /bin/usr &gt; ls-output.txt 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /bin/usr &gt; ls-output.txt 2&gt;&amp;1</span><br></pre></td></tr></tbody></table></figure>
 <p>除此以外，现在的bash还提供了新的方法，使用“<code>&amp;&gt;</code>”符号来联合定义输出和错误重定向。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /user/bin &amp;&gt; ls-output.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /user/bin &amp;&gt; ls-output.txt</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="标准输入重定向">标准输入重定向</h3>
 <p>在标准输入的重定向之前先提一下需要使用标准输入的地方。</p>
 <ul>
 <li><p>cat [file]：读取一个或多个文件，将其复制到标准输出，直接显示而没有分页，一般用来显示简短的文本。</p>
 <p>但是由于其可以读取多个文件的特性，所以就可以利用其来合并文件：</p>
-<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat page*.txt &gt; page.txt</span><br></pre></td></tr></table></figure></p>
+<p></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat page*.txt &gt; page.txt</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>同时！我们需要注意到。这里的file是使用<code>[]</code>括起来的，表示可以不读取file文件，那么无输入的时候会读取什么文件就值得去发现了。当我们仅输入<code>cat</code>后，直接回车！</p>
-<p>结果什么都没有发生:sweat:，仅有一个闪烁的光标。实际上此时cat是在<strong>等待标准输入</strong>，并从中来读取数据，尝试键入一些内容，发现就算按下回车也不会结束输入，此时就需要使用<code>Ctrl和d</code>来终止输入。</p>
+<p>结果什么都没有发生<span class="github-emoji"><span>😓</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f613.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>，仅有一个闪烁的光标。实际上此时cat是在<strong>等待标准输入</strong>，并从中来读取数据，尝试键入一些内容，发现就算按下回车也不会结束输入，此时就需要使用<code>Ctrl和d</code>来终止输入。</p>
 <p>为了验证，我们将标准输入再重定向出入到文件中：</p>
-<p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; cat-context.txt</span><br><span class="line">This is an interesting context.</span><br></pre></td></tr></table></figure></p>
+<p></p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; cat-context.txt</span><br><span class="line">This is an interesting context.</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p>最后使用<code>Ctrl和d</code>来终止输入，并<code>cat cat-context.txt</code>来查看这简短的文本，发现的确将内容输入到了文件中。</p></li>
 </ul>
 <p>最后我们使用“<code>&lt;</code>”符号就可以进行标准输入重定向：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat &lt; cat-context.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat &lt; cat-context.txt</span><br></pre></td></tr></tbody></table></figure>
 <p>发现结果与直接<code>cat cat-context.txt</code>并无差异，但是这里说明了标准输入重定向是可以将标准输入从键盘更改为文件的，更多应用之后再进行讨论。</p>
 <h3 id="管道线">管道线</h3>
 <p>管道线具有将命令从一个标准输入读取数据并输送到标准输入的能力。操作符是“<code>|</code>”</p>
 <p>例如标准输出ls和接受标准输入的less：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /usr/bin | less</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /usr/bin | less</span><br></pre></td></tr></tbody></table></figure>
 <p>这里我们就可以直接将标准输出内容利用接受标准输入的less显示。</p>
 <p>管道线一般是用来对内容进行复杂操作的，可以在管道中增加一些复杂操作，比如增加<strong>过滤器</strong>，使用<code>sort</code>对标准输出内容进行一个有序排列，再使用less输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /bin /usr/bin | sort | less</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /bin /usr/bin | sort | less</span><br></pre></td></tr></tbody></table></figure>
 <p>想要<strong>过滤重复字段</strong>，则可以使用<code>uniq</code>来忽略重复行，想看到重复行的话就使用<code>uniq -d</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /bin /usr/bin | sort | uniq | less</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /bin /usr/bin | sort | uniq | less</span><br></pre></td></tr></tbody></table></figure>
 <p>想统计内容的行数、字数和字节数，则可以使用<code>wc</code>，增加<code>-l</code>选项则只显示行数：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /bin /usr/bin | sort | uniq | wc -l</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /bin /usr/bin | sort | uniq | wc -l</span><br></pre></td></tr></tbody></table></figure>
 <p>还有一个强大的匹配方法<code>grep</code>，支持正则表达式进行复杂匹配，并且增加了一些选项，<code>-i</code>忽略大小写，<code>-v</code>只显示不匹配的行，例如搜索包含zip字段的内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /bin /usr/bin | sort | uniq | grep zip</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /bin /usr/bin | sort | uniq | grep zip</span><br></pre></td></tr></tbody></table></figure>
 <p>当输入输出内容太多，而只需要查看前几行或后几行内容的时候，就可以使用head/tail来打印，可以直接使用，也可以在管道线中使用，使用<code>-n</code>来指定显示的行数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">head -n 5 ls-output.txt</span><br><span class="line">ls /usr/bin | tail -n 8</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">head -n 5 ls-output.txt</span><br><span class="line">ls /usr/bin | tail -n 8</span><br></pre></td></tr></tbody></table></figure>
 <blockquote>
 <p>另外提到 tail有一个选项“<code>-f</code>”可以实时浏览文件，来观察日志的变化，例如<code>/var/log/messages</code>，当读取的文件修改之后，相应内容会立即显示在屏幕上。直到按下<code>Ctri+C</code>。但是WSL中似乎没有该文件，此处就不进行实验了。</p>
 </blockquote>
 <p>最后再提及一个<code>tee</code>命令，这是从标准输入中读取内容，并输出到标准输出中，在管道线中可以作为中间段来<strong>捕捉在管道线中流动的内容</strong>，例如在过滤关键字之前先保存完成的内容到ls.txt中。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /usr/bin | tee ls.txt | grep zip</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /usr/bin | tee ls.txt | grep zip</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="个人收获">个人收获</h2>
 <p>通过这次学习，了解了Linux中命令的区别，之前一直都以为命令都是系统内置的，现在想想一些通过安装的内容确实不是系统内置的，例如之前自己安装的<code>tree</code>命令，就属于可执行命令。最主要学到的是I/O重定向，这是一个很有趣的内容，可以来觉得自己的标准输入/输出，并且有一个管道可以进行复杂的操作，加上各种有趣的命令，完全就是一个自由度极高的DIY玩具呀！让我们继续快乐学习~</p>
 
