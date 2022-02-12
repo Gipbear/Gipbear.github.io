@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>python数据结构</title>
+    <url>/2022/02/12/python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是在天池学习路线中的『python数据结构』板块, 之前学习过部分, 在此记录一些易错点和不熟悉的地方. 仅作补充, 并不是全部知识点.</p>
+<p>详细知识点的所有代码均可在我的GitHub仓库<a href="https://github.com/Gipbear/TianChi-Studying">TianChi-Studying</a>中找到.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="列表-list">列表 list</h2>
+<p>在<code>list</code>中可以存放任意对象, 且由于存放的是<strong>对象指针</strong>, 所以即使是简单的<code>[1,2,3]</code>中也存放了3个对象和3个指针.</p>
+<p>列表可以进行如下乘法计算</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">x = [<span class="number">0</span>] * <span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(x, <span class="built_in">type</span>(x)) <span class="comment"># [0, 0, 0, 0, 0] &lt;class 'list'&gt;</span></span><br><span class="line"></span><br><span class="line">x[<span class="number">1</span>] = <span class="number">3</span></span><br><span class="line"><span class="built_in">print</span>(x, <span class="built_in">type</span>(x)) <span class="comment"># [0, 3, 0, 0, 0] &lt;class 'list'&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>以上结果符合期望, 而看下面这个例子</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">x = [[<span class="number">0</span>] * <span class="number">3</span>] * <span class="number">4</span></span><br><span class="line"><span class="built_in">print</span>(x, <span class="built_in">type</span>(x))</span><br><span class="line"><span class="comment"># [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]] &lt;class 'list'&gt;</span></span><br><span class="line"></span><br><span class="line">x[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(x, <span class="built_in">type</span>(x))</span><br><span class="line"><span class="comment"># [[1, 0, 0], [1, 0, 0], [1, 0, 0], [1, 0, 0]] &lt;class 'list'&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>x是将<code>[0] * 3</code>这个对象复制了4遍, 所以<code>x</code>列表中保存的是<strong>1个对象</strong>和<strong>4个指向该对象的指针</strong>!</p>
+<p>那么对<code>[0] * 3</code>对象进行修改的时候, 就会得到上述的结果. 这是一个<strong>小坑</strong><span class="github-emoji"><span>⚠</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/26a0.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>, 需要注意一下.</p>
+<h3 id="浅拷贝与深拷贝">浅拷贝与深拷贝</h3>
+<p>列表的浅拷贝与深拷贝是在编程时容易遇到的坑, 这里表述一下.</p>
+<ul>
+<li>浅拷贝是: 简单的将元素<strong>对象</strong>完全复制过来.</li>
+<li>深拷贝是: 创建新的元素对象, 仅复制原本的<strong>对象值</strong>.</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">list1 = [<span class="number">1</span>,<span class="number">2</span>,[<span class="number">3</span>,<span class="number">4</span>],<span class="number">5</span>]</span><br><span class="line">list2 = list1</span><br><span class="line">list3 = list1[:]</span><br><span class="line"></span><br><span class="line">list1[<span class="number">0</span>] = <span class="number">999</span></span><br><span class="line">list1[<span class="number">2</span>][<span class="number">0</span>] = <span class="number">777</span></span><br><span class="line"><span class="built_in">print</span>(list2)  <span class="comment"># [999, 2, [777, 4], 5]</span></span><br><span class="line"><span class="built_in">print</span>(list3)  <span class="comment"># [1, 2, [777, 4], 5]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>容易发现, 列表<code>list2</code>, 采用<strong>直接赋值</strong>的方法, 相当于将原<code>list1</code>中的所有元素对象地址直接复制过来, 那么两个列表<strong>完全等价</strong>.</p>
+<p>而<code>list3</code>是使用了<strong>切片</strong>的方法, 对列表元素的对象值进行了<strong>深拷贝</strong>, 所以未受到修改<code>999</code>的影响. 但是其中的<code>[3,4]</code>对象的是一个<strong>指针</strong>, 复制的依旧是指向该对象的指针, 所以修改<code>777</code>的作用生效了.</p>
+<blockquote>
+<p>除了切片, copy方法、列表推导式和<code>for+append</code>也同样的效果</p>
+</blockquote>
+<p><strong>也就是说</strong>, 这种深拷贝<strong>只能深拷贝一层</strong>, 更多层次的由指针指向的对象则只能浅拷贝.</p>
+<p>那么想要进行『完全的深拷贝』, 创建一个与原对象值相同, 但毫无关系的对象, 则需要使用<code>copy.deepcopy</code>方法进行拷贝.</p>
+<figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">list1 = [<span class="number">1</span>,<span class="number">2</span>,[<span class="number">3</span>,<span class="number">4</span>],<span class="number">5</span>]</span><br><span class="line">list2 = copy.deepcopy(list1)</span><br><span class="line"></span><br><span class="line">list1[<span class="number">0</span>] = <span class="number">999</span></span><br><span class="line">list1[<span class="number">2</span>][<span class="number">0</span>] = <span class="number">777</span></span><br><span class="line"><span class="built_in">print</span>(list2)  <span class="comment"># [1, 2, [3, 4], 5]</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="列表排序">列表排序</h3>
+<p>当我们想要对列表进行排序的时候, python似乎不能像c++一样定义cmp, 实现一列升序一列降序的复杂排序, 若需如此则需要进行两次排序.</p>
+<h2 id="参考">参考</h2>
+<ol type="1">
+<li>内容来自<a href="https://tianchi.aliyun.com/specials/promotion/aicamppython">python训练营</a></li>
+<li><a href="https://blog.csdn.net/qq_24502469/article/details/104185122">Python中List的复制（直接复制、浅拷贝、深拷贝）</a></li>
+<li><a href="https://docs.python.org/zh-cn/3/howto/sorting.html#ascending-and-descending">python官网-排序指南</a></li>
+</ol>
+<h2 id="个人收获">个人收获</h2>
+<p>列表中的深浅拷贝做了一次详细的整理, 彻底捋清楚了.</p>
+]]></content>
+      <categories>
+        <category>AI学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python基础入门</title>
     <url>/2022/02/11/python%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<blockquote>
@@ -230,6 +279,7 @@
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li>内容来自<a href="https://tianchi.aliyun.com/specials/promotion/aicamppython">python训练营</a></li>
+<li><a href="https://blog.csdn.net/beautiful77moon/article/details/88938741">Python 元组推导式</a></li>
 </ol>
 <h2 id="个人收获">个人收获</h2>
 <p>巩固了python基础知识, 补充了一些小知识, 一鼓作气继续学.</p>
@@ -2473,7 +2523,9 @@ Gini_index(D, a) = \sum^V_{v=1}{\frac{|D^v|}{|D|}Gini(D^v)}
 <li><p><strong>数组求和</strong> 需要借助库函数<code>numeric</code>实现</p>
 <p></p><figure class="highlight c++"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;numeric&gt;</span></span></span><br><span class="line"><span class="built_in">accumulate</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), <span class="number">0</span>)  <span class="comment">// 从0为基准开始求和</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
 <li><p><strong>数组排序</strong> 需要借助库函数<code>algorithm</code>实现</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());  <span class="comment">// 数组升序</span></span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), greater&lt;<span class="keyword">int</span>&gt;());  <span class="comment">// 数组降序</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
+<p></p><figure class="highlight c++"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());  <span class="comment">// 数组升序</span></span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), greater&lt;<span class="keyword">int</span>&gt;());  <span class="comment">// 数组降序</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>对于二维数组, 也可以自定义cmp函数, 实现一列升序, 一列降序的方法.</p>
+<p></p><figure class="highlight c++"><table><tbody><tr><td class="code"><pre><span class="line"><span class="comment">// 按照第一列降序排序</span></span><br><span class="line"><span class="comment">// 第一列相等按照第二列升序</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp;a, vector&lt;<span class="keyword">int</span>&gt; &amp;b)</span></span>{</span><br><span class="line">    <span class="keyword">if</span>(a[<span class="number">0</span>] != b[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">return</span> a[<span class="number">1</span>] &lt; b[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">return</span> a[<span class="number">0</span>] &gt; b[<span class="number">0</span>];</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), cmp);</span><br></pre></td></tr></tbody></table></figure><p></p></li>
 </ol>
 <p>以上<strong>加粗</strong>的也是比较常用的, 其实也很简单啦, 不用很复杂的操作.</p>
 <h2 id="个人收获">个人收获</h2>
