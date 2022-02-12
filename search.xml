@@ -264,6 +264,13 @@
 <p>一般多用于快速计算2的倍数.</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">n &lt;&lt; <span class="number">1</span>  <span class="comment"># 计算 n*2</span></span><br><span class="line">n &gt;&gt; <span class="number">1</span>  <span class="comment"># 计算 n/2，负奇数的运算不可用</span></span><br><span class="line">n &lt;&lt; m  <span class="comment"># 计算 n*(2^m)，即乘以 2 的 m 次方</span></span><br><span class="line">n &gt;&gt; m  <span class="comment"># 计算 n/(2^m)，即除以 2 的 m 次方</span></span><br><span class="line"><span class="number">1</span> &lt;&lt; n  <span class="comment"># 2^n</span></span><br></pre></td></tr></tbody></table></figure>
 <p>在算法中也经常有使用整数的二进制位来表示类似数组元素存在与否, 可以降低时空复杂度, 不在此处阐述. 当然还有其他的技巧, 可以多搜搜看.</p>
+<blockquote>
+<p>补充2个位运算的小技巧: 练习的话可以参考leetcode<a href="https://leetcode-cn.com/problems/power-of-two/">231. 2 的幂</a>和<a href="https://leetcode-cn.com/problems/number-of-1-bits/">191. 位1的个数</a></p>
+<ul>
+<li>判断偶数: <code>(n &amp; 1)</code></li>
+<li>消去二进制位最后一个1: <code>(n &amp; (n-1))</code></li>
+</ul>
+</blockquote>
 <h3 id="is-和">is 和 ==</h3>
 <ul>
 <li><code>is</code>: 表示是或不是;</li>
