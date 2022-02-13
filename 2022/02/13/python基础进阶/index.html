@@ -22,23 +22,20 @@
     var CONFIG = {"hostname":"gipbear.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="本文是关于c++中常用的数组vector的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的leetcode题解中经常会使用的.">
+  <meta name="description" content="本文是在天池学习路线中的『python基础进阶』板块, 之前学习过部分, 在此记录一些易错点和不熟悉的地方. 仅作补充, 并不是全部知识点. 详细知识点的所有代码均可在我的GitHub仓库TianChi-Studying中找到.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="cpp数据结构之vector的常见用法">
-<meta property="og:url" content="https://gipbear.github.io/2022/01/19/cpp%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="python基础进阶">
+<meta property="og:url" content="https://gipbear.github.io/2022/02/13/python%E5%9F%BA%E7%A1%80%E8%BF%9B%E9%98%B6/index.html">
 <meta property="og:site_name" content="Grizzly&#39;s daily">
-<meta property="og:description" content="本文是关于c++中常用的数组vector的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的leetcode题解中经常会使用的.">
+<meta property="og:description" content="本文是在天池学习路线中的『python基础进阶』板块, 之前学习过部分, 在此记录一些易错点和不熟悉的地方. 仅作补充, 并不是全部知识点. 详细知识点的所有代码均可在我的GitHub仓库TianChi-Studying中找到.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f468-1f4bb.png?v8">
-<meta property="article:published_time" content="2022-01-19T12:34:03.000Z">
-<meta property="article:modified_time" content="2022-02-12T07:18:28.587Z">
+<meta property="article:published_time" content="2022-02-13T13:27:58.000Z">
+<meta property="article:modified_time" content="2022-02-13T16:53:18.250Z">
 <meta property="article:author" content="Grizzly">
-<meta property="article:tag" content="c++">
-<meta property="article:tag" content="vector">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f468-1f4bb.png?v8">
 
-<link rel="canonical" href="https://gipbear.github.io/2022/01/19/cpp%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
+<link rel="canonical" href="https://gipbear.github.io/2022/02/13/python%E5%9F%BA%E7%A1%80%E8%BF%9B%E9%98%B6/">
 
 
 <script id="page-configurations">
@@ -51,7 +48,7 @@
   };
 </script>
 
-  <title>cpp数据结构之vector的常见用法 | Grizzly's daily</title>
+  <title>python基础进阶 | Grizzly's daily</title>
   
 
 
@@ -205,7 +202,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://gipbear.github.io/2022/01/19/cpp%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://gipbear.github.io/2022/02/13/python%E5%9F%BA%E7%A1%80%E8%BF%9B%E9%98%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -218,7 +215,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          cpp数据结构之vector的常见用法
+          python基础进阶
         </h1>
 
         <div class="post-meta">
@@ -229,14 +226,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-01-19 20:34:03" itemprop="dateCreated datePublished" datetime="2022-01-19T20:34:03+08:00">2022-01-19</time>
+              <time title="创建时间：2022-02-13 21:27:58" itemprop="dateCreated datePublished" datetime="2022-02-13T21:27:58+08:00">2022-02-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-12 15:18:28" itemprop="dateModified" datetime="2022-02-12T15:18:28+08:00">2022-02-12</time>
+                <time title="修改时间：2022-02-14 00:53:18" itemprop="dateModified" datetime="2022-02-14T00:53:18+08:00">2022-02-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -244,7 +241,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AF%AD%E8%A8%80%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">语言特性</span></a>
+                  <a href="/categories/AI%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">AI学习</span></a>
                 </span>
             </span>
 
@@ -261,7 +258,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -281,68 +278,60 @@
 
       
         <blockquote>
-<p>本文是关于c++中常用的数组<code>vector</code>的一些常见用法的总结, 主要是一些常用的调用方法, 主要是我的平时的<a href="https://gipbear.github.io/tags/leetcode题解/">leetcode题解</a>中经常会使用的.</p>
+<p>本文是在天池学习路线中的『python基础进阶』板块, 之前学习过部分, 在此记录一些易错点和不熟悉的地方. 仅作补充, 并不是全部知识点.</p>
+<p>详细知识点的所有代码均可在我的GitHub仓库<a target="_blank" rel="noopener" href="https://github.com/Gipbear/TianChi-Studying">TianChi-Studying</a>中找到.</p>
 </blockquote>
 <span id="more"></span>
-<h2 id="数组-vector">数组 vector</h2>
-<p>一般大家应该都学习过C语言, 在C语言中, <strong>数组</strong>通常使用<code>int[]</code>来表示, 但是在使用的过程中, 通常会出现一些麻烦(大佬轻喷), 比如静态初始化大小不能直接使用参数而是一个常量, 动态申请空间需要使用<code>malloc</code>等. 虽然手动分配内存可能会给代码带来一定的效率提升, 但是复杂的细节操作让我这个从<code>python</code>转来刷题应试的小白很难接受呀.</p>
-<p>所以一般直接使用标准库提供的<code>vector</code>(很多人都是这么建议的), 这个是比<code>int[]</code>更加的高级的容器, 可以自动扩容, 让你不需要操心细节, 非常nice<span class="github-emoji"><span>👨💻</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f468-1f4bb.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>!</p>
-<p>那么接下来我们来看一下vector的一些常见用法吧:</p>
-<h2 id="常见用法">常见用法</h2>
-<p>首先需要导入标准库</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br></pre></td></tr></tbody></table></figure>
-<h3 id="初始化">初始化</h3>
-<p>一维数组初始化</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;<span class="keyword">int</span>&gt; res1;  <span class="comment">//简单初始化一个空数组</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res2</span><span class="params">(n+<span class="number">1</span>)</span></span>;  <span class="comment">//初始化大小为 n+1 大小的数组</span></span><br><span class="line"><span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res3</span><span class="params">(n+<span class="number">1</span>, <span class="number">666</span>)</span></span>;  <span class="comment">//初始化大小为 n+1 大小的数组, 初始值为 666</span></span><br><span class="line">vector&lt;<span class="keyword">int</span>&gt; res4{<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>};  <span class="comment">// 直接初始化内容</span></span><br></pre></td></tr></tbody></table></figure>
-<p>二维数组初始化</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res1;  <span class="comment">// 初始化一个二维数组;</span></span><br><span class="line">vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">res2</span>(m, vmctor&lt;<span class="keyword">int</span>&gt;(n, <span class="number">2</span>));  <span class="comment">// 初始化一个二维数组, 大小为m*n, 默认值为2.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 重置大小</span></span><br><span class="line">res.<span class="built_in">resize</span>(m, vector&lt;<span class="keyword">int</span>&gt;(n));</span><br></pre></td></tr></tbody></table></figure>
-<p>其中的元素也可以是其他类型, 例如<code>string</code>, <code>bool</code>等.</p>
-<h3 id="查询属性">查询属性</h3>
+<h2 id="函数">函数</h2>
+<h2 id="面向对象">面向对象</h2>
+<h3 id="三大特性">三大特性</h3>
+<p>面向对象就必须了解三大特性:</p>
+<ul>
+<li>封装: 把客观事物封装成抽象的类, 让数据和方法给信任的类或对象操作, 而隐藏部分信息.</li>
+<li>继承: 子类自动共享父类的属性和方法.
+<ul>
+<li>一般认为一个类是自身的子类;</li>
+<li>可以使用<code>issubclass(B, A)</code>查看<code>B</code>是否是<code>A</code>的子类.</li>
+<li>python也支持多继承, 但会使得类的整体层次复杂, 所以并<strong>不建议使用</strong>.</li>
+</ul></li>
+<li>多态: 同一个<strong>方法</strong>的调用, 会由于不同对象而得到不同的结果.
+<ul>
+<li>必要条件是<code>继承</code>和<code>方法的重写</code>.</li>
+</ul></li>
+</ul>
+<h3 id="类类对象-和-实例对象">类、类对象 和 实例对象</h3>
+<ul>
+<li>类: 就是指对类的定义</li>
+<li>类对象: 是在创建类的时候, 在内存开辟的一个空间, 一个类只有<strong>一个类对象</strong>.</li>
+<li>实例对象: 通过实例化类创建的对象, 可以有多个.</li>
+</ul>
+<h3 id="类属性-和-对象属性">类属性 和 对象属性</h3>
+<ul>
+<li>类属性: 类定义内, 类方法外定义的变量称为类属性, 类属性属于类对象, 可以被多个实例化对象所<strong>共享</strong>, 就像<code>我们都有一个家, 名字叫中国</code>一样.</li>
+<li>对象属性: 对象属性和具体创建的对象实例直接相关, 并且相互之间不共享属性, 就像<code>我的老婆只是我的</code>一样.</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>():</span></span><br><span class="line">    a = <span class="number">0</span>  <span class="comment">#类属性</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, xx</span>):</span></span><br><span class="line">        A.a = xx  <span class="comment">#使用类属性可以通过 （类名.类属性）调用。</span></span><br></pre></td></tr></tbody></table></figure>
+<p>有一些操作属性的方法:</p>
+<ul>
+<li>使用<code>hasattr(object, name)</code>来判断对象是否包含对应的<strong>属性或方法</strong>.</li>
+<li>使用<code>getattr(object, name)</code>来获取<strong>属性或方法</strong>.</li>
+<li>使用<code>setattr(object, name, value)</code>来修改属性值, 或创建新的属性和值.</li>
+<li>使用<code>delattr(object, name)</code>来删除属性.</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    name = <span class="string">'张三'</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">set</span>(<span class="params">self, a, b</span>):</span></span><br><span class="line">        x = a</span><br><span class="line">        a = b</span><br><span class="line">        b = x</span><br><span class="line">        <span class="built_in">print</span>(a, b)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a = A()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hasattr</span>(a, <span class="string">'name'</span>))  <span class="comment"># 判断是否有name属性 True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hasattr</span>(a, <span class="string">'set'</span>))  <span class="comment"># 判断是否有set方法 True</span></span><br><span class="line">x = <span class="built_in">getattr</span>(a, <span class="string">'name'</span>)  <span class="comment"># 获取属性值</span></span><br><span class="line"><span class="built_in">print</span>(x)  <span class="comment"># 张三</span></span><br><span class="line">c = <span class="built_in">getattr</span>(a, <span class="string">'set'</span>)  <span class="comment"># 获取方法</span></span><br><span class="line">c(a=<span class="string">'1'</span>, b=<span class="string">'2'</span>)  <span class="comment"># 2 1</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="私有">私有</h3>
+<p>私有属性和方法仅需在定义命名的时候加上两个下划线"<code>__</code>"即可.</p>
+<p>相对于公有属性和公有方法来说, 私有属性和私有方法更加的安全. 从定义上来说, 将需要安全保护的属性和方法封装为私有, 可以阻止外部直接调用, 而必须使用<code>实例化对象方法</code>或<code>类方法</code>进行调用, 从而提高安全性.</p>
+<p>但在python中的私有是『伪私有』, 即可以使用类名, 通过 <code>object._className__attrName</code> 访问私有属性，用 <code>object._className__func()</code> 访问私有方法.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JustCounter</span>:</span></span><br><span class="line">    __secretCount = <span class="number">0</span>  <span class="comment"># 私有变量</span></span><br><span class="line">    publicCount = <span class="number">0</span>  <span class="comment"># 公开变量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">count</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.__secretCount += <span class="number">1</span></span><br><span class="line">        self.publicCount += <span class="number">1</span></span><br><span class="line">        <span class="built_in">print</span>(self.__secretCount)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">counter = JustCounter()</span><br><span class="line">counter.count()  <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(counter.publicCount)  <span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 特殊方法依旧可以访问</span></span><br><span class="line"><span class="built_in">print</span>(counter._JustCounter__secretCount)  <span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 直接访问则会报错.</span></span><br><span class="line"><span class="built_in">print</span>(counter.__secretCount)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">'调用func方法'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line"><span class="built_in">print</span>(b.__dict__)  <span class="comment"># 查看属性 {}</span></span><br><span class="line">b.name = <span class="string">'张三'</span></span><br><span class="line">b.age = <span class="number">18</span></span><br><span class="line"><span class="built_in">print</span>(b.__dict__)  <span class="comment"># 查看属性{'name': '张三', 'age': 18}</span></span><br><span class="line"></span><br><span class="line">b1 = B()</span><br><span class="line"><span class="built_in">print</span>(b1.__dict__)  <span class="comment"># 查看属性 {}</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="参考">参考</h2>
 <ol type="1">
-<li><p><strong>数组大小</strong></p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">size</span>();  <span class="comment">// 返回数组的大小</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p><strong>判断数组是否为空</strong></p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">empty</span>();</span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p>返回数组头的指针</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">begin</span>();</span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p>返回数组尾+1的指针, 注意是指向<strong>最后的后一个</strong>, 也就是空</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">end</span>();</span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p>得到数组头的引用</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">front</span>();</span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p>得到数组尾的引用</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">back</span>();</span><br></pre></td></tr></tbody></table></figure><p></p></li>
+<li>内容来自<a target="_blank" rel="noopener" href="https://tianchi.aliyun.com/specials/promotion/aicamppython">python训练营</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/DylanHooz/p/8436629.html">类：属性方法的私有公有详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58727281">Python面向对象三大特性</a></li>
 </ol>
-<h3 id="增删改查">增删改查</h3>
-<ol type="1">
-<li><p><strong>增加元素</strong></p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">push_back</span>(元素);  <span class="comment">// 在尾部插入一个元素</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p><strong>删除元素</strong></p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">pop_back</span>(元素);  <span class="comment">// 删除最后一个元素</span></span><br><span class="line">res.<span class="built_in">erase</span>(res.<span class="built_in">begin</span>() + i);  <span class="comment">// 删除第i个元素</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p><strong>修改元素</strong></p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res[pos] = 值;  <span class="comment">//  直接在第pos个位置修改为某个值</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p>查找元素(按索引查找)</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res[pos];  <span class="comment">// 直接查找第pos个位置的元素</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p>那如果想查找值是否在数组中(按值查找) <code>vector</code>没有直接的方法, 就需要使用标准库中的find方法来查找(这也是我写这篇的起因, 以后还有不懂的就加进来).</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span>  <span class="comment">// 首先必须导入标准库, 该库提供了大量基于迭代器的模板函数</span></span></span><br><span class="line"><span class="built_in">find</span>(res.<span class="built_in">begin</span>(), res.<span class="built_in">end</span>(), key);  <span class="comment">// 返回范围内第一个等于给定key的元素位置指针, 一般用于判断是否存在</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-</ol>
-<h3 id="其他">其他</h3>
-<ol type="1">
-<li><p>重新定义数组大小</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">resize</span>(m);  <span class="comment">// 数组大小重新定义为m</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p>清空数组</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.<span class="built_in">clear</span>();  <span class="comment">// 清空数组</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p>与另一个数组交换数据</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">swap</span>(res1, res2);  <span class="comment">// res1与res2交换数组</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p><strong>数组求和</strong> 需要借助库函数<code>numeric</code>实现</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;numeric&gt;</span></span></span><br><span class="line"><span class="built_in">accumulate</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), <span class="number">0</span>)  <span class="comment">// 从0为基准开始求和</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
-<li><p><strong>数组排序</strong> 需要借助库函数<code>algorithm</code>实现</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());  <span class="comment">// 数组升序</span></span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), greater&lt;<span class="keyword">int</span>&gt;());  <span class="comment">// 数组降序</span></span><br></pre></td></tr></tbody></table></figure><p></p>
-<p>对于二维数组, 也可以自定义cmp函数, 实现一列升序, 一列降序的方法.</p>
-<p></p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 按照第一列降序排序</span></span><br><span class="line"><span class="comment">// 第一列相等按照第二列升序</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp;a, vector&lt;<span class="keyword">int</span>&gt; &amp;b)</span></span>{</span><br><span class="line">    <span class="keyword">if</span>(a[<span class="number">0</span>] != b[<span class="number">0</span>])</span><br><span class="line">        <span class="keyword">return</span> a[<span class="number">1</span>] &lt; b[<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">return</span> a[<span class="number">0</span>] &gt; b[<span class="number">0</span>];</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), cmp);</span><br></pre></td></tr></tbody></table></figure><p></p></li>
-</ol>
-<p>以上<strong>加粗</strong>的也是比较常用的, 其实也很简单啦, 不用很复杂的操作.</p>
 <h2 id="个人收获">个人收获</h2>
-<p>这些方法对比<code>python</code>的<code>list</code>来学其实很简单, 只不过换了一个函数名而已, 当然还是有很多操作不一样, 比如指针操作, 记住就好了, 积少成多, 熟能生巧!</p>
 
     </div>
     <div>    
@@ -368,7 +357,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://gipbear.github.io/2022/01/19/cpp%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B9%8Bvector%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" title="cpp数据结构之vector的常见用法">https://gipbear.github.io/2022/01/19/cpp数据结构之vector的常见用法/</a>
+    <a href="https://gipbear.github.io/2022/02/13/python%E5%9F%BA%E7%A1%80%E8%BF%9B%E9%98%B6/" title="python基础进阶">https://gipbear.github.io/2022/02/13/python基础进阶/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -379,8 +368,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i>c++</a>
-              <a href="/tags/vector/" rel="tag"><i class="fa fa-tag"></i>vector</a>
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i>python</a>
           </div>
 
         
@@ -389,13 +377,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/01/17/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E5%8F%AF%E8%83%BD%E4%BC%9A%E4%BD%BF%E7%94%A8%E7%9A%84%E7%90%86%E8%AE%BA/" rel="prev" title="机器学习中可能会使用的理论">
-      <i class="fa fa-chevron-left"></i> 机器学习中可能会使用的理论
+    <a href="/2022/02/12/python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="prev" title="python数据结构">
+      <i class="fa fa-chevron-left"></i> python数据结构
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/01/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC04%E7%AB%A0%E5%86%B3%E7%AD%96%E6%A0%91/" rel="next" title="机器学习西瓜书——第04章决策树">
-      机器学习西瓜书——第04章决策树 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -454,7 +439,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84-vector"><span class="nav-number">1.</span> <span class="nav-text">数组 vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">常见用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E5%B1%9E%E6%80%A7"><span class="nav-number">2.2.</span> <span class="nav-text">查询属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="nav-number">2.3.</span> <span class="nav-text">增删改查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">2.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">3.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">三大特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%B1%BB%E5%AF%B9%E8%B1%A1-%E5%92%8C-%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.2.</span> <span class="nav-text">类、类对象 和 实例对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%B1%9E%E6%80%A7-%E5%92%8C-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">类属性 和 对象属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%81%E6%9C%89"><span class="nav-number">2.4.</span> <span class="nav-text">私有</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
