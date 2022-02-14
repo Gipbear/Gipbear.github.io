@@ -29,11 +29,13 @@
 <meta property="og:site_name" content="Grizzly&#39;s daily">
 <meta property="og:description" content="本文是在天池学习路线中的『python基础进阶』板块, 之前学习过部分, 在此记录一些易错点和不熟悉的地方. 仅作补充, 并不是全部知识点. 详细知识点的所有代码均可在我的GitHub仓库TianChi-Studying中找到.">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png?v8">
 <meta property="article:published_time" content="2022-02-13T13:27:58.000Z">
-<meta property="article:modified_time" content="2022-02-13T16:53:18.250Z">
+<meta property="article:modified_time" content="2022-02-14T15:51:46.099Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png?v8">
 
 <link rel="canonical" href="https://gipbear.github.io/2022/02/13/python%E5%9F%BA%E7%A1%80%E8%BF%9B%E9%98%B6/">
 
@@ -79,9 +81,9 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Grizzly's daily" type="application/atom+xml">
 
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="Grizzly's daily" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -233,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-02-14 00:53:18" itemprop="dateModified" datetime="2022-02-14T00:53:18+08:00">2022-02-14</time>
+                <time title="修改时间：2022-02-14 23:51:46" itemprop="dateModified" datetime="2022-02-14T23:51:46+08:00">2022-02-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,14 +260,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>7.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -283,6 +285,74 @@
 </blockquote>
 <span id="more"></span>
 <h2 id="函数">函数</h2>
+<p>python中『一切皆对象』, 函数也不例外.</p>
+<p>在之前所学的<code>C++</code>或<code>Java</code>中, 可以发现函数的返回值要么为空, 要么是某种数据类型, 但是在<code>python</code>中, 返回值可以是任何对象, 包括<strong>函数</strong>.</p>
+<h3 id="函数参数">函数参数</h3>
+<p>函数的参数种类比较多, 主要有:</p>
+<ol type="1">
+<li><p>位置参数 (positional argument): 就是最常见的x, y等</p></li>
+<li><p>默认参数 (default argument): 给定一个默认值, 用户也可以传入实参来调整.</p>
+<p></p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">x, y=<span class="number">3</span></span>):</span></span><br><span class="line">    <span class="built_in">print</span>(x+y)</span><br><span class="line"></span><br><span class="line">func(<span class="number">1</span>)  <span class="comment"># 4</span></span><br><span class="line">func(<span class="number">1</span>, <span class="number">666</span>)  <span class="comment"># 667</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
+<li><p>可变参数 (variable argument): 不限制输入参数的个数, 传入后自动保存为<strong>元组类型</strong>.</p>
+<ul>
+<li><code>*args</code> 是可变参数，<code>args</code> 接收的是一个 <code>tuple</code></li>
+</ul>
+<p></p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printinfo</span>(<span class="params">arg1, *args</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(arg1)</span><br><span class="line">    <span class="built_in">print</span>(args, <span class="built_in">type</span>(args))</span><br><span class="line"></span><br><span class="line">printinfo(<span class="number">10</span>)  <span class="comment"># 仅一个参数, 没有属于args的.</span></span><br><span class="line"><span class="comment"># 10</span></span><br><span class="line"><span class="comment"># () &lt;class 'tuple'&gt;</span></span><br><span class="line">printinfo(<span class="number">70</span>, <span class="number">60</span>, <span class="number">50</span>)  <span class="comment"># 除arg1位置匹配的, 其他都传入给可变参数</span></span><br><span class="line"><span class="comment"># 70</span></span><br><span class="line"><span class="comment"># (60, 50) &lt;class 'tuple'&gt;</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
+<li><p>关键字参数 (keyword argument): 不限制关键字的个数和命名, 传入后自动保存为字典的形式.</p>
+<ul>
+<li><code>**kw</code> 是关键字参数，<code>kw</code> 接收的是一个 <code>dict</code></li>
+</ul>
+<p></p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span>(<span class="params">name, **kwargs</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(name)</span><br><span class="line">    <span class="built_in">print</span>(kwargs, <span class="built_in">type</span>(kwargs))</span><br><span class="line">    <span class="keyword">if</span> <span class="string">'age'</span> <span class="keyword">in</span> kwargs:</span><br><span class="line">        age = kwargs[<span class="string">'age'</span>]</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f'<span class="subst">{name}</span>今年<span class="subst">{age}</span>岁'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">person(<span class="string">'张三'</span>)  <span class="comment"># 仅一个参数, 没有属于kwargs的.</span></span><br><span class="line"><span class="comment"># 张三</span></span><br><span class="line"><span class="comment"># {} &lt;class 'dict'&gt;</span></span><br><span class="line">person(<span class="string">'李四'</span>, age=<span class="number">18</span>, height=<span class="number">1.80</span>)  <span class="comment"># 除 name 位置匹配的, 其他都传入给关键字参数</span></span><br><span class="line"><span class="comment"># 李四</span></span><br><span class="line"><span class="comment"># {'age': 18, 'height': 1.8} &lt;class 'dict'&gt;</span></span><br><span class="line"><span class="comment"># 李四今年18岁</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
+<li><p>命名关键字参数 (name keyword argument)</p>
+<ul>
+<li>命名关键字参数是为了限制调用者可以传入的『<strong>参数名</strong>』，也可以提供<strong>默认值</strong>.</li>
+<li>与关键字参数不同的是, 关键字参数的名字和值都是任意的, 后续再进行匹配使用, 而命名关键字则只能接受<strong>给定的关键字</strong>作为参数.</li>
+<li>定义命名关键字参数不要忘了写分隔符 <code>*</code>, 否则定义的是位置参数, 命名关键字参数调用函数时<strong>必须给定参数名</strong>.</li>
+</ul>
+<p></p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span>(<span class="params">name, *, age, height=<span class="number">1.90</span></span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f'<span class="subst">{name}</span>今年<span class="subst">{age}</span>岁, 身高<span class="subst">{height:<span class="number">.2</span>f}</span>m'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">person(<span class="string">'张三'</span>, age=<span class="number">18</span>, height=<span class="number">1.80</span>)  <span class="comment"># 张三今年18岁, 身高1.80m</span></span><br><span class="line">person(<span class="string">'李四'</span>, age=<span class="number">18</span>)  <span class="comment"># 李四今年18岁, 身高1.90m</span></span><br><span class="line">person(<span class="string">'王五'</span>)  <span class="comment"># TypeError, 需要传入给定关键字</span></span><br></pre></td></tr></tbody></table></figure><p></p></li>
+<li><p>参数组合</p>
+<p>在<code>Python</code>中定义函数时, 以上这5种参数都可以使用, d但最多可以使用4种, 并且要注意顺序:</p>
+<ul>
+<li>位置参数、默认参数、可变参数和关键字参数.</li>
+<li>位置参数、默认参数、命名关键字参数和关键字参数.</li>
+</ul></li>
+</ol>
+<h3 id="变量作用域">变量作用域</h3>
+<p>在python程序中, 处于不同位置的变量, 有不同的作用域.</p>
+<ul>
+<li>定义在函数内部的变量拥有局部作用域, 该变量称为<strong>局部变量</strong>.</li>
+<li>定义在函数外部的变量拥有全局作用域, 该变量称为<strong>全局变量</strong>.</li>
+<li>局部变量只能在其被声明的函数内部访问, 而全局变量可以在整个程序范围内访问.</li>
+</ul>
+<p>需要注意的是:</p>
+<blockquote>
+<ul>
+<li>当局部变量试图访问全局变量时, 一定要在函数内声明<code>global</code>.</li>
+<li>当局部变量与全局变量<strong>命名冲突</strong>时, 程序会优先选择局部变量.</li>
+</ul>
+</blockquote>
+<h3 id="内嵌函数和闭包">内嵌函数和闭包</h3>
+<p><strong>内嵌函数</strong>就是在外层函数内定义内层函数.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'outer函数在这被调用'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>():</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">'inner函数在这被调用'</span>)</span><br><span class="line"></span><br><span class="line">    inner()  <span class="comment"># 该函数只能在outer函数内部被调用</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">outer()</span><br><span class="line"><span class="comment"># outer函数在这被调用</span></span><br><span class="line"><span class="comment"># inner函数在这被调用</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>闭包</strong>是一个比较重要的语法结构, 结构上与内嵌函数类似, 区别在于返回值, 闭包的外层函数<strong>返回值是一个函数</strong>.</p>
+<ul>
+<li>如果在一个内部函数里对外层非全局作用域的变量进行引用, 那么内部函数就被认为是<strong>闭包</strong>.</li>
+<li>通过闭包可以访问外层非全局作用域的变量, 这个作用域称为<strong>闭包作用域</strong>.</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">funX</span>(<span class="params">x</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">funY</span>(<span class="params">y</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">'使用funY(y)'</span>)</span><br><span class="line">        <span class="keyword">return</span> x * y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> funY</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">i = funX(<span class="number">8</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(i))  <span class="comment"># &lt;class 'function'&gt;</span></span><br><span class="line"><span class="built_in">print</span>(i(<span class="number">5</span>))  <span class="comment"># 40</span></span><br></pre></td></tr></tbody></table></figure>
+<blockquote>
+<p>注意到上述代码中, 内部函数<code>FunY</code>中使用了外部非全局作用域的变量<code>x</code>.</p>
+</blockquote>
+<p>同样是, 函数内嵌套的函数作用域也需要特别注意, 若我们需要修改闭包内的变量, 需要使用<code>nonlocal</code>关键字.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">999</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span>():</span></span><br><span class="line">    num = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inner</span>():</span></span><br><span class="line">        <span class="keyword">nonlocal</span> num  <span class="comment"># nonlocal关键字声明</span></span><br><span class="line">        num = <span class="number">100</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f'inner中num = <span class="subst">{num}</span>'</span>)</span><br><span class="line"></span><br><span class="line">    inner()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f'outer中num = <span class="subst">{num}</span>'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">outer()</span><br><span class="line"><span class="comment"># inner中num = 100</span></span><br><span class="line"><span class="comment"># outer中num = 100</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f'全局中num = <span class="subst">{num}</span>'</span>)</span><br><span class="line"><span class="comment"># 全局中num = 999</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="lambda-表达式">lambda 表达式</h3>
+<p>lambda需要注意的是:</p>
+<ul>
+<li>匿名函数没有<code>return</code>, 表达式本身就是返回值.</li>
+<li>匿名函数拥有『<strong>自己的命名空间</strong>』, 不能访问参数列表之外或全局变量.</li>
+</ul>
+<p>匿名函数主要适用于函数式编程(函数不会影响函数之外的内容)的一些高阶函数中. 例如map映射和filter过滤, 当然也可以在自己自定义函数中使用.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">odd = <span class="keyword">lambda</span> x: x % <span class="number">2</span> == <span class="number">1</span></span><br><span class="line">templist = <span class="built_in">filter</span>(odd, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(templist))  <span class="comment"># [1, 3, 5, 7, 9]</span></span><br><span class="line"></span><br><span class="line">m1 = <span class="built_in">map</span>(<span class="keyword">lambda</span> x: x ** <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">list</span>(m1))  <span class="comment"># [1, 4, 9, 16, 25]</span></span><br></pre></td></tr></tbody></table></figure>
 <h2 id="面向对象">面向对象</h2>
 <h3 id="三大特性">三大特性</h3>
 <p>面向对象就必须了解三大特性:</p>
@@ -324,14 +394,99 @@
 <p>相对于公有属性和公有方法来说, 私有属性和私有方法更加的安全. 从定义上来说, 将需要安全保护的属性和方法封装为私有, 可以阻止外部直接调用, 而必须使用<code>实例化对象方法</code>或<code>类方法</code>进行调用, 从而提高安全性.</p>
 <p>但在python中的私有是『伪私有』, 即可以使用类名, 通过 <code>object._className__attrName</code> 访问私有属性，用 <code>object._className__func()</code> 访问私有方法.</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JustCounter</span>:</span></span><br><span class="line">    __secretCount = <span class="number">0</span>  <span class="comment"># 私有变量</span></span><br><span class="line">    publicCount = <span class="number">0</span>  <span class="comment"># 公开变量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">count</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.__secretCount += <span class="number">1</span></span><br><span class="line">        self.publicCount += <span class="number">1</span></span><br><span class="line">        <span class="built_in">print</span>(self.__secretCount)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">counter = JustCounter()</span><br><span class="line">counter.count()  <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(counter.publicCount)  <span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 特殊方法依旧可以访问</span></span><br><span class="line"><span class="built_in">print</span>(counter._JustCounter__secretCount)  <span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 直接访问则会报错.</span></span><br><span class="line"><span class="built_in">print</span>(counter.__secretCount)</span><br></pre></td></tr></tbody></table></figure>
+<p>实例直接使用<strong>点</strong>就可以<strong>增加属性</strong>了, 这点需要注意一下.</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">'调用func方法'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line"><span class="built_in">print</span>(b.__dict__)  <span class="comment"># 查看属性 {}</span></span><br><span class="line">b.name = <span class="string">'张三'</span></span><br><span class="line">b.age = <span class="number">18</span></span><br><span class="line"><span class="built_in">print</span>(b.__dict__)  <span class="comment"># 查看属性{'name': '张三', 'age': 18}</span></span><br><span class="line"></span><br><span class="line">b1 = B()</span><br><span class="line"><span class="built_in">print</span>(b1.__dict__)  <span class="comment"># 查看属性 {}</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="魔法方法">魔法方法</h2>
+<h3 id="基本的魔法方法">基本的魔法方法</h3>
+<p>魔法方法基本上是被下划线包围的一些特殊方法. 相比于普通的方法, 它能够在适当的时候自动调用. 第一个参数一般是<code>cls</code>『类方法』或者<code>self</code>『实例方法』.</p>
+<ul>
+<li><code>__init__(self[, ...])</code> 构造器, 当一个实例被创建的时候调用的初始化方法.</li>
+<li><code>__new__(cls[, ...])</code> 在一个对象实例化的时候所调用的第一个方法, 在调用<code>__init__</code>初始化前, 先调用<code>__new__</code>.
+<ul>
+<li>需要注意的是, <code>__new__</code>的返回值必须为当前类的实例, 否则将不会调用<code>__init__</code>初始化.</li>
+<li>主要是在继承一些不可变的class(比如<code>int, str, tuple</code>)时, 提供一个自定义该类实例化过程的途径.</li>
+</ul></li>
+<li><code>__del__(self)</code> 析构器, 当一个对象将要被系统回收之时调用的方法.</li>
+<li><code>__str__(self)</code>: 当你打印一个对象、使用<code>%s</code>格式化或使用<code>str</code>强转数据类型的时候，触发<code>__str__</code>.</li>
+<li><code>__repr__(self)</code>是<code>__str__(self)</code>的备胎, 情况类似, 不过自定义时往往更加准确, 主要用于调试.</li>
+</ul>
+<h3 id="算术运算符">算术运算符</h3>
+<p>普通的计算在对象中是无法进行的, 需要自定义计算方式.</p>
+<ul>
+<li><code>__add__(self, other)</code>定义加法的行为: <code>+</code></li>
+<li><code>__sub__(self, other)</code>定义减法的行为: <code>-</code></li>
+<li><code>__mul__(self, other)</code>定义乘法的行为: <code>*</code></li>
+<li><code>__truediv__(self, other)</code>定义真除法的行为: <code>/</code></li>
+<li><code>__floordiv__(self, other)</code>定义整数除法的行为: <code>//</code></li>
+<li><code>__mod__(self, other)</code> 定义取模算法的行为: <code>%</code></li>
+<li><code>__divmod__(self, other)</code>定义当被 <code>divmod()</code> 调用时的行为
+<ul>
+<li><code>divmod(a, b)</code>把除数和余数运算结果结合起来，返回一个包含商和余数的元组<code>(a // b, a % b)</code>。</li>
+</ul></li>
+<li><code>__pow__(self, other[, module])</code>定义当被 <code>power()</code> 调用或 <code>**</code> 运算时的行为</li>
+<li><code>__lshift__(self, other)</code>定义按位左移位的行为: <code>&lt;&lt;</code></li>
+<li><code>__rshift__(self, other)</code>定义按位右移位的行为: <code>&gt;&gt;</code></li>
+<li><code>__and__(self, other)</code>定义按位与操作的行为: <code>&amp;</code></li>
+<li><code>__xor__(self, other)</code>定义按位异或操作的行为: <code>^</code></li>
+<li><code>__or__(self, other)</code>定义按位或操作的行为: <code>|</code></li>
+</ul>
+<p>还有对应的<strong>反运算符</strong>, 在之前加上<code>r</code>即可, 例如<code>__rsub__</code>. 对应增量赋值运算符, 在之前加上<code>i</code>即可, 例如<code>__isub__</code>.</p>
+<h3 id="属性访问">属性访问</h3>
+<ul>
+<li><code>__getattr__(self, name)</code>: 定义当用户试图获取一个不存在的属性时的行为.</li>
+<li><code>__getattribute__(self, name)</code>: 定义当该类的属性被访问时的行为(先调用该方法, 查看是否存在该属性, 若不存在, 接着去调用<code>__getattr__</code>).</li>
+<li><code>__setattr__(self, name, value)</code>: 定义当一个属性被设置时的行为.</li>
+<li><code>__delattr__(self, name)</code>: 定义当一个属性被删除时的行为.</li>
+</ul>
+<h3 id="描述符">描述符</h3>
+<p>描述符就是将某种特殊类型的类的实例指派给另一个类的属性.</p>
+<ul>
+<li><code>__get__(self, instance, owner)</code>: 用于访问属性, 它返回属性的值.</li>
+<li><code>__set__(self, instance, value)</code>: 将在属性分配操作中调用, 不返回任何内容.</li>
+<li><code>__del__(self, instance)</code>: 控制删除操作, 不返回任何内容.</li>
+</ul>
+<h2 id="迭代器和生成器">迭代器和生成器</h2>
+<h3 id="迭代器">迭代器</h3>
+<p>迭代是<code>Python</code>最强大的功能之一, 是访问集合元素的一种方式.</p>
+<ul>
+<li>迭代器是一个可以记住遍历的位置的对象.</li>
+<li>迭代器对象从集合的第一个元素开始访问, 直到所有的元素被访问完结束.</li>
+<li>迭代器只能往前不会后退.</li>
+<li>字符串, 列表或元组对象都可用于创建迭代器.</li>
+</ul>
+<p>迭代器有两个基本的方法: <code>iter()</code> 和 <code>next()</code>:</p>
+<ul>
+<li><code>iter(object)</code> 函数用来生成迭代器.</li>
+<li><code>next(iterator[, default])</code> 返回迭代器的下一个项目. 在元素为空时返回默认值, 若没有则会触发 <code>StopIteration</code> 异常. 在<a href="https://gipbear.github.io/2022/02/11/python基础入门/#元组推导式和next">元组推导式和next</a>中使用过, 不过是下面的『生成器』.</li>
+</ul>
+<p>把一个类作为一个迭代器使用需要在类中实现两个魔法方法 <code>__iter__()</code> 与 <code>__next__()</code> .</p>
+<ul>
+<li><code>__iter__(self)</code>定义当迭代容器中的元素的行为, 返回一个特殊的迭代器对象, 这个迭代器对象实现了 <code>__next__()</code> 方法并通过 <code>StopIteration</code> 异常标识迭代的完成.</li>
+<li><code>__next__()</code> 返回下一个迭代器对象.
+<ul>
+<li><code>StopIteration</code> 异常用于标识迭代的完成，防止出现无限循环的情况，在 <code>__next__()</code> 方法中我们可以设置在完成指定循环次数后触发 <code>StopIteration</code> 异常来结束迭代。</li>
+</ul></li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Fibs</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, n=<span class="number">10</span></span>):</span></span><br><span class="line">        self.a = <span class="number">0</span></span><br><span class="line">        self.b = <span class="number">1</span></span><br><span class="line">        self.n = n</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__next__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.a, self.b = self.b, self.a + self.b</span><br><span class="line">        <span class="keyword">if</span> self.a &gt; self.n:</span><br><span class="line">            <span class="keyword">raise</span> StopIteration</span><br><span class="line">        <span class="keyword">return</span> self.a</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fibs = Fibs(<span class="number">100</span>)</span><br><span class="line"><span class="keyword">for</span> each <span class="keyword">in</span> fibs:</span><br><span class="line">    <span class="built_in">print</span>(each, end=<span class="string">' '</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1 1 2 3 5 8 13 21 34 55 89</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="生成器">生成器</h3>
+<p>在 Python 中，使用了 <code>yield</code> 的函数被称为生成器(generator)。</p>
+<ul>
+<li>跟普通函数不同的是, 生成器是一个返回迭代器的函数, 只能用于迭代操作, 更简单点理解生成器就是一个迭代器.</li>
+<li>在调用生成器运行的过程中, 每次遇到 <code>yield</code> 时函数会<strong>暂停并保存</strong>当前所有的运行信息, 返回 <code>yield</code> 的值, 并在下一次执行 <code>next()</code> 方法时从当前位置<strong>继续</strong>运行.</li>
+<li>调用一个生成器函数, 返回的是一个迭代器对象.</li>
+</ul>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">libs</span>(<span class="params">n</span>):</span></span><br><span class="line">    a = <span class="number">0</span></span><br><span class="line">    b = <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        a, b = b, a + b</span><br><span class="line">        <span class="keyword">if</span> a &gt; n:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">yield</span> a</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> each <span class="keyword">in</span> libs(<span class="number">100</span>):</span><br><span class="line">    <span class="built_in">print</span>(each, end=<span class="string">' '</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1 1 2 3 5 8 13 21 34 55 89</span></span><br></pre></td></tr></tbody></table></figure>
 <h2 id="参考">参考</h2>
 <ol type="1">
 <li>内容来自<a target="_blank" rel="noopener" href="https://tianchi.aliyun.com/specials/promotion/aicamppython">python训练营</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wkkkkk/p/5731947.html">Python——函数的命名关键字参数</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/DylanHooz/p/8436629.html">类：属性方法的私有公有详解</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/58727281">Python面向对象三大特性</a></li>
 </ol>
 <h2 id="个人收获">个人收获</h2>
+<p>函数部分收获是关于『命名关键字参数』, 之前确实没有学习到这个知识点. 以及关于变量作用域的问题进一步加深体会, 闭包函数十分神奇, 还需要理解.</p>
+<p>还学习了面向对象的基础知识, 尤其是关于魔法方法这里, 内容虽多, 不过常用的不多.</p>
+<p>生成器和迭代器的构造也了解了一下, 感觉到了斐波那契似乎在哪里都可以用一下<span class="github-emoji"><span>😂</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>.</p>
 
     </div>
     <div>    
@@ -439,7 +594,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">三大特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%B1%BB%E5%AF%B9%E8%B1%A1-%E5%92%8C-%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.2.</span> <span class="nav-text">类、类对象 和 实例对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%B1%9E%E6%80%A7-%E5%92%8C-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">类属性 和 对象属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%81%E6%9C%89"><span class="nav-number">2.4.</span> <span class="nav-text">私有</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">4.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">函数参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">1.2.</span> <span class="nav-text">变量作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%B5%8C%E5%87%BD%E6%95%B0%E5%92%8C%E9%97%AD%E5%8C%85"><span class="nav-number">1.3.</span> <span class="nav-text">内嵌函数和闭包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">lambda 表达式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">三大特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%B1%BB%E5%AF%B9%E8%B1%A1-%E5%92%8C-%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.2.</span> <span class="nav-text">类、类对象 和 实例对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%B1%9E%E6%80%A7-%E5%92%8C-%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">类属性 和 对象属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%81%E6%9C%89"><span class="nav-number">2.4.</span> <span class="nav-text">私有</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">魔法方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">基本的魔法方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">3.2.</span> <span class="nav-text">算术运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE"><span class="nav-number">3.3.</span> <span class="nav-text">属性访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">3.4.</span> <span class="nav-text">描述符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">迭代器和生成器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">迭代器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">4.2.</span> <span class="nav-text">生成器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">6.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -519,13 +674,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">159k</span>
+    <span title="站点总字数">164k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:24</span>
+    <span title="站点阅读时长">2:29</span>
 </div>
 
 
