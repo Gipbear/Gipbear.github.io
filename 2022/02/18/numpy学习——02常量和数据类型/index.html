@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"gipbear.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","Sidebar Display (only for Muse | Mist), available values":null,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文是根据 DataWhale『巨硬的 numpy』文档进行学习, 辅之以天池平台, 之前学习过, 此时进行进一步的整理, 着重学习未完全熟悉的知识点. 详细的代码我也放入了天池学习的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="numpy学习——02数据类型">
+<meta property="og:url" content="https://gipbear.github.io/2022/02/18/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9402%E5%B8%B8%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/index.html">
+<meta property="og:site_name" content="Grizzly&#39;s daily">
+<meta property="og:description" content="本文是根据 DataWhale『巨硬的 numpy』文档进行学习, 辅之以天池平台, 之前学习过, 此时进行进一步的整理, 着重学习未完全熟悉的知识点. 详细的代码我也放入了天池学习的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png?v8">
+<meta property="article:published_time" content="2022-02-18T15:59:53.000Z">
+<meta property="article:modified_time" content="2022-02-19T16:56:49.816Z">
+<meta property="article:author" content="Grizzly">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="numpy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png?v8">
+
+<link rel="canonical" href="https://gipbear.github.io/2022/02/18/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9402%E5%B8%B8%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>numpy学习——02数据类型 | Grizzly's daily</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Grizzly's daily" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Gipbear" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Grizzly's daily</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://gipbear.github.io/2022/02/18/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9402%E5%B8%B8%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Grizzly">
+      <meta itemprop="description" content="冲冲冲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Grizzly's daily">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          numpy学习——02数据类型
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-18 23:59:53" itemprop="dateCreated datePublished" datetime="2022-02-18T23:59:53+08:00">2022-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-20 00:56:49" itemprop="dateModified" datetime="2022-02-20T00:56:49+08:00">2022-02-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">AI学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>本文是根据 <code>DataWhale</code>『巨硬的 <code>numpy</code>』文档进行学习, 辅之以天池平台, 之前学习过, 此时进行进一步的整理, 着重学习未完全熟悉的知识点.</p>
+<p>详细的代码我也放入了天池学习的</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="常量">常量</h2>
+<h3 id="空值">空值</h3>
+<p>使用 <code>np.nan</code> 来表示空值, 需要注意的是: 空值之间并<strong>不相等</strong>!</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(np.nan == np.nan)  <span class="comment"># False</span></span><br><span class="line"><span class="built_in">print</span>(np.nan != np.nan)  <span class="comment"># True</span></span><br></pre></td></tr></tbody></table></figure>
+<p>可以使用 <code>np.isnan</code> 来检查空值</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([<span class="number">1</span>, <span class="number">1</span>, <span class="number">8</span>, np.nan, <span class="number">10</span>])</span><br><span class="line">y = np.isnan(x)</span><br><span class="line"><span class="built_in">print</span>(y)</span><br><span class="line"><span class="comment"># [False False False  True False]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>如果需要计算空值的个数, 则可以使用计算非零数 <code>count_nonzero</code> 来等价使用, 因为布尔值就分别代表了 <code>0</code> 和 <code>1</code>.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">z = np.count_nonzero(y)</span><br><span class="line"><span class="built_in">print</span>(z)  <span class="comment"># 1</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="无穷大">无穷大</h3>
+<p>以下这几个都可以</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">np.inf</span><br><span class="line">np.Inf</span><br><span class="line">np.Infinity</span><br><span class="line">np.infty</span><br><span class="line">np.PINF</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="圆周率-pi">圆周率 <span class="math inline">\(\pi\)</span></h3>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.pi</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="自然常数-e">自然常数 <span class="math inline">\(e\)</span></h3>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.e</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="数据类型">数据类型</h2>
+<p>在原生的 python 中, 数据类型较少, 但进行科学计算的时候, 需要对数据有更多的控制, 所以数据类型相对而言很丰富了.</p>
+<p>在后续的创建数组时, 可以使用参数 <code>dtype</code> 来规定数据的类型. 与 python 原生类型相同的, 则会在类型后加入一个下划线以示区分, 例如 <code>bool_</code>, 常见的数据类型如下:</p>
+<table>
+<thead>
+<tr class="header">
+<th>类型</th>
+<th>备注</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>bool_ = bool8</td>
+<td>8位</td>
+<td>布尔类型</td>
+</tr>
+<tr class="even">
+<td>int8 = byte</td>
+<td>8位</td>
+<td>整型</td>
+</tr>
+<tr class="odd">
+<td>int16 = short</td>
+<td>16位</td>
+<td>整型</td>
+</tr>
+<tr class="even">
+<td>int32 = intc</td>
+<td>32位</td>
+<td>整型</td>
+</tr>
+<tr class="odd">
+<td>int_ = int64 = long = int0 = intp</td>
+<td>64位</td>
+<td>整型</td>
+</tr>
+<tr class="even">
+<td>uint8 = ubyte</td>
+<td>8位</td>
+<td>无符号整型</td>
+</tr>
+<tr class="odd">
+<td>uint16 = ushort</td>
+<td>16位</td>
+<td>无符号整型</td>
+</tr>
+<tr class="even">
+<td>uint32 = uintc</td>
+<td>32位</td>
+<td>无符号整型</td>
+</tr>
+<tr class="odd">
+<td>uint64 = uintp = uint0 = uint</td>
+<td>64位</td>
+<td>无符号整型</td>
+</tr>
+<tr class="even">
+<td>float16 = half</td>
+<td>16位</td>
+<td>浮点型</td>
+</tr>
+<tr class="odd">
+<td>float32 = single</td>
+<td>32位</td>
+<td>浮点型</td>
+</tr>
+<tr class="even">
+<td>float_ = float64 = double</td>
+<td>64位</td>
+<td>浮点型</td>
+</tr>
+<tr class="odd">
+<td>str_ = unicode_ = str0 = unicode</td>
+<td>Unicode 字符串</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>datetime64</td>
+<td>日期时间类型</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>timedelta64</td>
+<td>表示两个时间之间的间隔</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>而我们内建的数据类型会有一个与其唯一对应的字符代码, 如下:</p>
+<table>
+<thead>
+<tr class="header">
+<th>字符</th>
+<th>对应类型</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>b</td>
+<td>boolean</td>
+<td>'b1'</td>
+</tr>
+<tr class="even">
+<td>i</td>
+<td>signed integer</td>
+<td>'i1', 'i2', 'i4', 'i8'</td>
+</tr>
+<tr class="odd">
+<td>u</td>
+<td>unsigned integer</td>
+<td>'u1', 'u2' ,'u4' ,'u8'</td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td>floating-point</td>
+<td>'f2', 'f4', 'f8'</td>
+</tr>
+<tr class="odd">
+<td>c</td>
+<td>complex floating-point</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>m</td>
+<td>timedelta64</td>
+<td>表示两个时间之间的间隔</td>
+</tr>
+<tr class="odd">
+<td>M</td>
+<td>datetime64</td>
+<td>日期时间类型</td>
+</tr>
+<tr class="even">
+<td>O</td>
+<td>object</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>S</td>
+<td>(byte-)string</td>
+<td>S3表示长度为3的字符串</td>
+</tr>
+<tr class="even">
+<td>U</td>
+<td>Unicode</td>
+<td>Unicode 字符串</td>
+</tr>
+<tr class="odd">
+<td>V</td>
+<td>void</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看数据类型">查看数据类型</h3>
+<p><code>type</code> 是查看对象的类型, 而想要查看矩阵内的元素类型, 则可以使用 <code>dtype</code>.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(a.dtype)</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="日期和时间">日期和时间</h3>
+<h4 id="日期时间类型-datetime64">日期时间类型 datetime64</h4>
+<p>很多情况下, 我们需要字符串日期转化为时间类型, 在 <code>numpy</code> 中可以很方便的将字符串转换成时间日期类型 <code>datetime64</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>日期单位</th>
+<th>代码含义</th>
+<th>时间单位</th>
+<th>代码含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Y</td>
+<td>年</td>
+<td>h</td>
+<td>小时</td>
+</tr>
+<tr class="even">
+<td>M</td>
+<td>月</td>
+<td>m</td>
+<td>分钟</td>
+</tr>
+<tr class="odd">
+<td>W</td>
+<td>周</td>
+<td>s</td>
+<td>秒</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>天</td>
+<td>ms</td>
+<td>毫秒</td>
+</tr>
+<tr class="odd">
+<td>-</td>
+<td>-</td>
+<td>us</td>
+<td>微秒</td>
+</tr>
+<tr class="even">
+<td>-</td>
+<td>-</td>
+<td>ns</td>
+<td>纳秒</td>
+</tr>
+<tr class="odd">
+<td>-</td>
+<td>-</td>
+<td>ps</td>
+<td>皮秒</td>
+</tr>
+<tr class="even">
+<td>-</td>
+<td>-</td>
+<td>fs</td>
+<td>飞秒</td>
+</tr>
+<tr class="odd">
+<td>-</td>
+<td>-</td>
+<td>as</td>
+<td>阿托秒</td>
+</tr>
+</tbody>
+</table>
+<p>从字符串创建 <code>datetime64</code> 类型时, 会<strong>自动选择</strong>对应的单位.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">a = np.datetime64(<span class="string">'2022-02'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)  <span class="comment"># 2022-02 datetime64[M]</span></span><br><span class="line"></span><br><span class="line">a = np.datetime64(<span class="string">'2022-02-19'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)  <span class="comment"># 2022-02-19 datetime64[D]</span></span><br><span class="line"></span><br><span class="line">a = np.datetime64(<span class="string">'2022-02-19 17'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)  <span class="comment"># 2022-02-19T17 datetime64[h]</span></span><br><span class="line"></span><br><span class="line">a = np.datetime64(<span class="string">'2022-02-19 17:16'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)  <span class="comment"># 2022-02-19T17:16 datetime64[m]</span></span><br><span class="line"></span><br><span class="line">a = np.datetime64(<span class="string">'2022-02-19 17:16:02'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)  <span class="comment"># 2022-02-19T17:16:02 datetime64[s]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>但也能够强制指定类型</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = np.datetime64(<span class="string">'2022-02'</span>, <span class="string">'Y'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)  <span class="comment"># 2022 datetime64[Y]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>在时间数组中, 若单位不统一, 则全部转化为最小的单位.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([<span class="string">'2022-02'</span>, <span class="string">'2022-02-19'</span>, <span class="string">'2020-02-19 17:16'</span>], dtype=<span class="string">'datetime64'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)</span><br><span class="line"><span class="comment"># ['2022-02-01T00:00' '2022-02-19T00:00' '2020-02-19T17:16'] datetime64[m]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>使用 <code>arange</code> 也可以生成时间类型的数组, 若时间单位不一致, 则按照较小的单位作为间隔生成时间区间.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = np.arange(<span class="string">'2022-02'</span>, <span class="string">'2022-05'</span>, dtype=np.datetime64)</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># ['2022-02' '2022-03' '2022-04']</span></span><br><span class="line"></span><br><span class="line">a = np.arange(<span class="string">'2022'</span>, <span class="string">'2022-05'</span>, dtype=np.datetime64)</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># ['2022-01' '2022-02' '2022-03' '2022-04']</span></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="日期时间差-timedelta64">日期时间差 timedelta64</h4>
+<p><code>timedelta64</code> 表示两个 <code>datetime64</code> 之间的差, 其单位与相减运算中的两个 <code>datetime64</code> 中的较小的单位保持一致.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a = np.datetime64(<span class="string">'2022-02-19'</span>) - np.datetime64(<span class="string">'2022-02-02'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)  <span class="comment"># 17 days timedelta64[D]</span></span><br><span class="line"></span><br><span class="line">b = np.datetime64(<span class="string">'2022-02-19'</span>) - np.datetime64(<span class="string">'2022-02-18 08'</span>)</span><br><span class="line"><span class="built_in">print</span>(b, b.dtype)  <span class="comment"># 16 hours timedelta64[h]</span></span><br><span class="line"></span><br><span class="line">c = np.datetime64(<span class="string">'2022-02-19'</span>) - np.datetime64(<span class="string">'2022-02-17 23:00'</span>, <span class="string">'D'</span>)</span><br><span class="line"><span class="built_in">print</span>(c, c.dtype)  <span class="comment"># 2 days timedelta64[D]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>除了计算<strong>时间差</strong>得到 <code>timedelta64</code> 类型, 该类型还可以直接创建, 表示有多少个时间单位, 并可以进行<strong>四则运算</strong>.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = np.timedelta64(<span class="number">2</span>, <span class="string">'Y'</span>)</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># 2 years</span></span><br><span class="line">b = np.timedelta64(a, <span class="string">'M'</span>)</span><br><span class="line"><span class="built_in">print</span>(b)  <span class="comment"># 24 months</span></span><br></pre></td></tr></tbody></table></figure>
+<blockquote>
+<p>需要注意的是: 'Y'和'M'类型是无法与其他类型进行计算的, 因为无法确定一年有多少天, 一个月有多少天的问题.</p>
+</blockquote>
+<p>那么这样可以进行加法计算, 实现在<strong>多久之前</strong>和<strong>多久之后</strong>的计算.</p>
+<p>计算结果的单位依旧以较小的为准</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = np.datetime64(<span class="string">'2022-02'</span>) + np.timedelta64(<span class="number">20</span>, <span class="string">'D'</span>)</span><br><span class="line"><span class="built_in">print</span>(a, a.dtype)  <span class="comment"># 2022-02-21 datetime64[D]</span></span><br><span class="line"></span><br><span class="line">b = np.datetime64(<span class="string">'2022-02-15 00:00'</span>) + np.timedelta64(<span class="number">12</span>, <span class="string">'h'</span>)</span><br><span class="line"><span class="built_in">print</span>(b, b.dtype)  <span class="comment"># 2022-02-15T12:00 datetime64[m]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>数组的时间格式 <code>datetime64</code> 和 <code>datetime</code> 库中的时间格式 <code>datetime</code> 相互转换</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">dt = datetime.datetime(year=<span class="number">2022</span>, month=<span class="number">2</span>, day=<span class="number">19</span>, hour=<span class="number">17</span>, minute=<span class="number">22</span>, second=<span class="number">30</span>)</span><br><span class="line">dt64 = np.datetime64(dt, <span class="string">'s'</span>)</span><br><span class="line"><span class="built_in">print</span>(dt64, dt64.dtype)</span><br><span class="line"><span class="comment"># 2022-02-19T17:22:30 datetime64[s]</span></span><br><span class="line"></span><br><span class="line">dt2 = dt64.astype(datetime.datetime)</span><br><span class="line"><span class="built_in">print</span>(dt2, <span class="built_in">type</span>(dt2))</span><br><span class="line"><span class="comment"># 2022-02-19 17:22:30 &lt;class 'datetime.datetime'&gt;</span></span><br></pre></td></tr></tbody></table></figure>
+<h4 id="工作日">工作日</h4>
+<p>有些应用场景只有工作日的数据需要操作, 那么在这里也包含了 <code>busday</code> 功能, 可以计算 <code>offset</code> 天后的工作日.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2022-02-18 是星期五</span></span><br><span class="line">a = np.busday_offset(<span class="string">'2022-02-18'</span>, offsets=<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># 2022-02-21</span></span><br></pre></td></tr></tbody></table></figure>
+<p>若操作的时间本身不是工作日, 则会报错, 例如 <code>'2022-02-19'</code> 是周六, 那么将会抛出 <code>ValueError</code>.</p>
+<p>这时可以使用参数 <code>roll</code> 来找到前一个 (<code>forward</code>) 或后一个 (<code>backward</code>) 工作日.</p>
+<blockquote>
+<p>前一个指: 例如 21 号在 19 号之前; 后一个指: 例如 18 号在 19 号之后; 这个概念和平时理解的前天后天顺序不一样, 是类似数字大小的概念 <span class="github-emoji"><span>😂</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span>.</p>
+</blockquote>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2022-02-19 是星期六</span></span><br><span class="line">a = np.busday_offset(<span class="string">'2022-02-19'</span>, offsets=<span class="number">1</span>, roll=<span class="string">'forward'</span>)</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># 2022-02-22</span></span><br><span class="line">b = np.busday_offset(<span class="string">'2022-02-19'</span>, offsets=<span class="number">1</span>, roll=<span class="string">'backward'</span>)</span><br><span class="line"><span class="built_in">print</span>(b)  <span class="comment"># 2022-02-21</span></span><br></pre></td></tr></tbody></table></figure>
+<p>判断是否是工作日也很简单, 使用 <code>np.is_busday</code> 即可.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = np.is_busday(<span class="string">'2022-02-18'</span>)</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># True</span></span><br><span class="line">b = np.is_busday(<span class="string">'2022-02-19'</span>)</span><br><span class="line"><span class="built_in">print</span>(b)  <span class="comment"># False</span></span><br></pre></td></tr></tbody></table></figure>
+<p>例如统计数组中的工作日天数, 可以结合布尔值和计算非零数的方法 <code>count_nonzero</code> 进行解决.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.arange(<span class="string">'2022-02-01'</span>, <span class="string">'2022-03'</span>, dtype=np.datetime64)</span><br><span class="line">cnt = np.count_nonzero(np.is_busday(a))</span><br><span class="line"><span class="built_in">print</span>(cnt)  <span class="comment"># 20</span></span><br></pre></td></tr></tbody></table></figure>
+<p>对于日期区间内的工作日天数, 则可以直接使用 <code>busday_count</code> 来计算.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cnt = np.busday_count(<span class="string">'2022-02'</span>, <span class="string">'2022-03'</span>)</span><br><span class="line"><span class="built_in">print</span>(cnt)  <span class="comment"># 20</span></span><br></pre></td></tr></tbody></table></figure>
+<p>最后, 工作日还可以进行自定义, <del>毕竟一周可不是只上班五天呢~ (不是)</del>. 使用 <code>0/1</code> 表示周几属于工作日.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2022-02-18 是星期五</span></span><br><span class="line"><span class="comment"># 自定义设置工作日为 一 二 三 四 六</span></span><br><span class="line">a = np.is_busday(<span class="string">'2022-02-18'</span>, weekmask=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>])</span><br><span class="line">b = np.is_busday(<span class="string">'2022-02-19'</span>, weekmask=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># False</span></span><br><span class="line"><span class="built_in">print</span>(b)  <span class="comment"># True</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="个人收获">个人收获</h2>
+<p>本章对数据类型进行了一个汇总, 尤其是数据类型对于的字符代码, 之前不是很清楚什么 <code>U</code> 啊之类的, 这次整理好了, 可以方便以后查询.</p>
+<p>还有日期类型, 之前还好奇为何多了一个 <code>64</code> 在 <code>datetime</code> 后面, 原来是为了进行区分. 并熟悉了工作日的使用方法.</p>
+<p>还有一个就是学到了计算非零数的函数 <code>count_nonzero</code> 可以与布尔数组联合使用, 达到计算满足条件的元素个数的目的.</p>
+
+    </div>
+    <div>    
+      
+          <div>    
+	        
+		<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束------		</div>    
+	
+</div>    
+         
+    </div>
+
+    
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Grizzly
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://gipbear.github.io/2022/02/18/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9402%E5%B8%B8%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" title="numpy学习——02数据类型">https://gipbear.github.io/2022/02/18/numpy学习——02常量和数据类型/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i>python</a>
+              <a href="/tags/numpy/" rel="tag"><i class="fa fa-tag"></i>numpy</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/13/python%E5%9F%BA%E7%A1%80%E8%BF%9B%E9%98%B6/" rel="prev" title="python基础进阶">
+      <i class="fa fa-chevron-left"></i> python基础进阶
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/18/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9401%E6%95%B0%E7%BB%84%E5%88%9B%E5%BB%BA/" rel="next" title="numpy学习——01数组创建">
+      numpy学习——01数组创建 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">常量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E5%80%BC"><span class="nav-number">1.1.</span> <span class="nav-text">空值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%A9%B7%E5%A4%A7"><span class="nav-number">1.2.</span> <span class="nav-text">无穷大</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%86%E5%91%A8%E7%8E%87-pi"><span class="nav-number">1.3.</span> <span class="nav-text">圆周率 \(\pi\)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E7%84%B6%E5%B8%B8%E6%95%B0-e"><span class="nav-number">1.4.</span> <span class="nav-text">自然常数 \(e\)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">查看数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="nav-number">2.2.</span> <span class="nav-text">日期和时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E7%B1%BB%E5%9E%8B-datetime64"><span class="nav-number">2.2.1.</span> <span class="nav-text">日期时间类型 datetime64</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E6%97%B6%E9%97%B4%E5%B7%AE-timedelta64"><span class="nav-number">2.2.2.</span> <span class="nav-text">日期时间差 timedelta64</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%97%A5"><span class="nav-number">2.2.3.</span> <span class="nav-text">工作日</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E6%94%B6%E8%8E%B7"><span class="nav-number">3.</span> <span class="nav-text">个人收获</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Grizzly"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Grizzly</p>
+  <div class="site-description" itemprop="description">冲冲冲</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Gipbear" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Gipbear" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1099048889@qq.com" title="E-Mail → mailto:1099048889@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/178422303/" title="bilibili → https:&#x2F;&#x2F;space.bilibili.com&#x2F;178422303&#x2F;" rel="noopener" target="_blank"><i class="iconfont icon-bilibili-line fa-fw"></i>bilibili</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Grizzly</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">173k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:38</span>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <!--<span class="post-meta-item-icon">-->
+        <!--<i class="fa fa-fa fa-user"></i>-->
+      <!--</span>-->
+	  我的第
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+	  位朋友
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <!--<span class="post-meta-item-icon">-->
+        <!--<i class="fa fa-fa fa-eye"></i>-->
+      <!--</span>-->
+      历经
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+	  次回眸才与你相遇
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+  
+  <!--浏览器搞笑标题-->
+  <script type="text/javascript" src="/js/FunnyTitle.js"></script>
+  <!-- 页面点击小红心 -->
+  <script type="text/javascript" src="/js/love.js"></script>
+</body>
+</html>
