@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>numpy学习——03索引</title>
-    <url>/2022/02/23/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9403%E7%B4%A2%E5%BC%95/</url>
+    <title>numpy学习——04数组操作</title>
+    <url>/2022/02/24/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9404%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<blockquote>
+<p>本文是根据 <code>DataWhale</code>『巨硬的 <code>numpy</code>』文档进行学习, 辅之以天池平台, 之前学习过, 此时进行进一步的整理, 着重学习未完全熟悉的知识点.</p>
+<p>详细的代码我也放入了天池学习的<a href="https://github.com/Gipbear/TianChi-Studying/tree/main/AI训练营">AI训练营</a>合集中</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="个人收获">个人收获</h2>
+]]></content>
+      <categories>
+        <category>AI学习</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>numpy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>numpy学习——03索引切片</title>
+    <url>/2022/02/23/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9403%E7%B4%A2%E5%BC%95%E5%88%87%E7%89%87/</url>
     <content><![CDATA[<blockquote>
 <p>本文是根据 <code>DataWhale</code>『巨硬的 <code>numpy</code>』文档进行学习, 辅之以天池平台, 之前学习过, 此时进行进一步的整理, 着重学习未完全熟悉的知识点.</p>
 <p>详细的代码我也放入了天池学习的<a href="https://github.com/Gipbear/TianChi-Studying/tree/main/AI训练营">AI训练营</a>合集中</p>
@@ -3533,8 +3551,8 @@ f(\boldsymbol{x}+\Delta\boldsymbol{x}) \approxeq f(\boldsymbol{x}) + \Delta \bol
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>西瓜书</tag>
         <tag>ML理论</tag>
+        <tag>西瓜书</tag>
       </tags>
   </entry>
   <entry>
