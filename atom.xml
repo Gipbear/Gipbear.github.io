@@ -6,7 +6,7 @@
   <link href="https://gipbear.github.io/atom.xml" rel="self"/>
   
   <link href="https://gipbear.github.io/"/>
-  <updated>2022-02-24T09:16:51.840Z</updated>
+  <updated>2022-03-06T06:37:16.833Z</updated>
   <id>https://gipbear.github.io/</id>
   
   <author>
@@ -17,13 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>python多进程-multiprocessing</title>
+    <link href="https://gipbear.github.io/2022/03/06/python%E5%A4%9A%E8%BF%9B%E7%A8%8B-multiprocessing/"/>
+    <id>https://gipbear.github.io/2022/03/06/python%E5%A4%9A%E8%BF%9B%E7%A8%8B-multiprocessing/</id>
+    <published>2022-03-06T06:13:29.000Z</published>
+    <updated>2022-03-06T06:37:16.833Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文是关于python中多进程的使用，提高运行速度。</p></blockquote><span id="more"></span><h2 id="官方文档">官方文档</h2><blockquote><p><a href="https://docs.python.org/zh-cn/3/library/multiprocessing.html#module-multiprocessing"><code>multiprocessing</code></a> 是一个支持使用与 <a href="https://docs.python.org/zh-cn/3/library/threading.html#module-threading"><code>threading</code></a> 模块类似的 API 来产生进程的包。 <a href="https://docs.python.org/zh-cn/3/library/multiprocessing.html#module-multiprocessing"><code>multiprocessing</code></a> 包同时提供了本地和远程并发操作，通过使用子进程而非线程有效地绕过了 <a href="https://docs.python.org/zh-cn/3/glossary.html#term-global-interpreter-lock">全局解释器锁</a>。 因此，<a href="https://docs.python.org/zh-cn/3/library/multiprocessing.html#module-multiprocessing"><code>multiprocessing</code></a> 模块允许程序员充分利用给定机器上的多个处理器。 它在 Unix 和 Windows 上均可运行。 <a href="https://docs.python.org/zh-cn/3/library/multiprocessing.html#module-multiprocessing"><code>multiprocessing</code></a> 模块还引入了在 <a href="https://docs.python.org/zh-cn/3/library/threading.html#module-threading"><code>threading</code></a> 模块中没有的API。一个主要的例子就是 <a href="https://docs.python.org/zh-cn/3/library/multiprocessing.html#multiprocessing.pool.Pool"><code>Pool</code></a> 对象，它提供了一种快捷的方法，赋予函数并行化处理一系列输入值的能力，可以将输入数据分配给不同进程处理（数据并行）。下面的例子演示了在模块中定义此类函数的常见做法，以便子进程可以成功导入该模块。</p></blockquote><h2 id="学习案例">学习案例</h2><p>使用 <code>time.sleep</code> 来模拟一个函数可能会耗费大量时间。</p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>(<span class="params">x</span>):</span></span><br><span class="line">    time.sleep(<span class="number">2</span>)</span><br><span class="line">    <span class="built_in">print</span>(x**<span class="number">2</span>, end=<span class="string">' | '</span>)</span><br><span class="line">    <span class="keyword">return</span> x**<span class="number">2</span></span><br></pre></td></tr></tbody></table></figure><h3 id="普通调用函数">普通调用函数</h3><p>首先使用普通方法多次调用，这里使用 <code>map()</code> 函数，也可以选择使用循环。</p><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    <span class="comment"># list函数使得map解析，否则不会触发map</span></span><br><span class="line">    <span class="built_in">list</span>(<span class="built_in">map</span>(func, [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)]))</span><br><span class="line">    end_time = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f"\n一共耗时<span class="subst">{end_time-start_time}</span>"</span>)</span><br></pre></td></tr></tbody></table></figure><p><strong>输出结果</strong>：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0 | 1 | 4 | 9 | 16 | 25 | 36 | 49 | 64 | 81 |</span><br><span class="line">一共耗时20.07989525794983</span><br></pre></td></tr></tbody></table></figure><h3 id="使用进程池调用函数">使用进程池调用函数</h3><p>这里使用进程池的 <code>map</code> 方法</p><blockquote><p>map(func, iterable[, chunksize])</p><p>内置 <code>map()</code> 函数的并行版本 (但它只支持一个 <code>iterable</code> 参数，对于多个可迭代对象请参阅 <code>starmap())</code>。它会保持阻塞直到获得结果。 这个方法会将可迭代对象分割为许多块，然后提交给进程池。可以将 <code>chunksize</code> 设置为一个正整数从而（近似）指定每个块的大小可以。 注意对于很长的迭代对象，可能消耗很多内存。可以考虑使用 <code>imap()</code> 或 <code>imap_unordered()</code> 并且显示指定 <code>chunksize</code> 以提升效率。</p></blockquote><figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    start_time = time.time()</span><br><span class="line">    <span class="keyword">with</span> Pool(<span class="number">5</span>) <span class="keyword">as</span> p:</span><br><span class="line">        p.<span class="built_in">map</span>(func, [i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>)])</span><br><span class="line">    <span class="comment"># list(map(func, [i for i in range(10)]))</span></span><br><span class="line">    end_time = time.time()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f"\n一共耗时<span class="subst">{end_time-start_time}</span>"</span>)</span><br></pre></td></tr></tbody></table></figure><p><strong>输出结果</strong>：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0 | 36 | 1 | 49 | 4 | 25 | 9 | 64 | 16 | 81 | </span><br><span class="line">一共耗时4.738358020782471</span><br></pre></td></tr></tbody></table></figure><h2 id="结论">结论</h2><p>可以发现，使用普通的方法对同一个复杂函数调用多次，那么将会花费线性时间来处理。</p><p>而当使用了 <code>multiprocessing.Pool</code> 时，那么则会使得该函数并行处理，效率得到极大提升。</p><h2 id="参考">参考</h2><ul><li><a href="https://docs.python.org/zh-cn/3/library/multiprocessing.html#">官方文档</a></li><li><a href="https://blog.csdn.net/wulitaotao96/article/details/111914021">Python3中利用multiprocessing进行数据并行处理</a></li></ul><h2 id="个人收获">个人收获</h2><p>在华为一面中遇到问关于数据处理时，面对大量数据如何进行读取，是否会多线程的使用时有所欠缺，这次的学习使得补充了这部分的知识点，至于工作中可能会使用的更多方法则需要进一步了解。</p>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是关于python中多进程的使用，提高运行速度。&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="python" scheme="https://gipbear.github.io/categories/python/"/>
+    
+    
+    <category term="python" scheme="https://gipbear.github.io/tags/python/"/>
+    
+    <category term="多进程" scheme="https://gipbear.github.io/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>numpy学习——04数组操作</title>
     <link href="https://gipbear.github.io/2022/02/24/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9404%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C/"/>
     <id>https://gipbear.github.io/2022/02/24/numpy%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%9404%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C/</id>
     <published>2022-02-24T09:05:17.000Z</published>
-    <updated>2022-02-24T09:16:51.840Z</updated>
+    <updated>2022-03-06T06:37:33.992Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>本文是根据 <code>DataWhale</code>『巨硬的 <code>numpy</code>』文档进行学习, 辅之以天池平台, 之前学习过, 此时进行进一步的整理, 着重学习未完全熟悉的知识点.</p><p>详细的代码我也放入了天池学习的<a href="https://github.com/Gipbear/TianChi-Studying/tree/main/AI训练营">AI训练营</a>合集中</p></blockquote><span id="more"></span><h2 id="个人收获">个人收获</h2>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>本文是根据 <code>DataWhale</code>『巨硬的 <code>numpy</code>』文档进行学习, 辅之以天池平台, 之前学习过, 此时进行进一步的整理, 着重学习未完全熟悉的知识点.</p><p>详细的代码我也放入了天池学习的<a href="https://github.com/Gipbear/TianChi-Studying/tree/main/AI训练营">AI训练营</a>合集中</p></blockquote><span id="more"></span><h2 id="数组形状">数组形状</h2><h2 id="个人收获">个人收获</h2>]]></content>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -503,32 +528,6 @@
     <category term="leetcode题解" scheme="https://gipbear.github.io/tags/leetcode%E9%A2%98%E8%A7%A3/"/>
     
     <category term="迭代和递归" scheme="https://gipbear.github.io/tags/%E8%BF%AD%E4%BB%A3%E5%92%8C%E9%80%92%E5%BD%92/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>机器学习西瓜书——第01章绪论</title>
-    <link href="https://gipbear.github.io/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/"/>
-    <id>https://gipbear.github.io/2022/01/10/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC01%E7%AB%A0%E7%BB%AA%E8%AE%BA/</id>
-    <published>2022-01-10T13:21:36.000Z</published>
-    <updated>2022-01-27T15:19:38.664Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会.</p><p>主要的内容有: 机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)</p></blockquote><span id="more"></span><h2 id="引言">1.1 引言</h2><p>通俗来说机器学习: 在学习了很多的『经验』情况下, 学会了某种『方法』, 遇到<strong>新的问题</strong>后, 根据之前的『经验』和『方法』做出有效的决策.</p><blockquote><p>所谓"经验"就是"数据";</p><p>所谓"方法"就是机器学习研究的主要内容, 也就是从数据中学会的"模型"(model) 算法.</p></blockquote><h2 id="基本术语">1.2 基本术语</h2><h3 id="数据部分">数据部分</h3><ul><li><p><strong>数据集</strong>: 记录的集合称为一个"数据集"(data set);</p></li><li><p><strong>样本</strong>: 每条记录是关于一个事件或对象(这里是一个西瓜)的描述, 称为一个"示例"(instance) 或"样本"(sample);</p></li><li><p><strong>特征</strong>: 反映事件或对象在某方面的表现或性质的事项, 例如"色泽" "根蒂" "敲声", 称为"属性"(attribute) 或"特征"(feature);</p></li><li><p><strong>样本空间</strong>: 属性上的取值，例如"青绿" "乌黑", 称为"属性值" (attribute value). 属性张成的空间称为"属性空间" (attribute space) 、 "样本空间" (sample space) 或"输入空间".</p><blockquote><p>把属性值作为坐标轴，张成多维空间，得到坐标位置，每个点对应一个坐标向量，由此也把一个示例称为一个<strong>"特征向量" (feature vector)</strong>.</p></blockquote></li></ul><h3 id="学习过程">学习过程</h3><ul><li><p><strong>训练</strong>: 从数据中学得模型的过程称为"学习"(learning)或"训练"(training) ,这个过程通过执行某个学习算法来完成;</p></li><li><p><strong>训练样本</strong>: 训练过程中使用的数据称为"训练数据"(training data), 其中每个样本称为一个"训练样本"(training sample), 训练样本组成的集合称为"训练集"(training set);</p><blockquote><p>但有时候也会将整个数据集称为<strong>样本</strong>，需要依靠上下文判断。</p></blockquote></li><li><p><strong>学习器</strong>: 有时将模型称为"学习器"(learner), 可看作学习算法在给定数据和参数空间上的实例化;</p></li><li><p><strong>测试样本</strong>: 学得模型后, 使用器进行预测的过程称为"测试"(testing), 被预测的样本称为"测试样本"(test sample).</p></li></ul><h3 id="标记部分">标记部分</h3><ul><li><strong>标记</strong>: 关于示例结果的信息，例如"好瓜"，称为"标记" (label), 拥有了标记信息的示例，则称为"样例" (example);</li><li><strong>标记空间</strong>: 标记集合称为标记空间(label space)或"输出空间".</li></ul><h3 id="学习任务">学习任务</h3><ul><li><strong>分类</strong>: 若预测的是离散值, 则此类学习任务称为"分类"(classification);</li><li><strong>回归</strong>: 若预测的是连续值, 则此类学习任务称为"回归"(regression);</li><li><strong>聚类</strong>: 若对数据样本进行划分为各个"簇"(cluster), 则将此类学习任务称为"聚类"; &gt; 聚类的学习过程中使用的训练样本通常没有标记信息.</li><li>根据学习任务进行划分, 通常有两大类: <strong>有监督学习</strong>(supervised learning)和<strong>无监督学习</strong>(unsupervised learning), 分类和回归是前者的代表, 聚类则是后者的代表.</li></ul><h3 id="模型目标">模型目标</h3><ul><li>机器学习的目标是使得模型能够很好的适用于<strong>新样本</strong>, 而不是仅仅在训练集上表现的很好. 即使是聚类这种无监督的学习任务, 也同样如此;</li><li>学得的模型适用于新样本的能力, 称为"泛化"(generalization);</li><li>所以我们希望获得的样本能够尽可能的表示样本空间的特性, 从而在整个样本空间上都表现的很好;</li><li>通常假设每个样本都是<strong>独立同分布</strong>(independent and identically);</li><li>训练样本越多, 越有可能获得强泛化能力的模型.</li></ul><h2 id="假设空间">1.3 假设空间</h2><p>归纳(induction)与演绎(deduction)是科学推理的两大基本手段:</p><ul><li>前者是从特殊到一般的<strong>泛化</strong>(generalization)过程，即从具体的事实归结出一般性规律;</li><li>后者则是从一般到特殊的<strong>特化</strong>(specialization)过程，即从基础原理推演出具体状况.</li></ul><p>把学习的过程看作一个在所有假设(hypothesis)组成的空间中进行<strong>搜索</strong>的过程, 搜索的目标是找到与训练集"匹配"(fit)的假设.</p><blockquote><p>假设的表示一旦确定, 假设空间及其规模大小就确定了.</p></blockquote><p>搜索的策略有: 自顶向下、从一般到特殊，或是自底向上、从特殊到一般等. 搜索过程也可以不断删除与正例不一致的假设. 最终获得<strong>与训练集一致</strong>的假设, 这就是学习的结果.</p><p>但是现实中假设空间可能很大, 但是学习过程中使用的训练样本有限, 所以实际上存在很多的假设空间，但仅存在一个与训练集一致的<strong>假设集合</strong>, 称之为<strong>版本空间</strong>(version space).</p><h2 id="归纳偏好">1.4 归纳偏好</h2><p>// todo</p><h2 id="个人收获">个人收获</h2><p>整理了机器学习基本的术语和一些名词, 这是<strong>磨刀</strong>.</p><p>新接触了版本空间的概念,这是之前学习一些内容的时候没有注意到的部分.</p>]]></content>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文是关于周志华老师编写的机器学习书籍『西瓜书』的第一章绪论的简单体会.&lt;/p&gt;
-&lt;p&gt;主要的内容有: 机器学习的过程的一些基本术语和假设空间的解释. (归纳偏好回头再来)&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="机器学习" scheme="https://gipbear.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="西瓜书" scheme="https://gipbear.github.io/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
-    
-    <category term="名词解释" scheme="https://gipbear.github.io/tags/%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/"/>
     
   </entry>
   
