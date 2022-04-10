@@ -56,6 +56,13 @@ f(\mathbf{x};\mathbf{w},b) = \mathbf{w}^T\mathbf{x}+b
 loss = \frac{1}{N} \sum^{N}_{n=1}(y_i-\hat{y}_i)^2
 \]</span></p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">loss = nn.MSELoss()</span><br></pre></td></tr></tbody></table></figure>
+<p>常用<strong>损失函数</strong>还有：</p>
+<ul>
+<li>平均绝对误差(MAE): <code>loss = nn.L1Loss()</code></li>
+<li>二元交叉熵损失函数: <code>loss = nn.BCELoss()</code></li>
+<li>包含 sigmoid 的二元交叉损失函数: <code>loss = nn.BCEWithLogitsLoss()</code></li>
+<li>交叉熵损失函数: <code>nn.CrossEntropyLoss()</code></li>
+</ul>
 <p>优化算法选择<strong>小批量梯度下降</strong>算法, 该优化算法 <code>SGD</code> 在 <code>torch.optim</code> 中已经内置了, 还包括 <code>Adam</code> 和 <code>RMSProop</code> 等, 此处直接使用 <code>SGD</code>, 并且设定学习率 <code>lr</code>:</p>
 <figure class="highlight python"><table><tbody><tr><td class="code"><pre><span class="line">optimizer = optim.SGD(net.parameters(), lr=<span class="number">0.03</span>)</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="训练模型">训练模型</h2>

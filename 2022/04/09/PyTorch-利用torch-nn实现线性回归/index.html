@@ -30,7 +30,7 @@
 <meta property="og:description" content="本文是利用 torch.nn 实现一个简单的线性回归模型, 主要是根据 nn.Module 和 torch.nn 中的 Linear 模型, 来创建一个自己的线性模型. 适合与上篇手动创建模型进行对比学习.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-04-09T09:18:58.000Z">
-<meta property="article:modified_time" content="2022-04-09T15:40:14.639Z">
+<meta property="article:modified_time" content="2022-04-10T11:59:35.273Z">
 <meta property="article:author" content="Grizzly">
 <meta property="article:tag" content="pytorch">
 <meta property="article:tag" content="线性回归">
@@ -80,9 +80,9 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Grizzly's daily" type="application/atom+xml">
 
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="Grizzly's daily" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -226,10 +226,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-04-09 17:18:58 / 修改时间：23:40:14" itemprop="dateCreated datePublished" datetime="2022-04-09T17:18:58+08:00">2022-04-09</time>
+              <time title="创建时间：2022-04-09 17:18:58" itemprop="dateCreated datePublished" datetime="2022-04-09T17:18:58+08:00">2022-04-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-10 19:59:35" itemprop="dateModified" datetime="2022-04-10T19:59:35+08:00">2022-04-10</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -253,7 +259,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
+              <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -325,6 +331,13 @@ f(\mathbf{x};\mathbf{w},b) = \mathbf{w}^T\mathbf{x}+b
 loss = \frac{1}{N} \sum^{N}_{n=1}(y_i-\hat{y}_i)^2
 \]</span></p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">loss = nn.MSELoss()</span><br></pre></td></tr></tbody></table></figure>
+<p>常用<strong>损失函数</strong>还有：</p>
+<ul>
+<li>平均绝对误差(MAE): <code>loss = nn.L1Loss()</code></li>
+<li>二元交叉熵损失函数: <code>loss = nn.BCELoss()</code></li>
+<li>包含 sigmoid 的二元交叉损失函数: <code>loss = nn.BCEWithLogitsLoss()</code></li>
+<li>交叉熵损失函数: <code>nn.CrossEntropyLoss()</code></li>
+</ul>
 <p>优化算法选择<strong>小批量梯度下降</strong>算法, 该优化算法 <code>SGD</code> 在 <code>torch.optim</code> 中已经内置了, 还包括 <code>Adam</code> 和 <code>RMSProop</code> 等, 此处直接使用 <code>SGD</code>, 并且设定学习率 <code>lr</code>:</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = optim.SGD(net.parameters(), lr=<span class="number">0.03</span>)</span><br></pre></td></tr></tbody></table></figure>
 <h2 id="训练模型">训练模型</h2>
