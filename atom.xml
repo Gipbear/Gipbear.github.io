@@ -6,7 +6,7 @@
   <link href="https://gipbear.github.io/atom.xml" rel="self"/>
   
   <link href="https://gipbear.github.io/"/>
-  <updated>2022-04-18T08:40:59.140Z</updated>
+  <updated>2022-04-18T10:31:33.721Z</updated>
   <id>https://gipbear.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ubuntu常用快捷键</title>
+    <link href="https://gipbear.github.io/2022/04/18/ubuntu%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
+    <id>https://gipbear.github.io/2022/04/18/ubuntu%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</id>
+    <published>2022-04-18T09:01:00.000Z</published>
+    <updated>2022-04-18T10:31:33.721Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>本文是关于在 Vmware 中使用 Ubuntu 时经常使用的快捷键汇总</p></blockquote><span id="more"></span><p><strong>首先说明：在 Linux 中的 <code>Super</code> 键，就是 Windows 下的 <code>Windows 键</code>。</strong></p><h2 id="工作标配">工作标配</h2><p>很多 Windows 下常见的基本快捷键都可以直接使用，例如：</p><ul><li>复制 (<code>Ctrl + C</code>)</li><li>粘贴 (<code>Ctrl + V</code>)</li><li>撤销 (<code>Ctrl + Z</code>)</li><li>保存 (<code>Ctrl + S</code>)</li><li>窗口切换 (<code>Alt + Tab 或 Super + Tab</code>)</li><li>返回桌面 (<code>Super + D</code>)等。</li></ul><h2 id="终端-ctrl-alt-t">终端 Ctrl + Alt + T</h2><p>在 Ubuntu 中打开终端经常可以使用右击打开，不过使用快捷键更加方便 (<code>Ctrl + Alt + T</code>) 。</p><h2 id="快速运行命令-alt-f2">快速运行命令 Alt + F2</h2><p>很多深度用户想要直接运行命令，但又不想每次都打开 Terminal，就可以使用 (<code>Alt + F2</code>) 打开运行控制台，然后输入需要运行的命令即可。</p><h2 id="切换工作区-alt-tab">切换工作区 Alt + Tab</h2><p>上面提到的快捷键 (<code>Alt + Tab</code>) 直接在工作区内切换活动窗口，若需要切换工作区，则可以使用 (<code>Ctrl + Alt + 方向键</code>) 。</p><h2 id="显示所有活动窗口-super">显示所有活动窗口 Super</h2><p>当我们想要查看所有窗口和工作区时，可以使用 <code>Super</code> 键直接呼出，并使用鼠标或方向键进行选择。</p><h2 id="应用程序菜单-super-a">应用程序菜单 Super + A</h2><p>想要打开应用程序菜单的时候，也就是左下角的9个小点的图标，移动鼠标实在是太远了，可以使用快捷键 (<code>Super + A</code>) 直接打开。</p><h2 id="关闭窗口-ctrl-q">关闭窗口 Ctrl + Q</h2><p>除了鼠标点击 <code>X</code> 来关闭窗口，还可以使用 (<code>Ctrl + Q</code>) 直接关闭。</p><h2 id="输入法-super-space">输入法 Super + Space</h2><p>如果安装其他输入法的话，切换输入法可以使用 (<code>Super + Space</code>)。</p><h2 id="注销-ctrl-alt-del">注销 Ctrl + Alt + Del</h2><p>关机快捷键是 (<code>Ctrl + Alt + Del</code>) ，而这在 Windows 下是任务管理器，可不一样哈，切记！并且在虚拟机中使用的话，同时会呼出 Windows 的任务管理器。。。不如直接点关机按钮。</p><h2 id="个人收获">个人收获</h2><p>最近准备多在 Linux 环境中多熟悉熟悉了，当然，博客总结还是在 Windows下哈，所以就整理了一下快捷键的使用。大体上还是比较熟悉的，其中 Terminal 的打开让我格外喜欢！</p><p>若是还有其他的快捷键需求，在 Linux 中也是可以定制的，就请另外研究啦。</p>]]></content>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;本文是关于在 Vmware 中使用 Ubuntu 时经常使用的快捷键汇总&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="ubuntu" scheme="https://gipbear.github.io/categories/ubuntu/"/>
+    
+    
+    <category term="linux" scheme="https://gipbear.github.io/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>ubuntu下安装edge</title>
@@ -497,32 +520,6 @@
     <category term="西瓜书" scheme="https://gipbear.github.io/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
     
     <category term="神经网络" scheme="https://gipbear.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>机器学习西瓜书——第04章决策树</title>
-    <link href="https://gipbear.github.io/2022/01/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC04%E7%AB%A0%E5%86%B3%E7%AD%96%E6%A0%91/"/>
-    <id>https://gipbear.github.io/2022/01/20/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%A5%BF%E7%93%9C%E4%B9%A6%E2%80%94%E2%80%94%E7%AC%AC04%E7%AB%A0%E5%86%B3%E7%AD%96%E6%A0%91/</id>
-    <published>2022-01-19T16:06:16.000Z</published>
-    <updated>2022-01-27T15:12:19.547Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>本文是关于周志华老师编写的机器学习书籍『西瓜书』的第四章决策树的学习.</p><p>主要的内容有: 决策树的基本流程、信息熵、信息增益(ID3决策树)、信息增益率(C4.5决策树)和基尼指数(CART决策树)等.</p></blockquote><span id="more"></span><h2 id="基本流程模型">4.1 基本流程(模型)</h2><p>决策树(decision tree)是基于<strong>树结构</strong>来进行决策的, 是符合人类习惯的一种决策机制.</p><p>其中, 叶结点对应的是决策结果, 其他结点对应的是一个属性决策『决定按照什么属性, 将结点中的样本集合划分为子结点』, 从根结点到每个叶子结点的路径对应了一个决策序列.</p><p>既然是一棵树, 那么自然就符合递归的定义, 那么什么时候停止决策呢? 有如下三种情况:</p><ol type="1"><li>当前结点包含的样本均属于<code>同一标记</code>, 无需划分.</li><li>当前结点包含的样本均属于<code>同一属性</code>, 不可划分; 其归属标记为<strong>该结点</strong>中包含样本数量最多的标记.</li><li>当前结点样本集合为<code>空</code>, 不可划分; 其归属标记为<strong>父结点</strong>中包含样本数量最多的标记.</li></ol><blockquote><p>其中第三种情况我的理解是:</p><p>在父结点的样本中, 不存在该属性标记, 所以结点划分的时候该结点的样本为空, 但是我们依旧需要考虑这种情况, 因为我们是针对训练集进行的训练, 但是模型在应用的新样本中, 有可能会遇到该情况, 所以也需要考虑在分支上.</p><p>那如何归类呢? 就是按照父结点中样本数量最多的标记来标记该结点!</p></blockquote><p>我们的目的就是在生成树结点的过程中去做出<code>正确</code>的决策划分, 通过训练集构建的决策树需要能够在进行分类决策的时候<strong>泛化能力</strong>更强.</p><p>什么决策才是正确的决策呢?</p><h2 id="划分选择">4.2 划分选择</h2><p>正确的划分是将决策树的分支结点所包含的样本尽可能<strong>属于同一标记</strong>. 即, 结点的<strong>纯度</strong>(purity)最高.</p><h3 id="信息熵">信息熵</h3><p>想要度量结点的<code>纯度</code>, 我们一般使用<strong>信息熵</strong>(information entropy)这个指标.</p><blockquote><p>首先, 假设当前的样本集合<span class="math inline">\(D\)</span>中包含<span class="math inline">\(n\)</span>类样本，其中，第<span class="math inline">\(k\)</span>类样本所占的比例为<span class="math inline">\(p_k,(k=1, 2, 3, ···, n)\)</span>则D的信息熵定义为：</p></blockquote><p><span class="math display">\[Ent(D) = -\sum^n_{k=1} {p_k\log_2{p_k}}\]</span></p><p>其数值则表示数据的混乱程度，<code>信息熵值越大则数据越混乱</code>，则表示不确定性越大，所包含的信息量也就越大，也就越难决策。</p><blockquote><p>这里需要注意信息熵是<strong>负数</strong>.</p></blockquote><p>好嘞, 有了信息熵的基础, 那接下来我们就可以利用信息熵来构建决策树模型.</p><h3 id="信息增益id3决策树">信息增益(ID3决策树)</h3><p>有了信息熵的定义, 我们就可以计算<strong>当前结点</strong>对于分类信息的信息熵, 然后按照哪个属性进行划分呢? 这时候就需要使用到<strong>信息增益</strong>(information gain)了.</p><p>按照如下思路进行考虑:</p><ol type="1"><li><strong>目的</strong>: 我们的目的是找出最适合进行决策的<strong>属性</strong>;</li><li><strong>计算</strong>: 那么不妨假设按照<code>属性A</code>进行决策, 那么当前结点中属于<code>属性A</code>的样本中按照<span class="math inline">\(v\)</span>个<code>属性取值</code>计算得到的信息熵总和是多少呢?</li><li><strong>权重</strong>: 由于属于<code>属性A</code>中每个<code>属性取值</code>的样本个数不同, 那么对于信息熵总和的影响自然也就不同, 所以在计算的时候需要赋予一定的权重, 最简单的就是第v个属性取值占该属性样本的比重<span class="math inline">\(\frac{|D^v|}{|D|}\)</span></li><li><strong>循环</strong>: 依次类推计算当前结点各个属性的信息熵.</li><li><strong>结果</strong>: 所以, 信息增益就是用<strong>当前结点</strong>的信息熵, 分别减去<strong>按照各个属性</strong>决策的信息熵总和, 由于这里是<strong>减</strong>, 自然是选择<strong>信息增益越大</strong>的属性越好啦!</li></ol><p>得到的信息增益计算公式:</p><p><span class="math display">\[Gain(D,a) = Ent(D) - \sum_{v=1}^V{\frac{|D^v|}{|D|}Ent(D^v)}\]</span></p><p>著名的<strong>ID3决策树</strong>就是使用信息增益来实现属性划分的.</p><h3 id="增益率c4.5决策树">增益率(C4.5决策树)</h3><p>但是我们容易发现, 若将『编号』这种属性进行计算的时候</p><p><span class="math display">\[\begin{aligned}Gain(D,编号)&amp;= Ent(D) - \sum_{v=1}^V{\frac{1}{V}Ent(1)} \\&amp;= Ent(D) - Ent(1) \\&amp;= Ent(D)\end{aligned}\]</span></p><p>很明显这种取值不重复的属性的信息增益极大, 换句话说, 是『<strong>属性取值很多</strong>』的属性, 但这很明显不符合我们的预期, 因为我们都知道编号这种属性基本上是没有意义的.</p><p>由此, 我们引入了<strong>信息增益率</strong>(gain ratio)的概念.</p><p>那么我们理解一下是什么是信息增益率? 信息增益自然就是上面提到的部分, 那么『率』呢? 就需要相对于某个值了.</p><p>这里引入一个属性"<strong>固有值</strong>"(intrinsic value)的概念:</p><p><span class="math display">\[IV(a) = -\sum_{v=1}^V {\frac{|D^v|}{|D|}\log_2{\frac{|D^v|}{|D|}}}\]</span></p><blockquote><p>是不是跟信息增益很相似? 类比一下: 这就是衡量该属性取值的『混乱程度』, 数值越大越混乱, 自然就越不能要.</p></blockquote><p>所以将信息增益率定义为:</p><p><span class="math display">\[Gain_ratio(D, a) = \frac{Gain(D, a)}{IV(a)}\]</span></p><p>由于固有值在分母, 所以信息增益率整体会偏好选择属性数目较少的属性.</p><p>著名的<strong>C4.5决策树</strong>就是利用了信息增益率的方法来实现决策树的, 但不是直接选择增益率最大的属性, 而是使用<strong>启发式</strong>的方法: 先选择<strong>信息增益</strong>高于平均水平的属性, 再从中选择出<strong>增益率</strong>最高的.</p><h3 id="基尼指数cart决策树">基尼指数(CART决策树)</h3><p>最后要提的就是<strong>基尼指数</strong>(Gini index)了, 这是使用了一个与信息熵类似的概念——基尼值, 它们都是来衡量数据集的<code>纯度</code>.</p><p><span class="math display">\[\begin{aligned}Gini(D)&amp;= \sum^n_{i=1}\sum_{j\neq{i}}{p_ip_j}&amp;= 1 - \sum^n_{i=1}{p_i^2}\end{aligned}\]</span></p><p>正如公式表示的, 基尼值反映了在样本中随机抽取两个样本, 其标记不一致的概率. 反过来就是用<code>1</code>减去<code>一致</code>的概率, 同样考虑样本个数<strong>权重</strong>的影响, 得到基尼指数计算公式:</p><p><span class="math display">\[Gini_index(D, a) = \sum^V_{v=1}{\frac{|D^v|}{|D|}Gini(D^v)}\]</span></p><p>著名的<strong>CART决策树</strong>就是使用了基尼指数来划分属性的.</p><h2 id="个人收获">个人收获</h2><p>学习了决策树模型的三种建模方式, 起码知道了ID3有比较明显的缺陷, 所以一般可以使用C4.5或CART决策树.</p><p>决策树一般不会直接使用, 多使用在森林等集成算法中, 之后再进一步学习.</p><p>关于后续的剪枝处理也会抽空尽快学习.</p>]]></content>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;本文是关于周志华老师编写的机器学习书籍『西瓜书』的第四章决策树的学习.&lt;/p&gt;
-&lt;p&gt;主要的内容有: 决策树的基本流程、信息熵、信息增益(ID3决策树)、信息增益率(C4.5决策树)和基尼指数(CART决策树)等.&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    <category term="机器学习" scheme="https://gipbear.github.io/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="西瓜书" scheme="https://gipbear.github.io/tags/%E8%A5%BF%E7%93%9C%E4%B9%A6/"/>
-    
-    <category term="决策树" scheme="https://gipbear.github.io/tags/%E5%86%B3%E7%AD%96%E6%A0%91/"/>
     
   </entry>
   
