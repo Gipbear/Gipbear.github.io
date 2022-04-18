@@ -6,7 +6,7 @@
   <link href="https://gipbear.github.io/atom.xml" rel="self"/>
   
   <link href="https://gipbear.github.io/"/>
-  <updated>2022-04-18T10:31:33.721Z</updated>
+  <updated>2022-04-18T12:23:17.170Z</updated>
   <id>https://gipbear.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ubuntu常用快捷键</title>
-    <link href="https://gipbear.github.io/2022/04/18/ubuntu%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
-    <id>https://gipbear.github.io/2022/04/18/ubuntu%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</id>
+    <title>Ubuntu | ubuntu常用快捷键</title>
+    <link href="https://gipbear.github.io/2022/04/18/Ubuntu-ubuntu%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/"/>
+    <id>https://gipbear.github.io/2022/04/18/Ubuntu-ubuntu%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</id>
     <published>2022-04-18T09:01:00.000Z</published>
-    <updated>2022-04-18T10:31:33.721Z</updated>
+    <updated>2022-04-18T12:23:17.170Z</updated>
     
     <content type="html"><![CDATA[<blockquote><p>本文是关于在 Vmware 中使用 Ubuntu 时经常使用的快捷键汇总</p></blockquote><span id="more"></span><p><strong>首先说明：在 Linux 中的 <code>Super</code> 键，就是 Windows 下的 <code>Windows 键</code>。</strong></p><h2 id="工作标配">工作标配</h2><p>很多 Windows 下常见的基本快捷键都可以直接使用，例如：</p><ul><li>复制 (<code>Ctrl + C</code>)</li><li>粘贴 (<code>Ctrl + V</code>)</li><li>撤销 (<code>Ctrl + Z</code>)</li><li>保存 (<code>Ctrl + S</code>)</li><li>窗口切换 (<code>Alt + Tab 或 Super + Tab</code>)</li><li>返回桌面 (<code>Super + D</code>)等。</li></ul><h2 id="终端-ctrl-alt-t">终端 Ctrl + Alt + T</h2><p>在 Ubuntu 中打开终端经常可以使用右击打开，不过使用快捷键更加方便 (<code>Ctrl + Alt + T</code>) 。</p><h2 id="快速运行命令-alt-f2">快速运行命令 Alt + F2</h2><p>很多深度用户想要直接运行命令，但又不想每次都打开 Terminal，就可以使用 (<code>Alt + F2</code>) 打开运行控制台，然后输入需要运行的命令即可。</p><h2 id="切换工作区-alt-tab">切换工作区 Alt + Tab</h2><p>上面提到的快捷键 (<code>Alt + Tab</code>) 直接在工作区内切换活动窗口，若需要切换工作区，则可以使用 (<code>Ctrl + Alt + 方向键</code>) 。</p><h2 id="显示所有活动窗口-super">显示所有活动窗口 Super</h2><p>当我们想要查看所有窗口和工作区时，可以使用 <code>Super</code> 键直接呼出，并使用鼠标或方向键进行选择。</p><h2 id="应用程序菜单-super-a">应用程序菜单 Super + A</h2><p>想要打开应用程序菜单的时候，也就是左下角的9个小点的图标，移动鼠标实在是太远了，可以使用快捷键 (<code>Super + A</code>) 直接打开。</p><h2 id="关闭窗口-ctrl-q">关闭窗口 Ctrl + Q</h2><p>除了鼠标点击 <code>X</code> 来关闭窗口，还可以使用 (<code>Ctrl + Q</code>) 直接关闭。</p><h2 id="输入法-super-space">输入法 Super + Space</h2><p>如果安装其他输入法的话，切换输入法可以使用 (<code>Super + Space</code>)。</p><h2 id="注销-ctrl-alt-del">注销 Ctrl + Alt + Del</h2><p>关机快捷键是 (<code>Ctrl + Alt + Del</code>) ，而这在 Windows 下是任务管理器，可不一样哈，切记！并且在虚拟机中使用的话，同时会呼出 Windows 的任务管理器。。。不如直接点关机按钮。</p><h2 id="个人收获">个人收获</h2><p>最近准备多在 Linux 环境中多熟悉熟悉了，当然，博客总结还是在 Windows下哈，所以就整理了一下快捷键的使用。大体上还是比较熟悉的，其中 Terminal 的打开让我格外喜欢！</p><p>若是还有其他的快捷键需求，在 Linux 中也是可以定制的，就请另外研究啦。</p>]]></content>
     
@@ -40,13 +40,13 @@
   </entry>
   
   <entry>
-    <title>ubuntu下安装edge</title>
-    <link href="https://gipbear.github.io/2022/04/18/ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85edge/"/>
-    <id>https://gipbear.github.io/2022/04/18/ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85edge/</id>
+    <title>Ubuntu | ubuntu下安装edge</title>
+    <link href="https://gipbear.github.io/2022/04/18/Ubuntu-ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85edge/"/>
+    <id>https://gipbear.github.io/2022/04/18/Ubuntu-ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85edge/</id>
     <published>2022-04-18T07:57:48.000Z</published>
-    <updated>2022-04-18T08:40:59.140Z</updated>
+    <updated>2022-04-18T12:24:11.275Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>本文是关于如何在 Ubuntu 20.04下安装 Edge 浏览器的方法。</p></blockquote><span id="more"></span><h2 id="安装目的">安装目的</h2><p>目前在 VMware 虚拟机上安装了虚拟机 Ubuntu，使用时默认是火狐浏览器，而在 Windows 下，更多的则是使用 Edge 或 Chrome，因此有很多的收藏和记录在原本的 Edge上。</p><p>于是在 Ubuntu 上再次安装 Edge，并使用同步功能将标签等信息同步过来，这样在两个平台上使用浏览器就更方便了。</p><h2 id="安装步骤">安装步骤</h2><ol type="1"><li><p>首先打开 edge 的官网<a href="https://www.microsoft.com/zh-cn/edge">https://www.microsoft.com/zh-cn/edge</a>, 选择 <code>.deb</code> 文件下载。 <img src="/2022/04/18/ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85edge/%E4%B8%8B%E8%BD%BDEdge%E6%B5%8F%E8%A7%88%E5%99%A8.png" class="" title="下载Edge浏览器.png"></p></li><li><p>然后在文件夹中找到该文件，双击或右击使用软件安装打开该程序进行安装。<strong>如果一切顺利那么就结束啦！你也不可能来找我了😏</strong></p></li><li><p>但是双击文件就出现了一个<code>无法安装文件：不支持</code>的问题： <img src="/2022/04/18/ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85edge/%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%E4%B8%8D%E6%94%AF%E6%8C%81.png" class="" title="无法安装不支持.png"></p></li><li><p>遇到这个问题就使用命令来强制安装。</p><p></p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i 下载的文件名.deb</span><br><span class="line">sudo apt-get install -f</span><br></pre></td></tr></tbody></table></figure><p></p><p>需要输入Y来确认继续。</p></li><li><p>这时候在<strong>应用程序</strong>中就可以可以发现我们的<strong>Edge</strong>了！右击收藏一下，火狐拜拜！</p></li></ol><p>OK，至此就结束了，祝大家顺利解决🎉！</p>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>本文是关于如何在 Ubuntu 20.04下安装 Edge 浏览器的方法。</p></blockquote><span id="more"></span><h2 id="安装目的">安装目的</h2><p>目前在 VMware 虚拟机上安装了虚拟机 Ubuntu，使用时默认是火狐浏览器，而在 Windows 下，更多的则是使用 Edge 或 Chrome，因此有很多的收藏和记录在原本的 Edge上。</p><p>于是在 Ubuntu 上再次安装 Edge，并使用同步功能将标签等信息同步过来，这样在两个平台上使用浏览器就更方便了。</p><h2 id="安装步骤">安装步骤</h2><ol type="1"><li><p>首先打开 edge 的官网<a href="https://www.microsoft.com/zh-cn/edge">https://www.microsoft.com/zh-cn/edge</a>, 选择 <code>.deb</code> 文件下载。 <img src="/2022/04/18/Ubuntu-ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85edge/%E4%B8%8B%E8%BD%BDEdge%E6%B5%8F%E8%A7%88%E5%99%A8.png" class="" title="下载Edge浏览器.png"></p></li><li><p>然后在文件夹中找到该文件，双击或右击使用软件安装打开该程序进行安装。<strong>如果一切顺利那么就结束啦！你也不可能来找我了😏</strong></p></li><li><p>但是双击文件就出现了一个<code>无法安装文件：不支持</code>的问题： <img src="/2022/04/18/Ubuntu-ubuntu%E4%B8%8B%E5%AE%89%E8%A3%85edge/%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85%E4%B8%8D%E6%94%AF%E6%8C%81.png" class="" title="无法安装不支持.png"></p></li><li><p>遇到这个问题主要是因为缺少相应的依赖，可以使用<code>sudo apt-get install -f</code>来解决。</p><p></p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i 下载的文件名.deb</span><br><span class="line">sudo apt-get install -f</span><br></pre></td></tr></tbody></table></figure><p></p><p>需要输入Y来确认继续。</p></li><li><p>这时候在<strong>应用程序</strong>中就可以可以发现我们的<strong>Edge</strong>了！右击收藏一下，火狐拜拜！</p></li></ol><p>OK，至此就结束了，祝大家顺利解决🎉！</p>]]></content>
     
     
     <summary type="html">&lt;blockquote&gt;
