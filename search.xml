@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>【工具】| docker 的安装和使用</title>
+    <url>/2022/10/22/%E3%80%90%E5%B7%A5%E5%85%B7%E3%80%91-docker-%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<blockquote>
+<p>本文的关于在 Windows下创建 docker 环境和初步学习的教程。 参考内容来自 <a href="https://dockerpractice.readthedocs.io/zh/latest/dockerai/?spm=5176.20850343.J_3678908510.1.65982854JrDT3o">AI 开发者的 docker 实践</a></p>
+</blockquote>
+<span id="more"></span>
+<h2 id="docker-安装">docker 安装</h2>
+<p>以 Windows 为例，首先进入 <a href="https://www.docker.com/blog/announcing-docker-sbom-a-step-towards-more-visibility-into-docker-images/">docker 官网</a>，找到对应 <a href="https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe?utm_source=docker&amp;utm_medium=webreferral&amp;utm_campaign=dd-smartbutton&amp;utm_location=header">docker-desktop</a> 选择 Windows 版本进行下载。下载之后双击安装，稍等片刻就安装完成了。</p>
+<p>有很多操作直接在 docker-desktop 上可以交互式操作，会比较简单，但是学习 docker 命令对后面还是有好处的，毕竟之后工作中有 docker 的时候并不一定会有相应的 desktop 工具。</p>
+<h2 id="docker-基础命令">docker 基础命令</h2>
+<h3 id="拉取镜像">拉取镜像</h3>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker pull [选项] [docker镜像地址:标签]</span><br></pre></td></tr></tbody></table></figure>
+<p>例如</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker pull hello-world:latest</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="运行镜像">运行镜像</h3>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker run hello-world:latest</span><br></pre></td></tr></tbody></table></figure>
+<p>该镜像只是一个简单的文本，并不会进入环境。</p>
+<h3 id="查看本地镜像">查看本地镜像</h3>
+<p>其中的 <code>IMAGE ID</code> 是每个镜像的唯一标识。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">REPOSITORY    TAG       IMAGE ID       CREATED         SIZE</span><br><span class="line">alpine/git    latest    42a1cda0ba24   2 days ago      43.6MB</span><br><span class="line">hello-world   latest    feb5d9fea6a5   13 months ago   13.3kB</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="启动镜像创建容器">启动镜像，创建容器</h3>
+<p>直接指定镜像启动，若不指定 <code>TAG</code> 则默认 <code>latest</code> 版本。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker run -itd deekpe:latest</span><br></pre></td></tr></tbody></table></figure>
+<p>如果不加 <code>d</code> 会直接进入容器中。</p>
+<h3 id="查看容器">查看容器</h3>
+<p>查看运行中的容器，如果需要查看所有的容器，使用 <code>-a</code></p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker ps -a</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="进入运行中的容器">进入运行中的容器</h3>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker exec -it [CONTAINER ID] /bin/bash</span><br></pre></td></tr></tbody></table></figure>
+<p>但是在 Windows 下可能会出现 <code>the input device is not a TTY.  If you are using mintty, try prefixing the command with 'winpty'</code> 的问题，导致无法进入容器，为此在 Windows 下按照如下修改即可成功进入容器。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">winpty docker exec -it [CONTAINER ID] bash</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="个人收获">个人收获</h2>
+<p>docker 的简单使用，后面继续补充。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>利用宝塔面板在阿里云服务器上配置notebook</title>
     <url>/2022/05/22/%E5%88%A9%E7%94%A8%E5%AE%9D%E5%A1%94%E9%9D%A2%E6%9D%BF%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E9%85%8D%E7%BD%AEnotebook/</url>
     <content><![CDATA[<blockquote>
