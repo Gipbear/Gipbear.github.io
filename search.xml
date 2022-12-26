@@ -24,7 +24,7 @@
 <ol start="4" type="1">
 <li>隐式运行 docker 镜像</li>
 </ol>
-<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker run -d --name neo4j_name \ //-d表示容器后台运行 --name指定容器名字</span><br><span class="line">-p 7474:7474 -p 7687:7687 \ //映射容器的端口号到宿主机的端口号</span><br><span class="line">-v /home/neo4j/data:/e/workspace/neo4j/data \ //把容器内的数据目录挂载到宿主机的对应目录下</span><br><span class="line">-v /home/neo4j/logs:/e/workspace/neo4j/logs \ //挂载日志目录</span><br><span class="line">-v /home/neo4j/conf:/e/workspace/neo4j/conf \ //挂载配置目录</span><br><span class="line">-v /home/neo4j/import:/e/workspace/neo4j/import \ //挂载数据导入目录</span><br><span class="line">–env NEO4J_AUTH=neo4j/neo4j \ //设定数据库的名字的访问密码</span><br><span class="line">neo4j:latest //指定使用的镜像</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker run -d --network kg_network --name kg_neo4j \</span><br><span class="line">-p 7474:7474 -p 7687:7687 \</span><br><span class="line">-v /home/neo4j/data:/e/workspace/neo4j/data \</span><br><span class="line">-v /home/neo4j/logs:/e/workspace/neo4j/logs \</span><br><span class="line">-v /home/neo4j/conf:/e/workspace/neo4j/conf \</span><br><span class="line">-v /home/neo4j/import:/e/workspace/neo4j/import \</span><br><span class="line">--env NEO4J_AUTH=neo4j/password \</span><br><span class="line">neo4j:latest</span><br></pre></td></tr></tbody></table></figure>
 <ol start="5" type="1">
 <li>现在就可以在浏览器中访问 <a href="http://localhost:7474/browser/">http://localhost:7474</a></li>
 </ol>
