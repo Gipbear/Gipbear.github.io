@@ -28,7 +28,7 @@
 <p>备忘 mongo</p>
 <figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker run -d --network kg_network --name kg_mongo \</span><br><span class="line">-v e:/DockerImages/mongo_db/data:/data/db \</span><br><span class="line">-p 27017:27017 \</span><br><span class="line">mongo:latest</span><br></pre></td></tr></tbody></table></figure>
 <p>备忘 redis</p>
-<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker run -d --network kg_network --name kg_redis \</span><br><span class="line">-v e:/DockerImages/Redis/Conf/redis.conf:/etc/redis/redis.conf \</span><br><span class="line">-v e:/DockerImages/Redis/Data:/data \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">redis:latest \</span><br><span class="line">redis-server /etc/redis/redis.conf \</span><br><span class="line">--requirepass redis_pwd \</span><br><span class="line">--appendonly yes</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">docker run -d --network kg_network --name kg_redis \</span><br><span class="line">-v e:/DockerImages/Redis/Conf/redis.conf:/etc/redis/redis.conf \</span><br><span class="line">-v e:/DockerImages/Redis/Data:/data \</span><br><span class="line">-p 6379:6379 \</span><br><span class="line">redis:latest \</span><br><span class="line">--requirepass redis_pwd \</span><br><span class="line">--appendonly yes</span><br></pre></td></tr></tbody></table></figure>
 <ol start="5" type="1">
 <li>现在就可以在浏览器中访问 <a href="http://localhost:7474/browser/">http://localhost:7474</a></li>
 </ol>
